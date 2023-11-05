@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using LocalFarmer2.Shared.Models;
+using LocalFarmer2.Shared.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using LocalFarmer2.Utilities;
-using LocalFarmer2.Shared.Models;
-using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace LocalFarmer2.Server.Controllers
 {
@@ -54,6 +53,8 @@ namespace LocalFarmer2.Server.Controllers
         }
 
         [HttpPost]
+        [Route("Login")]
+
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);

@@ -1,4 +1,4 @@
-﻿namespace LocalFarmer2.Utilities
+﻿namespace LocalFarmer2.Shared.Utilities
 {
     public class LoginResult
     {
