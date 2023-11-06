@@ -25,6 +25,7 @@ namespace LocalFarmer2.Server.Controllers
         }
 
         [HttpPost]
+        [Route("Register")]
         public async Task<IActionResult> AddUser([FromBody] RegisterModel model)
         {
             var newUser = new IdentityUser
