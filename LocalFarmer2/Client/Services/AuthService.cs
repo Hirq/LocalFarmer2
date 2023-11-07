@@ -49,7 +49,9 @@ namespace LocalFarmer2.Client.Services
         public async Task<LoginResult> Login(LoginModel loginModel)
         {
             var loginAsJson = JsonSerializer.Serialize(loginModel);
-            var response = await _httpClient.PostAsJsonAsync("api/Account/Login", new StringContent(loginAsJson, Encoding.UTF8, "application/json"));
+
+            //var response = await _httpClient.PostAsJsonAsync("api/Account/Login", new StringContent(loginAsJson, Encoding.UTF8, "application/json"));
+            var response = await _httpClient.PostAsJsonAsync("api/Account/Login", loginModel);
 
             var loginResult = JsonSerializer.Deserialize<LoginResult>(
                 await response.Content.ReadAsStringAsync(),
@@ -60,10 +62,10 @@ namespace LocalFarmer2.Client.Services
 
             if (!response.IsSuccessStatusCode) 
             {
-                return loginResult;
+                return loginResult!;
             }
 
-            await _localStorageService.SetItemAsStringAsync("authToken", loginResult!.Token);
+            await _localStorageService.SetItemAsync("authToken", loginResult!.Token);
             ((CustomAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(loginModel.Email);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", loginResult.Token);
 
