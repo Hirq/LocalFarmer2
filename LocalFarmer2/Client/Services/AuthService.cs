@@ -49,9 +49,7 @@ namespace LocalFarmer2.Client.Services
         public async Task<LoginResult> Login(LoginModel loginModel)
         {
             var loginAsJson = JsonSerializer.Serialize(loginModel);
-
-            //var response = await _httpClient.PostAsJsonAsync("api/Account/Login", new StringContent(loginAsJson, Encoding.UTF8, "application/json"));
-            var response = await _httpClient.PostAsJsonAsync("api/Account/Login", loginModel);
+            var response = await _httpClient.PostAsync("api/Account/Login", new StringContent(loginAsJson, Encoding.UTF8, "application/json"));
 
             var loginResult = JsonSerializer.Deserialize<LoginResult>(
                 await response.Content.ReadAsStringAsync(),
