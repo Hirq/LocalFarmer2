@@ -1,5 +1,5 @@
-﻿using LocalFarmer2.Shared.Models;
-using LocalFarmer2.Shared.Utilities;
+﻿using LocalFarmer2.Shared.Utilities;
+using LocalFarmer2.Shared.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -94,5 +94,11 @@ namespace LocalFarmer2.Server.Controllers
 
         }
 
+        [HttpGet]
+        [Route("User/{userName}")]
+        public async Task<IActionResult> GetCurrentUserAsync(string userName)
+        {
+            return Ok(await _userManager.FindByNameAsync(userName));
+        }
     }
 }

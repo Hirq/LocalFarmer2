@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LocalFarmer2.Shared.Models
+namespace LocalFarmer2.Shared.ViewModels
 {
     public class LoginModel
     {

@@ -1,5 +1,5 @@
-﻿using LocalFarmer2.Shared.Models;
-using LocalFarmer2.Shared.Utilities;
+﻿using LocalFarmer2.Shared.Utilities;
+using LocalFarmer2.Shared.ViewModels;
 
 namespace LocalFarmer2.Client.Services
 {
@@ -8,5 +8,7 @@ namespace LocalFarmer2.Client.Services
         Task<RegisterResult> Register(RegisterModel registerModel);
         Task<LoginResult> Login(LoginModel loginModel);
         Task Logout();
+
+        Task<UserModel> GetUser(string userName);
     }
 }

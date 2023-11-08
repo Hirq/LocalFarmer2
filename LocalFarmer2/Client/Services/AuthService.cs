@@ -1,7 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using LocalFarmer2.Client.Utilities;
-using LocalFarmer2.Shared.Models;
 using LocalFarmer2.Shared.Utilities;
+using LocalFarmer2.Shared.ViewModels;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -25,7 +25,7 @@ namespace LocalFarmer2.Client.Services
         public async Task<RegisterResult> Register(RegisterModel registerModel)
         {
             var result = await _httpClient.PostAsJsonAsync("api/Account/Register", registerModel);
-            if (!result.IsSuccessStatusCode) 
+            if (!result.IsSuccessStatusCode)
             {
                 return new RegisterResult
                 {
@@ -58,7 +58,7 @@ namespace LocalFarmer2.Client.Services
                     PropertyNameCaseInsensitive = true,
                 });
 
-            if (!response.IsSuccessStatusCode) 
+            if (!response.IsSuccessStatusCode)
             {
                 return loginResult!;
             }
@@ -77,5 +77,16 @@ namespace LocalFarmer2.Client.Services
             _httpClient.DefaultRequestHeaders.Authorization = null;
         }
 
+        public async Task<UserModel> GetUser(string userName)
+        {
+            var result = await _httpClient.GetAsync($"api/Account/User/{userName}");
+            var response = result.Content;
+            var user = new UserModel()
+            {
+                Name = "Moja farma",
+                IdFarmhouse = 1
+            };
+            return user;
+        }
     }
 }
