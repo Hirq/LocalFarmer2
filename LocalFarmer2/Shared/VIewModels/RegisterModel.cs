@@ -17,7 +17,7 @@ namespace LocalFarmer2.Shared.ViewModels
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "Hasla msuza być takei same")]
+        [Compare("Password", ErrorMessage = "Hasla msuza być takie same")]
         public string ConfirmPassword { get; set; }
 
     }
