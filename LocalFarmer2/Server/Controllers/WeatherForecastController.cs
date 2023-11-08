@@ -1,4 +1,3 @@
-using LocalFarmer2.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LocalFarmer2.Server.Controllers
