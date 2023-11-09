@@ -98,7 +98,14 @@ namespace LocalFarmer2.Server.Controllers
         [Route("User/{userName}")]
         public async Task<IActionResult> GetCurrentUserAsync(string userName)
         {
-            return Ok(await _userManager.FindByNameAsync(userName));
+            //TODO: Create repository
+            var user = await _userManager.FindByNameAsync(userName);
+            var userDto = new UserModel()
+            {
+                Name = user.UserName,
+                IdFarmhouse = 33
+            };
+            return Ok(userDto);
         }
     }
 }

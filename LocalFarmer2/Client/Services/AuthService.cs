@@ -79,14 +79,9 @@ namespace LocalFarmer2.Client.Services
 
         public async Task<UserModel> GetUser(string userName)
         {
-            var result = await _httpClient.GetAsync($"api/Account/User/{userName}");
-            var response = result.Content;
-            var user = new UserModel()
-            {
-                Name = "Moja farma",
-                IdFarmhouse = 1
-            };
-            return user;
+            var result = await _httpClient.GetFromJsonAsync<UserModel>($"api/Account/User/{userName}");
+
+            return result;
         }
     }
 }
