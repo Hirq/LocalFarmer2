@@ -8,7 +8,6 @@ namespace LocalFarmer2.Client.Services
         Task<RegisterResult> Register(RegisterModel registerModel);
         Task<LoginResult> Login(LoginModel loginModel);
         Task Logout();
-
         Task<UserModel> GetUser(string userName);
     }
 }

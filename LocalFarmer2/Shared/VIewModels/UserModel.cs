@@ -9,6 +9,6 @@ namespace LocalFarmer2.Shared.ViewModels
     public class UserModel
     {
         public string Name { get; set; }
-        public int IdFarmhouse { get; set; }
+        public int? IdFarmhouse { get; set; }
     }
 }

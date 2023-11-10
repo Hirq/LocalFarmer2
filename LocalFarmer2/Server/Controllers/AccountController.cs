@@ -1,4 +1,6 @@
-﻿using LocalFarmer2.Shared.Utilities;
+﻿using LocalFarmer2.Server.Models;
+using LocalFarmer2.Server.Repositories;
+using LocalFarmer2.Shared.Utilities;
 using LocalFarmer2.Shared.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,19 +18,28 @@ namespace LocalFarmer2.Server.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IConfiguration _configuration;
+        private readonly IApplicationUserRepository _applicationUserRepository;
+        private readonly IFarmhouseRepository _farmhouseRepository;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IConfiguration configuration)
+        public AccountController(
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
+            IConfiguration configuration,
+            IApplicationUserRepository applicationUserRepository,
+            IFarmhouseRepository farmhouseRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
+            _applicationUserRepository = applicationUserRepository;
+            _farmhouseRepository = farmhouseRepository;
         }
 
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> AddUser([FromBody] RegisterModel model)
         {
-            var newUser = new IdentityUser
+            var newUser = new ApplicationUser
             {
                 UserName = model.Email,
                 Email = model.Email
@@ -98,12 +109,11 @@ namespace LocalFarmer2.Server.Controllers
         [Route("User/{userName}")]
         public async Task<IActionResult> GetCurrentUserAsync(string userName)
         {
-            //TODO: Create repository
-            var user = await _userManager.FindByNameAsync(userName);
+            var user = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.UserName == userName);
             var userDto = new UserModel()
             {
                 Name = user.UserName,
-                IdFarmhouse = 33
+                IdFarmhouse = user.IdFarmhouse
             };
             return Ok(userDto);
         }
