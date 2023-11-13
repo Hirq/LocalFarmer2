@@ -3,7 +3,7 @@
 
 <AuthorizeView>
     <Authorized>
-        Hello, @context.User.Identity!.Name!
+        Hello, @context.User.Identity!.Name!  | @UserModel.IdFarmhouse
         <a href="LogOut">Log out</a>
     </Authorized>
     <NotAuthorized>
@@ -13,14 +13,17 @@
 </AuthorizeView>
 
 @code{
+    private UserModel UserModel = new UserModel();
+    
     protected async override Task OnInitializedAsync()
     {
+
         var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
         var user = authstate.User;
         var name = user.Identity.Name;
 
-        var xxx = await AuthService.GetUser(name);
-        Console.WriteLine(xxx.Name);
-        Console.WriteLine(xxx.IdFarmhouse);
+        UserModel = await AuthService.GetUser(name);
+        Console.WriteLine(UserModel.Name);
+        Console.WriteLine(UserModel.IdFarmhouse);
     }
 }
