@@ -1,7 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using LocalFarmer2.Client.Utilities;
+using LocalFarmer2.Shared.DTOs;
 using LocalFarmer2.Shared.Utilities;
-using LocalFarmer2.Shared.ViewModels;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -22,7 +22,7 @@ namespace LocalFarmer2.Client.Services
             _authenticationStateProvider = authenticationStateProvider;
             _localStorageService = localStorageService;
         }
-        public async Task<RegisterResult> Register(RegisterModel registerModel)
+        public async Task<RegisterResult> Register(RegisterDto registerModel)
         {
             var result = await _httpClient.PostAsJsonAsync("api/Account/Register", registerModel);
             if (!result.IsSuccessStatusCode)
@@ -46,7 +46,7 @@ namespace LocalFarmer2.Client.Services
             };
         }
 
-        public async Task<LoginResult> Login(LoginModel loginModel)
+        public async Task<LoginResult> Login(LoginDto loginModel)
         {
             var loginAsJson = JsonSerializer.Serialize(loginModel);
             var response = await _httpClient.PostAsync("api/Account/Login", new StringContent(loginAsJson, Encoding.UTF8, "application/json"));
@@ -77,9 +77,9 @@ namespace LocalFarmer2.Client.Services
             _httpClient.DefaultRequestHeaders.Authorization = null;
         }
 
-        public async Task<UserModel> GetUser(string userName)
+        public async Task<UserDto> GetUser(string userName)
         {
-            var result = await _httpClient.GetFromJsonAsync<UserModel>($"api/Account/User/{userName}");
+            var result = await _httpClient.GetFromJsonAsync<UserDto>($"api/Account/User/{userName}");
 
             return result;
         }

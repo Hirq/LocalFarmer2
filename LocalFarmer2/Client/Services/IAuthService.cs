@@ -1,13 +1,13 @@
-﻿using LocalFarmer2.Shared.Utilities;
-using LocalFarmer2.Shared.ViewModels;
+﻿using LocalFarmer2.Shared.DTOs;
+using LocalFarmer2.Shared.Utilities;
 
 namespace LocalFarmer2.Client.Services
 {
     public interface IAuthService
     {
-        Task<RegisterResult> Register(RegisterModel registerModel);
-        Task<LoginResult> Login(LoginModel loginModel);
+        Task<RegisterResult> Register(RegisterDto registerModel);
+        Task<LoginResult> Login(LoginDto loginModel);
         Task Logout();
-        Task<UserModel> GetUser(string userName);
+        Task<UserDto> GetUser(string userName);
     }
 }

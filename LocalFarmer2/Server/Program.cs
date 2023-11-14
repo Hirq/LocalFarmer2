@@ -1,8 +1,11 @@
+global using AutoMapper;
+global using LocalFarmer2.Server.Models;
+global using LocalFarmer2.Server.Repositories;
+global using LocalFarmer2.Shared.DTOs;
 using LocalFarmer2.Server.Data;
-using LocalFarmer2.Server.Repositories;
+using LocalFarmer2.Server.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -10,7 +13,17 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddControllers()
+        .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSwaggerGen(s =>
+{
+    s.OperationFilter<ReApplyOptionalRouteParameterOperationFilter>();
+    s.EnableAnnotations();
+});
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<LocalfarmerDbContext>(
@@ -38,6 +51,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddScoped<IFarmhouseRepository, FarmhouseRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

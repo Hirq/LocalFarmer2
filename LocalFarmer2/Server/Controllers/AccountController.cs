@@ -1,7 +1,7 @@
 ﻿using LocalFarmer2.Server.Models;
 using LocalFarmer2.Server.Repositories;
+using LocalFarmer2.Shared.DTOs;
 using LocalFarmer2.Shared.Utilities;
-using LocalFarmer2.Shared.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -37,7 +37,7 @@ namespace LocalFarmer2.Server.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public async Task<IActionResult> AddUser([FromBody] RegisterModel model)
+        public async Task<IActionResult> AddUser([FromBody] RegisterDto model)
         {
             var newUser = new ApplicationUser
             {
@@ -67,7 +67,7 @@ namespace LocalFarmer2.Server.Controllers
         [HttpPost]
         [Route("Login")]
 
-        public async Task<IActionResult> Login([FromBody] LoginModel model)
+        public async Task<IActionResult> Login([FromBody] LoginDto model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
 
@@ -110,7 +110,7 @@ namespace LocalFarmer2.Server.Controllers
         public async Task<IActionResult> GetCurrentUserAsync(string userName)
         {
             var user = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.UserName == userName);
-            var userDto = new UserModel()
+            var userDto = new UserDto()
             {
                 Name = user.UserName,
                 IdFarmhouse = user.IdFarmhouse

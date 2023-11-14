@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LocalFarmer2.Shared.ViewModels
+namespace LocalFarmer2.Shared.DTOs
 {
-    public class RegisterModel
+    public class RegisterDto
     {
         [Required]
         [EmailAddress]
