@@ -1,4 +1,4 @@
-﻿namespace LocalFarmer2.Server.Models
+﻿namespace LocalFarmer2.Shared.Models
 {
     public class MyType
     {

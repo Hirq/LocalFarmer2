@@ -1,7 +1,5 @@
-﻿using LocalFarmer2.Server.Models;
-using LocalFarmer2.Server.Repositories;
-using LocalFarmer2.Server.Utilities;
-using LocalFarmer2.Shared.DTOs;
+﻿using LocalFarmer2.Server.Utilities;
+using LocalFarmer2.Shared.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;

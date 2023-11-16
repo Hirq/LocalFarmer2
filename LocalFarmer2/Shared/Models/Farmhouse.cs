@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace LocalFarmer2.Server.Models
+namespace LocalFarmer2.Shared.Models
 {
     public class Farmhouse
     {

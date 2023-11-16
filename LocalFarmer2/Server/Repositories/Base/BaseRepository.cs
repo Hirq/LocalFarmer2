@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
-using static LocalFarmer2.Server.Models.MyType;
+using static LocalFarmer2.Shared.Models.MyType;
 
 namespace LocalFarmer2.Server.Repositories
 {

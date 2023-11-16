@@ -1,5 +1,5 @@
 global using AutoMapper;
-global using LocalFarmer2.Server.Models;
+global using LocalFarmer2.Shared.Models;
 global using LocalFarmer2.Server.Repositories;
 global using LocalFarmer2.Shared.DTOs;
 using LocalFarmer2.Server.Data;

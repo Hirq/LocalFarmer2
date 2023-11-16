@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace LocalFarmer2.Server.Models
+namespace LocalFarmer2.Shared.Models
 {
     public class ApplicationUser : IdentityUser
     {

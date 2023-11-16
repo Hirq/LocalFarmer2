@@ -1,6 +1,4 @@
-﻿using LocalFarmer2.Server.Models;
-using LocalFarmer2.Server.Repositories;
-using LocalFarmer2.Shared.DTOs;
+﻿using LocalFarmer2.Shared.Models;
 using LocalFarmer2.Shared.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
