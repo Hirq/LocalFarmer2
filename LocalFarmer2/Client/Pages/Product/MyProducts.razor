@@ -1,0 +1,62 @@
+﻿@page "/myproducts"
+@inject IProductService ProductService
+@inject UtilsService UtilsService
+@inject NavigationManager NavigationManager
+@inject HttpClient httpClient
+@inject AlertService alertService
+
+<PageTitle>My products</PageTitle>
+
+<MudTable Items="@ListProducts" Hover="true" SortLabel="Sort By">
+    <HeaderContent>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Product, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.Description)">Description</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountMinOne)">Count min one</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.PrizeOne)">Prize one</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountAll)">Count all</MudTableSortLabel></MudTh>
+        <MudTh>Actions</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Id">@context.Id</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Description">@context.Description</MudTd>
+        <MudTd DataLabel="Count min one">@context.CountMinOne</MudTd>
+        <MudTd DataLabel="Prize one">@context.PrizeOne</MudTd>
+        <MudTd DataLabel="Count all">@context.CountAll</MudTd>
+        <MudTd DataLabel="Edit">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => EditProduct(context.Id)">Edit</MudButton>
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Medium" OnClick="() => DeleteProduct(context.Id)" />
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+    </PagerContent>
+</MudTable>
+
+@code {
+    IEnumerable<Product> ListProducts = new List<Product>();
+    int idFarmhouse;
+    protected override async Task OnInitializedAsync()
+    {
+        idFarmhouse = UtilsService.IdFarmhouseConst;
+        ListProducts = await ProductService.GetProductsFarmhouse(idFarmhouse);
+    }
+
+    void EditProduct(int id)
+    {
+        NavigationManager.NavigateTo($"editproduct/{id}");
+    }
+
+    //TODO: Poprawić wyświetlanei alertów + X zamyka poprawnie, ale po odczekaniu 2,5sec i usunieciu kolejnego nie pojawia sie alert
+
+    async void DeleteProduct(int id)
+    {
+        var product = await ProductService.GetProduct(id);
+        await ProductService.DeleteProduct(id);
+        alertService.SetDeleteAlert($"Delete product {product.Name}");
+        ListProducts = await ProductService.GetProductsFarmhouse(idFarmhouse);
+        StateHasChanged();
+        NavigationManager.NavigateTo("/myproducts");
+    }
+}

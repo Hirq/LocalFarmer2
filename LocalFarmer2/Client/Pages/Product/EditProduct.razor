@@ -1,0 +1,54 @@
+﻿@page "/editproduct/{id:int}"
+@inject IProductService ProductService
+@inject IMapper mapper
+@inject NavigationManager NavigationManager
+@inject AlertService alertService
+
+<PageTitle>Edit product</PageTitle>
+
+<EditForm Model="model" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <MudText Class="d-flex justify-center" Typo="Typo.h6">Edit product</MudText>
+    <MudGrid>
+        <MudItem xs="12">
+            <MudCard>
+                <MudCardContent>
+                    <MudTextField Label="Name product"
+                                  @bind-Value="model.Name" Required For="@(() => model.Name)"/>
+                    <MudTextField Label="Description"
+                                  @bind-Value="model.Description" Required For="@(() => model.Description)" />
+                    <MudTextField Label="Count min"
+                                  @bind-Value="model.CountMinOne" Required For="@(() => model.CountMinOne)" />
+                    <MudTextField Label="Prize for one"
+                                  @bind-Value="model.PrizeOne" Required For="@(() => model.PrizeOne)" />
+                    <MudTextField Label="Count all"
+                                  @bind-Value="model.CountAll" Required For="@(() => model.CountAll)" />
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Edit product</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    ProductDto model = new ProductDto();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var product = await ProductService.GetProduct(Id);
+        model = mapper.Map<ProductDto>(product);
+    }
+
+    private async void OnValidSubmit(EditContext context)
+    {
+        ProductDto dto = mapper.Map<ProductDto>(model);
+        await ProductService.EditProduct(dto, Id);
+        alertService.SetSuccessAlert($"Successfully edited product {model.Name}");
+        NavigationManager.NavigateTo("/myproducts");
+    }
+}

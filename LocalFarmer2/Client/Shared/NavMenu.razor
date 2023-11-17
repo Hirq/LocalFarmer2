@@ -1,4 +1,4 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@* <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">LocalFarmer2</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -36,4 +36,21 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
-}
+} *@
+
+
+<MudNavMenu>
+    <MudText Typo="Typo.h6" Class="px-4">Local Farmer</MudText>
+    <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">
+        Jan Kowalski
+    </MudText>
+    <MudDivider Class="my-2" />
+    <MudNavLink Href="/" Icon="@Icons.Material.Filled.Dashboard" Match="NavLinkMatch.All">Dashboard</MudNavLink>
+    <MudNavLink Href="/farmhouses" Icon="@Icons.Material.Filled.Storage" Match="NavLinkMatch.Prefix">Farmhouses</MudNavLink>
+    <MudNavLink Href="/products" Icon="@Icons.Material.Filled.ShoppingBasket" Match="NavLinkMatch.Prefix">Products</MudNavLink>
+</MudNavMenu>
+
+<MudNavMenu Style="margin-top: auto">
+    <MudNavLink Href="/register" Icon="@Icons.Material.Filled.CarRepair" Match="NavLinkMatch.Prefix" Class="">Register</MudNavLink>
+    <MudNavLink Href="/login" Icon="@Icons.Material.Filled.Male" Match="NavLinkMatch.Prefix">Login</MudNavLink>
+</MudNavMenu>

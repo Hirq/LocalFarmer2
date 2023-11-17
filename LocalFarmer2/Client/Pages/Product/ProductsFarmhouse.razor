@@ -1,0 +1,54 @@
+﻿@page "/productsFarmhouse/{id:int}"
+@inject IProductService ProductService
+@inject IFarmhouseService FarmhouseService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Products Farmhouse @farmhouse.Name</PageTitle>
+@farmhouse.Name
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>CountMinOne</th>
+            <th>PrizeOne</th>
+            <th>CountAll</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in farmhouse.Products)
+        {
+            <tr>
+                <th>@product.Name</th>
+                <th>@product.Description</th>
+                <th>@product.CountMinOne</th>
+                <th>@product.PrizeOne</th>
+                <th>@product.CountAll</th>
+                <td>
+                    <button class="btn btn-primary" @onclick="(() => ShowProduct(product.Id))">
+                        <i class="oi oi-pencil"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    Farmhouse farmhouse = new Farmhouse();
+
+    protected override async Task OnInitializedAsync()
+    {
+        farmhouse.Products = new List<Product>();
+        farmhouse = await FarmhouseService.GetFarmhouse(Id);
+    }
+
+    void ShowProduct(int id)
+    {
+        NavigationManager.NavigateTo($"product/{id}");
+    }
+}

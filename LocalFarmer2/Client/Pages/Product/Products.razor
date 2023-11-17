@@ -1,0 +1,73 @@
+﻿@page "/products"
+@inject IProductService ProductService
+@inject NavigationManager NavigationManager
+@inject HttpClient httpClient
+
+<PageTitle>Products All</PageTitle>
+
+<MudTable Items="@ListProducts" SortLabel="Sort By" Hover="true" Filter="new Func<Product,bool>(FilterFunc)" CommitEditTooltip="Commit Edit">
+
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Products</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+
+    <HeaderContent>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Product, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.Description)">Description</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountMinOne)">Count min one</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.PrizeOne)">Prize one</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountAll)">Count all</MudTableSortLabel></MudTh>
+        <MudTh>Detail</MudTh>
+        <MudTh>Farmhouse</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Id">@context.Id</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Description">@context.Description</MudTd>
+        <MudTd DataLabel="Count min one">@context.CountMinOne</MudTd>
+        <MudTd DataLabel="Prize one">@context.PrizeOne</MudTd>
+        <MudTd DataLabel="Count all">@context.CountAll</MudTd>
+        <MudTd DataLabel="Details"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProduct(context.Id)">Go to detail</MudButton></MudTd>
+        <MudTd DataLabel="Farmhouse"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.IdFarmhouse)">Go to farmhouse</MudButton></MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+    </PagerContent>
+</MudTable>
+
+@code {
+    IEnumerable<Product> ListProducts = new List<Product>();
+    private string searchString = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListProducts = await ProductService.GetProducts();
+    }
+
+    void ShowProduct(int id)
+    {
+        NavigationManager.NavigateTo($"product/{id}");
+    }
+    void ShowFarmhouse(int id)
+    {
+        NavigationManager.NavigateTo($"farmhouse/{id}");
+    }
+
+    private bool FilterFunc(Product product)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (product.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (product.CountMinOne.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (product.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if ($"{product.PrizeOne} {product.Id}".Contains(searchString))
+            return true;
+        return false;
+    }
+}

@@ -1,0 +1,119 @@
+﻿@page "/farmhouses"
+@inject IFarmhouseService FarmhouseService
+@inject IProductService ProductService
+@inject NavigationManager NavigationManager
+@inject HttpClient httpClient
+
+<PageTitle>Farmhouses</PageTitle>
+
+<MudTable Items="@ListFarmhousesVM" SortLabel="Sort By" Hover="true" Filter="new Func<FarmhouseViewModel,bool>(FilterFunc)" CommitEditTooltip="Commit Edit">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Farmhouses</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+
+    <HeaderContent>
+        <MudTh></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FarmhouseViewModel, object>(x=>x.Id)">Nr</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Name)">Sign</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Description)">Description</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Address)">Address</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Phone)">Phone</MudTableSortLabel></MudTh>
+        <MudTh>Detail</MudTh>
+        <MudTh>Products</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.Id))">@((context.ShowDetails == true) ? "Hide" : "Show") Products</MudButton></MudTd>
+        <MudTd DataLabel="Nr">@context.Id</MudTd>
+        <MudTd DataLabel="Sign">@context.Name</MudTd>
+        <MudTd DataLabel="Name">@context.Description</MudTd>
+        <MudTd DataLabel="Position">@context.Address</MudTd>
+        <MudTd DataLabel="Molar mass">@context.Phone</MudTd>
+        <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.Id)">Go to detail</MudButton></MudTd>
+        <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProducts(context.Id)">Show products</MudButton></MudTd>
+    </RowTemplate>
+
+    <ChildRowContent>
+        @if (context.ShowDetails)
+        {
+            <MudTr>
+                <td colspan="4">
+                    <MudCard Outlined="true" Elevation="0" Class="list-products">
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.body1" Class="text-white">Products for <strong>@context.Name</strong></MudText>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <MudCardContent Class="pa-0">
+                            <MudTable Items="@context.Products" Context="ProductContext" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0">
+                                <ColGroup>
+                                    <col />
+                                    <col />
+                                    <col style="width:200px;" />
+                                </ColGroup>
+                                <HeaderContent>
+                                    <MudTh>Name</MudTh>
+                                    <MudTh>Prize one</MudTh>
+                                    <MudTh>Description</MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd DataLabel="Address Line 1">@ProductContext.Name</MudTd>
+                                    <MudTd DataLabel="Address Line 2">@ProductContext.PrizeOne</MudTd>
+                                    <MudTd DataLabel="Postal Code">@ProductContext.Description</MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        </MudCardContent>
+                    </MudCard>
+                </td>
+            </MudTr>
+        }
+    </ChildRowContent>
+
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+    </PagerContent>
+</MudTable>
+
+@code {
+    IEnumerable<FarmhouseViewModel> ListFarmhousesVM = new List<FarmhouseViewModel>();
+    Product product = new Product();
+    private string searchString = null;
+    public bool ShowDetails { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListFarmhousesVM = await FarmhouseService.GetFarmhousesWithProductsAndButton();
+    }
+
+    void ShowFarmhouse(int id)
+    {
+        NavigationManager.NavigateTo($"farmhouse/{id}");
+    }
+
+    void ShowProducts(int id)
+    {
+        NavigationManager.NavigateTo($"productsFarmhouse/{id}");
+    }
+
+    private bool FilterFunc(FarmhouseViewModel farmhouse)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (farmhouse.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (farmhouse.Address.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (farmhouse.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if ($"{farmhouse.Phone} {farmhouse.Id}".Contains(searchString))
+            return true;
+        return false;
+    }
+
+    private void ShowBtnPress(int id)
+    {
+        FarmhouseViewModel tmpProduct = ListFarmhousesVM.First(f => f.Id == id);
+        tmpProduct.ShowDetails = !tmpProduct.ShowDetails;
+    }
+}

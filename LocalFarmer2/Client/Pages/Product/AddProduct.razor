@@ -1,0 +1,45 @@
+﻿@page "/addproduct"
+@inject IProductService ProductService
+@inject UtilsService UtilsService
+@inject NavigationManager NavigationManager
+@inject AlertService alertService
+
+<PageTitle>Add product</PageTitle>
+
+<EditForm Model="model" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <MudText Class="d-flex justify-center" Typo="Typo.h6">Add product</MudText>
+    <MudGrid>
+        <MudItem xs="12">
+            <MudCard>
+                <MudCardContent>
+                    <MudTextField Label="Name product"
+                                  @bind-Value="model.Name" Required For="@(() => model.Name)" />
+                    <MudTextField Label="Description"
+                                  @bind-Value="model.Description" Required For="@(() => model.Description)"/>
+                    <MudTextField Label="Count min"
+                                  @bind-Value="model.CountMinOne" Required For="@(() => model.CountMinOne)" />
+                    <MudTextField Label="Prize for one"
+                                  @bind-Value="model.PrizeOne" Required For="@(() => model.PrizeOne)" />
+                    <MudTextField Label="Count all"
+                                  @bind-Value="model.CountAll" Required For="@(() => model.CountAll)" />
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Add product</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</EditForm>
+
+@code {
+    ProductDto model = new ProductDto();
+    //TODO: Jeżeli nie wypełnione to cofnąć
+
+    private async void OnValidSubmit(EditContext context)
+    {
+        await ProductService.AddProduct(model, UtilsService.IdFarmhouseConst);
+        alertService.SetSuccessAlert($"Successfully add product {model.Name}");
+        NavigationManager.NavigateTo("/myproducts");
+    }
+}

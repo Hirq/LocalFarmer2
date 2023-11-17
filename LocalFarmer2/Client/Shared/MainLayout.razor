@@ -1,4 +1,4 @@
-﻿@inherits LayoutComponentBase
+﻿@* @inherits LayoutComponentBase
 
 <div class="page">
     <div class="sidebar">
@@ -16,3 +16,69 @@
         </article>
     </main>
 </div>
+ *@
+
+
+
+@inherits LayoutComponentBase
+@inject AlertService alertService
+@inject IJSRuntime JSRuntime
+@using Microsoft.JSInterop
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar>
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudSpacer />
+        <LoginDisplay></LoginDisplay>
+        <MudIconButton Icon="@Icons.Material.Outlined.Notifications" Color="Color.Inherit" />
+        <MudAvatar Color="Color.Secondary" Size="Size.Medium" Class="avatar">JK</MudAvatar>
+        <MudIconButton Icon="@Icons.Material.Outlined.MoreVert" Color="Color.Inherit" />
+    </MudAppBar>
+    <MudDrawer @bind-Open="@_drawerOpen">
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent>
+        @if (alertService.IsSuccessAlert)
+        {
+            <MudAlert Severity="Severity.Success" ContentAlignment="HorizontalAlignment.Center" Variant="Variant.Filled" ShowCloseIcon="true" CloseIconClicked="() => CloseAlertSuccess()">@alertService.Text </MudAlert>
+        }
+        @if (alertService.IsDeleteAlert)
+        {
+            <MudAlert Severity="Severity.Error" ContentAlignment="HorizontalAlignment.Center" Variant="Variant.Filled" ShowCloseIcon="true" CloseIconClicked="() => CloseAlertDelete()">@alertService.Text </MudAlert>
+        }
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    bool _drawerOpen = true;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    private void CloseAlertSuccess()
+    {
+        alertService.IsSuccessAlert = false;
+    }
+
+    private void CloseAlertDelete()
+    {
+        alertService.IsDeleteAlert = false;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (alertService.IsSuccessAlert || alertService.IsDeleteAlert)
+        {
+            alertService.IsSuccessAlert = false;
+            alertService.IsDeleteAlert = false;
+            await JSRuntime.InvokeVoidAsync("closeAlertAfterDelay");
+        }
+    }
+}
