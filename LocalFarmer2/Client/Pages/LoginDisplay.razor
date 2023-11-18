@@ -17,13 +17,10 @@
     
     protected async override Task OnInitializedAsync()
     {
-
         var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
         var user = authstate.User;
         var name = user.Identity.Name;
 
         UserModel = await AuthService.GetUser(name);
-        Console.WriteLine(UserModel.Name);
-        Console.WriteLine(UserModel.IdFarmhouse);
     }
 }
