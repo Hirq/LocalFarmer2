@@ -43,7 +43,7 @@ namespace LocalFarmer2.Client.Services
 
         public async Task<List<Farmhouse>> GetFarmhousesWithProducts()
         {
-            var result = await _http.GetFromJsonAsync<List<Farmhouse>>("https://localhost:7290/api/Farmhouse/ListFarmhousesWithProducts");
+            var result = await _http.GetFromJsonAsync<List<Farmhouse>>($"{UtilsService.ApiPath}/Farmhouse/ListFarmhousesWithProducts");
 
             if (result == null)
             {
@@ -57,7 +57,7 @@ namespace LocalFarmer2.Client.Services
 
         public async Task<List<FarmhouseViewModel>> GetFarmhousesWithProductsAndButton()
         {
-            var farmhouses = await _http.GetFromJsonAsync<List<Farmhouse>>("https://localhost:7290/api/Farmhouse/ListFarmhousesWithProducts");
+            var farmhouses = await _http.GetFromJsonAsync<List<Farmhouse>>($"{UtilsService.ApiPath}/Farmhouse/ListFarmhousesWithProducts");
 
             if (farmhouses == null)
             {

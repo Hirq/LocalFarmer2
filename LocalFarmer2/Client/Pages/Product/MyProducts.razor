@@ -1,6 +1,5 @@
 ﻿@page "/myproducts"
 @inject IProductService ProductService
-@inject UtilsService UtilsService
 @inject NavigationManager NavigationManager
 @inject HttpClient httpClient
 @inject AlertService alertService
@@ -34,12 +33,15 @@
     </PagerContent>
 </MudTable>
 
-@code {
+    @code {
     IEnumerable<Product> ListProducts = new List<Product>();
     int idFarmhouse;
+
+    int xxx = UtilsService.IdFarmhouseConst;
+
     protected override async Task OnInitializedAsync()
     {
-        idFarmhouse = UtilsService.IdFarmhouseConst;
+        idFarmhouse = xxx;
         ListProducts = await ProductService.GetProductsFarmhouse(idFarmhouse);
     }
 

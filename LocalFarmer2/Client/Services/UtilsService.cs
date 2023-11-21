@@ -1,7 +1,8 @@
 ﻿namespace LocalFarmer2.Client.Services
 {
-    public class UtilsService
+    public static class UtilsService
     {
-        public int IdFarmhouseConst { get; set; } = 1019;
+        public static int IdFarmhouseConst { get; set; } = 1019;
+        public static string ApiPath { get; set; } = "https://localhost:7239/api";
     }
 }

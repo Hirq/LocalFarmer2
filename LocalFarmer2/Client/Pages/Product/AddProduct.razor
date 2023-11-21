@@ -1,6 +1,5 @@
 ﻿@page "/addproduct"
 @inject IProductService ProductService
-@inject UtilsService UtilsService
 @inject NavigationManager NavigationManager
 @inject AlertService alertService
 
@@ -38,7 +37,7 @@
 
     private async void OnValidSubmit(EditContext context)
     {
-        await ProductService.AddProduct(model, UtilsService.IdFarmhouseConst);
+        // await ProductService.AddProduct(model, UtilsService.IdFarmhouseConst);
         alertService.SetSuccessAlert($"Successfully add product {model.Name}");
         NavigationManager.NavigateTo("/myproducts");
     }
