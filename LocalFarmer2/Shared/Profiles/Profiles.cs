@@ -3,7 +3,7 @@ using LocalFarmer2.Shared.DTOs;
 using LocalFarmer2.Shared.Models;
 using LocalFarmer2.Shared.ViewModels;
 
-namespace LocalFarmer2.Client.Profiles
+namespace LocalFarmer2.Shared.Profiles
 {
     public class Profiles : Profile
     {

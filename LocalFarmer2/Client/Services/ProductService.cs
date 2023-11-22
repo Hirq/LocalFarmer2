@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using LocalFarmer2.Shared.DTOs;
+﻿using LocalFarmer2.Shared.DTOs;
 using LocalFarmer2.Shared.Models;
 using System.Net.Http.Json;
 
@@ -22,7 +21,7 @@ namespace LocalFarmer2.Client.Services
 
         public async Task<List<Product>> GetProducts()
         {
-            var result = await _http.GetFromJsonAsync<List<Product>>("https://localhost:7290/api/Product/ListProducts");
+            var result = await _http.GetFromJsonAsync<List<Product>>("api/Product/ListProducts");
 
             if (result == null)
             {
@@ -34,8 +33,8 @@ namespace LocalFarmer2.Client.Services
 
         public async Task<List<Product>> GetProductsFarmhouse(int idFarmhouse)
         {
-            var result = await _http.GetFromJsonAsync<List<Product>>($"https://localhost:7290/api/Product/ListProductsFarmhouse/{idFarmhouse}");
-            
+            var result = await _http.GetFromJsonAsync<List<Product>>($"api/Product/ListProductsFarmhouse/{idFarmhouse}");
+
             if (result == null)
             {
                 throw new Exception("Not found products");
@@ -46,8 +45,8 @@ namespace LocalFarmer2.Client.Services
 
         public async Task<Product> GetProduct(int id)
         {
-            var result = await _http.GetFromJsonAsync<Product>($"https://localhost:7290/api/Product/Product/{id}");
-           
+            var result = await _http.GetFromJsonAsync<Product>($"api/Product/Product/{id}");
+
             if (result == null)
             {
                 throw new Exception("Not found products");
@@ -59,18 +58,18 @@ namespace LocalFarmer2.Client.Services
         public async Task AddProduct(ProductDto dto, int idFarmhouse)
         {
             Product product = _mapper.Map<Product>(dto);
-            await _http.PostAsJsonAsync($"https://localhost:7290/api/Product/AddProduct/{idFarmhouse}", product);
+            await _http.PostAsJsonAsync($"api/Product/AddProduct/{idFarmhouse}", product);
         }
 
         public async Task EditProduct(ProductDto dto, int idProduct)
         {
             Product product = _mapper.Map<Product>(dto);
-            await _http.PutAsJsonAsync($"https://localhost:7290/api/Product/EditProduct/{idProduct}", product);
+            await _http.PutAsJsonAsync($"api/Product/EditProduct/{idProduct}", product);
         }
 
         public async Task DeleteProduct(int idProduct)
         {
-            await _http.DeleteAsync($"https://localhost:7290/api/Product/DeleteProduct/{idProduct}");
+            await _http.DeleteAsync($"api/Product/DeleteProduct/{idProduct}");
         }
     }
 }

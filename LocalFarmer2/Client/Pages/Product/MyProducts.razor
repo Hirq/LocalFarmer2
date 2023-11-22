@@ -1,6 +1,7 @@
 ﻿@page "/myproducts"
 @inject IProductService ProductService
 @inject NavigationManager NavigationManager
+@inject UtilsService UtilsService
 @inject HttpClient httpClient
 @inject AlertService alertService
 
@@ -37,11 +38,9 @@
     IEnumerable<Product> ListProducts = new List<Product>();
     int idFarmhouse;
 
-    int xxx = UtilsService.IdFarmhouseConst;
-
     protected override async Task OnInitializedAsync()
     {
-        idFarmhouse = xxx;
+        idFarmhouse = UtilsService.IdFarmhouseConst;
         ListProducts = await ProductService.GetProductsFarmhouse(idFarmhouse);
     }
 
