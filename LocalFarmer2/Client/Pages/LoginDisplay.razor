@@ -3,24 +3,22 @@
 
 <AuthorizeView>
     <Authorized>
-        Hello, @context.User.Identity!.Name!  | @UserModel.IdFarmhouse
-        <a href="LogOut">Log out</a>
+        Hello, @context.User.Identity!.Name!  | @UserModel?.IdFarmhouse
     </Authorized>
-    <NotAuthorized>
-        <a href="Register">Register</a>
-        <a href="Login">Log in</a>
-    </NotAuthorized>
 </AuthorizeView>
 
 @code{
-    private UserDto UserModel = new UserDto();
-    
+    private UserDto? UserModel;
+
     protected async override Task OnInitializedAsync()
     {
         var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
         var user = authstate.User;
-        var name = user.Identity.Name;
-
-        UserModel = await AuthService.GetUser(name);
+        var name = user.Identity?.Name;
+        Console.WriteLine("name: " + name);
+        if (name != null || !string.IsNullOrEmpty(name))
+        {
+            UserModel = await AuthService.GetUser(name);
+        }
     }
 }

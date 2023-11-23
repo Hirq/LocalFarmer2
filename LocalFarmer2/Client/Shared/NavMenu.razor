@@ -50,7 +50,18 @@
     <MudNavLink Href="/products" Icon="@Icons.Material.Filled.ShoppingBasket" Match="NavLinkMatch.Prefix">Products</MudNavLink>
 </MudNavMenu>
 
-<MudNavMenu Style="margin-top: auto">
-    <MudNavLink Href="/register" Icon="@Icons.Material.Filled.CarRepair" Match="NavLinkMatch.Prefix" Class="">Register</MudNavLink>
-    <MudNavLink Href="/login" Icon="@Icons.Material.Filled.Male" Match="NavLinkMatch.Prefix">Login</MudNavLink>
-</MudNavMenu>
+<AuthorizeView>
+    <Authorized>
+        <MudNavMenu Style="margin-top: auto">
+            <MudNavLink Href="/LogOut" Icon="@Icons.Material.Filled.CarRepair" Match="NavLinkMatch.Prefix" Class="">Logout</MudNavLink>
+        </MudNavMenu>
+    </Authorized>
+    <NotAuthorized>
+        <MudNavMenu Style="margin-top: auto">
+            <MudNavLink Href="/register" Icon="@Icons.Material.Filled.CarRepair" Match="NavLinkMatch.Prefix" Class="">Register</MudNavLink>
+            <MudNavLink Href="/login" Icon="@Icons.Material.Filled.Male" Match="NavLinkMatch.Prefix">Login</MudNavLink>
+        </MudNavMenu>
+    </NotAuthorized>
+</AuthorizeView>
+
+
