@@ -1,0 +1,27 @@
+﻿@page "/account/logindisplay"
+@namespace LocalFarmer2.Client.Pages.Account
+@inject AuthenticationStateProvider GetAuthenticationStateAsync
+@inject IAccountService AccountService 
+@* @inject UserStateService UserStateService *@
+
+<AuthorizeView>
+    <Authorized>
+                   Hello, @context.User.Identity!.Name!  | @currentUser?.IdFarmhouse
+    </Authorized>
+</AuthorizeView>
+
+@code{
+    private UserDto? currentUser;
+    private bool isUserSignUp;
+
+    protected async override Task OnInitializedAsync()
+    {
+        // currentUser = UserStateService.CurrentUser;
+        isUserSignUp = await AccountService.IsUserSignUp();
+
+        if (isUserSignUp)
+        {
+            currentUser = await AccountService.GetCurrentUser();
+        }
+    }
+}

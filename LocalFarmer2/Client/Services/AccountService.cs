@@ -1,8 +1,11 @@
 ﻿using Blazored.LocalStorage;
 using LocalFarmer2.Client.Utilities;
 using LocalFarmer2.Shared.DTOs;
+using LocalFarmer2.Shared.Models;
 using LocalFarmer2.Shared.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
@@ -10,13 +13,13 @@ using System.Text.Json;
 
 namespace LocalFarmer2.Client.Services
 {
-    public class AuthService : IAuthService
+    public class AccountService : IAccountService
     {
         private readonly HttpClient _httpClient;
         private readonly AuthenticationStateProvider _authenticationStateProvider;
         private readonly ILocalStorageService _localStorageService;
 
-        public AuthService(ILocalStorageService localStorageService, AuthenticationStateProvider authenticationStateProvider, HttpClient httpClient)
+        public AccountService(ILocalStorageService localStorageService, AuthenticationStateProvider authenticationStateProvider, HttpClient httpClient)
         {
             _httpClient = httpClient;
             _authenticationStateProvider = authenticationStateProvider;
@@ -77,11 +80,21 @@ namespace LocalFarmer2.Client.Services
             _httpClient.DefaultRequestHeaders.Authorization = null;
         }
 
-        public async Task<UserDto> GetUser(string userName)
+        public async Task<UserDto> GetCurrentUser()
         {
-            var result = await _httpClient.GetFromJsonAsync<UserDto>($"api/Account/User/{userName}");
+            var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            var userDto = await _httpClient.GetFromJsonAsync<UserDto>($"api/Account/User/{user.Identity.Name}");
 
-            return result;
+            return userDto;
+        }
+
+        public async Task<bool> IsUserSignUp()
+        {
+            var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+
+            return user.Identity.IsAuthenticated;
         }
     }
 }

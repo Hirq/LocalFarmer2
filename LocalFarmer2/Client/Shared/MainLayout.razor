@@ -22,6 +22,8 @@
 
 @inherits LayoutComponentBase
 @inject AlertService alertService
+@inject UtilsService utilsService
+@inject IAccountService accontService
 @inject IJSRuntime JSRuntime
 @using Microsoft.JSInterop
 
@@ -55,7 +57,9 @@
 </MudLayout>
 
 @code {
+    [Inject] private UserStateService UserStateService { get; set; }
     bool _drawerOpen = true;
+    public UserDto? currentUser;
 
     void DrawerToggle()
     {
@@ -79,6 +83,15 @@
             alertService.IsSuccessAlert = false;
             alertService.IsDeleteAlert = false;
             await JSRuntime.InvokeVoidAsync("closeAlertAfterDelay");
+        }
+
+        if (await accontService.IsUserSignUp())
+        {
+            currentUser = await accontService.GetCurrentUser();
+            UserStateService.CurrentUser = currentUser;
+            Console.WriteLine(currentUser.IdFarmhouse);
+            Console.WriteLine(currentUser.Name);
+            Console.WriteLine(UserStateService.CurrentUser.IdFarmhouse);
         }
     }
 }
