@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using LocalFarmer2.Shared.Models;
+﻿using LocalFarmer2.Shared.Models;
 using LocalFarmer2.Shared.ViewModels;
 using System.Net.Http.Json;
 

@@ -1,28 +1,6 @@
-﻿@* @inherits LayoutComponentBase
-
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4">
-            <LoginDisplay></LoginDisplay>
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
- *@
-
-
-
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 @inject AlertService alertService
-@inject UtilsService utilsService
+@* @inject UtilsService utilsService *@
 @inject IAccountService accontService
 @inject IJSRuntime JSRuntime
 @using Microsoft.JSInterop
@@ -35,7 +13,6 @@
     <MudAppBar>
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         <MudSpacer />
-        <LoginDisplay></LoginDisplay>
         <MudIconButton Icon="@Icons.Material.Outlined.Notifications" Color="Color.Inherit" />
         <MudAvatar Color="Color.Secondary" Size="Size.Medium" Class="avatar">JK</MudAvatar>
         <MudIconButton Icon="@Icons.Material.Outlined.MoreVert" Color="Color.Inherit" />
@@ -85,13 +62,13 @@
             await JSRuntime.InvokeVoidAsync("closeAlertAfterDelay");
         }
 
-        if (await accontService.IsUserSignUp())
-        {
-            currentUser = await accontService.GetCurrentUser();
-            UserStateService.CurrentUser = currentUser;
-            Console.WriteLine(currentUser.IdFarmhouse);
-            Console.WriteLine(currentUser.Name);
-            Console.WriteLine(UserStateService.CurrentUser.IdFarmhouse);
-        }
+        // if (await accontService.IsUserSignUp())
+        // {
+        //     currentUser = await accontService.GetCurrentUser();
+        //     UserStateService.CurrentUser = currentUser;
+        //     Console.WriteLine(currentUser.IdFarmhouse);
+        //     Console.WriteLine(currentUser.Name);
+        //     Console.WriteLine(UserStateService.CurrentUser.IdFarmhouse);
+        // }
     }
 }

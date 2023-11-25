@@ -3,6 +3,7 @@
 @inject UtilsService UtilsService
 @inject NavigationManager NavigationManager
 @inject AlertService alertService
+@inject UserStateService UserStateService
 
 <PageTitle>Add product</PageTitle>
 
@@ -32,13 +33,13 @@
     </MudGrid>
 </EditForm>
 
-@code {
+ @code {
     ProductDto model = new ProductDto();
     //TODO: Jeżeli nie wypełnione to cofnąć
 
     private async void OnValidSubmit(EditContext context)
     {
-        await ProductService.AddProduct(model, UtilsService.IdFarmhouseConst);
+        await ProductService.AddProduct(model, (int)UserStateService.CurrentUser.IdFarmhouse);
         alertService.SetSuccessAlert($"Successfully add product {model.Name}");
         NavigationManager.NavigateTo("/myproducts");
     }

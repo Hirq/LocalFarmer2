@@ -17,6 +17,5 @@
             IsDeleteAlert = true;
             Text = text;
         }
-
     }
 }

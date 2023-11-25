@@ -4,6 +4,7 @@
 @inject UtilsService UtilsService
 @inject HttpClient httpClient
 @inject AlertService alertService
+@inject UserStateService UserStateService
 
 <PageTitle>My products</PageTitle>
 
@@ -40,7 +41,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        idFarmhouse = UtilsService.IdFarmhouseConst;
+        idFarmhouse = (int)UserStateService.CurrentUser?.IdFarmhouse;
         ListProducts = await ProductService.GetProductsFarmhouse(idFarmhouse);
     }
 
