@@ -15,7 +15,10 @@
         <MudSpacer />
         <MudIconButton Icon="@Icons.Material.Outlined.Notifications" Color="Color.Inherit" />
         <MudAvatar Color="Color.Secondary" Size="Size.Medium" Class="avatar">JK</MudAvatar>
-        <MudIconButton Icon="@Icons.Material.Outlined.MoreVert" Color="Color.Inherit" />
+        <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.MoreVert" TransformOrigin="Origin.TopRight" Color="Color.Inherit">
+            <MudMenuItem Href="/settings">Settings</MudMenuItem>
+        </MudMenu>
+
     </MudAppBar>
     <MudDrawer @bind-Open="@_drawerOpen">
         <NavMenu />
