@@ -1,7 +1,26 @@
 ﻿@page "/settings"
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
 
-<h3>Settings</h3>
+<MudGrid>
+    <MudItem xs="12">
+        <MudPaper Class="pa-4">
+            <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
+                <MudTextField T="string" Label="Farmhouse name" Required="true" RequiredError="Farmhouse name is required!"/>
+                <MudTextField T="string" Label="Description"/>
+                <MudTextField T="string" Label="Latitude" Required="true" RequiredError="Latitude is required!" />
+                <MudTextField T="string" Label="Longitude" Required="true" RequiredError="Longitude is required!" />
+            </MudForm>   
+        </MudPaper>
+        <MudPaper Class="pa-4 mt-4">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(()=>form.Validate())">Save</MudButton>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
 
 @code {
-
+    MudForm form;
+    bool success;
+    string[] errors = { };
+//TODO: Poprawić format dla latitide i longitude
 }
