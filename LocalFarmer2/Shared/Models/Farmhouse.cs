@@ -12,7 +12,6 @@ namespace LocalFarmer2.Shared.Models
         public string Description { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
-        public bool IsActive { get; set; }
 
         //Szerokość geograficzna
         public double Latitude { get; set; }
