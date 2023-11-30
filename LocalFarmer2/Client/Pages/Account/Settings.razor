@@ -1,6 +1,7 @@
 ﻿@page "/settings"
 @inject UserStateService UserStateService
 @inject IAccountService AccountService
+@inject IFarmhouseService FarmhouseService
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
 
@@ -11,10 +12,10 @@
         {
             <MudPaper Class="pa-4">
                 <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-                    <MudTextField T="string" Label="Farmhouse name" Required="true" RequiredError="Farmhouse name is required!" />
-                    <MudTextField T="string" Label="Description" />
-                    <MudTextField T="string" Label="Latitude" Required="true" RequiredError="Latitude is required!" />
-                    <MudTextField T="string" Label="Longitude" Required="true" RequiredError="Longitude is required!" />
+                    <MudTextField T="string" Label="Farmhouse name" @bind-Value="farmhouse.Name" Required="true" RequiredError="Farmhouse name is required!" />
+                    <MudTextField T="string" Label="Description" @bind-Value="farmhouse.Description" />
+                    <MudTextField Label="Latitude" @bind-Value="farmhouse.Latitude" Required="true" RequiredError="Latitude is required!" />
+                    <MudTextField Label="Longitude" @bind-Value="farmhouse.Longitude" Required="true" RequiredError="Longitude is required!" />
                 </MudForm>
             </MudPaper>
         }
@@ -30,6 +31,7 @@
     MudForm form;
     bool success;
     string[] errors = { };
+    private Farmhouse farmhouse;
     //TODO: Poprawić format dla latitide i longitude
 
     protected async override Task OnInitializedAsync()
@@ -40,6 +42,7 @@
         {
             currentUser = await AccountService.GetCurrentUser();
             UserStateService.CurrentUser = currentUser;
+            farmhouse = await FarmhouseService.GetFarmhouse((int)currentUser?.IdFarmhouse!);
         }
     }
 }
