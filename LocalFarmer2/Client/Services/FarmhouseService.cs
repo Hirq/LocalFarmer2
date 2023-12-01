@@ -1,4 +1,6 @@
-﻿using LocalFarmer2.Shared.Models;
+﻿using LocalFarmer2.Client.Pages.Product;
+using LocalFarmer2.Shared.DTOs;
+using LocalFarmer2.Shared.Models;
 using LocalFarmer2.Shared.ViewModels;
 using System.Net.Http.Json;
 
@@ -66,6 +68,12 @@ namespace LocalFarmer2.Client.Services
             var result = _mapper.Map<List<FarmhouseViewModel>>(farmhouses);
 
             return result;
+        }
+
+        public async Task EditFarmhouse(FarmhouseDto dto, int idFarmhouse)
+        {
+            Farmhouse farmhouse = _mapper.Map<Farmhouse>(dto);
+            await _http.PutAsJsonAsync($"api/Farmhouse/Farmhouse/{idFarmhouse}", farmhouse);
         }
     }
 }
