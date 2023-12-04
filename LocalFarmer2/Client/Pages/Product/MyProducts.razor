@@ -20,20 +20,20 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Id">@context.Id</MudTd>
-        <MudTd DataLabel="Name">@context.Name</MudTd>
-        <MudTd DataLabel="Description">@context.Description</MudTd>
-        <MudTd DataLabel="Count min one">@context.CountMinOne</MudTd>
-        <MudTd DataLabel="Prize one">@context.PrizeOne</MudTd>
-        <MudTd DataLabel="Count all">@context.CountAll</MudTd>
-        <MudTd DataLabel="Edit">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => EditProduct(context.Id)">Edit</MudButton>
-            <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Medium" OnClick="() => DeleteProduct(context.Id)" />
-        </MudTd>
-    </RowTemplate>
-    <PagerContent>
-        <MudTablePager PageSizeOptions="new int[]{50, 100}" />
-    </PagerContent>
-</MudTable>
+            <MudTd DataLabel="Name">@context.Name</MudTd>
+            <MudTd DataLabel="Description">@context.Description</MudTd>
+            <MudTd DataLabel="Count min one">@context.CountMinOne</MudTd>
+            <MudTd DataLabel="Prize one">@context.PrizeOne</MudTd>
+            <MudTd DataLabel="Count all">@context.CountAll</MudTd>
+            <MudTd DataLabel="Edit">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => EditProduct(context.Id)">Edit</MudButton>
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Medium" OnClick="() => DeleteProduct(context.Id)" />
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+        </PagerContent>
+    </MudTable>
 
     @code {
     IEnumerable<Product> ListProducts = new List<Product>();

@@ -1,19 +1,25 @@
 ﻿@page "/account/logindisplay"
 @namespace LocalFarmer2.Client.Pages.Account
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
-@inject IAccountService AccountService 
+@inject IAccountService AccountService
 @inject UserStateService UserStateService
 
 <AuthorizeView>
     <Authorized>
         @* @context.User.Identity!.Name! *@
-        @currentUser?.Name
-        <p>@currentUser?.IdFarmhouse</p>
+        <div>@currentUser?.Name</div>
+        <div>@currentUser?.IdFarmhouse</div>
+        <div>@currentUser?.FarmhouseName</div>
     </Authorized>
 </AuthorizeView>
 
-@code{
-    private UserDto? currentUser;
+@code {
+    private UserDto currentUser = new UserDto()
+        {
+            Name = "",
+            IdFarmhouse = 0,
+            FarmhouseName = ""
+        };
     private bool isUserSignUp;
 
     protected async override Task OnInitializedAsync()
