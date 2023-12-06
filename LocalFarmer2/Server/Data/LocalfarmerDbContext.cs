@@ -13,5 +13,6 @@ namespace LocalFarmer2.Server.Data
         public DbSet<Farmhouse> Farmhouses { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<FavoriteFarmhouse> FavoritesFarmhouses { get; set; }
     }
 }

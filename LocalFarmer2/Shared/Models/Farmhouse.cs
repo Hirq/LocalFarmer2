@@ -19,6 +19,9 @@ namespace LocalFarmer2.Shared.Models
         //Długość geograficzna
         public double Longitude { get; set; }
 
+        //TODO:
+        //Enum czym mozna płacić - gotówka/karta/Blik na telefon/Przelew
+
         public virtual IList<Product> Products { get; set; }
     }
 }
