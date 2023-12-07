@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LocalFarmer2.Server.Data.Migrations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LocalFarmer2.Server.Controllers
 {
@@ -39,6 +40,28 @@ namespace LocalFarmer2.Server.Controllers
             var favoritesFarmhouses = await _favoriteFarmhouseRepository.GetAllAsync(x => x.IdFarmhouse == idFarmhouse);
 
             return Ok(favoritesFarmhouses);
+        }
+
+        [HttpPost, Route("FavoriteFarmhouse")]
+        public async Task<IActionResult> AddFavorite(FavoriteFarmhouseDto dto)
+        {
+            FavoriteFarmhouse favoriteFarmhouse = _mapper.Map<FavoriteFarmhouse>(dto);
+
+            _favoriteFarmhouseRepository.Add(favoriteFarmhouse);
+            await _favoriteFarmhouseRepository.SaveChangesAsync();
+
+            return Ok(favoriteFarmhouse);
+        }
+
+        [HttpDelete, Route("FavoriteFarmhouse/{id}")]
+        public async Task<IActionResult> DeleteFavorite(int id)
+        {
+            FavoriteFarmhouse favoriteFarmhouse = await _favoriteFarmhouseRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+
+            await _favoriteFarmhouseRepository.DeleteAsync(favoriteFarmhouse);
+            await _favoriteFarmhouseRepository.SaveChangesAsync();
+
+            return Content($"Delete object favorite {id} where IdFarmhouse is {favoriteFarmhouse.IdFarmhouse}");
         }
     }
 }
