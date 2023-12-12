@@ -7,7 +7,7 @@
 <AuthorizeView>
     <Authorized>
         @* @context.User.Identity!.Name! *@
-        <div>@currentUser?.Name</div>
+        <div>@currentUser?.UserName</div>
         <div>@currentUser?.IdFarmhouse</div>
         <div>@currentUser?.FarmhouseName</div>
     </Authorized>
@@ -16,7 +16,7 @@
 @code {
     private UserDto currentUser = new UserDto()
         {
-            Name = "",
+            UserName = "",
             IdFarmhouse = 0,
             FarmhouseName = ""
         };

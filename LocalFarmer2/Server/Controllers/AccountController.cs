@@ -110,7 +110,8 @@ namespace LocalFarmer2.Server.Controllers
             var user = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.UserName == userName, x => x.Farmhouse);
             var userDto = new UserDto()
             {
-                Name = user.UserName,
+                UserName = user.UserName,
+                IdUser = user.Id,
                 IdFarmhouse = user.IdFarmhouse,
                 FarmhouseName = user.Farmhouse?.Name
             };

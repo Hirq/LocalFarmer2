@@ -1,9 +1,10 @@
 global using AutoMapper;
+global using System.Net.Http.Json;
+global using LocalFarmer2.Shared.Models;
 using Blazored.LocalStorage;
 using LocalFarmer2.Client;
 using LocalFarmer2.Client.Services;
 using LocalFarmer2.Client.Utilities;
-using LocalFarmer2.Shared.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -20,6 +21,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IFarmhouseService, FarmhouseService>();
+builder.Services.AddScoped<IFavoriteFarmhouseService, FavoriteFarmhouseService>();
 builder.Services.AddScoped<UserStateService>();
 builder.Services.AddSingleton<AlertService>();
 builder.Services.AddSingleton<UtilsService>();

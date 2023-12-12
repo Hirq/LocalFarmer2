@@ -1,6 +1,21 @@
 ﻿@page "/favoritefarmhouses"
+@inject UserStateService UserStateService
+@inject IFavoriteFarmhouseService FavoriteFarmhouseService
+
 <h3>ListFavorites</h3>
+@foreach(var favorite in ListFavoritesFarmhouse)
+{
+    <span> @favorite.IdFarmhouse </span>
+}
 
 @code {
+    IEnumerable<FavoriteFarmhouse> ListFavoritesFarmhouse = new List<FavoriteFarmhouse>();
 
+    protected override async Task OnInitializedAsync()
+    {
+        var userId = UserStateService.CurrentUser.IdUser;
+        Console.WriteLine(userId);
+        ListFavoritesFarmhouse = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUser(userId);
+        Console.WriteLine(ListFavoritesFarmhouse.Count());
+    }
 }

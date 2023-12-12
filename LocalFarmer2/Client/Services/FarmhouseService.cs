@@ -51,7 +51,7 @@ namespace LocalFarmer2.Client.Services
                 throw new Exception();
             }
 
-            result = new List<Farmhouse>();
+            //result = new List<Farmhouse>();
 
             return result;
         }
