@@ -29,7 +29,7 @@ namespace LocalFarmer2.Server.Controllers
         [HttpGet, Route("FavortieFarmhouseForUser")]
         public async Task<IActionResult> GetFavoritesFarmhousesForUser(string idUser)
         {
-            var favoritesFarmhouses = await _favoriteFarmhouseRepository.GetAllAsync(x => x.IdUser == idUser);
+            var favoritesFarmhouses = await _favoriteFarmhouseRepository.GetAllAsync(x => x.IdUser == idUser, x => x.Farmhouse);
 
             return Ok(favoritesFarmhouses);
         }
