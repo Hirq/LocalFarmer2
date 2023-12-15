@@ -1,14 +1,18 @@
-﻿namespace LocalFarmer2.Client.Services
+﻿using LocalFarmer2.Shared.DTOs;
+
+namespace LocalFarmer2.Client.Services
 {
     public class FavoriteFarmhouseService : IFavoriteFarmhouseService
     {
         private readonly HttpClient _http;
         private readonly IMapper _mapper;
+        private readonly IAccountService _accountService;
 
-        public FavoriteFarmhouseService(HttpClient http, IMapper mapper)
+        public FavoriteFarmhouseService(HttpClient http, IMapper mapper, IAccountService accountService)
         {
             _http = http;
             _mapper = mapper;
+            _accountService = accountService;
         }
 
         public async Task<List<FavoriteFarmhouse>> GetFavoriteFarmhousesForUser(string userName)
@@ -21,6 +25,23 @@
             }
 
             return listFavoriteFarmhouses;
+        }
+
+        public async Task AddFavorite(int idFarmhouse)
+        {
+            var idUser = (await _accountService.GetCurrentUser()).IdUser;
+            var dto = new FavoriteFarmhouseDto()
+            {
+                IdFarmhouse = idFarmhouse,
+                IdUser = idUser
+            };
+
+            var favoriteFarmhouse = await _http.PostAsJsonAsync($"api/FavoriteFarmhouse/FavortieFarmhouse", dto);
+        }
+
+        public async Task DeleteFavorite(int idFarmhouse)
+        {
+            await _http.DeleteAsync($"api/FavoriteFarmhouse/FavoriteFarmhouse/{idFarmhouse}");
         }
     }
 }
