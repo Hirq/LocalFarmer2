@@ -15,16 +15,18 @@
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FavoriteFarmhouse, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FavoriteFarmhouse, object>(x=>x.IdFarmhouse)">Id Farmhouse</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FavoriteFarmhouse, object>(x=>x.Farmhouse.Name)">Name Farmhouse</MudTableSortLabel></MudTh>
-
-@*         <MudTh>Detail</MudTh>
-        <MudTh>Products</MudTh> *@
+        <MudTh>Action</MudTh>
+        @*        <MudTh>Products</MudTh> *@
     </HeaderContent>
     <RowTemplate>
         @* <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.Id))">@((context.ShowDetails == true) ? "Hide" : "Show") Products</MudButton></MudTd> *@
         <MudTd DataLabel="Nr">@context.Id</MudTd>
         <MudTd DataLabel="Nr">@context.IdFarmhouse</MudTd>
         <MudTd DataLabel="Nr">@context.Farmhouse.Name</MudTd>
-
+        <MudTd DataLabel="Edit">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => DeleteFavorite(context.Id)">Delete</MudButton>
+            @* <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Medium" OnClick="() => DeleteProduct(context.Id)" /> *@
+        </MudTd>
 @*             <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.Id)">Go to detail</MudButton></MudTd>
             <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProducts(context.Id)">Show products</MudButton></MudTd> *@
         </RowTemplate>
@@ -81,6 +83,11 @@
         var userId = UserStateService.CurrentUser.IdUser;
         Console.WriteLine(userId);
         ListFavoritesFarmhouse = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUser(userId);
+    }
+
+    private async void DeleteFavorite(int idFarmhouse)
+    {
+        await FavoriteFarmhouseService.DeleteFavorite(idFarmhouse);
     }
 
     private bool FilterFunc(FavoriteFarmhouse farmhouse)

@@ -1,6 +1,7 @@
 ﻿@page "/farmhouses"
 @inject IFarmhouseService FarmhouseService
 @inject IProductService ProductService
+@inject IFavoriteFarmhouseService FavoriteFarmhouseService
 @inject NavigationManager NavigationManager
 @inject HttpClient httpClient
 
@@ -32,6 +33,7 @@
         <MudTd DataLabel="Molar mass">@context.Phone</MudTd>
         <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.Id)">Go to detail</MudButton></MudTd>
         <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProducts(context.Id)">Show products</MudButton></MudTd>
+        <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddFavorite(context.Id)">Add favorite</MudButton></MudTd>
     </RowTemplate>
 
     <ChildRowContent>
@@ -94,6 +96,11 @@
     void ShowProducts(int id)
     {
         NavigationManager.NavigateTo($"productsFarmhouse/{id}");
+    }
+
+    private async void AddFavorite(int idFarmhouse)
+    {
+        await FavoriteFarmhouseService.AddFavorite(idFarmhouse);
     }
 
     private bool FilterFunc(FarmhouseViewModel farmhouse)

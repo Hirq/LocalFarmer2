@@ -36,12 +36,12 @@ namespace LocalFarmer2.Client.Services
                 IdUser = idUser
             };
 
-            var favoriteFarmhouse = await _http.PostAsJsonAsync($"api/FavoriteFarmhouse/FavortieFarmhouse", dto);
+            var favoriteFarmhouse = await _http.PostAsJsonAsync($"api/FavoriteFarmhouse/AddFavoriteFarmhouse", dto);
         }
 
         public async Task DeleteFavorite(int idFarmhouse)
         {
-            await _http.DeleteAsync($"api/FavoriteFarmhouse/FavoriteFarmhouse/{idFarmhouse}");
+            await _http.DeleteAsync($"api/FavoriteFarmhouse/DeleteFavoriteFarmhouse/{idFarmhouse}");
         }
     }
 }

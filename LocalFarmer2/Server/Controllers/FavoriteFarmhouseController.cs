@@ -42,7 +42,7 @@ namespace LocalFarmer2.Server.Controllers
             return Ok(favoritesFarmhouses);
         }
 
-        [HttpPost, Route("FavoriteFarmhouse")]
+        [HttpPost, Route("AddFavoriteFarmhouse")]
         public async Task<IActionResult> AddFavorite(FavoriteFarmhouseDto dto)
         {
             FavoriteFarmhouse favoriteFarmhouse = _mapper.Map<FavoriteFarmhouse>(dto);
@@ -53,7 +53,7 @@ namespace LocalFarmer2.Server.Controllers
             return Ok(favoriteFarmhouse);
         }
 
-        [HttpDelete, Route("FavoriteFarmhouse/{id}")]
+        [HttpDelete, Route("DeleteFavoriteFarmhouse/{id}")]
         public async Task<IActionResult> DeleteFavorite(int id)
         {
             FavoriteFarmhouse favoriteFarmhouse = await _favoriteFarmhouseRepository.GetFirstOrDefaultAsync(x => x.Id == id);
