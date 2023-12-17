@@ -4,6 +4,7 @@
 @inject IFavoriteFarmhouseService FavoriteFarmhouseService
 @inject NavigationManager NavigationManager
 @inject HttpClient httpClient
+@inject AlertService alertService
 
 <PageTitle>Farmhouses</PageTitle>
 
@@ -101,6 +102,7 @@
     private async void AddFavorite(int idFarmhouse)
     {
         await FavoriteFarmhouseService.AddFavorite(idFarmhouse);
+        alertService.SetSuccessAlert($"Successfully added subscribe {idFarmhouse}");
     }
 
     private bool FilterFunc(FarmhouseViewModel farmhouse)

@@ -2,7 +2,7 @@
 @inject IProductService ProductService
 @inject UtilsService UtilsService
 @inject NavigationManager NavigationManager
-@inject AlertService alertService
+@inject AlertService AlertService
 @inject UserStateService UserStateService
 
 <PageTitle>Add product</PageTitle>
@@ -40,7 +40,7 @@
     private async void OnValidSubmit(EditContext context)
     {
         await ProductService.AddProduct(model, (int)UserStateService.CurrentUser.IdFarmhouse);
-        alertService.SetSuccessAlert($"Successfully add product {model.Name}");
+        AlertService.SetSuccessAlert($"Successfully add product {model.Name}");
         NavigationManager.NavigateTo("/myproducts");
     }
 }

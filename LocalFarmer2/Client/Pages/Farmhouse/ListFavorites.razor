@@ -1,6 +1,7 @@
 ﻿@page "/favoritefarmhouses"
-@inject UserStateService UserStateService
 @inject IFavoriteFarmhouseService FavoriteFarmhouseService
+@inject UserStateService UserStateService
+@inject AlertService alertService
 
 <PageTitle>Farmhouses</PageTitle>
 
@@ -88,6 +89,7 @@
     private async void DeleteFavorite(int idFarmhouse)
     {
         await FavoriteFarmhouseService.DeleteFavorite(idFarmhouse);
+        alertService.SetDeleteAlert($"Deleted subscribe farmhouse {idFarmhouse}");
     }
 
     private bool FilterFunc(FavoriteFarmhouse farmhouse)
