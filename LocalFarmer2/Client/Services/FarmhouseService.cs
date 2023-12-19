@@ -1,4 +1,5 @@
-﻿using LocalFarmer2.Client.Pages.Product;
+﻿using LocalFarmer2.Client.Pages.Farmhouse;
+using LocalFarmer2.Client.Pages.Product;
 using LocalFarmer2.Shared.DTOs;
 using LocalFarmer2.Shared.Models;
 using LocalFarmer2.Shared.ViewModels;
@@ -56,9 +57,17 @@ namespace LocalFarmer2.Client.Services
             return result;
         }
 
-        public async Task<List<FarmhouseViewModel>> GetFarmhousesWithProductsAndButton()
+        public async Task<List<FarmhouseViewModel>> GetFarmhousesWithProductsAndButton(int? idFarmhouse)
         {
-            var farmhouses = await _http.GetFromJsonAsync<List<Farmhouse>>($"api/Farmhouse/ListFarmhousesWithProducts");
+            List<Farmhouse> farmhouses;
+            if (idFarmhouse == null)
+            {
+                farmhouses = await _http.GetFromJsonAsync<List<Farmhouse>>($"api/Farmhouse/ListFarmhousesWithProducts");
+            }
+            else
+            {
+                farmhouses = await _http.GetFromJsonAsync<List<Farmhouse>>($"api/Farmhouse/ListFarmhousesWithProducts?idFarmhouse={idFarmhouse}");
+            }
 
             if (farmhouses == null)
             {

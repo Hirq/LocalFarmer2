@@ -34,9 +34,17 @@ namespace LocalFarmer2.Server.Controllers
         }
 
         [HttpGet, Route("ListFarmhousesWithProducts")]
-        public async Task<IActionResult> GetFarmhousesWithProducts()
+        public async Task<IActionResult> GetFarmhousesWithProducts(int? idFarmhouse)
         {
-            var farmhouses = await _farmhouseRepository.GetAllAsync(x => true, x => x.Products);
+            IEnumerable<Farmhouse> farmhouses;
+            if (idFarmhouse == null)
+            {
+                farmhouses = await _farmhouseRepository.GetAllAsync(x => true, x => x.Products);
+            }
+            else
+            {
+                farmhouses = await _farmhouseRepository.GetAllAsync(x => x.Id != idFarmhouse, x => x.Products);
+            }
 
             return Ok(farmhouses);
         }

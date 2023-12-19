@@ -32,6 +32,14 @@ namespace LocalFarmer2.Server.Controllers
             var favoritesFarmhouses = await _favoriteFarmhouseRepository.GetAllAsync(x => x.IdUser == idUser, x => x.Farmhouse);
 
             return Ok(favoritesFarmhouses);
+        }   
+        
+        [HttpGet, Route("FavortieFarmhouseForUserOnlyIds")]
+        public async Task<IActionResult> GetFavoritesFarmhousesForUserOnlyIds(string idUser)
+        {
+            var favoritesFarmhouses = (await _favoriteFarmhouseRepository.GetAllAsync(x => x.IdUser == idUser)).Select(x => x.IdFarmhouse);
+
+            return Ok(favoritesFarmhouses);
         }
 
         [HttpGet, Route("FavortieFarmhouseForFarmhouse")]

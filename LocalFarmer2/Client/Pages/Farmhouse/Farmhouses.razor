@@ -5,6 +5,7 @@
 @inject NavigationManager NavigationManager
 @inject HttpClient httpClient
 @inject AlertService alertService
+@inject UserStateService UserStateService
 
 <PageTitle>Farmhouses</PageTitle>
 
@@ -80,13 +81,18 @@
 
 @code {
     IEnumerable<FarmhouseViewModel> ListFarmhousesVM = new List<FarmhouseViewModel>();
+    List<int> CurrentListFavorite = new List<int>();
     Product product = new Product();
     private string searchString = null;
     public bool ShowDetails { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        ListFarmhousesVM = await FarmhouseService.GetFarmhousesWithProductsAndButton();
+        int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
+        var idUser = UserStateService.CurrentUser?.IdUser;
+        ListFarmhousesVM = await FarmhouseService.GetFarmhousesWithProductsAndButton(idFarmhouse);
+        CurrentListFavorite = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUserOnlyIds(idUser);
+        CurrentListFavorite.ForEach(x => Console.WriteLine(x));
     }
 
     void ShowFarmhouse(int id)
