@@ -57,7 +57,7 @@ namespace LocalFarmer2.Client.Services
             return result;
         }
 
-        public async Task<List<FarmhouseViewModel>> GetFarmhousesWithProductsAndButton(int? idFarmhouse)
+        public async Task<List<FarmhouseViewModel>> GetFarmhousesWithProductsAndButton(int[] idsFavorites, int? idFarmhouse)
         {
             List<Farmhouse> farmhouses;
             if (idFarmhouse == null)
@@ -75,6 +75,14 @@ namespace LocalFarmer2.Client.Services
             }
 
             var result = _mapper.Map<List<FarmhouseViewModel>>(farmhouses);
+
+            //TODO: Do sprawdzenia
+
+            foreach (var vm in result.Where(x => idsFavorites.Contains(x.Id)))
+            {
+                vm.IsFavorite = true;
+            };
+            
 
             return result;
         }
