@@ -44,7 +44,7 @@ namespace LocalFarmer2.Client.Services
             await _http.DeleteAsync($"api/FavoriteFarmhouse/DeleteFavoriteFarmhouse/{idFarmhouse}");
         }
 
-        public async Task<List<int>> GetFavoriteFarmhousesForUserOnlyIds(string userName)
+        public async Task<int[]> GetFavoriteFarmhousesForUserOnlyIds(string userName)
         {
             var listFavoriteFarmhouses = await _http.GetFromJsonAsync<List<int>>($"api/FavoriteFarmhouse/FavortieFarmhouseForUserOnlyIds?idUser={userName}");
 
@@ -53,7 +53,7 @@ namespace LocalFarmer2.Client.Services
                 throw new Exception();
             }
 
-            return listFavoriteFarmhouses;
+            return listFavoriteFarmhouses.ToArray();
         }
     }
 }

@@ -25,21 +25,25 @@
         <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Phone)">Phone</MudTableSortLabel></MudTh>
         <MudTh>Detail</MudTh>
         <MudTh>Products</MudTh>
+        <MudTh>Subscribe</MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.Id))">@((context.ShowDetails == true) ? "Hide" : "Show") Products</MudButton></MudTd>
         <MudTd DataLabel="Nr">@context.Id</MudTd>
-        <MudTd DataLabel="Sign">@context.Name</MudTd>
-        <MudTd DataLabel="Name">@context.Description</MudTd>
-        <MudTd DataLabel="Position">@context.Address</MudTd>
-        <MudTd DataLabel="Molar mass">@context.Phone</MudTd>
-        <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.Id)">Go to detail</MudButton></MudTd>
-        <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProducts(context.Id)">Show products</MudButton></MudTd>
-        <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddFavorite(context.Id)">Add favorite</MudButton></MudTd>
-    </RowTemplate>
+            <MudTd DataLabel="Sign">@context.Name</MudTd>
+            <MudTd DataLabel="Name">@context.Description</MudTd>
+            <MudTd DataLabel="Position">@context.Address</MudTd>
+            <MudTd DataLabel="Molar mass">@context.Phone</MudTd>
+            <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.Id)">Go to detail</MudButton></MudTd>
+            <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProducts(context.Id)">Show products</MudButton></MudTd>
+            @if(context.IsFavorite == false)
+            {
+                <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddFavorite(context.Id)">Add favorite</MudButton></MudTd>
+            }
+        </RowTemplate>
 
-    <ChildRowContent>
-        @if (context.ShowDetails)
+        <ChildRowContent>
+            @if (context.ShowDetails)
         {
             <MudTr>
                 <td colspan="4">
@@ -63,14 +67,14 @@
                                 </HeaderContent>
                                 <RowTemplate>
                                     <MudTd DataLabel="Address Line 1">@ProductContext.Name</MudTd>
-                                    <MudTd DataLabel="Address Line 2">@ProductContext.PrizeOne</MudTd>
-                                    <MudTd DataLabel="Postal Code">@ProductContext.Description</MudTd>
-                                </RowTemplate>
-                            </MudTable>
-                        </MudCardContent>
-                    </MudCard>
-                </td>
-            </MudTr>
+                                        <MudTd DataLabel="Address Line 2">@ProductContext.PrizeOne</MudTd>
+                                        <MudTd DataLabel="Postal Code">@ProductContext.Description</MudTd>
+                                    </RowTemplate>
+                                </MudTable>
+                            </MudCardContent>
+                        </MudCard>
+                    </td>
+                </MudTr>
         }
     </ChildRowContent>
 
@@ -78,11 +82,11 @@
         <MudTablePager PageSizeOptions="new int[]{50, 100}" />
     </PagerContent>
 </MudTable>
-
+https://localhost:7239/farmhouses
 @code {
     IEnumerable<FarmhouseViewModel> ListFarmhousesVM = new List<FarmhouseViewModel>();
-    List<int> CurrentListFavorite = new List<int>();
-    Product product = new Product();
+    private int[] CurrentListFavorite;
+    private Product product = new Product();
     private string searchString = null;
     public bool ShowDetails { get; set; }
 
@@ -90,9 +94,20 @@
     {
         int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
         var idUser = UserStateService.CurrentUser?.IdUser;
-        ListFarmhousesVM = await FarmhouseService.GetFarmhousesWithProductsAndButton(idFarmhouse);
         CurrentListFavorite = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUserOnlyIds(idUser);
-        CurrentListFavorite.ForEach(x => Console.WriteLine(x));
+        ListFarmhousesVM = await FarmhouseService.GetFarmhousesWithProductsAndButton(CurrentListFavorite, idFarmhouse);
+
+        AddComment();
+    }
+
+    void AddComment()
+    {
+        ListFarmhousesVM.ToList().ForEach(x => Console.WriteLine(x.Name + " | " + x.IsFavorite));
+
+        foreach (var n in CurrentListFavorite)
+        {
+            Console.WriteLine("Id: "+n);
+        }
     }
 
     void ShowFarmhouse(int id)

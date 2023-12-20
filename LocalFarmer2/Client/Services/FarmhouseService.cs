@@ -1,9 +1,5 @@
-﻿using LocalFarmer2.Client.Pages.Farmhouse;
-using LocalFarmer2.Client.Pages.Product;
-using LocalFarmer2.Shared.DTOs;
-using LocalFarmer2.Shared.Models;
+﻿using LocalFarmer2.Shared.DTOs;
 using LocalFarmer2.Shared.ViewModels;
-using System.Net.Http.Json;
 
 namespace LocalFarmer2.Client.Services
 {
@@ -82,7 +78,6 @@ namespace LocalFarmer2.Client.Services
             {
                 vm.IsFavorite = true;
             };
-            
 
             return result;
         }
