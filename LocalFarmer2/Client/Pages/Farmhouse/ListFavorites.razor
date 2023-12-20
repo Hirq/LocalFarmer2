@@ -76,20 +76,27 @@
 
 
     @code {
-    IEnumerable<FavoriteFarmhouse> ListFavoritesFarmhouse = new List<FavoriteFarmhouse>();
+    List <FavoriteFarmhouse> ListFavoritesFarmhouse = new List<FavoriteFarmhouse>();
     private string searchString = null;
+    private string userId = null;
 
     protected override async Task OnInitializedAsync()
     {
-        var userId = UserStateService.CurrentUser.IdUser;
+        userId = UserStateService.CurrentUser.IdUser;
         Console.WriteLine(userId);
         ListFavoritesFarmhouse = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUser(userId);
     }
 
     private async void DeleteFavorite(int idFarmhouse)
     {
-        await FavoriteFarmhouseService.DeleteFavorite(idFarmhouse);
-        alertService.SetDeleteAlert($"Deleted subscribe farmhouse {idFarmhouse}");
+        var deletedFarmhouse = ListFavoritesFarmhouse.FirstOrDefault(x => x.Id == idFarmhouse);
+        if (deletedFarmhouse != null)
+        {
+            await FavoriteFarmhouseService.DeleteFavorite(idFarmhouse);
+            ListFavoritesFarmhouse.Remove(deletedFarmhouse);
+            StateHasChanged();
+            alertService.SetDeleteAlert($"Deleted subscribe farmhouse {idFarmhouse}");
+        }
     }
 
     private bool FilterFunc(FavoriteFarmhouse farmhouse)
