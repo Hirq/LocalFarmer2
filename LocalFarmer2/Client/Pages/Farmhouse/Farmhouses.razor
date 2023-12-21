@@ -82,9 +82,9 @@
         <MudTablePager PageSizeOptions="new int[]{50, 100}" />
     </PagerContent>
 </MudTable>
-https://localhost:7239/farmhouses
+
 @code {
-    IEnumerable<FarmhouseViewModel> ListFarmhousesVM = new List<FarmhouseViewModel>();
+    List<FarmhouseViewModel> ListFarmhousesVM = new List<FarmhouseViewModel>();
     private int[] CurrentListFavorite;
     private Product product = new Product();
     private string searchString = null;
@@ -123,7 +123,13 @@ https://localhost:7239/farmhouses
     private async void AddFavorite(int idFarmhouse)
     {
         await FavoriteFarmhouseService.AddFavorite(idFarmhouse);
-        alertService.SetSuccessAlert($"Successfully added subscribe {idFarmhouse}");
+        var addedFarmhouse = ListFarmhousesVM.FirstOrDefault(x => x.Id == idFarmhouse);
+        if (addedFarmhouse != null)
+        {
+            addedFarmhouse.IsFavorite = true;
+            StateHasChanged();
+            alertService.SetSuccessAlert($"Successfully added subscribe {idFarmhouse}");
+        }
     }
 
     private bool FilterFunc(FarmhouseViewModel farmhouse)
