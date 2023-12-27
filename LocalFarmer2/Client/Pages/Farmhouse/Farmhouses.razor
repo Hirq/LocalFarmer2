@@ -94,7 +94,18 @@
     {
         int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
         var idUser = UserStateService.CurrentUser?.IdUser;
-        CurrentListFavorite = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUserOnlyIds(idUser);
+        Console.WriteLine("idFarmhouse: " + idFarmhouse);
+
+        if (!string.IsNullOrEmpty(idUser))
+        {
+            Console.WriteLine("W");
+            CurrentListFavorite = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUserOnlyIds(idUser);
+        }
+        //3 akcje - 
+        // 1. niezalogowany - bez iduser bez idFarmhouse
+        // 2. zalogowany - Z idUser bez idfarmhouse
+        // 3. zalogowany z farma - Z idUser z idfarmhouse
+        Console.WriteLine("ZA");
         ListFarmhousesVM = await FarmhouseService.GetFarmhousesWithProductsAndButton(CurrentListFavorite, idFarmhouse);
 
         AddComment();
@@ -104,9 +115,12 @@
     {
         ListFarmhousesVM.ToList().ForEach(x => Console.WriteLine(x.Name + " | " + x.IsFavorite));
 
-        foreach (var n in CurrentListFavorite)
+        if (CurrentListFavorite?.Length > 0)
         {
-            Console.WriteLine("Id: "+n);
+            foreach (var n in CurrentListFavorite)
+            {
+                Console.WriteLine("Id: "+n);
+            }
         }
     }
 

@@ -73,11 +73,13 @@ namespace LocalFarmer2.Client.Services
             var result = _mapper.Map<List<FarmhouseViewModel>>(farmhouses);
 
             //TODO: Do sprawdzenia
-
-            foreach (var vm in result.Where(x => idsFavorites.Contains(x.Id)))
+            if (idFarmhouse != null)
             {
-                vm.IsFavorite = true;
-            };
+                foreach (var vm in result.Where(x => idsFavorites.Contains(x.Id)))
+                {
+                    vm.IsFavorite = true;
+                };
+            }
 
             return result;
         }
