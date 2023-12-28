@@ -56,24 +56,22 @@ namespace LocalFarmer2.Client.Services
         public async Task<List<FarmhouseViewModel>> GetFarmhousesWithProductsAndButton(int[] idsFavorites, int? idFarmhouse)
         {
             List<Farmhouse> farmhouses;
-            if (idFarmhouse == null)
-            {
-                farmhouses = await _http.GetFromJsonAsync<List<Farmhouse>>($"api/Farmhouse/ListFarmhousesWithProducts");
-            }
-            else
-            {
-                farmhouses = await _http.GetFromJsonAsync<List<Farmhouse>>($"api/Farmhouse/ListFarmhousesWithProducts?idFarmhouse={idFarmhouse}");
-            }
+
+            farmhouses = await _http.GetFromJsonAsync<List<Farmhouse>>($"api/Farmhouse/ListFarmhousesWithProducts");
 
             if (farmhouses == null)
             {
                 throw new Exception();
             }
 
+            if (idFarmhouse != null)
+            {
+                farmhouses = farmhouses.Where(x => x.Id != idFarmhouse).ToList();
+            }
+
             var result = _mapper.Map<List<FarmhouseViewModel>>(farmhouses);
 
-            //TODO: Do sprawdzenia
-            if (idFarmhouse != null)
+            if (idsFavorites != null)
             {
                 foreach (var vm in result.Where(x => idsFavorites.Contains(x.Id)))
                 {

@@ -10,6 +10,7 @@ namespace LocalFarmer2.Shared.Profiles
         public Profiles()
         {
             CreateMap<FarmhouseDto, Farmhouse>();
+            CreateMap<AddFarmhouseDto, Farmhouse>();
             CreateMap<Farmhouse, FarmhouseDto>();
             CreateMap<Farmhouse, FarmhouseViewModel>();
             CreateMap<ProductDto, Product>();

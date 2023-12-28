@@ -16,13 +16,16 @@ namespace LocalFarmer2.Server.Controllers
     public class FarmhouseController : ControllerBase
     {
         private readonly IFarmhouseRepository _farmhouseRepository;
+        private readonly IApplicationUserRepository _applicationUserRepository;
         private readonly IMapper _mapper;
 
         public FarmhouseController(IFarmhouseRepository farmhouseRepository,
-            IMapper mapper)
+            IMapper mapper,
+            IApplicationUserRepository applicationUserRepository)
         {
             _farmhouseRepository = farmhouseRepository;
             _mapper = mapper;
+            _applicationUserRepository = applicationUserRepository;
         }
 
         [HttpGet, Route("ListFarmhouses")]
@@ -34,17 +37,9 @@ namespace LocalFarmer2.Server.Controllers
         }
 
         [HttpGet, Route("ListFarmhousesWithProducts")]
-        public async Task<IActionResult> GetFarmhousesWithProducts(int? idFarmhouse)
+        public async Task<IActionResult> GetFarmhousesWithProducts()
         {
-            IEnumerable<Farmhouse> farmhouses;
-            if (idFarmhouse == null)
-            {
-                farmhouses = await _farmhouseRepository.GetAllAsync(x => true, x => x.Products);
-            }
-            else
-            {
-                farmhouses = await _farmhouseRepository.GetAllAsync(x => x.Id != idFarmhouse, x => x.Products);
-            }
+            IEnumerable<Farmhouse> farmhouses = await _farmhouseRepository.GetAllAsync(x => true, x => x.Products);
 
             return Ok(farmhouses);
         }
@@ -58,12 +53,22 @@ namespace LocalFarmer2.Server.Controllers
         }
 
         [HttpPost, Route("Farmhouse")]
-        public async Task<IActionResult> AddFarmhouse(FarmhouseDto dto)
+        public async Task<IActionResult> AddFarmhouse(AddFarmhouseDto dto)
         {
             Farmhouse farmhouse = _mapper.Map<Farmhouse>(dto);
 
             _farmhouseRepository.Add(farmhouse);
             await _farmhouseRepository.SaveChangesAsync();
+            var user = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.Id == dto.IdUser);
+            
+            if (user.IdFarmhouse != null)
+            {
+                throw new Exception("You have Farmhouse. First delete old farmhouse, next add new.");
+            }
+
+            user.IdFarmhouse = farmhouse.Id;
+            await _applicationUserRepository.UpdateAsync(user);
+            await _applicationUserRepository.SaveChangesAsync();
 
             return Ok(farmhouse);
         }

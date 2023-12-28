@@ -25,21 +25,29 @@
         <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Phone)">Phone</MudTableSortLabel></MudTh>
         <MudTh>Detail</MudTh>
         <MudTh>Products</MudTh>
-        <MudTh>Subscribe</MudTh>
+        <AuthorizeView>
+            <Authorized>
+                <MudTh>Subscribe</MudTh>
+            </Authorized>
+        </AuthorizeView>
     </HeaderContent>
-    <RowTemplate>
-        <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.Id))">@((context.ShowDetails == true) ? "Hide" : "Show") Products</MudButton></MudTd>
-        <MudTd DataLabel="Nr">@context.Id</MudTd>
-            <MudTd DataLabel="Sign">@context.Name</MudTd>
-            <MudTd DataLabel="Name">@context.Description</MudTd>
-            <MudTd DataLabel="Position">@context.Address</MudTd>
-            <MudTd DataLabel="Molar mass">@context.Phone</MudTd>
-            <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.Id)">Go to detail</MudButton></MudTd>
-            <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProducts(context.Id)">Show products</MudButton></MudTd>
-            @if(context.IsFavorite == false)
-            {
-                <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddFavorite(context.Id)">Add favorite</MudButton></MudTd>
-            }
+    <RowTemplate Context="row">
+        <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => ShowBtnPress(row.Id))">@((row.ShowDetails == true) ? "Hide" : "Show") Products</MudButton></MudTd>
+        <MudTd DataLabel="Nr">@row.Id</MudTd>
+            <MudTd DataLabel="Sign">@row.Name</MudTd>
+            <MudTd DataLabel="Name">@row.Description</MudTd>
+            <MudTd DataLabel="Position">@row.Address</MudTd>
+            <MudTd DataLabel="Molar mass">@row.Phone</MudTd>
+            <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(row.Id)">Go to detail</MudButton></MudTd>
+            <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProducts(row.Id)">Show products</MudButton></MudTd>
+            <AuthorizeView>
+                <Authorized>
+                    @if (row.IsFavorite == false)
+                        {
+                            <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddFavorite(row.Id)">Add favorite</MudButton></MudTd>
+                        }
+                </Authorized>
+            </AuthorizeView>
         </RowTemplate>
 
         <ChildRowContent>
@@ -94,19 +102,18 @@
     {
         int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
         var idUser = UserStateService.CurrentUser?.IdUser;
-        Console.WriteLine("idFarmhouse: " + idFarmhouse);
 
         if (!string.IsNullOrEmpty(idUser))
         {
-            Console.WriteLine("W");
             CurrentListFavorite = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUserOnlyIds(idUser);
-        }
-        //3 akcje - 
-        // 1. niezalogowany - bez iduser bez idFarmhouse
-        // 2. zalogowany - Z idUser bez idfarmhouse
-        // 3. zalogowany z farma - Z idUser z idfarmhouse
-        Console.WriteLine("ZA");
+        }        
+
         ListFarmhousesVM = await FarmhouseService.GetFarmhousesWithProductsAndButton(CurrentListFavorite, idFarmhouse);
+         
+        // 3 types of users
+        // 1. Not logged                            idUser null + idFarmhouse null
+        // 2. have account without farmhouse        idUser not null + idFarmhouse null
+        // 3. have account with farmhouse           idUser not null + idFarmhouse not null
 
         AddComment();
     }
