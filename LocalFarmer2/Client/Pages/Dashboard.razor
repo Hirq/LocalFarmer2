@@ -1,16 +1,50 @@
 ﻿@page "/"
+@inject UserStateService UserStateService
 <PageTitle>Index</PageTitle>
 
 <MudGrid Class="m-0 w-100">
     <MudItem xs="12" Class="dashboard-paper-name-farmhouse">
         <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">- Local Farmer -</MudPaper>
     </MudItem>
-    <MudItem xs="12" sm="6" Class="dashboard-button">
-        <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/myproducts">My products</MudButton>
-    </MudItem>
-    <MudItem xs="12" sm="6" Class="dashboard-button">
-        <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/addproduct">Add product</MudButton>
-    </MudItem>
+
+    <AuthorizeView>
+        <Authorized>
+            @if (UserStateService.CurrentUser?.IdFarmhouse != null)
+            {
+                <MudItem xs="12" sm="6" Class="dashboard-button">
+                    <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/myproducts">My products</MudButton>
+                </MudItem>
+                <MudItem xs="12" sm="6" Class="dashboard-button">
+                    <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/addproduct">Add product</MudButton>
+                </MudItem>
+            }
+            else
+            {
+                <MudItem xs="12" sm="6" Class="dashboard-button">
+                    <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/addFarmhouse">Create own farmhouse </MudButton>
+                </MudItem>
+                <MudItem xs="12" sm="6" Class="dashboard-button">
+                    <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/farmhouses">Check farmhouses</MudButton>
+                </MudItem>
+            }
+        </Authorized>
+        <NotAuthorized>
+            <MudItem xs="12" Class="dashboard-paper-name-farmhouse">
+                <MudPaper Class="d-flex flex-column align-center mud-width-full py-8">
+                    <MudText Typo="Typo.h5">Hello! Here you find local farmers. </MudText>
+                    <MudText Typo="Typo.h5">Are u need fresh vegetables or preserve? Check you region and buy from farmhouse. </MudText>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" Class="dashboard-button">
+                <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/register">Create account</MudButton>
+            </MudItem>
+            <MudItem xs="12" sm="6" Class="dashboard-button">
+                <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/farmhouses">Check farmhouses</MudButton>
+            </MudItem>
+        </NotAuthorized>
+    </AuthorizeView>
+
+
 @*    <MudItem xs="12" sm="6">
         <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">My orders</MudPaper>
     </MudItem>
@@ -19,7 +53,13 @@
     </MudItem>*@
 </MudGrid>
 
-
+@code {
+    protected async override Task OnInitializedAsync()
+    {
+        int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
+        var idUser = UserStateService.CurrentUser?.IdUser;
+    }
+}
 
 @* Pomyśleć co jeszcze do API może być potrzebne? *@
 @* Osobny widok dla osob, ktore nie maja farmhouse ?? *@
@@ -29,6 +69,7 @@ albo i lista wszystkich rzeczy jakie mają i lista nowych (np. z ostatnich 30 dn
 
 
 @* SMALL TASKS *@
+@* logged user without farmhouse can set farmhouse, user with idFarmhouse can add products etc. = home view *@
 @* VIEW FOR NOT LOGGIN USER AND OTHER VIEW FOR NO HAVE FARMHOUSE - frontend ok, now backend *@
 @* Is have farmhouse? if not dashboard other view *@
 @* Check endpoints when not logged, and not have set farmhouse *@
@@ -43,3 +84,4 @@ albo i lista wszystkich rzeczy jakie mają i lista nowych (np. z ostatnich 30 dn
 
 @* Usunąć mudBlazor i ustawić UI przy pomocy Radzen ?? - Mud daje rade na .NET8 *@
 @* https://github.com/radzenhq/radzen-blazor *@
+

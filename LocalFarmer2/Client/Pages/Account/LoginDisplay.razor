@@ -7,9 +7,9 @@
 <AuthorizeView>
     <Authorized>
         @* @context.User.Identity!.Name! *@
-        <div>@currentUser?.UserName</div>
-        <div>@currentUser?.IdFarmhouse</div>
-        <div>@currentUser?.FarmhouseName</div>
+        <div>UserName: @currentUser?.UserName</div>
+        <div>FarmhouseId: @currentUser?.IdFarmhouse</div>
+        <div>Farmhouse: @currentUser?.FarmhouseName</div>
     </Authorized>
 </AuthorizeView>
 

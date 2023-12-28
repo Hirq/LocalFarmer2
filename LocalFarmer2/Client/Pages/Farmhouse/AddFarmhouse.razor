@@ -1,4 +1,4 @@
-﻿@page "/settings"
+﻿@page "/addFarmhouse"
 @inject UserStateService UserStateService
 @inject IMapper mapper
 @inject IAccountService AccountService
@@ -13,16 +13,15 @@
     <MudGrid>
         <MudItem xs="12">
             <MudText Class="d-flex justify-center" Typo="Typo.h6">Settings</MudText>
-            @if (@currentUser?.IdFarmhouse != null)
-            {
                 <MudPaper Class="pa-4">
 
                     <MudTextField T="string" Label="Farmhouse name" @bind-Value="farmhouseDto.Name" Required="true" RequiredError="Farmhouse name is required!" />
                     <MudTextField T="string" Label="Description" @bind-Value="farmhouseDto.Description" />
+                    <MudTextField T="string" Label="Address" @bind-Value="farmhouseDto.Address" />
+                    <MudTextField T="string" Label="Phone" @bind-Value="farmhouseDto.Phone" />
                     <MudTextField Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" RequiredError="Latitude is required!" />
                     <MudTextField Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" RequiredError="Longitude is required!" />
                 </MudPaper>
-            }
             <MudPaper Class="pa-4 mt-4">
                 <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
             </MudPaper>
@@ -34,20 +33,20 @@
     private UserDto? currentUser;
     private bool isUserSignUp;
     public int Id { get; set; }
-    private FarmhouseDto farmhouseDto = new FarmhouseDto();
+    private AddFarmhouseDto farmhouseDto = new AddFarmhouseDto();
     //TODO: Poprawić format dla latitide i longitude ( obecnie przymuje tylko 11,11, a powinno przyjmować też 11.11 oraz przy tym jak jest 0 poinformować, że jest 0 czy tak ma być )
 
     protected async override Task OnInitializedAsync()
     {
-        isUserSignUp = await AccountService.IsUserSignUp();
+        // isUserSignUp = await AccountService.IsUserSignUp();
 
-        if (isUserSignUp)
-        {
-            currentUser = await AccountService.GetCurrentUser();
-            UserStateService.CurrentUser = currentUser;
-            var farmhouse = await FarmhouseService.GetFarmhouse((int)currentUser?.IdFarmhouse!);
-            farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
-        }
+        // if (isUserSignUp)
+        // {
+        //     currentUser = await AccountService.GetCurrentUser();
+        //     UserStateService.CurrentUser = currentUser;
+        //     var farmhouse = await FarmhouseService.GetFarmhouse((int)currentUser?.IdFarmhouse!);
+        //     farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
+        // }
     }
 
 
@@ -60,9 +59,14 @@
 
     private async void OnValidSubmit(EditContext context)
     {
-        FarmhouseDto dto = mapper.Map<FarmhouseDto>(farmhouseDto);
-        await FarmhouseService.EditFarmhouse(dto, (int)currentUser?.IdFarmhouse!);
-        alertService.SetSuccessAlert($"Successfully edited farmhouse {farmhouseDto.Name}");
+        // AddFarmhouseDto dto = mapper.Map<AddFarmhouseDto>(farmhouseDto);
+        farmhouseDto.IdUser = UserStateService.CurrentUser?.IdUser;
+        if (farmhouseDto.IdUser == null)
+        {
+            throw new Exception("null iduser");
+        }
+        await FarmhouseService.AddFarmhouse(farmhouseDto);
+        alertService.SetSuccessAlert($"Successfully add farmhouse {farmhouseDto.Name}");
         NavigationManager.NavigateTo("/");
     }
 
