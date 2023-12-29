@@ -11,5 +11,6 @@ namespace LocalFarmer2.Client.Services
         public Task<Farmhouse> GetFarmhouse(int id);
         public Task EditFarmhouse(FarmhouseDto dto, int idFarmhouse);
         public Task AddFarmhouse(AddFarmhouseDto dto);
+        public Task DeleteFarmhouse(int idFarmhouse);
     }
 }

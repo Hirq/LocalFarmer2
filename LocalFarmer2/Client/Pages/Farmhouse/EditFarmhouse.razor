@@ -26,7 +26,8 @@
             }
             <MudPaper Class="pa-4 mt-4">
                 <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
-            </MudPaper>
+                <MudButton OnClick="() => DeleteFarmhouse()" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Error">Delete</MudButton>
+            </MudPaper>         
         </MudItem>
     </MudGrid>
 </EditForm>
@@ -67,5 +68,14 @@
         NavigationManager.NavigateTo("/");
     }
 
+    private async void DeleteFarmhouse()
+    {
+        if (currentUser?.IdFarmhouse != null)
+        {
+            await FarmhouseService.DeleteFarmhouse((int)currentUser.IdFarmhouse);
+            alertService.SetSuccessAlert($"Deleted farmhouse {farmhouseDto.Name}");
+            NavigationManager.NavigateTo("/");
+        }
+    }
 
 }

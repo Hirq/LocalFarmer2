@@ -60,7 +60,7 @@ namespace LocalFarmer2.Server.Controllers
             _farmhouseRepository.Add(farmhouse);
             await _farmhouseRepository.SaveChangesAsync();
             var user = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.Id == dto.IdUser);
-            
+
             if (user.IdFarmhouse != null)
             {
                 throw new Exception("You have Farmhouse. First delete old farmhouse, next add new.");
@@ -120,12 +120,24 @@ namespace LocalFarmer2.Server.Controllers
         [HttpDelete, Route("Farmhouse/{id}")]
         public async Task<IActionResult> DeleteFarmhouse(int id)
         {
-            Farmhouse farmhouse = await _farmhouseRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            var user = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.IdFarmhouse == id);
+            
+            if (user != null)
+            {
+                user.IdFarmhouse = null;
+                await _applicationUserRepository.UpdateAsync(user);
+                await _applicationUserRepository.SaveChangesAsync();
+                Farmhouse farmhouse = await _farmhouseRepository.GetFirstOrDefaultAsync(x => x.Id == id);
 
-            await _farmhouseRepository.DeleteAsync(farmhouse);
-            await _farmhouseRepository.SaveChangesAsync();
+                await _farmhouseRepository.DeleteAsync(farmhouse);
+                await _farmhouseRepository.SaveChangesAsync();
 
-            return Content($"Delete object farmhouse {id}");
+                return Content($"Delete object farmhouse {id}");
+            }
+            else
+            {
+                throw new Exception($"You cant delete farmhouse without owner.");
+            }
         }
 
     }

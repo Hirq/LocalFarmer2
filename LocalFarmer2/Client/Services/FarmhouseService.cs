@@ -94,5 +94,10 @@ namespace LocalFarmer2.Client.Services
         {
             await _http.PostAsJsonAsync($"api/Farmhouse/Farmhouse/", dto);
         }
+
+        public async Task DeleteFarmhouse(int idFarmhouse)
+        {
+            await _http.DeleteAsync($"api/Farmhouse/Farmhouse/{idFarmhouse}");
+        }
     }
 }
