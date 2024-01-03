@@ -47,8 +47,15 @@
         {
             currentUser = await AccountService.GetCurrentUser();
             UserStateService.CurrentUser = currentUser;
-            var farmhouse = await FarmhouseService.GetFarmhouse((int)currentUser?.IdFarmhouse!);
-            farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
+            if (UserStateService.CurrentUser?.IdFarmhouse != null)
+            {
+                var farmhouse = await FarmhouseService.GetFarmhouse((int)currentUser?.IdFarmhouse!);
+                farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
+            }
+            else
+            {
+                throw new Exception("You must first set farmhouse, before edit");
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @inject AlertService alertService
 @* @inject UtilsService utilsService *@
+@inject UserStateService UserStateService
 @inject IAccountService accontService
 @inject IJSRuntime JSRuntime
 @using Microsoft.JSInterop
@@ -16,7 +17,14 @@
         <MudIconButton Icon="@Icons.Material.Outlined.Notifications" Color="Color.Inherit" />
         <MudAvatar Color="Color.Secondary" Size="Size.Medium" Class="avatar">JK</MudAvatar>
         <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.MoreVert" TransformOrigin="Origin.TopRight" Color="Color.Inherit">
-            <MudMenuItem Href="/editfarmhouse">Settings</MudMenuItem>
+            @if(UserStateService.CurrentUser?.IdFarmhouse != null)
+            {
+                <MudMenuItem Href="/editfarmhouse">Edit farmhouse</MudMenuItem>
+            }
+            else
+            {
+                <MudMenuItem Href="/addfarmhouse">Set farmhouse</MudMenuItem>
+            }
         </MudMenu>
 
     </MudAppBar>
@@ -37,9 +45,7 @@
 </MudLayout>
 
 @code {
-    [Inject] private UserStateService UserStateService { get; set; }
     bool _drawerOpen = true;
-    public UserDto? currentUser;
 
     void DrawerToggle()
     {
