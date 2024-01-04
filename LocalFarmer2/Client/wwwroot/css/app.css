@@ -5,7 +5,7 @@ html, body {
 }
 
 html, body * {
-    background-color: #75a668 !important;
+    /*background-color: #75a668 !important;*/
 }
 
 h1:focus {
