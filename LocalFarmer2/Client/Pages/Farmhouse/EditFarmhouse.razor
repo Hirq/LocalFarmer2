@@ -7,31 +7,31 @@
 @inject NavigationManager NavigationManager
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
-
-<EditForm Model="farmhouseDto" OnValidSubmit="OnValidSubmit">
-    <DataAnnotationsValidator />
-    <MudGrid>
-        <MudItem xs="12">
-            <MudText Class="d-flex justify-center" Typo="Typo.h6">Settings</MudText>
-            @if (@currentUser?.IdFarmhouse != null)
-            {
-                <MudPaper Class="pa-4">
-                    <MudTextField T="string" Label="Farmhouse name" @bind-Value="farmhouseDto.Name" Required="true" RequiredError="Farmhouse name is required!" />
-                    <MudTextField T="string" Label="Description" @bind-Value="farmhouseDto.Description" />
-                    <MudTextField T="string" Label="Address" @bind-Value="farmhouseDto.Address" />
-                    <MudTextField T="string" Label="Phone" @bind-Value="farmhouseDto.Phone" />
-                    <MudTextField Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" RequiredError="Latitude is required!" />
-                    <MudTextField Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" RequiredError="Longitude is required!" />
+<AuthorizeView>
+    <EditForm Model="farmhouseDto" OnValidSubmit="OnValidSubmit" Context="editForm">
+        <DataAnnotationsValidator />
+        <MudGrid>
+            <MudItem xs="12">
+                <MudText Class="d-flex justify-center" Typo="Typo.h6">Settings</MudText>
+                @if (@currentUser?.IdFarmhouse != null)
+                {
+                    <MudPaper Class="pa-4">
+                        <MudTextField T="string" Label="Farmhouse name" @bind-Value="farmhouseDto.Name" Required="true" RequiredError="Farmhouse name is required!" />
+                        <MudTextField T="string" Label="Description" @bind-Value="farmhouseDto.Description" />
+                        <MudTextField T="string" Label="Address" @bind-Value="farmhouseDto.Address" />
+                        <MudTextField T="string" Label="Phone" @bind-Value="farmhouseDto.Phone" />
+                        <MudTextField Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" RequiredError="Latitude is required!" />
+                        <MudTextField Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" RequiredError="Longitude is required!" />
+                    </MudPaper>
+                }
+                <MudPaper Class="pa-4 mt-4">
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
+                    <MudButton OnClick="() => DeleteFarmhouse()" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Error">Delete</MudButton>
                 </MudPaper>
-            }
-            <MudPaper Class="pa-4 mt-4">
-                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
-                <MudButton OnClick="() => DeleteFarmhouse()" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Error">Delete</MudButton>
-            </MudPaper>         
-        </MudItem>
-    </MudGrid>
-</EditForm>
-
+            </MudItem>
+        </MudGrid>
+    </EditForm>
+</AuthorizeView>
 @code {
     private UserDto? currentUser;
     private bool isUserSignUp;
