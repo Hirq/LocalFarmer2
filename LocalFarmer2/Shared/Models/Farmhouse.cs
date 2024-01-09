@@ -13,10 +13,10 @@ namespace LocalFarmer2.Shared.Models
         public string Address { get; set; }
         public string Phone { get; set; }
 
-        //Szerokość geograficzna
+        //Szerokość geograficzna - zakres 0:90
         public double Latitude { get; set; }
 
-        //Długość geograficzna
+        //Długość geograficzna - zakres 0:180
         public double Longitude { get; set; }
 
         //TODO:

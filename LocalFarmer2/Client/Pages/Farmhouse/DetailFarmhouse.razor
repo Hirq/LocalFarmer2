@@ -5,6 +5,8 @@
 <PageTitle>Farmhouse</PageTitle>
 
 <h2>@farmhouse.Name - @farmhouse.Id</h2>
+<h2>Latitude - @farmhouse.Latitude </h2>
+<h2>Longitude - @farmhouse.Longitude</h2>
 <h2>MAPA</h2>
 <div id="map" style="height:70vh; width: 100%"></div>
 @code {
@@ -27,6 +29,21 @@
         {
             var client = new HttpClient();
             var raw = await client.GetStringAsync("https://localhost:7239/geojson.json");
+
+            // string sciezkaDoPliku = System.IO.Path.Combine(AppContext.BaseDirectory, "Utilities", "geojson.json");
+            // string jsonZawartosc = System.IO.File.ReadAllText(sciezkaDoPliku);
+
+            if (farmhouse.Id == 7)
+            {
+                JArray jsonArray = JArray.Parse(raw);
+                JObject firstElement = (JObject)jsonArray[0];
+
+                firstElement["geometry"]["coordinates"] = new JArray(farmhouse.Latitude, farmhouse.Longitude);
+                firstElement["properties"]["name"] = farmhouse.Name;
+
+                raw = jsonArray.ToString();
+            }
+
             module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
             if (module != null)
             {
