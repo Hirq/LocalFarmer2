@@ -1,4 +1,5 @@
 ﻿@page "/farmhouse/{id:int}"
+@using Newtonsoft.Json.Linq
 @inject IFarmhouseService FarmhouseService
 @inject IJSRuntime JSRuntime
 @implements IAsyncDisposable
@@ -7,6 +8,7 @@
 <h2>@farmhouse.Name - @farmhouse.Id</h2>
 <h2>Latitude - @farmhouse.Latitude </h2>
 <h2>Longitude - @farmhouse.Longitude</h2>
+<h2>Tip: Network => disable cache set true</h2>
 <h2>MAPA</h2>
 <div id="map" style="height:70vh; width: 100%"></div>
 @code {
@@ -18,13 +20,9 @@
 
     Farmhouse farmhouse = new Farmhouse();
 
-    protected override async Task OnInitializedAsync()
-    {
-        farmhouse = await FarmhouseService.GetFarmhouse(Id);
-    }
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        farmhouse = await FarmhouseService.GetFarmhouse(Id);
         if (firstRender)
         {
             var client = new HttpClient();
@@ -33,22 +31,18 @@
             // string sciezkaDoPliku = System.IO.Path.Combine(AppContext.BaseDirectory, "Utilities", "geojson.json");
             // string jsonZawartosc = System.IO.File.ReadAllText(sciezkaDoPliku);
 
-            if (farmhouse.Id == 7)
-            {
-                JArray jsonArray = JArray.Parse(raw);
-                JObject firstElement = (JObject)jsonArray[0];
+            JArray jsonArray = JArray.Parse(raw);
+            JObject firstElement = (JObject)jsonArray[0];
 
-                firstElement["geometry"]["coordinates"] = new JArray(farmhouse.Latitude, farmhouse.Longitude);
-                firstElement["properties"]["name"] = farmhouse.Name;
+            firstElement["geometry"]["coordinates"] = new JArray(farmhouse.Latitude, farmhouse.Longitude);
+            firstElement["properties"]["name"] = farmhouse.Name;
 
-                raw = jsonArray.ToString();
-            }
+            raw = jsonArray.ToString();
 
             module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
             if (module != null)
             {
-                //result = await module.InvokeAsync<string>("load_map", 54.22, 16.11);
-                result = await module.InvokeAsync<string>("load_map", Convert.ToString(raw));
+                result = await module.InvokeAsync<string>("load_map", Convert.ToString(raw), farmhouse.Latitude, farmhouse.Longitude);
             }
         }
     }

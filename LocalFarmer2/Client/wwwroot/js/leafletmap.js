@@ -6,9 +6,9 @@
 //Plan - zrobiæ mapê dla wszystkich aktywnych gospodarstw + jak wchodze w szczeoly to widzê mape wszystkich ale jest wyœrodkowane na dane gosporastwo
 // A jak wchodze w ogolny to pyta o lokalizacje i pokazuje dookola, jak nie udostêpni to na Warszawe i elo
 
-export function load_map(raw) {
+export function load_map(raw, latitude, longitude) {
     console.log(JSON.parse(String(raw)));
-    let map = L.map('map').setView({ lon: 16.177133, lat: 54.196165 }, 14);
+    let map = L.map('map').setView({ lon: latitude, lat: longitude }, 14);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
     var geojson_layer = L.geoJSON().addTo(map);
     var geojson_data = JSON.parse(String(raw));
