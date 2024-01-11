@@ -8,7 +8,7 @@
 
 export function load_map(raw, latitude, longitude) {
     console.log(JSON.parse(String(raw)));
-    let map = L.map('map').setView({ lon: latitude, lat: longitude }, 14);
+    let map = L.map('map').setView({ lon: latitude, lat: longitude }, 8);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
     var geojson_layer = L.geoJSON().addTo(map);
     var geojson_data = JSON.parse(String(raw));

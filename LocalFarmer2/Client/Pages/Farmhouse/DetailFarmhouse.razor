@@ -20,9 +20,13 @@
 
     Farmhouse farmhouse = new Farmhouse();
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnInitializedAsync()
     {
         farmhouse = await FarmhouseService.GetFarmhouse(Id);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
         if (firstRender)
         {
             var client = new HttpClient();
