@@ -23,16 +23,11 @@
     // {
     //     farmhouses = await FarmhouseService.GetFarmhouses();
     // }  
-    
+
     protected override async Task OnInitializedAsync()
     {
         farmhouses = await FarmhouseService.GetFarmhouses();
         farmhouse = farmhouses.FirstOrDefault();
-        farmhouse2 = farmhouses.LastOrDefault();
-        foreach (var x in farmhouses)
-        {
-            Console.WriteLine(x.Name);
-        }
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -46,17 +41,31 @@
             // string jsonZawartosc = System.IO.File.ReadAllText(sciezkaDoPliku);
 
             JArray jsonArray = JArray.Parse(raw);
-            JObject firstElement = (JObject)jsonArray[0];
+            foreach(var entry in farmhouses)
+            {
+                JObject newEntry = new JObject
+                {
+                        ["type"] = "Feature",
+                        ["geometry"] = new JObject
+                        {
+                            ["type"] = "Point",
+                            ["coordinates"] = new JArray(entry.Latitude, entry.Longitude)
+                        },
+                        ["properties"] = new JObject
+                        {
+                            ["name"] = entry.Name
+                        }
+                };
 
-            firstElement["geometry"]["coordinates"] = new JArray(farmhouse.Latitude, farmhouse.Longitude);
-            firstElement["properties"]["name"] = farmhouse.Name;
+                jsonArray.Add(newEntry);
+            }
 
             raw = jsonArray.ToString();
 
             module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
             if (module != null)
             {
-                result = await module.InvokeAsync<string>("load_map", Convert.ToString(raw), farmhouse.Latitude, farmhouse.Longitude);
+                result = await module.InvokeAsync<string>("load_map", Convert.ToString(raw), 19.5, 52, 7);
             }
         }
     }

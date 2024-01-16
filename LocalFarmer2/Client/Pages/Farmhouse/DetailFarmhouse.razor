@@ -36,17 +36,27 @@
             // string jsonZawartosc = System.IO.File.ReadAllText(sciezkaDoPliku);
 
             JArray jsonArray = JArray.Parse(raw);
-            JObject firstElement = (JObject)jsonArray[0];
+            JObject newEntry = new JObject
+                {
+                    ["type"] = "Feature",
+                    ["geometry"] = new JObject
+                    {
+                        ["type"] = "Point",
+                        ["coordinates"] = new JArray(farmhouse.Latitude, farmhouse.Longitude)
+                    },
+                    ["properties"] = new JObject
+                    {
+                        ["name"] = farmhouse.Name
+                    }
+                };
 
-            firstElement["geometry"]["coordinates"] = new JArray(farmhouse.Latitude, farmhouse.Longitude);
-            firstElement["properties"]["name"] = farmhouse.Name;
-
+            jsonArray.Add(newEntry);
             raw = jsonArray.ToString();
 
             module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
             if (module != null)
             {
-                result = await module.InvokeAsync<string>("load_map", Convert.ToString(raw), farmhouse.Latitude, farmhouse.Longitude);
+                result = await module.InvokeAsync<string>("load_map", Convert.ToString(raw), farmhouse.Latitude, farmhouse.Longitude, 9);
             }
         }
     }
