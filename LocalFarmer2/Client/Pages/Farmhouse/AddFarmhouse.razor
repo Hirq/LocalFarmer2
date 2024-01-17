@@ -1,12 +1,11 @@
 ﻿@page "/addFarmhouse"
-@inject UserStateService UserStateService
 @inject IMapper mapper
 @inject IAccountService AccountService
 @inject IFarmhouseService FarmhouseService
+@inject IJSRuntime JSRuntime
+@inject UserStateService UserStateService
 @inject AlertService alertService
 @inject NavigationManager NavigationManager
-@using System.Text.RegularExpressions
-@using System.ComponentModel.DataAnnotations
 <AuthorizeView>
     <EditForm Model="farmhouseDto" OnValidSubmit="OnValidSubmit" Context="editForm">
         <DataAnnotationsValidator />
@@ -19,8 +18,8 @@
                     <MudTextField T="string" Label="Description" @bind-Value="farmhouseDto.Description" />
                     <MudTextField T="string" Label="Address" @bind-Value="farmhouseDto.Address" />
                     <MudTextField T="string" Label="Phone" @bind-Value="farmhouseDto.Phone" />
-                    <MudTextField Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
-                    <MudTextField Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
+                    <MudTextField Id="latitude_input" Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
+                    <MudTextField Id="longitude_input"Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
                 </MudPaper>
                 <MudPaper Class="pa-4 mt-4">
                     <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
@@ -28,8 +27,13 @@
             </MudItem>
         </MudGrid>
     </EditForm>
+    <div id="map" style="height: 400px;"></div>
+
 </AuthorizeView>
 @code {
+    private IJSObjectReference? module;
+    private string? result;
+
     private UserDto? currentUser;
     private bool isUserSignUp;
     public int Id { get; set; }
@@ -68,6 +72,19 @@
         await FarmhouseService.AddFarmhouse(farmhouseDto);
         alertService.SetSuccessAlert($"Successfully add farmhouse {farmhouseDto.Name}");
         NavigationManager.NavigateTo("/");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
+            if (module != null)
+            {
+                result = await module.InvokeAsync<string>("setCoordinates", "map");
+                Console.WriteLine(result);
+            }
+        }
     }
 
 

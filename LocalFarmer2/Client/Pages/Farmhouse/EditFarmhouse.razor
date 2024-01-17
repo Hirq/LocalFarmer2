@@ -6,8 +6,7 @@
 @inject IJSRuntime JSRuntime
 @inject AlertService alertService
 @inject NavigationManager NavigationManager
-@using System.Text.RegularExpressions
-@using System.ComponentModel.DataAnnotations
+
 <AuthorizeView>
     <EditForm Model="farmhouseDto" OnValidSubmit="OnValidSubmit" Context="editForm">
         <DataAnnotationsValidator />
@@ -36,7 +35,6 @@
 
 </AuthorizeView>
 @code {
-    private string mapId = "leafletMap";
     private IJSObjectReference? module;
     private string? result;
 
@@ -45,6 +43,12 @@
     public int Id { get; set; }
     private FarmhouseDto farmhouseDto = new FarmhouseDto();
     //TODO: Poprawić format dla latitide i longitude ( obecnie przymuje tylko 11,11, a powinno przyjmować też 11.11 oraz przy tym jak jest 0 poinformować, że jest 0 czy tak ma być )
+
+    // protected override async Task OnParametersSetAsync()
+    // {
+    //     var product = await ProductService.GetProduct(Id);
+    //     model = mapper.Map<ProductDto>(product);
+    // }
 
     protected async override Task OnInitializedAsync()
     {
@@ -74,17 +78,9 @@
             if (module != null)
             {
                 result = await module.InvokeAsync<string>("setCoordinates", "map");
-                Console.WriteLine(result);
             }
         }
     }
-
-    // protected override async Task OnParametersSetAsync()
-    // {
-    //     var product = await ProductService.GetProduct(Id);
-    //     model = mapper.Map<ProductDto>(product);
-    // }
-
 
     private async void OnValidSubmit(EditContext context)
     {
@@ -103,5 +99,4 @@
             NavigationManager.NavigateTo("/");
         }
     }
-
 }
