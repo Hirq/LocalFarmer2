@@ -31,3 +31,28 @@ export function load_map(raw, latitude, longitude, zoom) {
 
     return "";
 }
+
+export function setCoordinates(mapId) {
+    var currentMarker;
+    var map = L.map(mapId).setView([51.505, -0.09], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    map.on('click', onMapClick);
+
+    function onMapClick(e) {
+        document.getElementById("latitude_input").value = e.latlng.lat;
+        document.getElementById("longitude_input").value = e.latlng.lng; 
+
+        if (currentMarker) {
+            currentMarker.remove();
+        }
+
+
+        currentMarker = L.marker(e.latlng).addTo(map);
+        currentMarker.bindPopup("You clicked the map at " + e.latlng).openPopup();
+    }
+};
+
