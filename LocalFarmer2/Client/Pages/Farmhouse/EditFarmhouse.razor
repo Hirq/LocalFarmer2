@@ -8,7 +8,7 @@
 @inject NavigationManager NavigationManager
 
 <AuthorizeView>
-    <EditForm Model="farmhouseDto" OnValidSubmit="OnValidSubmit" Context="editForm">
+    <EditForm Model="farmhouseDto" OnValidSubmit="OnValidSubmit" Context="editForm" @key="farmhouseDto">
         <DataAnnotationsValidator />
         <MudGrid>
             <MudItem xs="12">
@@ -20,8 +20,8 @@
                         <MudTextField T="string" Label="Description" @bind-Value="farmhouseDto.Description" />
                         <MudTextField T="string" Label="Address" @bind-Value="farmhouseDto.Address" />
                         <MudTextField T="string" Label="Phone" @bind-Value="farmhouseDto.Phone" />
-                        <MudTextField Id="latitude_input" Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
-                        <MudTextField Id="longitude_input" Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
+                        <MudTextField T="string" @ref="latitudeInput" Id="latitude_input" Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
+                        <MudTextField T="string" @ref="longitudeInput" Id="longitude_input" Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
                     </MudPaper>
                 }
                 <MudPaper Class="pa-4 mt-4">
@@ -37,6 +37,9 @@
 @code {
     private IJSObjectReference? module;
     private string? result;
+
+    private MudTextField<string> latitudeInput;
+    private MudTextField<string> longitudeInput;
 
     private UserDto? currentUser;
     private bool isUserSignUp;
@@ -84,6 +87,13 @@
 
     private async void OnValidSubmit(EditContext context)
     {
+        string latitudeValue = latitudeInput.Text;
+        string longitudeValue = longitudeInput.Text;
+        Console.WriteLine(latitudeValue);
+        Console.WriteLine(longitudeValue);
+        // context.OnFieldChanged(context.Field(nameof(farmhouseDto.Name)));
+        // editForm.EditContext.OnFieldChanged(editForm.EditContext.Field(nameof(farmhouseDto.Description)));
+
         FarmhouseDto dto = mapper.Map<FarmhouseDto>(farmhouseDto);
         await FarmhouseService.EditFarmhouse(dto, (int)currentUser?.IdFarmhouse!);
         alertService.SetSuccessAlert($"Successfully edited farmhouse {farmhouseDto.Name}");

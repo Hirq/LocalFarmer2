@@ -14,10 +14,10 @@ namespace LocalFarmer2.Shared.Models
         public string Phone { get; set; }
 
         //Szerokość geograficzna - zakres 0:90
-        public double Latitude { get; set; }
+        public string Latitude { get; set; }
 
         //Długość geograficzna - zakres 0:180
-        public double Longitude { get; set; }
+        public string Longitude { get; set; }
 
         //TODO:
         //Enum czym mozna płacić - gotówka/karta/Blik na telefon/Przelew

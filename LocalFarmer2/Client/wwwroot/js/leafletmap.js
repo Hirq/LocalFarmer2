@@ -44,12 +44,11 @@ export function setCoordinates(mapId) {
 
     function onMapClick(e) {
         document.getElementById("latitude_input").value = e.latlng.lat;
-        document.getElementById("longitude_input").value = e.latlng.lng; 
+        document.getElementById("longitude_input").value = e.latlng.lng;
 
         if (currentMarker) {
             currentMarker.remove();
         }
-
 
         currentMarker = L.marker(e.latlng).addTo(map);
         currentMarker.bindPopup("You clicked the map at " + e.latlng).openPopup();
