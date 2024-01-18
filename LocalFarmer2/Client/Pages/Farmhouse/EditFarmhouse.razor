@@ -20,8 +20,8 @@
                         <MudTextField T="string" Label="Description" @bind-Value="farmhouseDto.Description" />
                         <MudTextField T="string" Label="Address" @bind-Value="farmhouseDto.Address" />
                         <MudTextField T="string" Label="Phone" @bind-Value="farmhouseDto.Phone" />
-                        <MudTextField T="string" @ref="latitudeInput" Id="latitude_input" Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
-                        <MudTextField T="string" @ref="longitudeInput" Id="longitude_input" Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
+                        <MudTextField T="string" Id="latitude_input" Disabled Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
+                        <MudTextField T="string" Id="longitude_input" Disabled Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
                     </MudPaper>
                 }
                 <MudPaper Class="pa-4 mt-4">
@@ -35,17 +35,14 @@
 
 </AuthorizeView>
 @code {
+    private FarmhouseDto farmhouseDto = new FarmhouseDto();
     private IJSObjectReference? module;
     private string? result;
-
-    private MudTextField<string> latitudeInput;
-    private MudTextField<string> longitudeInput;
-
+    private string? latitude;
+    private string? longitude;
     private UserDto? currentUser;
     private bool isUserSignUp;
     public int Id { get; set; }
-    private FarmhouseDto farmhouseDto = new FarmhouseDto();
-    //TODO: Poprawić format dla latitide i longitude ( obecnie przymuje tylko 11,11, a powinno przyjmować też 11.11 oraz przy tym jak jest 0 poinformować, że jest 0 czy tak ma być )
 
     // protected override async Task OnParametersSetAsync()
     // {
@@ -87,12 +84,14 @@
 
     private async void OnValidSubmit(EditContext context)
     {
-        string latitudeValue = latitudeInput.Text;
-        string longitudeValue = longitudeInput.Text;
-        Console.WriteLine(latitudeValue);
-        Console.WriteLine(longitudeValue);
-        // context.OnFieldChanged(context.Field(nameof(farmhouseDto.Name)));
-        // editForm.EditContext.OnFieldChanged(editForm.EditContext.Field(nameof(farmhouseDto.Description)));
+        if (module != null)
+        {
+            latitude = await module.InvokeAsync<string>("getValueById", "latitude_input");
+            longitude = await module.InvokeAsync<string>("getValueById", "longitude_input");
+        }
+
+        farmhouseDto.Latitude = latitude;
+        farmhouseDto.Longitude = longitude;
 
         FarmhouseDto dto = mapper.Map<FarmhouseDto>(farmhouseDto);
         await FarmhouseService.EditFarmhouse(dto, (int)currentUser?.IdFarmhouse!);

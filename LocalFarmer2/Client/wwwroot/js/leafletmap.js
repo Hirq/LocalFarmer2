@@ -55,3 +55,7 @@ export function setCoordinates(mapId) {
     }
 };
 
+export function getValueById(elementId) {
+    var element = document.getElementById(elementId);
+    return element ? element.value : null;
+};
