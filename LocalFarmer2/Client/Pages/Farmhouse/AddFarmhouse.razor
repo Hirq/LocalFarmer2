@@ -33,6 +33,8 @@
 @code {
     private IJSObjectReference? module;
     private string? result;
+    private string? latitude;
+    private string? longitude;
 
     private UserDto? currentUser;
     private bool isUserSignUp;
@@ -63,7 +65,15 @@
 
     private async void OnValidSubmit(EditContext context)
     {
-        // AddFarmhouseDto dto = mapper.Map<AddFarmhouseDto>(farmhouseDto);
+        if (module != null)
+        {
+            latitude = await module.InvokeAsync<string>("getValueById", "latitude_input");
+            longitude = await module.InvokeAsync<string>("getValueById", "longitude_input");
+        }
+
+        farmhouseDto.Latitude = latitude;
+        farmhouseDto.Longitude = longitude;
+
         farmhouseDto.IdUser = UserStateService.CurrentUser?.IdUser;
         if (farmhouseDto.IdUser == null)
         {
