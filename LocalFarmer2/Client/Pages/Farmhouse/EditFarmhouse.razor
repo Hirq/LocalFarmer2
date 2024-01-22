@@ -7,35 +7,44 @@
 @inject AlertService alertService
 @inject NavigationManager NavigationManager
 
-<AuthorizeView>
-    <EditForm Model="farmhouseDto" OnValidSubmit="OnValidSubmit" Context="editForm" @key="farmhouseDto">
-        <DataAnnotationsValidator />
-        <MudGrid>
-            <MudItem xs="12">
-                <MudText Class="d-flex justify-center" Typo="Typo.h6">Settings</MudText>
-                @if (@currentUser?.IdFarmhouse != null)
-                {
-                    <MudPaper Class="pa-4">
-                        <MudTextField T="string" Label="Farmhouse name" @bind-Value="farmhouseDto.Name" Required="true" RequiredError="Farmhouse name is required!" />
-                        <MudTextField T="string" Label="Description" @bind-Value="farmhouseDto.Description" />
-                        <MudTextField T="string" Label="Address" @bind-Value="farmhouseDto.Address" />
-                        <MudTextField T="string" Label="Phone" @bind-Value="farmhouseDto.Phone" />
-                        <MudTextField T="string" Id="latitude_input" Disabled Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
-                        <MudTextField T="string" Id="longitude_input" Disabled Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
+@if (farmhouseDto == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <AuthorizeView>
+        <EditForm Model="farmhouseDto" OnValidSubmit="OnValidSubmit" Context="editForm">
+            <DataAnnotationsValidator />
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Class="d-flex justify-center" Typo="Typo.h6">Settings</MudText>
+                    @if (@currentUser?.IdFarmhouse != null)
+                    {
+                        <MudPaper Class="pa-4">
+                            <MudTextField T="string" Label="Farmhouse name" @bind-Value="farmhouseDto.Name" Required="true" RequiredError="Farmhouse name is required!" />
+                            <MudTextField T="string" Label="Description" @bind-Value="farmhouseDto.Description" />
+                            <MudTextField T="string" Label="Address" @bind-Value="farmhouseDto.Address" />
+                            <MudTextField T="string" Label="Phone" @bind-Value="farmhouseDto.Phone" />
+                            <MudTextField T="string" Id="latitude_input" Disabled Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
+                             <MudTextField T="string" Id="longitude_input" Disabled Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
+                         </MudPaper>
+                    }
+                    <MudPaper Class="pa-4 mt-4">
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
+                        <MudButton OnClick="() => DeleteFarmhouse()" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Error">Delete</MudButton>
                     </MudPaper>
-                }
-                <MudPaper Class="pa-4 mt-4">
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
-                    <MudButton OnClick="() => DeleteFarmhouse()" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Error">Delete</MudButton>
-                </MudPaper>
-            </MudItem>
-        </MudGrid>
-    </EditForm>
-    <div id="map" style="height: 400px;"></div>
+                </MudItem>
+            </MudGrid>
+        </EditForm>
+        <div id="map" style="height: 400px;"></div>
+    </AuthorizeView>
+}
 
-</AuthorizeView>
 @code {
-    private FarmhouseDto farmhouseDto = new FarmhouseDto();
+    [Parameter]
+    public FarmhouseDto farmhouseDto { get; set; }
+
     private IJSObjectReference? module;
     private string? result;
     private string? latitude;
@@ -70,15 +79,39 @@
         }
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected async override Task OnParametersSetAsync()
     {
-        if (firstRender)
-        {
-            module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
-            if (module != null)
+        await base.OnParametersSetAsync();
+        var client = new HttpClient();
+        var raw = await client.GetStringAsync("https://localhost:7239/geojson.json");
+
+        // string sciezkaDoPliku = System.IO.Path.Combine(AppContext.BaseDirectory, "Utilities", "geojson.json");
+        // string jsonZawartosc = System.IO.File.ReadAllText(sciezkaDoPliku);
+
+        JArray jsonArray = JArray.Parse(raw);
+        JObject newEntry = new JObject
             {
-                result = await module.InvokeAsync<string>("setCoordinates", "map");
-            }
+                ["type"] = "Feature",
+                ["geometry"] = new JObject
+                {
+                    ["type"] = "Point",
+                    ["coordinates"] = new JArray(farmhouseDto.Latitude, farmhouseDto.Longitude)
+                },
+                ["properties"] = new JObject
+                {
+                    ["name"] = farmhouseDto.Name
+                }
+            };
+
+        jsonArray.Add(newEntry);
+        raw = jsonArray.ToString();
+
+        module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
+        if (module != null)
+        {
+            result = await module.InvokeAsync<string>("load_map", Convert.ToString(raw), farmhouseDto.Latitude, farmhouseDto.Longitude, 9);
+
+            // result = await module.InvokeAsync<string>("setCoordinates", "map");
         }
     }
 
