@@ -32,6 +32,7 @@ else
                     }
                     <MudPaper Class="pa-4 mt-4">
                         <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
+                        <MudButton OnClick="() => UnlockMap()" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Change marker</MudButton>
                         <MudButton OnClick="() => DeleteFarmhouse()" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Error">Delete</MudButton>
                     </MudPaper>
                 </MudItem>
@@ -95,7 +96,7 @@ else
                 ["geometry"] = new JObject
                 {
                     ["type"] = "Point",
-                    ["coordinates"] = new JArray(farmhouseDto.Latitude, farmhouseDto.Longitude)
+                    ["coordinates"] = new JArray(farmhouseDto.Longitude, farmhouseDto.Latitude)
                 },
                 ["properties"] = new JObject
                 {
@@ -139,6 +140,14 @@ else
             await FarmhouseService.DeleteFarmhouse((int)currentUser.IdFarmhouse);
             alertService.SetSuccessAlert($"Deleted farmhouse {farmhouseDto.Name}");
             NavigationManager.NavigateTo("/");
+        }
+    }
+
+    private async void UnlockMap()
+    {
+        if (module != null)
+        {
+            result = await module.InvokeAsync<string>("setCoordinates", "map");
         }
     }
 }
