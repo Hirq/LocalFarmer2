@@ -18,8 +18,8 @@
                     <MudTextField T="string" Label="Description" @bind-Value="farmhouseDto.Description" />
                     <MudTextField T="string" Label="Address" @bind-Value="farmhouseDto.Address" />
                     <MudTextField T="string" Label="Phone" @bind-Value="farmhouseDto.Phone" />
-                    <MudTextField Id="latitude_input" Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
-                    <MudTextField Id="longitude_input"Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
+                    <MudTextField Disabled Id="latitude_input" Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
+                    <MudTextField Disabled Id="longitude_input"Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
                 </MudPaper>
                 <MudPaper Class="pa-4 mt-4">
                     <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
