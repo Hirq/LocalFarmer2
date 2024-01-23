@@ -32,7 +32,7 @@ else
                     }
                     <MudPaper Class="pa-4 mt-4">
                         <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
-                        <MudButton OnClick="() => UnlockMap()" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Change marker</MudButton>
+                        <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Change marker</MudButton>
                         <MudButton OnClick="() => DeleteFarmhouse()" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Error">Delete</MudButton>
                     </MudPaper>
                 </MudItem>
@@ -111,8 +111,6 @@ else
         if (module != null)
         {
             result = await module.InvokeAsync<string>("load_map", Convert.ToString(raw), farmhouseDto.Latitude, farmhouseDto.Longitude, 9);
-
-            // result = await module.InvokeAsync<string>("setCoordinates", "map");
         }
     }
 
@@ -145,9 +143,16 @@ else
 
     private async void UnlockMap()
     {
+        Console.WriteLine(module);
+        Console.WriteLine("1");
+
         if (module != null)
         {
-            result = await module.InvokeAsync<string>("setCoordinates", "map");
+            Console.WriteLine("2");
+            Console.WriteLine(farmhouseDto.Latitude);
+
+            result = await module.InvokeAsync<string>("setCoordinates", "map", farmhouseDto.Latitude, farmhouseDto.Longitude);
+            Console.WriteLine(result);
         }
     }
 }
