@@ -49,7 +49,7 @@
                         ["geometry"] = new JObject
                         {
                             ["type"] = "Point",
-                            ["coordinates"] = new JArray(entry.Latitude, entry.Longitude)
+                            ["coordinates"] = new JArray(entry.Longitude, entry.Latitude)
                         },
                         ["properties"] = new JObject
                         {
@@ -65,7 +65,7 @@
             module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
             if (module != null)
             {
-                result = await module.InvokeAsync<string>("load_map", Convert.ToString(raw), 19.5, 52, 7);
+                result = await module.InvokeAsync<string>("load_map", Convert.ToString(raw), 52, 20, 7);
             }
         }
     }
