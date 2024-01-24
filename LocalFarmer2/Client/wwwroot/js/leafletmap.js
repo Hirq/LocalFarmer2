@@ -32,26 +32,41 @@ export function load_map(raw, latitude, longitude, zoom) {
     return "";
 }
 
-export function setCoordinates(mapId) {
+export function setCoordinates(mapId, latitude, longitude) {
     var currentMarker;
-    var map = L.map(mapId).setView([51.505, -0.09], 12);
+    var defaultLatitude = 51.505;
+    var defaultLongitude = -0.09;
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+    latitude = latitude || defaultLatitude;
+    longitude = longitude || defaultLongitude;
 
-    map.on('click', onMapClick);
+    var mapContainer = document.getElementById(mapId);
+    if (mapContainer) {
+        var map = L.map(mapId).setView([latitude, longitude], 12);
 
-    function onMapClick(e) {
-        document.getElementById("latitude_input").value = e.latlng.lat;
-        document.getElementById("longitude_input").value = e.latlng.lng;
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
 
-        if (currentMarker) {
-            currentMarker.remove();
+        // Dodaj marker na podanych wspó³rzêdnych
+        if (latitude !== defaultLatitude || longitude !== defaultLongitude) {
+            currentMarker = L.marker([latitude, longitude]).addTo(map);
+            currentMarker.bindPopup("Initial marker at " + [latitude, longitude]).openPopup();
         }
 
-        currentMarker = L.marker(e.latlng).addTo(map);
-        currentMarker.bindPopup("You clicked the map at " + e.latlng).openPopup();
+        map.on('click', onMapClick);
+
+        function onMapClick(e) {
+            document.getElementById("latitude_input").value = e.latlng.lat;
+            document.getElementById("longitude_input").value = e.latlng.lng;
+
+            if (currentMarker) {
+                currentMarker.remove();
+            }
+
+            currentMarker = L.marker(e.latlng).addTo(map);
+            currentMarker.bindPopup("You clicked the map at " + e.latlng).openPopup();
+        }
     }
 };
 
@@ -59,3 +74,25 @@ export function getValueById(elementId) {
     var element = document.getElementById(elementId);
     return element ? element.value : null;
 };
+
+export function removeMap(mapId) {
+    var mapContainer = document.getElementById(mapId);
+    if (mapContainer) {
+        mapContainer._leaflet_id = null;
+        mapContainer.innerHTML = '';
+    }
+}
+
+export function setDisplayMap(mapId, display) {
+    var mapContainer = document.getElementById(mapId);
+    if (mapContainer) {
+        mapContainer.style.display = display;
+    }
+}
+
+export function disableButton(buttonId, bool) {
+    var buttonElement = document.getElementById(buttonId);
+    if (buttonElement) {
+        buttonElement.disabled = bool;
+    }
+}

@@ -32,13 +32,14 @@ else
                     }
                     <MudPaper Class="pa-4 mt-4">
                         <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
-                        <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Change marker</MudButton>
+                        <MudButton OnClick="() => UnlockMap()" id="buttonChangeMarker" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Change marker</MudButton>
                         <MudButton OnClick="() => DeleteFarmhouse()" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Error">Delete</MudButton>
                     </MudPaper>
                 </MudItem>
             </MudGrid>
         </EditForm>
         <div id="map" style="height: 400px;"></div>
+        <div id="map2" style="height: 400px; display: none;"></div>
     </AuthorizeView>
 }
 
@@ -143,16 +144,13 @@ else
 
     private async void UnlockMap()
     {
-        Console.WriteLine(module);
-        Console.WriteLine("1");
-
         if (module != null)
         {
-            Console.WriteLine("2");
-            Console.WriteLine(farmhouseDto.Latitude);
-
-            result = await module.InvokeAsync<string>("setCoordinates", "map", farmhouseDto.Latitude, farmhouseDto.Longitude);
-            Console.WriteLine(result);
+            result = await module.InvokeAsync<string>("setDisplayMap", "map", "none");
+            result = await module.InvokeAsync<string>("removeMap", "map");
+            result = await module.InvokeAsync<string>("disableButton", "buttonChangeMarker", "true");
+            result = await module.InvokeAsync<string>("setDisplayMap", "map2", "block");
+            result = await module.InvokeAsync<string>("setCoordinates", "map2", farmhouseDto.Latitude, farmhouseDto.Longitude);
         }
     }
 }
