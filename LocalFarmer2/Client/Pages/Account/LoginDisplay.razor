@@ -1,12 +1,9 @@
 ﻿@page "/account/logindisplay"
-@namespace LocalFarmer2.Client.Pages.Account
-@inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject IAccountService AccountService
 @inject UserStateService UserStateService
 
 <AuthorizeView>
     <Authorized>
-        @* @context.User.Identity!.Name! *@
         <div>UserName: @currentUser?.UserName</div>
         <div>FarmhouseId: @currentUser?.IdFarmhouse</div>
         <div>Farmhouse: @currentUser?.FarmhouseName</div>

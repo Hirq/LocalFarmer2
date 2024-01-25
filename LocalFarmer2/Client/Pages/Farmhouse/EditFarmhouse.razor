@@ -55,12 +55,6 @@ else
     private bool isUserSignUp;
     public int Id { get; set; }
 
-    // protected override async Task OnParametersSetAsync()
-    // {
-    //     var product = await ProductService.GetProduct(Id);
-    //     model = mapper.Map<ProductDto>(product);
-    // }
-
     protected async override Task OnInitializedAsync()
     {
         isUserSignUp = await AccountService.IsUserSignUp();
@@ -86,10 +80,6 @@ else
         await base.OnParametersSetAsync();
         var client = new HttpClient();
         var raw = await client.GetStringAsync("https://localhost:7239/geojson.json");
-
-        // string sciezkaDoPliku = System.IO.Path.Combine(AppContext.BaseDirectory, "Utilities", "geojson.json");
-        // string jsonZawartosc = System.IO.File.ReadAllText(sciezkaDoPliku);
-
         JArray jsonArray = JArray.Parse(raw);
         JObject newEntry = new JObject
             {

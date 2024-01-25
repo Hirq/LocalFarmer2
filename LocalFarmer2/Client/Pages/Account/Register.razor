@@ -36,7 +36,7 @@
                 <InputText Id="password" type="password" class="form-control" @bind-Value="RegisterModel.ConfirmPassword" />
                 <ValidationMessage For="@(() => RegisterModel.ConfirmPassword)" />
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <MudButton ButtonType="ButtonType.Submit" class="btn btn-primary">Submit</MudButton>
         </EditForm>
     </div>
 </div>

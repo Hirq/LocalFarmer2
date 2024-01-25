@@ -35,12 +35,10 @@
     private string? result;
     private string? latitude;
     private string? longitude;
-
     private UserDto? currentUser;
     private bool isUserSignUp;
     public int Id { get; set; }
     private AddFarmhouseDto farmhouseDto = new AddFarmhouseDto();
-    //TODO: Poprawić format dla latitide i longitude ( obecnie przymuje tylko 11,11, a powinno przyjmować też 11.11 oraz przy tym jak jest 0 poinformować, że jest 0 czy tak ma być )
 
     protected async override Task OnInitializedAsync()
     {
@@ -54,14 +52,6 @@
         //     farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
         // }
     }
-
-
-    // protected override async Task OnParametersSetAsync()
-    // {
-    //     var product = await ProductService.GetProduct(Id);
-    //     model = mapper.Map<ProductDto>(product);
-    // }
-
 
     private async void OnValidSubmit(EditContext context)
     {
@@ -96,6 +86,4 @@
             }
         }
     }
-
-
 }

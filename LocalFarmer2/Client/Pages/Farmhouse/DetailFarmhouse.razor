@@ -31,10 +31,6 @@
         {
             var client = new HttpClient();
             var raw = await client.GetStringAsync("https://localhost:7239/geojson.json");
-
-            // string sciezkaDoPliku = System.IO.Path.Combine(AppContext.BaseDirectory, "Utilities", "geojson.json");
-            // string jsonZawartosc = System.IO.File.ReadAllText(sciezkaDoPliku);
-
             JArray jsonArray = JArray.Parse(raw);
             JObject newEntry = new JObject
                 {
