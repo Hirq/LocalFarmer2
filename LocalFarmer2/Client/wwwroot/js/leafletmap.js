@@ -1,12 +1,6 @@
-//export function load_map(latitude, longitude) {
-//    let map = L.map('map').setView([latitude, longitude], 12);
-//    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
-//}
-
-//Plan - zrobiæ mapê dla wszystkich aktywnych gospodarstw + jak wchodze w szczeoly to widzê mape wszystkich ale jest wyœrodkowane na dane gosporastwo
 // A jak wchodze w ogolny to pyta o lokalizacje i pokazuje dookola, jak nie udostêpni to na Warszawe i elo
-
-export function load_map(raw, latitude, longitude, zoom) {
+var zoom = 8;
+export function load_map(raw, latitude, longitude) {
     console.log(JSON.parse(String(raw)));
     let map = L.map('map').setView({ lat: latitude, lon: longitude }, zoom);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
@@ -34,15 +28,15 @@ export function load_map(raw, latitude, longitude, zoom) {
 
 export function setCoordinates(mapId, latitude, longitude) {
     var currentMarker;
-    var defaultLatitude = 51.505;
-    var defaultLongitude = -0.09;
+    var defaultLatitude = 21.505;
+    var defaultLongitude = 19.50;
 
     latitude = latitude || defaultLatitude;
     longitude = longitude || defaultLongitude;
 
     var mapContainer = document.getElementById(mapId);
     if (mapContainer) {
-        var map = L.map(mapId).setView([latitude, longitude], 12);
+        var map = L.map(mapId).setView([latitude, longitude], zoom);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
