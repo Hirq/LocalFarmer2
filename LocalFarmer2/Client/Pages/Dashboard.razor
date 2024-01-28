@@ -59,10 +59,17 @@
 @code {
     protected async override Task OnInitializedAsync()
     {
+
+    }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
         int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
         var idUser = UserStateService.CurrentUser?.IdUser;
     }
 }
+
 
 @* SMALL TASKS *@
 @* Sprawdzic usera niezalogowane - jego błedy *@

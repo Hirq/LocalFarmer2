@@ -77,7 +77,7 @@ else
 
     protected async override Task OnParametersSetAsync()
     {
-        await base.OnParametersSetAsync();
+        // await base.OnParametersSetAsync();
         var client = new HttpClient();
         var raw = await client.GetStringAsync("https://localhost:7239/geojson.json");
         JArray jsonArray = JArray.Parse(raw);
