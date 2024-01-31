@@ -83,7 +83,6 @@
     protected override async Task OnInitializedAsync()
     {
         userId = UserStateService.CurrentUser.IdUser;
-        Console.WriteLine(userId);
         ListFavoritesFarmhouse = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUser(userId);
     }
 

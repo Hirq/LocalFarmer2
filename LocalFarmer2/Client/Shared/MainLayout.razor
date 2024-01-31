@@ -4,7 +4,6 @@
 @inject UserStateService UserStateService
 @inject IAccountService accontService
 @inject IJSRuntime JSRuntime
-@using Microsoft.JSInterop
 
 <MudThemeProvider />
 <MudDialogProvider />
@@ -21,10 +20,12 @@
                 @if(UserStateService.CurrentUser?.IdFarmhouse != null)
                 {
                     <MudMenuItem Href="/editfarmhouse">Edit farmhouse</MudMenuItem>
+                    <MudMenuItem Href="/myaccount">My account</MudMenuItem>
                 }
                 else
                 {
                     <MudMenuItem Href="/addfarmhouse">Set farmhouse</MudMenuItem>
+                    <MudMenuItem Href="/myaccount">My account</MudMenuItem>
                 }
             </MudMenu>
         </AuthorizeView>
