@@ -1,7 +1,54 @@
 ﻿@page "/myaccount"
+@inject IMapper mapper;
+@inject IAccountService AccountService
+@inject NavigationManager NavigationManager
 
-<h3>MyAccount</h3>
+
+@if (userDto == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <AuthorizeView>
+        <EditForm Model="userDto" OnValidSubmit="OnValidSubmit" Context="editForm">
+            <DataAnnotationsValidator />
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText Class="d-flex justify-center" Typo="Typo.h6">My account</MudText>
+                    <MudPaper Class="pa-4">
+                        <MudTextField T="string" Label="UserName" @bind-Value="userDto.UserName" Required="true" RequiredError="UserName name is required!" />
+                        </MudPaper>
+                    <MudPaper Class="pa-4 mt-4">
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
+        </EditForm>
+    </AuthorizeView>
+}
+
 
 @code {
+    [Parameter]
+    public UserDto userDto { get; set; }
 
+    protected async override Task OnInitializedAsync()
+    {
+        bool isUserSignUp = await AccountService.IsUserSignUp();
+
+        if (isUserSignUp)
+        {
+            userDto = await AccountService.GetCurrentUser();
+        }
+        else
+        {
+            throw new Exception("You aren't logged");
+        }
+    }
+
+    private async void OnValidSubmit(EditContext context)
+    {
+        NavigationManager.NavigateTo("/");
+    }
 }
