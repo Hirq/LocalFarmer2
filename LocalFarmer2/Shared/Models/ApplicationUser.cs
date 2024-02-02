@@ -8,6 +8,9 @@ namespace LocalFarmer2.Shared.Models
         [ForeignKey(nameof(Farmhouse))]
         public int? IdFarmhouse { get; set; }
 
+        public string FullName { get; set; } 
+        
         public Farmhouse Farmhouse { get; set; }
+
     }
 }

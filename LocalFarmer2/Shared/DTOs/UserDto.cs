@@ -6,5 +6,7 @@
         public string IdUser { get; set; }
         public int? IdFarmhouse { get; set; }
         public string FarmhouseName { get; set; }
+        public string FullName { get; set; }
+
     }
 }
