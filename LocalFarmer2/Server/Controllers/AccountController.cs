@@ -1,8 +1,12 @@
-﻿using LocalFarmer2.Shared.Models;
+﻿using Humanizer;
+using LocalFarmer2.Client.Pages.Farmhouse;
+using LocalFarmer2.Server.Utilities;
+using LocalFarmer2.Shared.Models;
 using LocalFarmer2.Shared.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Annotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -18,6 +22,7 @@ namespace LocalFarmer2.Server.Controllers
         private readonly IConfiguration _configuration;
         private readonly IApplicationUserRepository _applicationUserRepository;
         private readonly IFarmhouseRepository _farmhouseRepository;
+
 
         public AccountController(
             UserManager<IdentityUser> userManager,
@@ -111,11 +116,30 @@ namespace LocalFarmer2.Server.Controllers
             var userDto = new UserDto()
             {
                 UserName = user.UserName,
-                IdUser = user.Id,
                 IdFarmhouse = user.IdFarmhouse,
                 FarmhouseName = user.Farmhouse?.Name,
                 FullName = user.FullName
             };
+            return Ok(userDto);
+        }
+
+        [HttpPut]
+        [Route("User/{userName}")]
+        public async Task<IActionResult> PutUser([FromBody] EditUserDto dto, string userName)
+        {
+            var user = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.UserName == userName, x => x.Farmhouse);
+            user.FullName = dto.FullName;
+            _applicationUserRepository.Update(user);
+            await _applicationUserRepository.SaveChangesAsync();
+
+            var userDto = new UserDto()
+            {
+                UserName = user.UserName,
+                IdFarmhouse = user.IdFarmhouse,
+                FarmhouseName = user.Farmhouse?.Name,
+                FullName = user.FullName
+            };
+
             return Ok(userDto);
         }
     }
