@@ -4,7 +4,6 @@ using LocalFarmer2.Shared.DTOs;
 using LocalFarmer2.Shared.Utilities;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
@@ -89,6 +88,12 @@ namespace LocalFarmer2.Client.Services
             return userDto;
         }
 
+        public async Task EditUser(EditUserDto dto)
+        {
+            var user = await GetCurrentUser();
+            await _httpClient.PutAsJsonAsync($"api/Account/User/{user.UserName}", dto);
+        }
+
         public async Task<bool> IsUserSignUp()
         {
             var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
@@ -96,5 +101,6 @@ namespace LocalFarmer2.Client.Services
 
             return user.Identity.IsAuthenticated;
         }
+
     }
 }

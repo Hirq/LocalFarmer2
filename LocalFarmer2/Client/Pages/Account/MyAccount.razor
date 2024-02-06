@@ -1,6 +1,7 @@
 ﻿@page "/myaccount"
 @inject IMapper mapper;
 @inject IAccountService AccountService
+@inject AlertService alertService
 @inject NavigationManager NavigationManager
 
 
@@ -49,6 +50,9 @@ else
 
     private async void OnValidSubmit(EditContext context)
     {
+        var editDto = mapper.Map<EditUserDto>(userDto);
+        await AccountService.EditUser(editDto);
+        alertService.SetSuccessAlert($"You new Fullname is: {editDto.FullName}");
         NavigationManager.NavigateTo("/");
     }
 }
