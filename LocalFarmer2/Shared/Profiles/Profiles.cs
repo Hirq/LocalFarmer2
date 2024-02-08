@@ -18,6 +18,7 @@ namespace LocalFarmer2.Shared.Profiles
             CreateMap<FavoriteFarmhouse, FavoriteFarmhouseDto>();
             CreateMap<FavoriteFarmhouseDto, FavoriteFarmhouse>();
             CreateMap<UserDto, EditUserDto>();
+            CreateMap<AddOpinionDto, Opinion>();
         }
     }
 }

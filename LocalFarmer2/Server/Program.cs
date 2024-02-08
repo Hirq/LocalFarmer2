@@ -2,7 +2,7 @@ global using AutoMapper;
 global using LocalFarmer2.Shared.Models;
 global using LocalFarmer2.Server.Repositories;
 global using LocalFarmer2.Shared.DTOs;
-using LocalFarmer2.Server.Data;
+global using LocalFarmer2.Server.Data;
 using LocalFarmer2.Server.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -52,6 +52,7 @@ builder.Services.AddScoped<IFarmhouseRepository, FarmhouseRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
 builder.Services.AddScoped<IFavoriteFarmhouseRepository, FavoriteFarmhouseRepository>();
+builder.Services.AddScoped<IOpinionRepository, OpinionRepository>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

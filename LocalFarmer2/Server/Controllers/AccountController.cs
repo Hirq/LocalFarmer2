@@ -1,12 +1,7 @@
-﻿using Humanizer;
-using LocalFarmer2.Client.Pages.Farmhouse;
-using LocalFarmer2.Server.Utilities;
-using LocalFarmer2.Shared.Models;
-using LocalFarmer2.Shared.Utilities;
+﻿using LocalFarmer2.Shared.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Swashbuckle.AspNetCore.Annotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

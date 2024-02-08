@@ -1,6 +1,4 @@
-﻿using LocalFarmer2.Server.Data;
-
-namespace LocalFarmer2.Server.Repositories
+﻿namespace LocalFarmer2.Server.Repositories
 {
     public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
