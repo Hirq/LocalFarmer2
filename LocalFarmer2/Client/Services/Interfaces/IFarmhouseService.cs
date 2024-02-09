@@ -1,5 +1,4 @@
-﻿using LocalFarmer2.Shared.DTOs;
-using LocalFarmer2.Shared.ViewModels;
+﻿using LocalFarmer2.Shared.ViewModels;
 
 namespace LocalFarmer2.Client.Services
 {

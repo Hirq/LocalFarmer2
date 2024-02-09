@@ -1,6 +1,5 @@
 ﻿using Blazored.LocalStorage;
 using LocalFarmer2.Client.Utilities;
-using LocalFarmer2.Shared.DTOs;
 using LocalFarmer2.Shared.Utilities;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Headers;

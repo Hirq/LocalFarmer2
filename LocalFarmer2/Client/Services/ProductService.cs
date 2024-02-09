@@ -1,8 +1,4 @@
-﻿using LocalFarmer2.Shared.DTOs;
-using LocalFarmer2.Shared.Models;
-using System.Net.Http.Json;
-
-namespace LocalFarmer2.Client.Services
+﻿namespace LocalFarmer2.Client.Services
 {
     public class ProductService : IProductService
     {

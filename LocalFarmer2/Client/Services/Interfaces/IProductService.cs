@@ -1,7 +1,4 @@
-﻿using LocalFarmer2.Shared.DTOs;
-using LocalFarmer2.Shared.Models;
-
-namespace LocalFarmer2.Client.Services
+﻿namespace LocalFarmer2.Client.Services
 {
     public interface IProductService
     {

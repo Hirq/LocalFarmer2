@@ -1,5 +1,4 @@
-﻿using LocalFarmer2.Shared.DTOs;
-using LocalFarmer2.Shared.ViewModels;
+﻿using LocalFarmer2.Shared.ViewModels;
 
 namespace LocalFarmer2.Client.Services
 {
@@ -8,7 +7,8 @@ namespace LocalFarmer2.Client.Services
         private readonly HttpClient _http;
         private readonly IMapper _mapper;
 
-        public FarmhouseService(HttpClient http,
+        public FarmhouseService(
+            HttpClient http,
             IMapper mapper)
         {
             _http = http;

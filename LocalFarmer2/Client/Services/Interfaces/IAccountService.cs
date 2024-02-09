@@ -1,5 +1,4 @@
-﻿using LocalFarmer2.Shared.DTOs;
-using LocalFarmer2.Shared.Utilities;
+﻿using LocalFarmer2.Shared.Utilities;
 
 namespace LocalFarmer2.Client.Services
 {

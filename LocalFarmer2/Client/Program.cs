@@ -1,6 +1,7 @@
 global using AutoMapper;
 global using System.Net.Http.Json;
 global using LocalFarmer2.Shared.Models;
+global using LocalFarmer2.Shared.DTOs;
 using Blazored.LocalStorage;
 using LocalFarmer2.Client;
 using LocalFarmer2.Client.Services;
