@@ -2,6 +2,7 @@
 @inject IFarmhouseService FarmhouseService
 @inject IProductService ProductService
 @inject IFavoriteFarmhouseService FavoriteFarmhouseService
+@inject IOpinionService OpinionService
 @inject NavigationManager NavigationManager
 @inject HttpClient httpClient
 @inject AlertService alertService
@@ -28,6 +29,7 @@
         <AuthorizeView>
             <Authorized>
                 <MudTh>Subscribe</MudTh>
+                <MudTh>Add opinion</MudTh>
             </Authorized>
         </AuthorizeView>
     </HeaderContent>
@@ -45,6 +47,10 @@
                     @if (row.IsFavorite == false)
                         {
                             <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddFavorite(row.Id)">Add favorite</MudButton></MudTd>
+                        }
+                    @if (row.IsCommented == false)
+                        {
+                            <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddOpinion(row.Id)">Add opinion</MudButton></MudTd>
                         }
                 </Authorized>
             </AuthorizeView>
@@ -97,19 +103,20 @@
     private Product product = new Product();
     private string searchString = null;
     public bool ShowDetails { get; set; }
+    private string idUser = null;
 
     protected override async Task OnInitializedAsync()
     {
         int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
-        var idUser = UserStateService.CurrentUser?.IdUser;
-
+        idUser = UserStateService.CurrentUser?.IdUser;
+        Console.WriteLine(idUser);
         if (!string.IsNullOrEmpty(idUser))
         {
             CurrentListFavorite = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUserOnlyIds(idUser);
         }        
 
         ListFarmhousesVM = await FarmhouseService.GetFarmhousesWithProductsAndButton(CurrentListFavorite, idFarmhouse);
-         
+
         // 3 types of users
         // 1. Not logged                            idUser null + idFarmhouse null
         // 2. have account without farmhouse        idUser not null + idFarmhouse null
@@ -125,7 +132,7 @@
         if (CurrentListFavorite?.Length > 0)
         {
             Console.WriteLine("Favorites: ");
-            
+
             foreach (var n in CurrentListFavorite)
             {
                 Console.WriteLine("Id: "+n);
@@ -152,6 +159,28 @@
             addedFarmhouse.IsFavorite = true;
             StateHasChanged();
             alertService.SetSuccessAlert($"Successfully added subscribe {idFarmhouse}");
+        }
+    }
+
+    private async void AddOpinion(int idFarmhouse)
+    {
+        Console.WriteLine(UserStateService.CurrentUser?.IdUser);
+        AddOpinionDto dto = new AddOpinionDto()
+        {
+            IdFarmhouse = idFarmhouse,
+            IdUser = idUser,
+            Comment = "Comment",
+            Rating = 4
+        };
+
+        await OpinionService.AddOpinion(dto, idFarmhouse);
+
+        var addedFarmhouse = ListFarmhousesVM.FirstOrDefault(x => x.Id == idFarmhouse);
+        if (addedFarmhouse != null)
+        {
+            addedFarmhouse.IsCommented = true;
+            StateHasChanged();
+            alertService.SetSuccessAlert($"Successfully added opinion about {idFarmhouse}");
         }
     }
 

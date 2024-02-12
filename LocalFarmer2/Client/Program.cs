@@ -23,6 +23,7 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IFarmhouseService, FarmhouseService>();
 builder.Services.AddScoped<IFavoriteFarmhouseService, FavoriteFarmhouseService>();
+builder.Services.AddScoped<IOpinionService, OpinionService>();
 builder.Services.AddScoped<UserStateService>();
 builder.Services.AddSingleton<AlertService>();
 builder.Services.AddSingleton<UtilsService>();

@@ -11,6 +11,7 @@ namespace LocalFarmer2.Shared.ViewModels
         public string Phone { get; set; }
         public bool ShowDetails { get; set; } = false;
         public bool IsFavorite { get; set; } = false;
+        public bool IsCommented { get; set; } = false;
 
         public IList<Product> Products { get; set; }
     }

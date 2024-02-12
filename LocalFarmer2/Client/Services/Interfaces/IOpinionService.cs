@@ -1,4 +1,6 @@
-﻿namespace LocalFarmer2.Client.Services
+﻿using LocalFarmer2.Shared.DTOs;
+
+namespace LocalFarmer2.Client.Services
 {
     public interface IOpinionService
     {
