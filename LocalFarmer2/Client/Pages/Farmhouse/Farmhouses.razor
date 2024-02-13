@@ -3,6 +3,7 @@
 @inject IProductService ProductService
 @inject IFavoriteFarmhouseService FavoriteFarmhouseService
 @inject IOpinionService OpinionService
+@inject IAccountService AccountService
 @inject NavigationManager NavigationManager
 @inject HttpClient httpClient
 @inject AlertService alertService
@@ -103,19 +104,14 @@
     private Product product = new Product();
     private string searchString = null;
     public bool ShowDetails { get; set; }
+    public bool isUserSignUp = false;
     private string idUser = null;
 
     protected override async Task OnInitializedAsync()
     {
-        int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
-        idUser = UserStateService.CurrentUser?.IdUser;
-        Console.WriteLine(idUser);
-        if (!string.IsNullOrEmpty(idUser))
-        {
-            CurrentListFavorite = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUserOnlyIds(idUser);
-        }        
+        isUserSignUp = await AccountService.IsUserSignUp();
 
-        ListFarmhousesVM = await FarmhouseService.GetFarmhousesWithProductsAndButton(CurrentListFavorite, idFarmhouse);
+
 
         // 3 types of users
         // 1. Not logged                            idUser null + idFarmhouse null
@@ -124,6 +120,26 @@
 
         AddComment();
     }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        if (isUserSignUp)
+        {
+            UserStateService.CurrentUser = await AccountService.GetCurrentUser();
+        }
+
+        int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
+        idUser = UserStateService.CurrentUser?.IdUser;
+        Console.WriteLine(UserStateService);
+        Console.WriteLine(idUser);
+        if (!string.IsNullOrEmpty(idUser))
+        {
+            CurrentListFavorite = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUserOnlyIds(idUser);
+        }
+
+        ListFarmhousesVM = await FarmhouseService.GetFarmhousesWithProductsAndButton(CurrentListFavorite, idFarmhouse);
+    }
+
 
     void AddComment()
     {
