@@ -2,7 +2,7 @@
 @inject AlertService alertService
 @* @inject UtilsService utilsService *@
 @inject UserStateService UserStateService
-@inject IAccountService accontService
+@inject IAccountService AccountService
 @inject IJSRuntime JSRuntime
 
 <MudThemeProvider />
@@ -17,7 +17,7 @@
             <MudIconButton Icon="@Icons.Material.Outlined.Notifications" Color="Color.Inherit" />
             @* <MudAvatar Color="Color.Secondary" Size="Size.Medium" Class="avatar">JK</MudAvatar> *@
             <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.MoreVert" TransformOrigin="Origin.TopRight" Color="Color.Inherit">
-                @if(UserStateService.CurrentUser?.IdFarmhouse != null)
+                @if (UserStateService.CurrentUser?.IdFarmhouse != null)
                 {
                     <MudMenuItem Href="/editfarmhouse">Edit farmhouse</MudMenuItem>
                     <MudMenuItem Href="/myaccount">My account</MudMenuItem>
@@ -48,6 +48,7 @@
 
 @code {
     bool _drawerOpen = true;
+    private bool isDataInitialized = false;
 
     void DrawerToggle()
     {
@@ -72,14 +73,25 @@
             alertService.IsDeleteAlert = false;
             await JSRuntime.InvokeVoidAsync("closeAlertAfterDelay");
         }
+    }
 
-        // if (await accontService.IsUserSignUp())
-        // {
-        //     currentUser = await accontService.GetCurrentUser();
-        //     UserStateService.CurrentUser = currentUser;
-        //     Console.WriteLine(currentUser.IdFarmhouse);
-        //     Console.WriteLine(currentUser.Name);
-        //     Console.WriteLine(UserStateService.CurrentUser.IdFarmhouse);
-        // }
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("MainLayout.razor initialized");
+
+        if (!isDataInitialized)
+        {
+            if (await AccountService.IsUserSignUp())
+            {
+                Console.WriteLine("MainLayout.razor initialized2222333");
+
+                UserStateService.CurrentUser = await AccountService.GetCurrentUser();
+                Console.WriteLine("MainLayout - FullName: " + UserStateService.CurrentUser.FullName);
+                Console.WriteLine("MainLayout - IdFarmhouse: " + UserStateService.CurrentUser.IdFarmhouse);
+
+                isDataInitialized = true;
+                await JSRuntime.InvokeVoidAsync("notifyDataInitialized");
+            }
+        }
     }
 }

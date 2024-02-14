@@ -42,3 +42,17 @@
 </body>
 
 </html>
+
+<script>
+    var dataInitializedCallbacks = [];
+
+    function notifyDataInitialized() {
+        dataInitializedCallbacks.forEach(callback => callback());
+    }
+
+    function waitForDataInitialization() {
+        return new Promise(resolve => {
+            dataInitializedCallbacks.push(resolve);
+        });
+    }
+</script>

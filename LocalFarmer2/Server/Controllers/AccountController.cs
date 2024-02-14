@@ -111,6 +111,7 @@ namespace LocalFarmer2.Server.Controllers
             var userDto = new UserDto()
             {
                 UserName = user.UserName,
+                IdUser = user.Id,
                 IdFarmhouse = user.IdFarmhouse,
                 FarmhouseName = user.Farmhouse?.Name,
                 FullName = user.FullName
