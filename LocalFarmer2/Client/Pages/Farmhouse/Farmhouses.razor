@@ -11,7 +11,7 @@
 @inject IJSRuntime JSRuntime
 
 <PageTitle>Farmhouses</PageTitle>
-@if (ListFarmhousesVM != null)
+@if (ListFarmhousesVM == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -114,33 +114,12 @@ else
     public bool ShowDetails { get; set; }
     public bool isUserSignUp = false;
     private string idUser = null;
-    private bool isDataInitialized = false;
 
     protected override async Task OnInitializedAsync()
     {
-        await JSRuntime.InvokeVoidAsync("waitForDataInitialization");
-        isDataInitialized = true;
-
-        if (UserStateService.CurrentUser != null)
-        {
-            Console.WriteLine("1");
-        }
-        else
-        {
-            Console.WriteLine("2");
-        }
-
-        // isUserSignUp = await AccountService.IsUserSignUp();
-        // if (isUserSignUp)
-        // {
-        //     UserStateService.CurrentUser = await AccountService.GetCurrentUser();
-        // }
-
         int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
         idUser = UserStateService.CurrentUser?.IdUser;
-        Console.WriteLine("UserName:" + UserStateService.CurrentUser?.UserName);
-        Console.WriteLine("IdUser:" + UserStateService.CurrentUser?.IdUser);
-        Console.WriteLine("IdFarmhouse:" + UserStateService.CurrentUser?.IdFarmhouse);
+
         if (!string.IsNullOrEmpty(idUser))
         {
             CurrentListFavorite = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUserOnlyIds(idUser);
