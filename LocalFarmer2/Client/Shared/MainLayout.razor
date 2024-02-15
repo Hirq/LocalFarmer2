@@ -42,7 +42,10 @@
         {
             <MudAlert Severity="Severity.Error" ContentAlignment="HorizontalAlignment.Center" Variant="Variant.Filled" ShowCloseIcon="true" CloseIconClicked="() => CloseAlertDelete()">@alertService.Text </MudAlert>
         }
-        @Body
+        @if (isDataInitialized)
+        {
+            @Body
+        }
     </MudMainContent>
 </MudLayout>
 
@@ -77,20 +80,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine("MainLayout.razor initialized");
-
         if (!isDataInitialized)
         {
             if (await AccountService.IsUserSignUp())
             {
-                Console.WriteLine("MainLayout.razor initialized2222333");
-
                 UserStateService.CurrentUser = await AccountService.GetCurrentUser();
-                Console.WriteLine("MainLayout - FullName: " + UserStateService.CurrentUser.FullName);
-                Console.WriteLine("MainLayout - IdFarmhouse: " + UserStateService.CurrentUser.IdFarmhouse);
-
                 isDataInitialized = true;
-                await JSRuntime.InvokeVoidAsync("notifyDataInitialized");
             }
         }
     }
