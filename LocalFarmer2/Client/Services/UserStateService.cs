@@ -1,10 +1,11 @@
-﻿using LocalFarmer2.Shared.DTOs;
-
-namespace LocalFarmer2.Client.Services
+﻿namespace LocalFarmer2.Client.Services
 {
     public class UserStateService
     {
+        public bool IsUserLogged { get; set; }
+
         private UserDto? _currentUser;
+
         public event Action OnUserChanged;
 
         public UserDto? CurrentUser

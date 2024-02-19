@@ -84,8 +84,13 @@
         {
             if (await AccountService.IsUserSignUp())
             {
+                UserStateService.IsUserLogged = true;
                 UserStateService.CurrentUser = await AccountService.GetCurrentUser();
                 isDataInitialized = true;
+            }
+            else
+            {
+                UserStateService.IsUserLogged = false;
             }
         }
     }
