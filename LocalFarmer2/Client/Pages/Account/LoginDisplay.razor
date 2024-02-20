@@ -4,30 +4,30 @@
 
 <AuthorizeView>
     <Authorized>
-        <div>FullName: @currentUser?.FullName</div>
-        <div>UserName: @currentUser?.UserName</div>
-        <div>FarmhouseId: @currentUser?.IdFarmhouse</div>
-        <div>Farmhouse: @currentUser?.FarmhouseName</div>
+        <div>FullName: @UserStateService.CurrentUser?.FullName</div>
+        <div>UserName: @UserStateService.CurrentUser?.UserName</div>
+        <div>FarmhouseId: @UserStateService.CurrentUser?.IdFarmhouse</div>
+        <div>Farmhouse: @UserStateService.CurrentUser?.FarmhouseName</div>
     </Authorized>
 </AuthorizeView>
 
 @code {
-    private UserDto currentUser = new UserDto()
-        {
-            UserName = "",
-            IdFarmhouse = 0,
-            FarmhouseName = ""
-        };
-    private bool isUserSignUp;
+    // private UserDto currentUser = new UserDto()
+    //     {
+    //         UserName = "",
+    //         IdFarmhouse = 0,
+    //         FarmhouseName = ""
+    //     };
+    // private bool isUserSignUp;
 
-    protected async override Task OnInitializedAsync()
-    {
-        isUserSignUp = await AccountService.IsUserSignUp();
+    // protected async override Task OnInitializedAsync()
+    // {
+    //     isUserSignUp = await AccountService.IsUserSignUp();
 
-        if (isUserSignUp)
-        {
-            currentUser = await AccountService.GetCurrentUser();
-            UserStateService.CurrentUser = currentUser;
-        }
-    }
+    //     if (isUserSignUp)
+    //     {
+    //         currentUser = await AccountService.GetCurrentUser();
+    //         UserStateService.CurrentUser = currentUser;
+    //     }
+    // }
 }
