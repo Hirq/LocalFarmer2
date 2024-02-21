@@ -8,47 +8,45 @@
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
-
-<MudLayout>
-    <MudAppBar>
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        <MudSpacer />
-        <AuthorizeView>
-            <MudIconButton Icon="@Icons.Material.Outlined.Notifications" Color="Color.Inherit" />
-            @* <MudAvatar Color="Color.Secondary" Size="Size.Medium" Class="avatar">JK</MudAvatar> *@
-            <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.MoreVert" TransformOrigin="Origin.TopRight" Color="Color.Inherit">
-                @if (UserStateService.CurrentUser?.IdFarmhouse != null)
-                {
-                    <MudMenuItem Href="/editfarmhouse">Edit farmhouse</MudMenuItem>
-                    <MudMenuItem Href="/myaccount">My account</MudMenuItem>
-                }
-                else
-                {
-                    <MudMenuItem Href="/addfarmhouse">Set farmhouse</MudMenuItem>
-                    <MudMenuItem Href="/myaccount">My account</MudMenuItem>
-                }
-            </MudMenu>
-        </AuthorizeView>
-    </MudAppBar>
-    <MudDrawer @bind-Open="@_drawerOpen">
-        <NavMenu />
-    </MudDrawer>
-    <MudMainContent>
-        @if (alertService.IsSuccessAlert)
-        {
-            <MudAlert Severity="Severity.Success" ContentAlignment="HorizontalAlignment.Center" Variant="Variant.Filled" ShowCloseIcon="true" CloseIconClicked="() => CloseAlertSuccess()">@alertService.Text </MudAlert>
-        }
-        @if (alertService.IsDeleteAlert)
-        {
-            <MudAlert Severity="Severity.Error" ContentAlignment="HorizontalAlignment.Center" Variant="Variant.Filled" ShowCloseIcon="true" CloseIconClicked="() => CloseAlertDelete()">@alertService.Text </MudAlert>
-        }
-        @if (isDataInitialized)
-        {
+@if (isDataInitialized)
+{
+    <MudLayout>
+        <MudAppBar>
+            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+            <MudSpacer />
+            <AuthorizeView>
+                <MudIconButton Icon="@Icons.Material.Outlined.Notifications" Color="Color.Inherit" />
+                @* <MudAvatar Color="Color.Secondary" Size="Size.Medium" Class="avatar">JK</MudAvatar> *@
+                <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.MoreVert" TransformOrigin="Origin.TopRight" Color="Color.Inherit">
+                    @if (UserStateService.CurrentUser?.IdFarmhouse != null)
+                    {
+                        <MudMenuItem Href="/editfarmhouse">Edit farmhouse</MudMenuItem>
+                        <MudMenuItem Href="/myaccount">My account</MudMenuItem>
+                    }
+                    else
+                    {
+                        <MudMenuItem Href="/addfarmhouse">Set farmhouse</MudMenuItem>
+                        <MudMenuItem Href="/myaccount">My account</MudMenuItem>
+                    }
+                </MudMenu>
+            </AuthorizeView>
+        </MudAppBar>
+        <MudDrawer @bind-Open="@_drawerOpen">
+            <NavMenu />
+        </MudDrawer>
+        <MudMainContent>
+            @if (alertService.IsSuccessAlert)
+            {
+                <MudAlert Severity="Severity.Success" ContentAlignment="HorizontalAlignment.Center" Variant="Variant.Filled" ShowCloseIcon="true" CloseIconClicked="() => CloseAlertSuccess()">@alertService.Text </MudAlert>
+            }
+            @if (alertService.IsDeleteAlert)
+            {
+                <MudAlert Severity="Severity.Error" ContentAlignment="HorizontalAlignment.Center" Variant="Variant.Filled" ShowCloseIcon="true" CloseIconClicked="() => CloseAlertDelete()">@alertService.Text </MudAlert>
+            }
             @Body
-        }
-    </MudMainContent>
-</MudLayout>
-
+        </MudMainContent>
+    </MudLayout>
+}
 @code {
     bool _drawerOpen = true;
     private bool isDataInitialized = false;
@@ -86,12 +84,12 @@
             {
                 UserStateService.IsUserLogged = true;
                 UserStateService.CurrentUser = await AccountService.GetCurrentUser();
-                isDataInitialized = true;
             }
             else
             {
                 UserStateService.IsUserLogged = false;
             }
+            isDataInitialized = true;
         }
     }
 }
