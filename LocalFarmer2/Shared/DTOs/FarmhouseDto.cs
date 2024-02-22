@@ -1,4 +1,6 @@
-﻿namespace LocalFarmer2.Shared.DTOs
+﻿using LocalFarmer2.Shared.Utilities;
+
+namespace LocalFarmer2.Shared.DTOs
 {
     public class FarmhouseDto
     {
@@ -9,5 +11,6 @@
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public bool IsOpen { get; set; }
+        public string PaymentMethods { get; set; }
     }
 }

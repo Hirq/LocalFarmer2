@@ -26,9 +26,15 @@ else
                             <MudTextField T="String" Label="Description" @bind-Value="farmhouseDto.Description" />
                             <MudTextField T="String" Label="Address" @bind-Value="farmhouseDto.Address" />
                             <MudTextField T="String" Label="Phone" @bind-Value="farmhouseDto.Phone" />
+                            <MudSelect T="string" Label="Payment methods" MultiSelection="true" SelectAll="true" Required="true" @bind-Value="@farmhouseDto.PaymentMethods" @bind-SelectedValues="SelectedPayment">
+                                @foreach (var method in PaymentMethodInfo.PaymentMethods)
+                                {
+                                    <MudSelectItem T="string" Value="@method">@method</MudSelectItem>
+                                }
+                            </MudSelect>
                             <MudTextField T="String" Id="latitude_input" Disabled Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
                             <MudTextField T="String" Id="longitude_input" Disabled Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
-                             <MudCheckBox T="Boolean" Checked="farmhouseDto.IsOpen" CheckedChanged="HandleCheckedChanged" Color="Color.Primary" Label="Active" />
+                            <MudCheckBox T="Boolean" Checked="farmhouseDto.IsOpen" CheckedChanged="HandleCheckedChanged" Color="Color.Primary" Label="Active" />
                          </MudPaper>
                     }
                     <MudPaper Class="pa-4 mt-4">
@@ -55,7 +61,9 @@ else
     private string? longitude;
     private UserDto? currentUser;
     private bool isUserSignUp;
+    private IEnumerable<string> SelectedPayment { get; set; } = PaymentMethodInfo.DefaultPayment;
     public int Id { get; set; }
+
 
     protected async override Task OnInitializedAsync()
     {
@@ -69,6 +77,7 @@ else
             {
                 var farmhouse = await FarmhouseService.GetFarmhouse((int)currentUser?.IdFarmhouse!);
                 farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
+                SelectedPayment = farmhouseDto.PaymentMethods.Split(',').Select(s => s.Trim());
             }
             else
             {
@@ -117,7 +126,6 @@ else
 
         farmhouseDto.Latitude = latitude;
         farmhouseDto.Longitude = longitude;
-
         FarmhouseDto dto = mapper.Map<FarmhouseDto>(farmhouseDto);
         await FarmhouseService.EditFarmhouse(dto, (int)currentUser?.IdFarmhouse!);
         alertService.SetSuccessAlert($"Successfully edited farmhouse {farmhouseDto.Name}");

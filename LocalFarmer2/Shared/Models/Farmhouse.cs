@@ -22,7 +22,7 @@ namespace LocalFarmer2.Shared.Models
 
         public bool IsOpen { get; set; }
 
-        public string PaymentMethodsJson { get; set; }
+        public string PaymentMethods { get; set; }
 
         public virtual IList<Product> Products { get; set; }
     }

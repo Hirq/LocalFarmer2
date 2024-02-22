@@ -2,16 +2,15 @@
 {
     public class PaymentMethodInfo
     {
-        public PaymentMethod Method { get; set; }
-        public string DisplayName { get; set; }
-    }
+        public static readonly string[] PaymentMethods =
+        {
+            "Cash",
+            "Card",
+            "Bank transfer",
+            "Transfer on phone",
+            "Other in describe"
+        };
 
-    public enum PaymentMethod
-    {
-        Cash,
-        Card,
-        BankTransfer,
-        TransferOnPhone,
-        Other
-    }
+        public static IEnumerable<string> DefaultPayment { get; set; } = new HashSet<string>() { "Cash" };
+    };
 }
