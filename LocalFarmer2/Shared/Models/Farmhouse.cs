@@ -19,6 +19,8 @@ namespace LocalFarmer2.Shared.Models
         //Długość geograficzna - zakres 0:180
         public string Longitude { get; set; }
 
+        public bool IsOpen { get; set; }
+
         //TODO:
         //Enum czym mozna płacić - gotówka/karta/Blik na telefon/Przelew
 

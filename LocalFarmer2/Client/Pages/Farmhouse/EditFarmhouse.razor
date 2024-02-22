@@ -22,12 +22,13 @@ else
                     @if (@currentUser?.IdFarmhouse != null)
                     {
                         <MudPaper Class="pa-4">
-                            <MudTextField T="string" Label="Farmhouse name" @bind-Value="farmhouseDto.Name" Required="true" RequiredError="Farmhouse name is required!" />
-                            <MudTextField T="string" Label="Description" @bind-Value="farmhouseDto.Description" />
-                            <MudTextField T="string" Label="Address" @bind-Value="farmhouseDto.Address" />
-                            <MudTextField T="string" Label="Phone" @bind-Value="farmhouseDto.Phone" />
-                            <MudTextField T="string" Id="latitude_input" Disabled Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
-                             <MudTextField T="string" Id="longitude_input" Disabled Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
+                            <MudTextField T="String" Label="Farmhouse name" @bind-Value="farmhouseDto.Name" Required="true" RequiredError="Farmhouse name is required!" />
+                            <MudTextField T="String" Label="Description" @bind-Value="farmhouseDto.Description" />
+                            <MudTextField T="String" Label="Address" @bind-Value="farmhouseDto.Address" />
+                            <MudTextField T="String" Label="Phone" @bind-Value="farmhouseDto.Phone" />
+                            <MudTextField T="String" Id="latitude_input" Disabled Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
+                            <MudTextField T="String" Id="longitude_input" Disabled Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
+                             <MudCheckBox T="Boolean" Checked="farmhouseDto.IsOpen" CheckedChanged="HandleCheckedChanged" Color="Color.Primary" Label="Active" />
                          </MudPaper>
                     }
                     <MudPaper Class="pa-4 mt-4">
@@ -38,6 +39,7 @@ else
                 </MudItem>
             </MudGrid>
         </EditForm>
+
         <div id="map" style="height: 400px;"></div>
         <div id="map2" style="height: 400px; display: none;"></div>
     </AuthorizeView>
@@ -142,5 +144,10 @@ else
             result = await module.InvokeAsync<string>("setDisplayMap", "map2", "block");
             result = await module.InvokeAsync<string>("setCoordinates", "map2", farmhouseDto.Latitude, farmhouseDto.Longitude);
         }
+    }
+
+    private void HandleCheckedChanged(bool isChecked)
+    {
+        farmhouseDto.IsOpen = isChecked;
     }
 }
