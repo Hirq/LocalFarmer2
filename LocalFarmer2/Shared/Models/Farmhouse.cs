@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using LocalFarmer2.Shared.Utilities;
 
 namespace LocalFarmer2.Shared.Models
 {
@@ -21,8 +22,7 @@ namespace LocalFarmer2.Shared.Models
 
         public bool IsOpen { get; set; }
 
-        //TODO:
-        //Enum czym mozna płacić - gotówka/karta/Blik na telefon/Przelew
+        public string PaymentMethodsJson { get; set; }
 
         public virtual IList<Product> Products { get; set; }
     }
