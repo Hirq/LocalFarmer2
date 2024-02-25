@@ -18,6 +18,12 @@
                     <MudTextField T="string" Label="Description" @bind-Value="farmhouseDto.Description" />
                     <MudTextField T="string" Label="Address" @bind-Value="farmhouseDto.Address" />
                     <MudTextField T="string" Label="Phone" @bind-Value="farmhouseDto.Phone" />
+                    <MudSelect T="string" Label="Payment methods" MultiSelection="true" SelectAll="true" Required="true" @bind-Value="@farmhouseDto.PaymentMethods" @bind-SelectedValues="SelectedPayment">
+                        @foreach (var method in PaymentMethodInfo.PaymentMethods)
+                        {
+                            <MudSelectItem T="string" Value="@method">@method</MudSelectItem>
+                        }
+                    </MudSelect>
                     <MudTextField Disabled Id="latitude_input" Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
                     <MudTextField Disabled Id="longitude_input"Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
                 </MudPaper>
@@ -39,6 +45,8 @@
     private bool isUserSignUp;
     public int Id { get; set; }
     private AddFarmhouseDto farmhouseDto = new AddFarmhouseDto();
+    private IEnumerable<string> SelectedPayment { get; set; } = PaymentMethodInfo.DefaultPayment;
+
 
     protected async override Task OnInitializedAsync()
     {

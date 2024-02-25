@@ -10,5 +10,7 @@
         public string Longitude { get; set; }
         public string IdUser { get; set; }
         public bool IsOpen { get; set; } = true;
+        public string PaymentMethods { get; set; }
+
     }
 }
