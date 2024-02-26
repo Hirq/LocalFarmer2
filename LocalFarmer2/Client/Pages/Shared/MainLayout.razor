@@ -74,21 +74,32 @@
             alertService.IsDeleteAlert = false;
             await JSRuntime.InvokeVoidAsync("closeAlertAfterDelay");
         }
+        Console.WriteLine("Zawsze???");
+
     }
 
     protected override async Task OnInitializedAsync()
     {
+        Console.Write("1");
         if (!isDataInitialized)
         {
+            Console.WriteLine("SRART");
+
             if (await AccountService.IsUserSignUp())
             {
+                Console.WriteLine("IFFF");
+
                 UserStateService.IsUserLogged = true;
                 UserStateService.CurrentUser = await AccountService.GetCurrentUser();
             }
             else
             {
+                Console.WriteLine("elseee");
+
                 UserStateService.IsUserLogged = false;
             }
+            Console.WriteLine("KONIEC");
+
             isDataInitialized = true;
         }
     }

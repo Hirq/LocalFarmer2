@@ -66,6 +66,7 @@ namespace LocalFarmer2.Client.Services
             await _localStorageService.SetItemAsync("authToken", loginResult!.Token);
             ((CustomAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(loginModel.Email);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", loginResult.Token);
+            _userStateService.CurrentUser = await GetCurrentUser();
 
             return loginResult;
         }

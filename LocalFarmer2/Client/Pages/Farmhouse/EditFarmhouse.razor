@@ -128,6 +128,7 @@ else
         farmhouseDto.Longitude = longitude;
         FarmhouseDto dto = mapper.Map<FarmhouseDto>(farmhouseDto);
         await FarmhouseService.EditFarmhouse(dto, (int)currentUser?.IdFarmhouse!);
+        UserStateService.CurrentUser.FarmhouseName = farmhouseDto.Name;
         alertService.SetSuccessAlert($"Successfully edited farmhouse {farmhouseDto.Name}");
         NavigationManager.NavigateTo("/");
     }
@@ -137,6 +138,8 @@ else
         if (currentUser?.IdFarmhouse != null)
         {
             await FarmhouseService.DeleteFarmhouse((int)currentUser.IdFarmhouse);
+            UserStateService.CurrentUser.FarmhouseName = null;
+            UserStateService.CurrentUser.IdFarmhouse = null;
             alertService.SetSuccessAlert($"Deleted farmhouse {farmhouseDto.Name}");
             NavigationManager.NavigateTo("/");
         }

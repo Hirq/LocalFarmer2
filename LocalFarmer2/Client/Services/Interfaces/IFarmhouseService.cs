@@ -9,7 +9,7 @@ namespace LocalFarmer2.Client.Services
         public Task<List<FarmhouseViewModel>> GetFarmhousesWithProductsAndButton(int[] idsFavorites, int? idFarmhouse);
         public Task<Farmhouse> GetFarmhouse(int id);
         public Task EditFarmhouse(FarmhouseDto dto, int idFarmhouse);
-        public Task AddFarmhouse(AddFarmhouseDto dto);
+        public Task<int> AddFarmhouse(AddFarmhouseDto dto);
         public Task DeleteFarmhouse(int idFarmhouse);
     }
 }

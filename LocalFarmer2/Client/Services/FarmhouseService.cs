@@ -1,4 +1,6 @@
-﻿using LocalFarmer2.Shared.ViewModels;
+﻿using LocalFarmer2.Shared.Models;
+using LocalFarmer2.Shared.ViewModels;
+using System.Net.Http.Json;
 
 namespace LocalFarmer2.Client.Services
 {
@@ -90,9 +92,20 @@ namespace LocalFarmer2.Client.Services
             await _http.PutAsJsonAsync($"api/Farmhouse/Farmhouse/{idFarmhouse}", farmhouse);
         }
 
-        public async Task AddFarmhouse(AddFarmhouseDto dto)
+        public async Task<int> AddFarmhouse(AddFarmhouseDto dto)
         {
-            await _http.PostAsJsonAsync($"api/Farmhouse/Farmhouse/", dto);
+            var response = await _http.PostAsJsonAsync($"api/Farmhouse/Farmhouse/", dto);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var farmhouse = await response.Content.ReadFromJsonAsync<Farmhouse>();
+                return farmhouse.Id;
+            }
+            else
+            {
+                var errorMessage = await response.Content.ReadAsStringAsync();
+                throw new Exception($"HTTP request failed with status code {response.StatusCode}. Error message: {errorMessage}");
+            }
         }
 
         public async Task DeleteFarmhouse(int idFarmhouse)

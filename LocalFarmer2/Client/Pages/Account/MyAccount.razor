@@ -1,7 +1,8 @@
 ﻿@page "/myaccount"
 @inject IMapper mapper;
 @inject IAccountService AccountService
-@inject AlertService alertService
+@inject AlertService AlertService
+@inject UserStateService UserStateService
 @inject NavigationManager NavigationManager
 
 
@@ -52,7 +53,8 @@ else
     {
         var editDto = mapper.Map<EditUserDto>(userDto);
         await AccountService.EditUser(editDto);
-        alertService.SetSuccessAlert($"You new Fullname is: {editDto.FullName}");
+        UserStateService.CurrentUser.FullName = editDto.FullName;
+        AlertService.SetSuccessAlert($"You new Fullname is: {editDto.FullName}");
         NavigationManager.NavigateTo("/");
     }
 }
