@@ -191,7 +191,7 @@ else
                 Rating = 4
             };
 
-        await OpinionService.AddOpinion(dto, idFarmhouse);
+        await OpinionService.AddOpinion(dto);
 
         var addedFarmhouse = ListFarmhousesVM.FirstOrDefault(x => x.Id == idFarmhouse);
         if (addedFarmhouse != null)

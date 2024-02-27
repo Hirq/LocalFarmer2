@@ -38,10 +38,11 @@
             return opinion;
         }
 
-        public async Task AddOpinion(AddOpinionDto dto, int idFarmhouse)
+        public async Task AddOpinion(AddOpinionDto dto)
         {
             var opinion = _mapper.Map<Opinion>(dto);
-            await _httpClient.PostAsJsonAsync($"api/Opinion/AddOpinion/{idFarmhouse}", opinion);
+            opinion.DateCreated = DateTime.Now;
+            await _httpClient.PostAsJsonAsync($"api/Opinion/AddOpinion", opinion);
         }
 
         public async Task EditOpinion(EditOpinionDto dto, int idFarmhouse)
