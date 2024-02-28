@@ -61,7 +61,25 @@ else
                     }
                     @if (row.IsCommented == false)
                     {
-                        <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddOpinion(row.Id)">Add opinion</MudButton></MudTd>
+                        <MudTd DataLabel="Molar mass">
+                            @* <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddOpinion(row.Id)">Add opinion</MudButton> *@
+
+
+                            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OnButtonClicked">Add opinion</MudButton>
+                            <MudMessageBox @ref="mbox" Title="Add opinion" CancelText="Cancel">
+                                <MessageContent>
+                                    <div class="d-flex flex-column align-center">
+                                        <MudRating @bind-SelectedValue="selectedVal" HoveredValueChanged="HandleHoveredValueChanged" />
+                                        <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">@LabelText</MudText>
+                                    </div>
+                                    <MudTextField T="string" Label="Outlined" Variant="Variant.Outlined" Lines="3" />
+                                        <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.AddBox" OnClick="() => CheckValues()">CHECK CONSOLE!</MudButton>
+                                </MessageContent>
+                                <YesButton>
+                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.AddBox" OnClick="() => AddOpinion(row.Id)">Add!</MudButton>
+                                </YesButton>
+                            </MudMessageBox>
+                        </MudTd>
                     }
                     else
                     {
@@ -111,6 +129,10 @@ else
             <MudTablePager PageSizeOptions="new int[]{50, 100}" />
         </PagerContent>
     </MudTable>
+@*     <div class="d-flex flex-column align-center">
+        <MudRating @bind-SelectedValue="selectedVal" HoveredValueChanged="HandleHoveredValueChanged" />
+        <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">@LabelText</MudText>
+        </div> *@
 }
 @code {
     [Parameter]
@@ -122,6 +144,47 @@ else
     public bool ShowDetails { get; set; }
     public bool isUserSignUp = false;
     private string idUser = null;
+    MudMessageBox mbox { get; set; }
+    private int selectedVal = 0;
+    private int? activeVal;
+
+    private void HandleHoveredValueChanged(int? val) => activeVal = val.Value;
+
+    private string LabelText => (activeVal ?? selectedVal) switch
+    {
+        1 => "Very bad",
+        2 => "Bad",
+        3 => "Sufficient",
+        4 => "Good",
+        5 => "Awesome!",
+        _ => "Rate our farmhouse!"
+    };
+
+    private async void OnButtonClicked()
+    {
+        bool? result = await mbox.Show();
+        StateHasChanged();
+    }
+
+
+    private async void CheckValues()
+    {
+        if (activeVal != null)
+        {
+            Console.WriteLine($"Wartość activeVal: {activeVal}");
+        }
+        else
+        {
+            Console.WriteLine("activeVal jest null");
+        }
+
+        Console.WriteLine($"Wartość activeVal: {activeVal?.ToString() ?? "activeVal jest null"}");
+
+        Console.WriteLine("selectedVal: "+selectedVal);
+        Console.WriteLine("activeVal: " + activeVal);
+        StateHasChanged();
+    }
+
 
     protected override async Task OnInitializedAsync()
     {
