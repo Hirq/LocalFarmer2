@@ -12,3 +12,7 @@
     padding-left: 20px !important;
     padding-right: 20px !important;
 }
+
+.mud-dialog-width-sm {
+    width: 50% !important;
+}
