@@ -1,4 +1,6 @@
-﻿namespace LocalFarmer2.Client.Services
+﻿using static System.Net.WebRequestMethods;
+
+namespace LocalFarmer2.Client.Services
 {
     public class OpinionService : IOpinionService
     {
@@ -38,6 +40,18 @@
             return opinion;
         }
 
+        public async Task<int[]> GetOpinionFarmhousesForUserOnlyIds(string userName)
+        {
+            var listOpinionFarmhouses = await _httpClient.GetFromJsonAsync<List<int>>($"api/Opinion/OpinionFarmhouseForUserOnlyIds?idUser={userName}");
+
+            if (listOpinionFarmhouses == null)
+            {
+                throw new Exception();
+            }
+
+            return listOpinionFarmhouses.ToArray();
+        }
+
         public async Task AddOpinion(AddOpinionDto dto)
         {
             var opinion = _mapper.Map<Opinion>(dto);
@@ -55,5 +69,7 @@
         {
             await _httpClient.DeleteAsync($"api/Opinion/DeleteOpinion/{idOpinion}");
         }
+
+
     }
 }

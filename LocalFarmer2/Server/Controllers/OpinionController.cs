@@ -44,6 +44,14 @@ namespace LocalFarmer2.Server.Controllers
             return Ok(opinion);
         }
 
+        [HttpGet, Route("OpinionFarmhouseForUserOnlyIds")]
+        public async Task<IActionResult> GetOpinonFarmhousesForUserOnlyIds(string idUser)
+        {
+            var opinonsFarmhouses = (await _opinionRepository.GetAllAsync(x => x.IdUser == idUser)).Select(x => x.IdFarmhouse);
+
+            return Ok(opinonsFarmhouses);
+        }
+
         [HttpGet, Route("AllOpinions")]
         public async Task<IActionResult> AllOpinions()
         {

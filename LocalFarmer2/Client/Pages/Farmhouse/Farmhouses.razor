@@ -72,8 +72,7 @@ else
                                         <MudRating @bind-SelectedValue="selectedVal" HoveredValueChanged="HandleHoveredValueChanged" />
                                         <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">@LabelText</MudText>
                                     </div>
-                                    <MudTextField T="string" Label="Outlined" Variant="Variant.Outlined" Lines="3" />
-                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.AddBox" OnClick="() => CheckValues()">CHECK CONSOLE!</MudButton>
+                                    <MudTextField T="string" @bind-Value="opinion.Comment" Label="Outlined" Variant="Variant.Outlined" Lines="3" />
                                 </MessageContent>
                                 <YesButton>
                                     <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.AddBox" OnClick="() => AddOpinion(row.Id)">Add!</MudButton>
@@ -139,7 +138,9 @@ else
     public List<FarmhouseViewModel> ListFarmhousesVM { get; set; }
 
     private int[] CurrentListFavorite;
+    private int[] CurrentListOpinion;
     private Product product = new Product();
+    private Opinion opinion = new Opinion();
     private string searchString = null;
     public bool ShowDetails { get; set; }
     public bool isUserSignUp = false;
@@ -166,26 +167,6 @@ else
         StateHasChanged();
     }
 
-
-    private async void CheckValues()
-    {
-        if (activeVal != null)
-        {
-            Console.WriteLine($"Wartość activeVal: {activeVal}");
-        }
-        else
-        {
-            Console.WriteLine("activeVal jest null");
-        }
-
-        Console.WriteLine($"Wartość activeVal: {activeVal?.ToString() ?? "activeVal jest null"}");
-
-        Console.WriteLine("selectedVal: "+selectedVal);
-        Console.WriteLine("activeVal: " + activeVal);
-        StateHasChanged();
-    }
-
-
     protected override async Task OnInitializedAsync()
     {
         int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
@@ -194,9 +175,10 @@ else
         if (!string.IsNullOrEmpty(idUser))
         {
             CurrentListFavorite = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUserOnlyIds(idUser);
+            CurrentListOpinion = await OpinionService.GetOpinionFarmhousesForUserOnlyIds(idUser);
         }
 
-        ListFarmhousesVM = await FarmhouseService.GetFarmhousesWithProductsAndButton(CurrentListFavorite, idFarmhouse);
+        ListFarmhousesVM = await FarmhouseService.GetFarmhousesWithProductsAndButton(CurrentListFavorite, CurrentListOpinion, idFarmhouse);
 
         // 3 types of users
         // 1. Not logged                            idUser null + idFarmhouse null
@@ -250,8 +232,8 @@ else
             {
                 IdFarmhouse = idFarmhouse,
                 IdUser = idUser,
-                Comment = "Comment",
-                Rating = 4
+                Comment = opinion.Comment,
+                Rating = selectedVal
             };
 
         await OpinionService.AddOpinion(dto);

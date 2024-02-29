@@ -1,6 +1,4 @@
-﻿using LocalFarmer2.Shared.Models;
-using LocalFarmer2.Shared.ViewModels;
-using System.Net.Http.Json;
+﻿using LocalFarmer2.Shared.ViewModels;
 
 namespace LocalFarmer2.Client.Services
 {
@@ -55,7 +53,7 @@ namespace LocalFarmer2.Client.Services
             return result;
         }
 
-        public async Task<List<FarmhouseViewModel>> GetFarmhousesWithProductsAndButton(int[] idsFavorites, int? idFarmhouse)
+        public async Task<List<FarmhouseViewModel>> GetFarmhousesWithProductsAndButton(int[] idsFavorites, int[] idsOpinons, int? idFarmhouse)
         {
             List<Farmhouse> farmhouses;
 
@@ -78,6 +76,14 @@ namespace LocalFarmer2.Client.Services
                 foreach (var vm in result.Where(x => idsFavorites.Contains(x.Id)))
                 {
                     vm.IsFavorite = true;
+                };
+            }
+
+            if (idsOpinons != null)
+            {
+                foreach (var vm in result.Where(x => idsOpinons.Contains(x.Id)))
+                {
+                    vm.IsCommented = true;
                 };
             }
 
