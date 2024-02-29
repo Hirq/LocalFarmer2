@@ -1,0 +1,77 @@
+﻿@page "/myopinionsfarmhouses"
+@inject IOpinionService OpinionService
+@inject UserStateService UserStateService
+@inject AlertService alertService
+
+<PageTitle>Farmhouses</PageTitle>
+
+<MudTable Items="@ListMyOpinionsFarmhouse" SortLabel="Sort By" Hover="true" Filter="new Func<Opinion,bool>(FilterFunc)" CommitEditTooltip="Commit Edit">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Farmhouses</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent> 
+
+    <HeaderContent>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.IdFarmhouse)">Id Farmhouse</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Farmhouse.Name)">Name Farmhouse</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Comment)">Comment</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Rating)">Rating</MudTableSortLabel></MudTh>
+        <MudTh>Action</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nr">@context.Id</MudTd>
+        <MudTd DataLabel="Nr">@context.IdFarmhouse</MudTd>
+        <MudTd DataLabel="Nr">@context.Farmhouse.Name</MudTd>
+        <MudTd DataLabel="Nr">@context.Comment</MudTd>
+        <MudTd DataLabel="Nr">@context.Rating</MudTd>
+        <MudTd DataLabel="Edit">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => DeleteOpinion(context.Id)">Delete</MudButton>
+        </MudTd>
+        </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+    </PagerContent>
+</MudTable>
+
+
+
+    @code {
+    List<Opinion> ListMyOpinionsFarmhouse = new List<Opinion>();
+    private string searchString = null;
+    private string userId = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        userId = UserStateService.CurrentUser.IdUser;
+        ListMyOpinionsFarmhouse = await OpinionService.GetOpinionFarmhousesForUser(userId);
+    }
+
+    private async void DeleteOpinion(int idFarmhouse)
+    {
+        var opinion = ListMyOpinionsFarmhouse.FirstOrDefault(x => x.Id == idFarmhouse);
+        if (opinion != null)
+        {
+            await OpinionService.DeleteOpinion(opinion.Id);
+            ListMyOpinionsFarmhouse.Remove(opinion);
+            StateHasChanged();
+            alertService.SetDeleteAlert($"Deleted opinion about farmhouse {idFarmhouse}");
+        }
+    }
+
+    private bool FilterFunc(Opinion opinion)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        // if (farmhouse.IdFarmhouse.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //     return true;
+        // if (farmhouse.Address.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //     return true;
+        // if (farmhouse.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //     return true;
+        if ($"{opinion.IdFarmhouse} {opinion.Id}".Contains(searchString))
+            return true;
+        return false;
+    }
+}

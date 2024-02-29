@@ -40,6 +40,18 @@ namespace LocalFarmer2.Client.Services
             return opinion;
         }
 
+        public async Task<List<Opinion>> GetOpinionFarmhousesForUser(string userName)
+        {
+            var listOpinionFarmhouses = await _httpClient.GetFromJsonAsync<List<Opinion>>($"api/Opinion/OpinionFarmhouseForUser?idUser={userName}");
+
+            if (listOpinionFarmhouses == null)
+            {
+                throw new Exception();
+            }
+
+            return listOpinionFarmhouses;
+        }
+
         public async Task<int[]> GetOpinionFarmhousesForUserOnlyIds(string userName)
         {
             var listOpinionFarmhouses = await _httpClient.GetFromJsonAsync<List<int>>($"api/Opinion/OpinionFarmhouseForUserOnlyIds?idUser={userName}");
@@ -69,7 +81,5 @@ namespace LocalFarmer2.Client.Services
         {
             await _httpClient.DeleteAsync($"api/Opinion/DeleteOpinion/{idOpinion}");
         }
-
-
     }
 }
