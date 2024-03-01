@@ -90,5 +90,15 @@ namespace LocalFarmer2.Server.Controllers
 
             return Ok();
         }
+
+        [HttpGet, Route("AverageForFarmhouse/{idFarmhouse}")]
+        public async Task<IActionResult> AverageForFarmhouse(int idFarmhouse)
+        {
+            var allValue = (await _opinionRepository.GetAllAsync(x => x.IdFarmhouse == idFarmhouse)).Select(x => x.Rating);
+
+            var average = allValue.Average();
+
+            return Ok(average);
+        }
     }
 }

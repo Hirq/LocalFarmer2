@@ -11,8 +11,8 @@ namespace LocalFarmer2.Shared.Models
         
         public string Comment { get; set; }
         
-        [RegularExpression(@"^(0(\.5)?|1(\.5)?|2(\.5)?|3(\.5)?|4(\.5)?|5)$", ErrorMessage = "Rating must be in increments of 0.5 between 0 and 5.")]
-        public double Rating { get; set; }
+        [Range(0, 5, ErrorMessage = "Rating must be between 0 and 5.")]
+        public int Rating { get; set; }
         
         public DateTime DateCreated { get; set; }
         

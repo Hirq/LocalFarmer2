@@ -1,19 +1,25 @@
 ﻿@page "/farmhouse/{id:int}"
 @using Newtonsoft.Json.Linq
 @inject IFarmhouseService FarmhouseService
+@inject IOpinionService OpinionService
 @inject IJSRuntime JSRuntime
 @implements IAsyncDisposable
 <PageTitle>Farmhouse</PageTitle>
 
-<h2>@farmhouse.Name - @farmhouse.Id</h2>
-<h2>Latitude - @farmhouse.Latitude </h2>
-<h2>Longitude - @farmhouse.Longitude</h2>
+<h2>Name: @farmhouse.Name</h2>
+<h2>Id: @farmhouse.Id</h2>
+<h2>Average opinion: @average</h2>
+@* Może ilość ocen też dodać gdzieś? i jakieś 5 ostatnich ocen? lub jakis random  *@
+<h2>Latitude: @farmhouse.Latitude </h2>
+<h2>Longitude: @farmhouse.Longitude</h2>
 <h2>Tip: Network => disable cache set true</h2>
 <h2>MAPA</h2>
 <div id="map" style="height:70vh; width: 100%"></div>
 @code {
     [Parameter]
     public int Id { get; set; }
+
+    public double average { get; set; }
 
     private IJSObjectReference? module;
     private string? result;
@@ -23,6 +29,7 @@
     protected override async Task OnInitializedAsync()
     {
         farmhouse = await FarmhouseService.GetFarmhouse(Id);
+        average = await OpinionService.AverageForFarmhouse(Id);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

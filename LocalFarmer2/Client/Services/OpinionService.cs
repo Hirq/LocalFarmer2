@@ -1,6 +1,4 @@
-﻿using static System.Net.WebRequestMethods;
-
-namespace LocalFarmer2.Client.Services
+﻿namespace LocalFarmer2.Client.Services
 {
     public class OpinionService : IOpinionService
     {
@@ -30,7 +28,7 @@ namespace LocalFarmer2.Client.Services
 
         public async Task<Opinion> GetOpinion(int idOpinion)
         {
-            var opinion = await _httpClient.GetFromJsonAsync<Opinion>($"api/Opinion/Opinion{idOpinion}");
+            var opinion = await _httpClient.GetFromJsonAsync<Opinion>($"api/Opinion/Opinion/{idOpinion}");
 
             if (opinion == null)
             {
@@ -71,15 +69,21 @@ namespace LocalFarmer2.Client.Services
             await _httpClient.PostAsJsonAsync($"api/Opinion/AddOpinion", opinion);
         }
 
-        public async Task EditOpinion(EditOpinionDto dto, int idFarmhouse)
+        public async Task EditOpinion(EditOpinionDto dto, int idOpinion)
         {
-            var opinion = _mapper.Map<Opinion>(dto);
-            await _httpClient.PutAsJsonAsync($"api/Opinion/EditOpinion/{idFarmhouse}", opinion);
+            await _httpClient.PutAsJsonAsync($"api/Opinion/EditOpinion/{idOpinion}", dto);
         }
 
         public async Task DeleteOpinion(int idOpinion)
         {
             await _httpClient.DeleteAsync($"api/Opinion/DeleteOpinion/{idOpinion}");
+        }
+
+        public async Task<double> AverageForFarmhouse(int idFarmhouse)
+        {
+            var average = await _httpClient.GetFromJsonAsync<double>($"api/Opinion/AverageForFarmhouse/{idFarmhouse}");
+
+            return average;
         }
     }
 }

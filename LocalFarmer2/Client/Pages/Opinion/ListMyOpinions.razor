@@ -1,7 +1,8 @@
 ﻿@page "/myopinionsfarmhouses"
 @inject IOpinionService OpinionService
+@inject IMapper Mapper
 @inject UserStateService UserStateService
-@inject AlertService alertService
+@inject AlertService AlertService
 
 <PageTitle>Farmhouses</PageTitle>
 
@@ -28,6 +29,19 @@
         <MudTd DataLabel="Nr">@context.Rating</MudTd>
         <MudTd DataLabel="Edit">
             <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => DeleteOpinion(context.Id)">Delete</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OpenMessageBoxEditOpinion(context.Id)">Edit</MudButton>
+            <MudMessageBox @ref="mbox" Title="Edit opinion" CancelText="Cancel">
+                <MessageContent>
+                    <div class="d-flex flex-column align-center">
+                        <MudRating @bind-SelectedValue="opinionDto.Rating" />
+                        <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">Your opinion!</MudText>
+                    </div>
+                    <MudTextField T="string" @bind-Value="opinionDto.Comment" Label="Comment" Variant="Variant.Outlined" Lines="3" Placeholder="Set star and add your opinion" />
+                </MessageContent>
+                <YesButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.AddBox" OnClick="() => EditOpinion(context.Id)">Edit!</MudButton>
+                </YesButton>
+            </MudMessageBox>
         </MudTd>
         </RowTemplate>
     <PagerContent>
@@ -41,6 +55,8 @@
     List<Opinion> ListMyOpinionsFarmhouse = new List<Opinion>();
     private string searchString = null;
     private string userId = null;
+    MudMessageBox mbox { get; set; }
+    EditOpinionDto opinionDto { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -48,15 +64,39 @@
         ListMyOpinionsFarmhouse = await OpinionService.GetOpinionFarmhousesForUser(userId);
     }
 
-    private async void DeleteOpinion(int idFarmhouse)
+    private async void DeleteOpinion(int idOpinion)
     {
-        var opinion = ListMyOpinionsFarmhouse.FirstOrDefault(x => x.Id == idFarmhouse);
+        var opinion = ListMyOpinionsFarmhouse.FirstOrDefault(x => x.Id == idOpinion);
         if (opinion != null)
         {
             await OpinionService.DeleteOpinion(opinion.Id);
             ListMyOpinionsFarmhouse.Remove(opinion);
             StateHasChanged();
-            alertService.SetDeleteAlert($"Deleted opinion about farmhouse {idFarmhouse}");
+            AlertService.SetDeleteAlert($"Deleted opinion about farmhouse {opinion.Farmhouse.Name}");
+        }
+    }
+
+    private async void OpenMessageBoxEditOpinion(int idOpinion)
+    {
+        var opinionToEdit = ListMyOpinionsFarmhouse.FirstOrDefault(x => x.Id == idOpinion);
+        opinionDto = new EditOpinionDto()
+        {
+            Comment = opinionToEdit.Comment,
+            Rating = opinionToEdit.Rating
+        };
+        await mbox.Show();
+    }    
+
+    private async void EditOpinion(int idOpinion)
+    {
+        var opinion = ListMyOpinionsFarmhouse.FirstOrDefault(x => x.Id == idOpinion);
+        if (opinion != null)
+        {
+            await OpinionService.EditOpinion(opinionDto, opinion.Id);
+            opinion.Comment = opinionDto.Comment;
+            opinion.Rating = opinionDto.Rating;
+            StateHasChanged();
+            AlertService.SetSuccessAlert($"Edit opinion about farmhouse {opinion.Farmhouse.Name}");
         }
     }
 

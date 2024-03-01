@@ -69,10 +69,10 @@ else
                             <MudMessageBox @ref="mbox" Title="Add opinion" CancelText="Cancel">
                                 <MessageContent>
                                     <div class="d-flex flex-column align-center">
-                                        <MudRating @bind-SelectedValue="selectedVal" HoveredValueChanged="HandleHoveredValueChanged" />
-                                        <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">@LabelText</MudText>
+                                        <MudRating @bind-SelectedValue="opinion.Rating"/>
+                                        <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">Rate our farmhouse!</MudText>
                                     </div>
-                                    <MudTextField T="string" @bind-Value="opinion.Comment" Label="Outlined" Variant="Variant.Outlined" Lines="3" />
+                                    <MudTextField T="string" @bind-Value="opinion.Comment" Label="Comment" Variant="Variant.Outlined" Lines="3" Placeholder="Set star and add your opinion"/>
                                 </MessageContent>
                                 <YesButton>
                                     <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.AddBox" OnClick="() => AddOpinion(row.Id)">Add!</MudButton>
@@ -128,11 +128,8 @@ else
             <MudTablePager PageSizeOptions="new int[]{50, 100}" />
         </PagerContent>
     </MudTable>
-@*     <div class="d-flex flex-column align-center">
-        <MudRating @bind-SelectedValue="selectedVal" HoveredValueChanged="HandleHoveredValueChanged" />
-        <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">@LabelText</MudText>
-        </div> *@
 }
+
 @code {
     [Parameter]
     public List<FarmhouseViewModel> ListFarmhousesVM { get; set; }
@@ -140,26 +137,15 @@ else
     private int[] CurrentListFavorite;
     private int[] CurrentListOpinion;
     private Product product = new Product();
-    private Opinion opinion = new Opinion();
+    private Opinion opinion = new Opinion()
+    {
+            Rating = 3,
+    };
     private string searchString = null;
     public bool ShowDetails { get; set; }
     public bool isUserSignUp = false;
     private string idUser = null;
     MudMessageBox mbox { get; set; }
-    private int selectedVal = 0;
-    private int? activeVal;
-
-    private void HandleHoveredValueChanged(int? val) => activeVal = val.Value;
-
-    private string LabelText => (activeVal ?? selectedVal) switch
-    {
-        1 => "Very bad",
-        2 => "Bad",
-        3 => "Sufficient",
-        4 => "Good",
-        5 => "Awesome!",
-        _ => "Rate our farmhouse!"
-    };
 
     private async void OnButtonClicked()
     {
@@ -227,13 +213,12 @@ else
 
     private async void AddOpinion(int idFarmhouse)
     {
-        Console.WriteLine(UserStateService.CurrentUser?.IdUser);
         AddOpinionDto dto = new AddOpinionDto()
             {
                 IdFarmhouse = idFarmhouse,
                 IdUser = idUser,
                 Comment = opinion.Comment,
-                Rating = selectedVal
+                Rating = opinion.Rating
             };
 
         await OpinionService.AddOpinion(dto);
@@ -245,6 +230,8 @@ else
             StateHasChanged();
             alertService.SetSuccessAlert($"Successfully added opinion about {idFarmhouse}");
         }
+        opinion.Comment = "";
+        opinion.Rating = 3;
     }
 
     private bool FilterFunc(FarmhouseViewModel farmhouse)
