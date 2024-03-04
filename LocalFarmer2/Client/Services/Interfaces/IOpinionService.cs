@@ -9,6 +9,7 @@
         public Task AddOpinion(AddOpinionDto dto);
         public Task EditOpinion(EditOpinionDto dto, int idOpinion);
         public Task DeleteOpinion(int idOpinion);
-        public Task<double> AverageForFarmhouse(int idFarmhouse);
+        public Task<List<Opinion>> AllOpinionsForFarmhouse(int idFarmhouse);
+        public Task<double?> AverageForFarmhouse(int idFarmhouse);
     }
 }

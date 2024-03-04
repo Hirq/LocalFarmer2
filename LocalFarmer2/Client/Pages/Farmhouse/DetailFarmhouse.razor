@@ -8,7 +8,19 @@
 
 <h2>Name: @farmhouse.Name</h2>
 <h2>Id: @farmhouse.Id</h2>
-<h2>Average opinion: @average</h2>
+@if (listOpinion.Count > 0)
+{
+    <h2>Average opinion: @average</h2>
+    <h2>Opinion about this farmhouse</h2>
+    foreach (var opinion in listOpinion)
+    {
+        <div>
+            <p>Rating: @opinion.Rating</p>
+            <p>@opinion.Comment </p>
+            <br />
+        </div>
+    }
+}
 @* Może ilość ocen też dodać gdzieś? i jakieś 5 ostatnich ocen? lub jakis random  *@
 <h2>Latitude: @farmhouse.Latitude </h2>
 <h2>Longitude: @farmhouse.Longitude</h2>
@@ -19,7 +31,8 @@
     [Parameter]
     public int Id { get; set; }
 
-    public double average { get; set; }
+    public List<Opinion> listOpinion = new List<Opinion>();
+    public double? average { get; set; }
 
     private IJSObjectReference? module;
     private string? result;
@@ -29,7 +42,11 @@
     protected override async Task OnInitializedAsync()
     {
         farmhouse = await FarmhouseService.GetFarmhouse(Id);
-        average = await OpinionService.AverageForFarmhouse(Id);
+        listOpinion = await OpinionService.AllOpinionsForFarmhouse(Id);
+        if (listOpinion.Count > 0)
+        {
+            average = await OpinionService.AverageForFarmhouse(Id);
+        }
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

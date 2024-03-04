@@ -65,7 +65,7 @@ else
                             @* <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddOpinion(row.Id)">Add opinion</MudButton> *@
 
 
-                            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OnButtonClicked">Add opinion</MudButton>
+                            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OnButtonClicked(row.Id)">Add opinion</MudButton>
                             <MudMessageBox @ref="mbox" Title="Add opinion" CancelText="Cancel">
                                 <MessageContent>
                                     <div class="d-flex flex-column align-center">
@@ -75,7 +75,7 @@ else
                                     <MudTextField T="string" @bind-Value="opinion.Comment" Label="Comment" Variant="Variant.Outlined" Lines="3" Placeholder="Set star and add your opinion"/>
                                 </MessageContent>
                                 <YesButton>
-                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.AddBox" OnClick="() => AddOpinion(row.Id)">Add!</MudButton>
+                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.AddBox" OnClick="() => AddOpinion()">Add!</MudButton>
                                 </YesButton>
                             </MudMessageBox>
                         </MudTd>
@@ -147,8 +147,9 @@ else
     private string idUser = null;
     MudMessageBox mbox { get; set; }
 
-    private async void OnButtonClicked()
+    private async void OnButtonClicked(int idFarmhouse)
     {
+        opinion.IdFarmhouse = idFarmhouse;
         bool? result = await mbox.Show();
         StateHasChanged();
     }
@@ -211,11 +212,12 @@ else
         }
     }
 
-    private async void AddOpinion(int idFarmhouse)
+    private async void AddOpinion()
     {
+        Console.WriteLine(opinion.IdFarmhouse);
         AddOpinionDto dto = new AddOpinionDto()
             {
-                IdFarmhouse = idFarmhouse,
+                IdFarmhouse = opinion.IdFarmhouse,
                 IdUser = idUser,
                 Comment = opinion.Comment,
                 Rating = opinion.Rating
@@ -223,15 +225,16 @@ else
 
         await OpinionService.AddOpinion(dto);
 
-        var addedFarmhouse = ListFarmhousesVM.FirstOrDefault(x => x.Id == idFarmhouse);
+        var addedFarmhouse = ListFarmhousesVM.FirstOrDefault(x => x.Id == opinion.IdFarmhouse);
         if (addedFarmhouse != null)
         {
             addedFarmhouse.IsCommented = true;
             StateHasChanged();
-            alertService.SetSuccessAlert($"Successfully added opinion about {idFarmhouse}");
+            alertService.SetSuccessAlert($"Successfully added opinion about {opinion.IdFarmhouse}");
         }
         opinion.Comment = "";
         opinion.Rating = 3;
+        opinion.IdFarmhouse = 0;
     }
 
     private bool FilterFunc(FarmhouseViewModel farmhouse)

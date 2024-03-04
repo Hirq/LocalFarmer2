@@ -56,7 +56,7 @@
 
             if (listOpinionFarmhouses == null)
             {
-                throw new Exception();
+                throw new Exception("TODO");
             }
 
             return listOpinionFarmhouses.ToArray();
@@ -79,9 +79,20 @@
             await _httpClient.DeleteAsync($"api/Opinion/DeleteOpinion/{idOpinion}");
         }
 
-        public async Task<double> AverageForFarmhouse(int idFarmhouse)
+        public async Task<List<Opinion>> AllOpinionsForFarmhouse(int idFarmhouse)
         {
-            var average = await _httpClient.GetFromJsonAsync<double>($"api/Opinion/AverageForFarmhouse/{idFarmhouse}");
+            var opinions = await _httpClient.GetFromJsonAsync<List<Opinion>>($"api/Opinion/AllOpinionsForFarmhouse/{idFarmhouse}");
+
+            if (opinions == null)
+            {
+                throw new Exception("TODO");
+            }
+
+            return opinions;
+        }
+        public async Task<double?> AverageForFarmhouse(int idFarmhouse)
+        {
+            var average = await _httpClient.GetFromJsonAsync<double?>($"api/Opinion/AverageForFarmhouse/{idFarmhouse}");
 
             return average;
         }
