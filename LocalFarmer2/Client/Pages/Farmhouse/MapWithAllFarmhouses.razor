@@ -11,16 +11,13 @@
 @code {
     [Parameter]
     public List<Farmhouse> farmhouses { get; set; }
-    public Farmhouse farmhouse = new Farmhouse();
-    public Farmhouse farmhouse2 = new Farmhouse();
     public int Id { get; set; }
     private IJSObjectReference? module;
     private string? result;
 
     protected override async Task OnInitializedAsync()
     {
-        farmhouses = await FarmhouseService.GetFarmhouses();
-        farmhouse = farmhouses.FirstOrDefault();
+        farmhouses = (await FarmhouseService.GetFarmhouses()).Where(x => x.IsOpen).ToList();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
