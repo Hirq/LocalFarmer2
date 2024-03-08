@@ -5,9 +5,9 @@ using LocalFarmer2.Shared.ViewModels;
 
 namespace LocalFarmer2.Shared.Profiles
 {
-    public class Profiles : Profile
+    public class AutoMapperProfile : Profile
     {
-        public Profiles()
+        public AutoMapperProfile()
         {
             CreateMap<FarmhouseDto, Farmhouse>();
             CreateMap<AddFarmhouseDto, Farmhouse>();

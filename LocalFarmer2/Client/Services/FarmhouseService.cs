@@ -1,4 +1,5 @@
 ﻿using LocalFarmer2.Shared.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LocalFarmer2.Client.Services
 {
@@ -53,6 +54,7 @@ namespace LocalFarmer2.Client.Services
             return result;
         }
 
+        [AllowAnonymous]
         public async Task<List<FarmhouseViewModel>> GetFarmhousesWithProductsAndButton(int[] idsFavorites, int[] idsOpinons, int? idFarmhouse)
         {
             List<Farmhouse> farmhouses;
