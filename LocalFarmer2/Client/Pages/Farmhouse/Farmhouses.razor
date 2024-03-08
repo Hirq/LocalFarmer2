@@ -21,6 +21,7 @@ else
         <ToolBarContent>
             <MudText Typo="Typo.h6">Farmhouses</MudText>
             <MudSpacer />
+            <MudButton OnClick="@(() => FilterFavorite())"> Only favorite </MudButton>
             <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         </ToolBarContent>
 
@@ -133,7 +134,8 @@ else
 @code {
     [Parameter]
     public List<FarmhouseViewModel> ListFarmhousesVM { get; set; }
-
+    public List<FarmhouseViewModel> originalFarmhousesList { get; set; }
+    private bool isFavoriteFilterActive = false;
     private int[] CurrentListFavorite;
     private int[] CurrentListOpinion;
     private Product product = new Product();
@@ -149,6 +151,8 @@ else
 
     private async void OnButtonClicked(int idFarmhouse)
     {
+        opinion.Comment = string.Empty;
+        opinion.Rating = 3;
         opinion.IdFarmhouse = idFarmhouse;
         bool? result = await mbox.Show();
         StateHasChanged();
@@ -166,7 +170,7 @@ else
         }
 
         ListFarmhousesVM = await FarmhouseService.GetFarmhousesWithProductsAndButton(CurrentListFavorite, CurrentListOpinion, idFarmhouse);
-
+        originalFarmhousesList = ListFarmhousesVM;
         // 3 types of users
         // 1. Not logged                            idUser null + idFarmhouse null
         // 2. have account without farmhouse        idUser not null + idFarmhouse null
@@ -214,7 +218,6 @@ else
 
     private async void AddOpinion()
     {
-        Console.WriteLine(opinion.IdFarmhouse);
         AddOpinionDto dto = new AddOpinionDto()
             {
                 IdFarmhouse = opinion.IdFarmhouse,
@@ -250,6 +253,20 @@ else
         if ($"{farmhouse.Phone} {farmhouse.Id}".Contains(searchString))
             return true;
         return false;
+    }
+
+    private void FilterFavorite()
+    {
+        isFavoriteFilterActive = !isFavoriteFilterActive;
+
+        if (isFavoriteFilterActive)
+        {
+            ListFarmhousesVM = originalFarmhousesList.Where(x => x.IsFavorite).ToList();
+        }
+        else 
+        {
+            ListFarmhousesVM = originalFarmhousesList;
+        }
     }
 
     private void ShowBtnPress(int id)
