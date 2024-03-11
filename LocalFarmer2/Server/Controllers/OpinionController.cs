@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LocalFarmer2.Server.Controllers
@@ -97,14 +96,14 @@ namespace LocalFarmer2.Server.Controllers
             var allValue = (await _opinionRepository.GetAllAsync(x => x.IdFarmhouse == idFarmhouse));
 
             return Ok(allValue);
-        } 
-        
+        }
+
         [HttpGet, Route("AverageForFarmhouse/{idFarmhouse}")]
         public async Task<IActionResult> AverageForFarmhouse(int idFarmhouse)
         {
             var allValue = (await _opinionRepository.GetAllAsync(x => x.IdFarmhouse == idFarmhouse)).Select(x => x.Rating);
 
-            if (allValue.Any()) 
+            if (allValue.Any())
             {
                 var average = allValue.Average();
                 return Ok(average);
