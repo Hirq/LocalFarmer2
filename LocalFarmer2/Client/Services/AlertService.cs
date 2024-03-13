@@ -1,19 +1,49 @@
-﻿
-using static System.Net.WebRequestMethods;
-
-namespace LocalFarmer2.Client.Services
+﻿namespace LocalFarmer2.Client.Services
 {
     public class AlertService : IAlertService
     {
+        private bool _isSuccessAlert = false;
+        private bool _isDeleteAlert = false;
+        private string _text = string.Empty;
+
+        public bool IsSuccessAlert
+        {
+            get => _isSuccessAlert;
+            set
+            {
+                _isSuccessAlert = value;
+                OnAlert?.Invoke();
+            }
+        }
+
+        public bool IsDeleteAlert
+        {
+            get => _isDeleteAlert;
+            set
+            {
+                _isDeleteAlert = value;
+                OnAlert?.Invoke();
+            }
+        }
+
+        public string Text
+        {
+            get => _text;
+            set
+            {
+                _text = value;
+                OnAlert?.Invoke();
+            }
+        }
         private readonly HttpClient _httpClient;
         public event Action OnAlert;
-        public bool IsSuccessAlert { get; set; }
-        public bool IsDeleteAlert { get; set; }
-        public string Text { get; set; }
+
 
         public AlertService(HttpClient httpClient)
         {
             _httpClient = httpClient;
+            IsSuccessAlert = false;
+            IsDeleteAlert = false;
         }
 
         public void SetSuccessAlert(string text)
@@ -21,7 +51,6 @@ namespace LocalFarmer2.Client.Services
             IsSuccessAlert = true;
             IsDeleteAlert = false;
             Text = text;
-            OnAlert?.Invoke();
         }
 
         public void SetDeleteAlert(string text)
@@ -29,7 +58,6 @@ namespace LocalFarmer2.Client.Services
             IsSuccessAlert = false;
             IsDeleteAlert = true;
             Text = text;
-            OnAlert?.Invoke();
         }
 
         public async Task<List<Alert>> GetAllForUser(string idUser)

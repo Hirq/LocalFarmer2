@@ -25,7 +25,7 @@ builder.Services.AddScoped<IFarmhouseService, FarmhouseService>();
 builder.Services.AddScoped<IFavoriteFarmhouseService, FavoriteFarmhouseService>();
 builder.Services.AddScoped<IOpinionService, OpinionService>();
 builder.Services.AddScoped<UserStateService>();
-builder.Services.AddSingleton<AlertService>();
+builder.Services.AddScoped<IAlertService, AlertService>();
 builder.Services.AddSingleton<UtilsService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
