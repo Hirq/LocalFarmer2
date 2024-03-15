@@ -20,5 +20,14 @@ namespace LocalFarmer2.Server.Controllers
 
             return Ok(alerts);
         }
+
+        [HttpPost, Route("Alert")]
+        public async Task<IActionResult> Alert(Alert alert)
+        {
+            _alertRepository.Add(alert);
+            await _alertRepository.SaveChangesAsync();
+
+            return Ok(alert);
+        }
     }
 }
