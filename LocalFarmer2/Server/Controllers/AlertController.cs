@@ -18,7 +18,7 @@ namespace LocalFarmer2.Server.Controllers
         [HttpGet, Route("AlertForUser")]
         public async Task<IActionResult> GetAlertsForUser(string idUser)
         {
-            var alerts = _alertRepository.GetAllAsync(x => x.IdUser == idUser);
+            var alerts = await _alertRepository.GetAllAsync(x => x.IdUser == idUser);
 
             return Ok(alerts);
         }
@@ -27,6 +27,7 @@ namespace LocalFarmer2.Server.Controllers
         public async Task<IActionResult> Alert(AddAlertDto dto)
         {
             var alert = _mapper.Map<Alert>(dto);
+            alert.IsOpen = false;
             _alertRepository.Add(alert);
             await _alertRepository.SaveChangesAsync();
 

@@ -1,7 +1,7 @@
 ﻿@page "/favoritefarmhouses"
 @inject IFavoriteFarmhouseService FavoriteFarmhouseService
+@inject IAlertService AlertService
 @inject UserStateService UserStateService
-@inject AlertService alertService
 
 <PageTitle>Farmhouses</PageTitle>
 
@@ -94,7 +94,7 @@
             await FavoriteFarmhouseService.DeleteFavorite(idFarmhouse);
             ListFavoritesFarmhouse.Remove(deletedFarmhouse);
             StateHasChanged();
-            alertService.SetDeleteAlert($"Deleted subscribe farmhouse {idFarmhouse}");
+            AlertService.SetDeleteAlert($"Deleted subscribe farmhouse {idFarmhouse}");
         }
     }
 

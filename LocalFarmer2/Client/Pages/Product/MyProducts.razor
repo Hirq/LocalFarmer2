@@ -1,9 +1,9 @@
 ﻿@page "/myproducts"
 @inject IProductService ProductService
+@inject IAlertService AlertService
 @inject NavigationManager NavigationManager
 @inject UtilsService UtilsService
 @inject HttpClient httpClient
-@inject AlertService alertService
 @inject UserStateService UserStateService
 
 <PageTitle>My products</PageTitle>
@@ -56,7 +56,7 @@
     {
         var product = await ProductService.GetProduct(id);
         await ProductService.DeleteProduct(id);
-        alertService.SetDeleteAlert($"Delete product {product.Name}");
+        AlertService.SetDeleteAlert($"Delete product {product.Name}");
         ListProducts = await ProductService.GetProductsFarmhouse(idFarmhouse);
         StateHasChanged();
         NavigationManager.NavigateTo("/myproducts");

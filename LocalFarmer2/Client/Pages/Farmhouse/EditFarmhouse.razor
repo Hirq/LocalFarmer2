@@ -4,7 +4,7 @@
 @inject IAccountService AccountService
 @inject IFarmhouseService FarmhouseService
 @inject IJSRuntime JSRuntime
-@inject AlertService alertService
+@inject IAlertService AlertService
 @inject NavigationManager NavigationManager
 
 @if (farmhouseDto == null)
@@ -129,7 +129,7 @@ else
         FarmhouseDto dto = mapper.Map<FarmhouseDto>(farmhouseDto);
         await FarmhouseService.EditFarmhouse(dto, (int)currentUser?.IdFarmhouse!);
         UserStateService.CurrentUser.FarmhouseName = farmhouseDto.Name;
-        alertService.SetSuccessAlert($"Successfully edited farmhouse {farmhouseDto.Name}");
+        AlertService.SetSuccessAlert($"Successfully edited farmhouse {farmhouseDto.Name}");
         NavigationManager.NavigateTo("/");
     }
 
@@ -140,7 +140,7 @@ else
             await FarmhouseService.DeleteFarmhouse((int)currentUser.IdFarmhouse);
             UserStateService.CurrentUser.FarmhouseName = null;
             UserStateService.CurrentUser.IdFarmhouse = null;
-            alertService.SetSuccessAlert($"Deleted farmhouse {farmhouseDto.Name}");
+            AlertService.SetSuccessAlert($"Deleted farmhouse {farmhouseDto.Name}");
             NavigationManager.NavigateTo("/");
         }
     }

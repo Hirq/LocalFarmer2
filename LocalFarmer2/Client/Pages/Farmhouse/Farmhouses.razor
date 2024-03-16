@@ -4,9 +4,9 @@
 @inject IFavoriteFarmhouseService FavoriteFarmhouseService
 @inject IOpinionService OpinionService
 @inject IAccountService AccountService
+@inject IAlertService AlertService
 @inject NavigationManager NavigationManager
 @inject HttpClient httpClient
-@inject AlertService alertService
 @inject UserStateService UserStateService
 @inject IJSRuntime JSRuntime
 
@@ -212,7 +212,7 @@ else
         {
             addedFarmhouse.IsFavorite = true;
             StateHasChanged();
-            alertService.SetSuccessAlert($"Successfully added subscribe {idFarmhouse}");
+            AlertService.SetSuccessAlert($"Successfully added subscribe {idFarmhouse}");
         }
     }
 
@@ -233,7 +233,7 @@ else
         {
             addedFarmhouse.IsCommented = true;
             StateHasChanged();
-            alertService.SetSuccessAlert($"Successfully added opinion about {opinion.IdFarmhouse}");
+            AlertService.SetSuccessAlert($"Successfully added opinion about {opinion.IdFarmhouse}");
         }
         opinion.Comment = "";
         opinion.Rating = 3;

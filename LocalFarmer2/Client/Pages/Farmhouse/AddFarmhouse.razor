@@ -3,8 +3,8 @@
 @inject IAccountService AccountService
 @inject IFarmhouseService FarmhouseService
 @inject IJSRuntime JSRuntime
+@inject IAlertService AlertService
 @inject UserStateService UserStateService
-@inject AlertService alertService
 @inject NavigationManager NavigationManager
 <AuthorizeView>
     <EditForm Model="farmhouseDto" OnValidSubmit="OnValidSubmit" Context="editForm">
@@ -80,7 +80,7 @@
         var idFarmhouse = await FarmhouseService.AddFarmhouse(farmhouseDto);
         UserStateService.CurrentUser.FarmhouseName = farmhouseDto.Name;
         UserStateService.CurrentUser.IdFarmhouse = idFarmhouse;
-        alertService.SetSuccessAlert($"Successfully add farmhouse {farmhouseDto.Name}");
+        AlertService.SetSuccessAlert($"Successfully add farmhouse {farmhouseDto.Name}");
         NavigationManager.NavigateTo("/");
     }
 

@@ -1,8 +1,8 @@
 ﻿@page "/editproduct/{id:int}"
 @inject IProductService ProductService
 @inject IMapper mapper
+@inject IAlertService AlertService
 @inject NavigationManager NavigationManager
-@inject AlertService alertService
 
 <PageTitle>Edit product</PageTitle>
 
@@ -48,7 +48,7 @@
     {
         ProductDto dto = mapper.Map<ProductDto>(model);
         await ProductService.EditProduct(dto, Id);
-        alertService.SetSuccessAlert($"Successfully edited product {model.Name}");
+        AlertService.SetSuccessAlert($"Successfully edited product {model.Name}");
         NavigationManager.NavigateTo("/myproducts");
     }
 }

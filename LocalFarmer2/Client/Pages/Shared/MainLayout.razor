@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-@inject IAlertService alertService
+@inject IAlertService AlertService
 @* @inject UtilsService utilsService *@
 @inject UserStateService UserStateService
 @inject IAccountService AccountService
@@ -35,13 +35,13 @@
             <NavMenu />
         </MudDrawer>
         <MudMainContent>
-            @if (alertService.IsSuccessAlert)
+            @if (AlertService.IsSuccessAlert)
             {
-                <MudAlert Severity="Severity.Success" ContentAlignment="HorizontalAlignment.Center" Variant="Variant.Filled" ShowCloseIcon="true" CloseIconClicked="() => CloseAlertSuccess()">@alertService.Text </MudAlert>
+                <MudAlert Severity="Severity.Success" ContentAlignment="HorizontalAlignment.Center" Variant="Variant.Filled" ShowCloseIcon="true" CloseIconClicked="() => CloseAlertSuccess()">@AlertService.Text </MudAlert>
             }
-            @if (alertService.IsDeleteAlert)
+            @if (AlertService.IsDeleteAlert)
             {
-                <MudAlert Severity="Severity.Error" ContentAlignment="HorizontalAlignment.Center" Variant="Variant.Filled" ShowCloseIcon="true" CloseIconClicked="() => CloseAlertDelete()">@alertService.Text </MudAlert>
+                <MudAlert Severity="Severity.Error" ContentAlignment="HorizontalAlignment.Center" Variant="Variant.Filled" ShowCloseIcon="true" CloseIconClicked="() => CloseAlertDelete()">@AlertService.Text </MudAlert>
             }
             @Body
         </MudMainContent>
@@ -58,20 +58,20 @@
 
     private void CloseAlertSuccess()
     {
-        alertService.IsSuccessAlert = false;
+        AlertService.IsSuccessAlert = false;
     }
 
     private void CloseAlertDelete()
     {
-        alertService.IsDeleteAlert = false;
+        AlertService.IsDeleteAlert = false;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (alertService.IsSuccessAlert || alertService.IsDeleteAlert)
+        if (AlertService.IsSuccessAlert || AlertService.IsDeleteAlert)
         {
-            alertService.IsSuccessAlert = false;
-            alertService.IsDeleteAlert = false;
+            AlertService.IsSuccessAlert = false;
+            AlertService.IsDeleteAlert = false;
             await JSRuntime.InvokeVoidAsync("closeAlertAfterDelay");
         }
     }
@@ -84,6 +84,9 @@
             {
                 UserStateService.IsUserLogged = true;
                 UserStateService.CurrentUser = await AccountService.GetCurrentUser();
+                var alerts = await AlertService.GetAllForUser(UserStateService.CurrentUser.IdUser);
+                Console.WriteLine("Wszystkich alertow dla mnie to: " + alerts.Count());
+                Console.WriteLine("Nowych alertow dla mnie to: " + alerts.Where(x => !x.IsOpen).Count());
             }
             else
             {
