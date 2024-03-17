@@ -15,7 +15,9 @@
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
             <MudSpacer />
             <AuthorizeView>
-                <MudIconButton Icon="@Icons.Material.Outlined.Notifications" Color="Color.Inherit" />
+                <MudBadge Content="@newAlerts" Color="Color.Error" Overlap="true" Class="mx-6 my-4" OnClick="(() => ShowComment())">
+                    <MudIcon Icon="@Icons.Material.Outlined.Notifications" Color="Color.Inherit"/>
+                </MudBadge>
                 @* <MudAvatar Color="Color.Secondary" Size="Size.Medium" Class="avatar">JK</MudAvatar> *@
                 <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.MoreVert" TransformOrigin="Origin.TopRight" Color="Color.Inherit">
                     @if (UserStateService.CurrentUser?.IdFarmhouse != null)
@@ -50,6 +52,7 @@
 @code {
     bool _drawerOpen = true;
     private bool isDataInitialized = false;
+    int newAlerts = 0;
 
     void DrawerToggle()
     {
@@ -85,8 +88,8 @@
                 UserStateService.IsUserLogged = true;
                 UserStateService.CurrentUser = await AccountService.GetCurrentUser();
                 var alerts = await AlertService.GetAllForUser(UserStateService.CurrentUser.IdUser);
-                Console.WriteLine("Wszystkich alertow dla mnie to: " + alerts.Count());
-                Console.WriteLine("Nowych alertow dla mnie to: " + alerts.Where(x => !x.IsOpen).Count());
+
+                newAlerts = alerts.Where(x => !x.IsOpen).Count();
             }
             else
             {
@@ -94,5 +97,10 @@
             }
             isDataInitialized = true;
         }
+    }
+
+    private void ShowComment()
+    {
+        Console.WriteLine("Nowych alertow dla mnie to: " + newAlerts);
     }
 }
