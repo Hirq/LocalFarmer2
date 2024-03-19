@@ -15,9 +15,15 @@
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
             <MudSpacer />
             <AuthorizeView>
-                <MudBadge Content="@newAlerts" Color="Color.Error" Overlap="true" Class="mx-6 my-4" OnClick="(() => ShowComment())">
-                    <MudIcon Icon="@Icons.Material.Outlined.Notifications" Color="Color.Inherit"/>
-                </MudBadge>
+                <div class="cursor-pointer" onclick="@(() => ShowComment())">
+                    <MudBadge Content="@newAlerts" Color="Color.Error" Overlap="true" Class="mx-6 my-4">
+                        <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.Notifications" TransformOrigin="Origin.TopRight" Color="Color.Inherit">
+                            <MudMenuItem>Alert 1</MudMenuItem>
+                            <MudMenuItem>Alert 22</MudMenuItem>
+                            <MudMenuItem> 3333 </MudMenuItem>
+                        </MudMenu>
+                    </MudBadge>
+                </div>
                 @* <MudAvatar Color="Color.Secondary" Size="Size.Medium" Class="avatar">JK</MudAvatar> *@
                 <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.MoreVert" TransformOrigin="Origin.TopRight" Color="Color.Inherit">
                     @if (UserStateService.CurrentUser?.IdFarmhouse != null)
