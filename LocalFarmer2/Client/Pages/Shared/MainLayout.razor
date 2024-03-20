@@ -15,12 +15,13 @@
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
             <MudSpacer />
             <AuthorizeView>
-                <div class="cursor-pointer" onclick="@(() => ShowComment())">
+                <div class="cursor-pointer">
                     <MudBadge Content="@newAlerts" Color="Color.Error" Overlap="true" Class="mx-6 my-4">
-                        <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.Notifications" TransformOrigin="Origin.TopRight" Color="Color.Inherit">
-                            <MudMenuItem>Alert 1</MudMenuItem>
-                            <MudMenuItem>Alert 22</MudMenuItem>
-                            <MudMenuItem> 3333 </MudMenuItem>
+                        <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.Notifications" TransformOrigin="Origin.TopRight" Color="Color.Inherit" onclick="@(() => SetAlertsAsReaded())">
+                            @foreach (var alert in alerts)
+                            {
+                                <MudMenuItem>@alert.Message</MudMenuItem>
+                            }
                         </MudMenu>
                     </MudBadge>
                 </div>
@@ -59,6 +60,7 @@
     bool _drawerOpen = true;
     private bool isDataInitialized = false;
     int newAlerts = 0;
+    List<Alert> alerts = new List<Alert>();
 
     void DrawerToggle()
     {
@@ -93,8 +95,7 @@
             {
                 UserStateService.IsUserLogged = true;
                 UserStateService.CurrentUser = await AccountService.GetCurrentUser();
-                var alerts = await AlertService.GetAllForUser(UserStateService.CurrentUser.IdUser);
-
+                alerts = await AlertService.GetAllForUser(UserStateService.CurrentUser.IdUser);
                 newAlerts = alerts.Where(x => !x.IsOpen).Count();
             }
             else
@@ -105,8 +106,12 @@
         }
     }
 
-    private void ShowComment()
+    private void SetAlertsAsReaded()
     {
-        Console.WriteLine("Nowych alertow dla mnie to: " + newAlerts);
+        foreach (var alert in alerts)
+        {
+            alert.IsOpen = true;
+        }
+        newAlerts = 0;
     }
 }

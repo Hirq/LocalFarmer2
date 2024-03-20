@@ -18,7 +18,7 @@ namespace LocalFarmer2.Server.Controllers
         [HttpGet, Route("AlertForUser")]
         public async Task<IActionResult> GetAlertsForUser(string idUser)
         {
-            var alerts = await _alertRepository.GetAllAsync(x => x.IdUser == idUser);
+            var alerts = await _alertRepository.GetAllAsync(x => x.IdUser == idUser, x => x.Farmhouse);
 
             return Ok(alerts);
         }
