@@ -8,5 +8,6 @@
         public void SetSuccessAlert(string text);
         public void SetDeleteAlert(string text);
         public Task<List<Alert>> GetAllForUser(string idUser);
+        public Task SetAllAlertsAsReadForUser(string idUser);
     }
 }

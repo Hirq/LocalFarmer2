@@ -16,14 +16,26 @@
             <MudSpacer />
             <AuthorizeView>
                 <div class="cursor-pointer">
-                    <MudBadge Content="@newAlerts" Color="Color.Error" Overlap="true" Class="mx-6 my-4">
-                        <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.Notifications" TransformOrigin="Origin.TopRight" Color="Color.Inherit" onclick="@(() => SetAlertsAsReaded())">
+                    @if(newAlerts > 0)
+                    {
+                        <MudBadge id="badge" Content="@newAlerts" Color="Color.Error" Overlap="true" Class="mx-6 my-4">
+                        <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.Notifications" TransformOrigin="Origin.TopRight" Color="Color.Inherit" IsOpenChanged="MenuStateChanged">
+                                @foreach (var alert in alerts)
+                                {
+                                    <MudMenuItem>@alert.Message</MudMenuItem>
+                                }
+                            </MudMenu>
+                        </MudBadge>
+                    }
+                    else
+                    {
+                        <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.Notifications" TransformOrigin="Origin.TopRight" Color="Color.Inherit">
                             @foreach (var alert in alerts)
                             {
                                 <MudMenuItem>@alert.Message</MudMenuItem>
                             }
                         </MudMenu>
-                    </MudBadge>
+                    }
                 </div>
                 @* <MudAvatar Color="Color.Secondary" Size="Size.Medium" Class="avatar">JK</MudAvatar> *@
                 <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.MoreVert" TransformOrigin="Origin.TopRight" Color="Color.Inherit">
@@ -61,6 +73,15 @@
     private bool isDataInitialized = false;
     int newAlerts = 0;
     List<Alert> alerts = new List<Alert>();
+
+    private async Task MenuStateChanged(bool isOpen)
+    {
+        if (!isOpen)
+        {
+            await AlertService.SetAllAlertsAsReadForUser(UserStateService.CurrentUser.IdUser);
+            newAlerts = 0;
+        }
+    }
 
     void DrawerToggle()
     {
@@ -104,14 +125,5 @@
             }
             isDataInitialized = true;
         }
-    }
-
-    private void SetAlertsAsReaded()
-    {
-        foreach (var alert in alerts)
-        {
-            alert.IsOpen = true;
-        }
-        newAlerts = 0;
     }
 }
