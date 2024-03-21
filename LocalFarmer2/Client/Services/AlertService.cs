@@ -66,5 +66,10 @@
             
             return alerts;
         }
+
+        public async Task SetAllAlertsAsReadForUser(string idUser)
+        {
+            await _httpClient.PutAsync($"api/Alert/SetAllAlertsAsReadForUser?idUser={idUser}", null);
+        }
     }
 }

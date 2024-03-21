@@ -33,5 +33,15 @@ namespace LocalFarmer2.Server.Controllers
 
             return Ok(alert);
         }
+
+        [HttpPut, Route("SetAllAlertsAsReadForUser")]
+        public async Task<IActionResult> SetAllAlertsAsReadForUser(string idUser)
+        {
+            var alerts = (await _alertRepository.GetAllAsync(x => x.IdUser == idUser)).ToList();
+            alerts.ForEach(x => x.IsOpen = true);
+            await _alertRepository.SaveChangesAsync();
+
+            return Ok(alerts);
+        }
     }
 }
