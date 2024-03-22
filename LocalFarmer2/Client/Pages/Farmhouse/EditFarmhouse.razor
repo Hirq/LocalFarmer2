@@ -33,8 +33,8 @@ else
                                 }
                             </MudSelect>
                             <MudTextField T="String" Id="latitude_input" Disabled Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
-                            <MudTextField T="String" Id="longitude_input" Disabled Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
-                            <MudCheckBox T="Boolean" Checked="farmhouseDto.IsOpen" CheckedChanged="HandleCheckedChanged" Color="Color.Primary" Label="Active" />
+                             <MudTextField T="String" Id="longitude_input" Disabled Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
+                             <MudCheckBox T="Boolean" Checked="farmhouseDto.IsOpen" CheckedChanged="HandleCheckedChanged" Color="Color.Primary" Label="Active" />
                          </MudPaper>
                     }
                     <MudPaper Class="pa-4 mt-4">
@@ -63,7 +63,7 @@ else
     private bool isUserSignUp;
     private IEnumerable<string> SelectedPayment { get; set; } = PaymentMethodInfo.DefaultPayment;
     public int Id { get; set; }
-
+    public bool initIsOpen;
 
     protected async override Task OnInitializedAsync()
     {
@@ -78,6 +78,7 @@ else
                 var farmhouse = await FarmhouseService.GetFarmhouse((int)currentUser?.IdFarmhouse!);
                 farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
                 SelectedPayment = farmhouseDto.PaymentMethods.Split(',').Select(s => s.Trim());
+                initIsOpen = farmhouseDto.IsOpen;
             }
             else
             {
@@ -129,6 +130,18 @@ else
         FarmhouseDto dto = mapper.Map<FarmhouseDto>(farmhouseDto);
         await FarmhouseService.EditFarmhouse(dto, (int)currentUser?.IdFarmhouse!);
         UserStateService.CurrentUser.FarmhouseName = farmhouseDto.Name;
+
+        if (farmhouseDto.IsOpen != initIsOpen)
+        {
+            AddAlertDto dtoAlert = new AddAlertDto()
+            {
+                IdFarmhouse = (int)currentUser.IdFarmhouse,
+                Message = $"Farmhouse {dto.Name} is actually " + (farmhouseDto.IsOpen == true ? "open" : "close"),
+                IdUser = "f5eba541-e2ca-4955-bc72-b6daa3f37e1d"
+            };
+            await AlertService.AddAlert(dtoAlert);
+        }
+
         AlertService.SetSuccessAlert($"Successfully edited farmhouse {farmhouseDto.Name}");
         NavigationManager.NavigateTo("/");
     }

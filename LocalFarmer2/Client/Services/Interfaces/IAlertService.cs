@@ -9,5 +9,6 @@
         public void SetDeleteAlert(string text);
         public Task<List<Alert>> GetAllForUser(string idUser);
         public Task SetAllAlertsAsReadForUser(string idUser);
+        public Task AddAlert(AddAlertDto dto);
     }
 }

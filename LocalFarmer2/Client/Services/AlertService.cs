@@ -1,4 +1,5 @@
-﻿namespace LocalFarmer2.Client.Services
+﻿
+namespace LocalFarmer2.Client.Services
 {
     public class AlertService : IAlertService
     {
@@ -70,6 +71,11 @@
         public async Task SetAllAlertsAsReadForUser(string idUser)
         {
             await _httpClient.PutAsync($"api/Alert/SetAllAlertsAsReadForUser?idUser={idUser}", null);
+        }
+
+        public async Task AddAlert(AddAlertDto dto)
+        {
+            await _httpClient.PostAsJsonAsync($"api/Alert/Alert", dto);
         }
     }
 }
