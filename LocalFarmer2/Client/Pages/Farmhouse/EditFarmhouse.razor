@@ -133,13 +133,19 @@ else
 
         if (farmhouseDto.IsOpen != initIsOpen)
         {
-            AddAlertDto dtoAlert = new AddAlertDto()
+            // AddAlertDto dtoAlert = new AddAlertDto()
+            // {
+            //     IdFarmhouse = (int)currentUser.IdFarmhouse,
+            //     Message = $"Farmhouse {dto.Name} is actually " + (farmhouseDto.IsOpen == true ? "open" : "close"),
+            //     IdUser = "f5eba541-e2ca-4955-bc72-b6daa3f37e1d"
+            // };
+
+            await AlertService.AddAlert(new AddAlertDto()
             {
                 IdFarmhouse = (int)currentUser.IdFarmhouse,
                 Message = $"Farmhouse {dto.Name} is actually " + (farmhouseDto.IsOpen == true ? "open" : "close"),
                 IdUser = "f5eba541-e2ca-4955-bc72-b6daa3f37e1d"
-            };
-            await AlertService.AddAlert(dtoAlert);
+            });
         }
 
         AlertService.SetSuccessAlert($"Successfully edited farmhouse {farmhouseDto.Name}");
