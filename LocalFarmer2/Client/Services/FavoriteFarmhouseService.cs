@@ -55,5 +55,17 @@ namespace LocalFarmer2.Client.Services
 
             return listFavoriteFarmhouses.ToArray();
         }
+
+        public async Task<List<string>> GetFavoriteFarmhouseUsersIds(int idFarmhouse)
+        {
+            var listFavoriteFarmhouses = await _http.GetFromJsonAsync<List<FavoriteFarmhouse>>($"api/FavoriteFarmhouse/FavortieFarmhouseForFarmhouse?idFarmhouse={idFarmhouse}");
+
+            if (listFavoriteFarmhouses == null)
+            {
+                throw new Exception();
+            }
+
+            return listFavoriteFarmhouses.Select(x => x.IdUser).ToList();
+        }
     }
 }
