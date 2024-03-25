@@ -10,5 +10,6 @@
         public Task<List<Alert>> GetAllForUser(string idUser);
         public Task SetAllAlertsAsReadForUser(string idUser);
         public Task AddAlert(AddAlertDto dto);
+        public Task AddAlerts(List<string> dtos, int idFarmhouse, MessageAlert messageAlert);
     }
 }

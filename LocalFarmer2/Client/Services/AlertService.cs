@@ -1,4 +1,6 @@
 ﻿
+using LocalFarmer2.Shared.DTOs;
+
 namespace LocalFarmer2.Client.Services
 {
     public class AlertService : IAlertService
@@ -76,6 +78,20 @@ namespace LocalFarmer2.Client.Services
         public async Task AddAlert(AddAlertDto dto)
         {
             await _httpClient.PostAsJsonAsync($"api/Alert/Alert", dto);
+        }
+
+        public async Task AddAlerts(List<string> dtos,int idFarmhouse, MessageAlert messageAlert)
+        {
+            foreach (var userId in dtos)
+            {
+                AddAlertDto dtoAlert = new AddAlertDto()
+                {
+                    IdFarmhouse = idFarmhouse,
+                    Message = messageAlert.GetMessage(),
+                    IdUser = userId,
+                };
+                await AddAlert(dtoAlert);
+            }
         }
     }
 }
