@@ -11,11 +11,11 @@
         public bool IsOpen { get; }
         public MessageAlertEnum AlertEnum { get; }
 
-        public MessageAlert(MessageAlertEnum alertEnum, string name, bool isOpen)
+        public MessageAlert(MessageAlertEnum alertEnum, string nameFarmhouse, bool isOpenFarmhouse)
         {
             AlertEnum = alertEnum; 
-            Name = name;
-            IsOpen = isOpen;
+            Name = nameFarmhouse;
+            IsOpen = isOpenFarmhouse;
         }
 
         public string GetMessage()

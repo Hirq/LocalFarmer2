@@ -135,9 +135,9 @@ else
         //Alerts
         if (farmhouseDto.IsOpen != initIsOpen)
         {
-            var listUserIds = await FavoriteFarmhouseService.GetFavoriteFarmhouseUsersIds((int)currentUser.IdFarmhouse);
-            var messageAlert = new MessageAlert(MessageAlertEnum.MessageIsOpen,farmhouseDto.Name, farmhouseDto.IsOpen);
-            await AlertService.AddAlerts(listUserIds, (int)currentUser.IdFarmhouse, messageAlert);
+            var listUsersIds = await FavoriteFarmhouseService.GetFavoriteFarmhouseUsersIds((int)currentUser.IdFarmhouse);
+            var messageAlert = new MessageAlert(MessageAlertEnum.MessageIsOpen, farmhouseDto.Name, farmhouseDto.IsOpen);
+            await AlertService.AddAlerts(listUsersIds, (int)currentUser.IdFarmhouse, messageAlert);
         }
 
         AlertService.SetSuccessAlert($"Successfully edited farmhouse {farmhouseDto.Name}");
