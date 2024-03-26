@@ -24,7 +24,10 @@
                                 {
                                     <MudMenuItem>@alert.Message</MudMenuItem>
                                 }
+                                <MudDivider></MudDivider>
+                                <MudMenuItem Href="/myalerts">All alerts</MudMenuItem>
                             </MudMenu>
+
                         </MudBadge>
                     }
                     else
@@ -34,6 +37,8 @@
                             {
                                 <MudMenuItem>@alert.Message</MudMenuItem>
                             }
+                            <MudDivider DividerType="DividerType.Middle" Style="height: 3px" />
+                            <MudMenuItem Avatar="@Icons.Material.Filled.History" Href="/myalerts">All alerts</MudMenuItem>
                         </MudMenu>
                     }
                 </div>
