@@ -24,8 +24,10 @@
                                 {
                                     <MudMenuItem>@alert.Message</MudMenuItem>
                                 }
-                                <MudDivider></MudDivider>
-                                <MudMenuItem Href="/myalerts">All alerts</MudMenuItem>
+                                <MudDivider DividerType="DividerType.Middle" Style="height: 3px" />
+                                <MudTooltip Text="Open history">
+                                    <MudMenuItem Avatar="@Icons.Material.Filled.History" Href="/myalerts">All alerts</MudMenuItem>
+                                </MudTooltip>
                             </MudMenu>
 
                         </MudBadge>
@@ -38,7 +40,9 @@
                                 <MudMenuItem>@alert.Message</MudMenuItem>
                             }
                             <MudDivider DividerType="DividerType.Middle" Style="height: 3px" />
-                            <MudMenuItem Avatar="@Icons.Material.Filled.History" Href="/myalerts">All alerts</MudMenuItem>
+                            <MudTooltip Text="Open history">
+                                <MudMenuItem Avatar="@Icons.Material.Filled.History" Href="/myalerts">All alerts</MudMenuItem>
+                            </MudTooltip>
                         </MudMenu>
                     }
                 </div>
