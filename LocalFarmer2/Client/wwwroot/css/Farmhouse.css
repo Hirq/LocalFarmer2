@@ -16,3 +16,7 @@
 .mud-dialog-width-sm {
     width: 50% !important;
 }
+
+.mud-tooltip-root.mud-tooltip-inline{
+    width: 100%;
+}

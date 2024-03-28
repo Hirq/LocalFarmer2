@@ -4,11 +4,11 @@
 @inject IAlertService AlertService
 @inject UserStateService UserStateService
 
-<PageTitle>Farmhouses</PageTitle>
+<PageTitle>My Opinions</PageTitle>
 
 <MudTable Items="@ListMyOpinionsFarmhouse" SortLabel="Sort By" Hover="true" Filter="new Func<Opinion,bool>(FilterFunc)" CommitEditTooltip="Commit Edit">
     <ToolBarContent>
-        <MudText Typo="Typo.h6">Farmhouses</MudText>
+        <MudText Typo="Typo.h6">My Opinions</MudText>
         <MudSpacer />
         <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent> 

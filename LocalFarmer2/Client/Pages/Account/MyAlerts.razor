@@ -1,8 +1,71 @@
 ﻿@page "/myalerts"
+@inject IAlertService AlertService
+@inject UserStateService UserStateService
 
+<PageTitle>Alerts</PageTitle>
 
-<h3>MyAlerts</h3>
+<MudTable Items="@ListAlert" SortLabel="Sort By" Hover="true" Filter="new Func<Alert,bool>(FilterFunc)" CommitEditTooltip="Commit Edit">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Alerts</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+
+    <HeaderContent>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.IdFarmhouse)">Id Farmhouse</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.Farmhouse.Name)">Name Farmhouse</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.Message)">Message</MudTableSortLabel></MudTh>
+        @* <MudTh>Action</MudTh> *@
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nr">@context.Id</MudTd>
+            <MudTd DataLabel="Nr">@context.IdFarmhouse</MudTd>
+            <MudTd DataLabel="Nr">@context.Farmhouse.Name</MudTd>
+            <MudTd DataLabel="Nr">@context.Message</MudTd>
+@*             <MudTd DataLabel="Edit">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => DeleteOpinion(context.Id)">Delete</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OpenMessageBoxEditOpinion(context.Id)">Edit</MudButton>
+                <MudMessageBox @ref="mbox" Title="Edit opinion" CancelText="Cancel">
+                    <MessageContent>
+                        <div class="d-flex flex-column align-center">
+                            <MudRating @bind-SelectedValue="opinionDto.Rating" />
+                            <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">Your opinion!</MudText>
+                        </div>
+                        <MudTextField T="string" @bind-Value="opinionDto.Comment" Label="Comment" Variant="Variant.Outlined" Lines="3" Placeholder="Set star and add your opinion" />
+                    </MessageContent>
+                    <YesButton>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.AddBox" OnClick="() => EditOpinion(context.Id)">Edit!</MudButton>
+                    </YesButton>
+                </MudMessageBox>
+            </MudTd> *@
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+    </PagerContent>
+</MudTable>
 
 @code {
+    List<Alert> ListAlert = new List<Alert>();
+    private string searchString = null;
 
+    protected override async Task OnInitializedAsync()
+    {
+        ListAlert = await AlertService.GetAllForUser(UserStateService.CurrentUser.IdUser);
+    }
+
+    private bool FilterFunc(Alert alert)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        // if (farmhouse.IdFarmhouse.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //     return true;
+        // if (farmhouse.Address.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            // return true;
+        if (alert.Message.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if ($"{alert.IdFarmhouse} {alert.Id}".Contains(searchString))
+            return true;
+        return false;
+    }
 }
