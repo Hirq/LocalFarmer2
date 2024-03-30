@@ -58,10 +58,6 @@
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
-        // if (farmhouse.IdFarmhouse.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-        //     return true;
-        // if (farmhouse.Address.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            // return true;
         if (alert.Message.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         if ($"{alert.IdFarmhouse} {alert.Id}".Contains(searchString))
