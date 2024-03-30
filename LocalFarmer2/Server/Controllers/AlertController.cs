@@ -28,6 +28,7 @@ namespace LocalFarmer2.Server.Controllers
         {
             var alert = _mapper.Map<Alert>(dto);
             alert.IsOpen = false;
+            alert.DateCreated = DateTime.Now;
             _alertRepository.Add(alert);
             await _alertRepository.SaveChangesAsync();
 
