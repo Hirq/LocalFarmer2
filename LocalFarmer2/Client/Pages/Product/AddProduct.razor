@@ -1,13 +1,14 @@
 ﻿@page "/addproduct"
 @inject IProductService ProductService
 @inject IAlertService AlertService
+@inject IFavoriteFarmhouseService FavoriteFarmhouseService
 @inject UtilsService UtilsService
 @inject NavigationManager NavigationManager
 @inject UserStateService UserStateService
 
 <PageTitle>Add product</PageTitle>
 
-<EditForm Model="model" OnValidSubmit="OnValidSubmit">
+<EditForm Model="product" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
     <MudText Class="d-flex justify-center" Typo="Typo.h6">Add product</MudText>
     <MudGrid>
@@ -15,15 +16,15 @@
             <MudCard>
                 <MudCardContent>
                     <MudTextField Label="Name product"
-                                  @bind-Value="model.Name" Required For="@(() => model.Name)" />
+                                  @bind-Value="product.Name" Required For="@(() => product.Name)" />
                     <MudTextField Label="Description"
-                                  @bind-Value="model.Description" Required For="@(() => model.Description)"/>
+                                  @bind-Value="product.Description" Required For="@(() => product.Description)"/>
                     <MudTextField Label="Count min"
-                                  @bind-Value="model.CountMinOne" Required For="@(() => model.CountMinOne)" />
+                                  @bind-Value="product.CountMinOne" Required For="@(() => product.CountMinOne)" />
                     <MudTextField Label="Prize for one"
-                                  @bind-Value="model.PrizeOne" Required For="@(() => model.PrizeOne)" />
+                                  @bind-Value="product.PrizeOne" Required For="@(() => product.PrizeOne)" />
                     <MudTextField Label="Count all"
-                                  @bind-Value="model.CountAll" Required For="@(() => model.CountAll)" />
+                                  @bind-Value="product.CountAll" Required For="@(() => product.CountAll)" />
                 </MudCardContent>
                 <MudCardActions>
                     <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Add product</MudButton>
@@ -34,13 +35,19 @@
 </EditForm>
 
  @code {
-    ProductDto model = new ProductDto();
+    ProductDto product = new ProductDto();
     //TODO: Jeżeli nie wypełnione to cofnąć
 
     private async void OnValidSubmit(EditContext context)
     {
-        await ProductService.AddProduct(model, (int)UserStateService.CurrentUser.IdFarmhouse);
-        AlertService.SetSuccessAlert($"Successfully add product {model.Name}");
+        await ProductService.AddProduct(product, (int)UserStateService.CurrentUser.IdFarmhouse);
+
+        //Alerts
+        var listUsersIds = await FavoriteFarmhouseService.GetFavoriteFarmhouseUsersIds((int)UserStateService.CurrentUser.IdFarmhouse);
+        var messageAlert = new MessageAlert(MessageAlertEnum.NewProduct, UserStateService.CurrentUser.FarmhouseName, product.Name);
+        await AlertService.AddAlerts(listUsersIds, (int)UserStateService.CurrentUser.IdFarmhouse, messageAlert);
+
+        AlertService.SetSuccessAlert($"Successfully add product {product.Name}");
         NavigationManager.NavigateTo("/myproducts");
     }
 }

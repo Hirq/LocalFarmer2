@@ -136,7 +136,7 @@ else
         if (farmhouseDto.IsOpen != initIsOpen)
         {
             var listUsersIds = await FavoriteFarmhouseService.GetFavoriteFarmhouseUsersIds((int)currentUser.IdFarmhouse);
-            var messageAlert = new MessageAlert(MessageAlertEnum.MessageIsOpen, farmhouseDto.Name, farmhouseDto.IsOpen);
+            var messageAlert = new MessageAlert(MessageAlertEnum.MessageIsOpen, farmhouseDto.Name, null, farmhouseDto.IsOpen);
             await AlertService.AddAlerts(listUsersIds, (int)currentUser.IdFarmhouse, messageAlert);
         }
 
