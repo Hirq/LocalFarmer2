@@ -2,7 +2,9 @@
 @inject IProductService ProductService
 @inject IMapper mapper
 @inject IAlertService AlertService
+@inject IFavoriteFarmhouseService FavoriteFarmhouseService
 @inject NavigationManager NavigationManager
+@inject UserStateService UserStateService
 
 <PageTitle>Edit product</PageTitle>
 
@@ -46,8 +48,14 @@
 
     private async void OnValidSubmit(EditContext context)
     {
-        ProductDto dto = mapper.Map<ProductDto>(model);
-        await ProductService.EditProduct(dto, Id);
+        ProductDto product = mapper.Map<ProductDto>(model);
+        await ProductService.EditProduct(product, Id);
+
+        //Alerts
+        var listUsersIds = await FavoriteFarmhouseService.GetFavoriteFarmhouseUsersIds((int)UserStateService.CurrentUser.IdFarmhouse);
+        var messageAlert = new MessageAlert(MessageAlertEnum.EditProduct, UserStateService.CurrentUser.FarmhouseName, product.Name);
+        await AlertService.AddAlerts(listUsersIds, (int)UserStateService.CurrentUser.IdFarmhouse, messageAlert);
+
         AlertService.SetSuccessAlert($"Successfully edited product {model.Name}");
         NavigationManager.NavigateTo("/myproducts");
     }
