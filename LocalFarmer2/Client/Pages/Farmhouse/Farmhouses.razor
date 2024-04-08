@@ -211,6 +211,12 @@ else
         if (addedFarmhouse != null)
         {
             addedFarmhouse.IsFavorite = true;
+
+            // //Alerts
+            // var listUsersIds = await FavoriteFarmhouseService.GetFavoriteFarmhouseUsersIds((int)UserStateService.CurrentUser.IdFarmhouse);
+            // var messageAlert = new MessageAlert(MessageAlertEnum.NewProduct, UserStateService.CurrentUser.FarmhouseName, product.Name);
+            // await AlertService.AddAlerts(listUsersIds, (int)UserStateService.CurrentUser.IdFarmhouse, messageAlert);
+
             StateHasChanged();
             AlertService.SetSuccessAlert($"Successfully added subscribe {idFarmhouse}");
         }
