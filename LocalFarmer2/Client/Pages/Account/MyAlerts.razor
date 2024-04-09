@@ -53,7 +53,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        ListAlert = await AlertService.GetAllForUser(UserStateService.CurrentUser.IdUser);
+        ListAlert = await AlertService.GetAllForUser(UserStateService.CurrentUser.IdUser, UserStateService.CurrentUser.IdFarmhouse);
     }
 
     private bool FilterFunc(Alert alert)

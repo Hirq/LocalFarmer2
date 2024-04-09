@@ -54,7 +54,7 @@
         //Alerts
         var listUsersIds = await FavoriteFarmhouseService.GetFavoriteFarmhouseUsersIds((int)UserStateService.CurrentUser.IdFarmhouse);
         var messageAlert = new MessageAlert(MessageAlertEnum.EditProduct, UserStateService.CurrentUser.FarmhouseName, product.Name);
-        await AlertService.AddAlerts(listUsersIds, (int)UserStateService.CurrentUser.IdFarmhouse, messageAlert);
+        await AlertService.AddAlerts(listUsersIds, (int)UserStateService.CurrentUser.IdFarmhouse, true, messageAlert);
 
         AlertService.SetSuccessAlert($"Successfully edited product {model.Name}");
         NavigationManager.NavigateTo("/myproducts");

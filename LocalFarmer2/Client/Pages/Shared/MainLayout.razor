@@ -124,7 +124,7 @@
             {
                 UserStateService.IsUserLogged = true;
                 UserStateService.CurrentUser = await AccountService.GetCurrentUser();
-                alerts = await AlertService.GetAllForUser(UserStateService.CurrentUser.IdUser);
+                alerts = await AlertService.GetAllForUser(UserStateService.CurrentUser.IdUser, UserStateService.CurrentUser.IdFarmhouse);
                 newAlerts = alerts.Where(x => !x.IsOpen).Count();
             }
             else

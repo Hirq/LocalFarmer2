@@ -212,10 +212,10 @@ else
         {
             addedFarmhouse.IsFavorite = true;
 
-            // //Alerts
-            // var listUsersIds = await FavoriteFarmhouseService.GetFavoriteFarmhouseUsersIds((int)UserStateService.CurrentUser.IdFarmhouse);
-            // var messageAlert = new MessageAlert(MessageAlertEnum.NewProduct, UserStateService.CurrentUser.FarmhouseName, product.Name);
-            // await AlertService.AddAlerts(listUsersIds, (int)UserStateService.CurrentUser.IdFarmhouse, messageAlert);
+            //Alerts
+            var listUsersIds = new List<string>() { UserStateService.CurrentUser.IdUser };
+            var messageAlert = new MessageAlert(MessageAlertEnum.NewSubscriber, UserStateService.CurrentUser.FullName);
+            await AlertService.AddAlerts(listUsersIds, idFarmhouse, false, messageAlert);
 
             StateHasChanged();
             AlertService.SetSuccessAlert($"Successfully added subscribe {idFarmhouse}");
@@ -238,6 +238,12 @@ else
         if (addedFarmhouse != null)
         {
             addedFarmhouse.IsCommented = true;
+
+            //Alerts
+            var listUsersIds = new List<string>() { UserStateService.CurrentUser.IdUser };
+            var messageAlert = new MessageAlert(MessageAlertEnum.NewOpinion, dto.Comment);
+            await AlertService.AddAlerts(listUsersIds, dto.IdFarmhouse, false, messageAlert);
+
             StateHasChanged();
             AlertService.SetSuccessAlert($"Successfully added opinion about {opinion.IdFarmhouse}");
         }

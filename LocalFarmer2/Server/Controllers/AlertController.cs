@@ -16,9 +16,18 @@ namespace LocalFarmer2.Server.Controllers
         }
 
         [HttpGet, Route("AlertForUser")]
-        public async Task<IActionResult> GetAlertsForUser(string idUser)
+        public async Task<IActionResult> GetAlertsForUser(string idUser, int? idFarmhouse)
         {
-            var alerts = await _alertRepository.GetAllAsync(x => x.IdUser == idUser, x => x.Farmhouse);
+            IEnumerable<Alert> alerts;
+
+            if (idFarmhouse == null)
+            {
+                alerts = await _alertRepository.GetAllAsync(x => x.IdUser == idUser || x.IdFarmhouse == idFarmhouse, x => x.Farmhouse);
+            }
+            else
+            {
+                alerts = await _alertRepository.GetAllAsync(x => x.IdUser == idUser, x => x.Farmhouse);
+            }
 
             return Ok(alerts);
         }

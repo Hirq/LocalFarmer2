@@ -40,9 +40,9 @@
                 case MessageAlertEnum.EditDetails:
                     return $"Farmhouse {Value} change information";
                 case MessageAlertEnum.NewSubscriber:
-                    return $"New Subscriber {Value}";
+                    return $"New Subscriber: {Value}";
                 case MessageAlertEnum.NewOpinion:
-                    return $"New Opinion {Value}";
+                    return $"New Opinion: {Value}";
                 default:
                     return string.Empty;
             }

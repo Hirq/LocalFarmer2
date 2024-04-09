@@ -5,5 +5,6 @@
         public string Message { get; set; }
         public int IdFarmhouse { get; set; }
         public string IdUser { get; set; }
+        public bool InfoFromFarmhouse { get; set; }
     }
 }

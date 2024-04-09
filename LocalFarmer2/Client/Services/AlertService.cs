@@ -63,10 +63,19 @@ namespace LocalFarmer2.Client.Services
             Text = text;
         }
 
-        public async Task<List<Alert>> GetAllForUser(string idUser)
+        public async Task<List<Alert>> GetAllForUser(string idUser, int? idFarmhouse)
         {
-            var alerts = await _httpClient.GetFromJsonAsync<List<Alert>>($"api/Alert/AlertForUser?idUser={idUser}");
-            
+            List<Alert> alerts;
+
+            if (idFarmhouse != null)
+            {
+                alerts = await _httpClient.GetFromJsonAsync<List<Alert>>($"api/Alert/AlertForUser?idUser={idUser}&idFarmhouse={idFarmhouse}");
+            }
+            else
+            {
+                alerts = await _httpClient.GetFromJsonAsync<List<Alert>>($"api/Alert/AlertForUser?idUser={idUser}");
+            }
+
             return alerts;
         }
 
@@ -80,7 +89,7 @@ namespace LocalFarmer2.Client.Services
             await _httpClient.PostAsJsonAsync($"api/Alert/Alert", dto);
         }
 
-        public async Task AddAlerts(List<string> dtos,int idFarmhouse, MessageAlert messageAlert)
+        public async Task AddAlerts(List<string> dtos,int idFarmhouse, bool infoFromFarmhouse, MessageAlert messageAlert)
         {
             foreach (var userId in dtos)
             {
@@ -89,6 +98,7 @@ namespace LocalFarmer2.Client.Services
                     IdFarmhouse = idFarmhouse,
                     Message = messageAlert.GetMessage(),
                     IdUser = userId,
+                    InfoFromFarmhouse = infoFromFarmhouse
                 };
                 await AddAlert(dtoAlert);
             }

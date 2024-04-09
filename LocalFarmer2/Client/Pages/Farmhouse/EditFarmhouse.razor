@@ -137,13 +137,13 @@ else
         if (farmhouseDto.IsOpen != initIsOpen)
         {
             var messageAlertIsOpen = new MessageAlert(MessageAlertEnum.MessageIsOpen, farmhouseDto.Name, null, farmhouseDto.IsOpen);
-            await AlertService.AddAlerts(listUsersIds, (int)currentUser.IdFarmhouse, messageAlertIsOpen);
+            await AlertService.AddAlerts(listUsersIds, (int)currentUser.IdFarmhouse, true, messageAlertIsOpen);
         }
 
         //TODO: 
         // Powinno być tylko gdy faktycznie coś się zmieniło - sprawdzać model, który był na poczatku i ten koncówy - jak ejst różnica to wysłac, jak nie ma to nie.
         var messageAlertEdit = new MessageAlert(MessageAlertEnum.EditDetails, UserStateService.CurrentUser.FarmhouseName);
-        await AlertService.AddAlerts(listUsersIds, (int)currentUser.IdFarmhouse, messageAlertEdit);
+        await AlertService.AddAlerts(listUsersIds, (int)currentUser.IdFarmhouse, true, messageAlertEdit);
 
         AlertService.SetSuccessAlert($"Successfully edited farmhouse {farmhouseDto.Name}");
         NavigationManager.NavigateTo("/");
