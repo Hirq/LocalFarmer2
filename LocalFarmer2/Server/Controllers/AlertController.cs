@@ -20,7 +20,7 @@ namespace LocalFarmer2.Server.Controllers
         {
             IEnumerable<Alert> alerts;
 
-            if (idFarmhouse == null)
+            if (idFarmhouse != null)
             {
                 alerts = await _alertRepository.GetAllAsync(x => x.IdUser == idUser || x.IdFarmhouse == idFarmhouse, x => x.Farmhouse);
             }
