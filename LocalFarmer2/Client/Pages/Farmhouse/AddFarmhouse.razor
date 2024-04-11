@@ -18,6 +18,7 @@
                     <MudTextField T="string" Label="Description" @bind-Value="farmhouseDto.Description" />
                     <MudTextField T="string" Label="Address" @bind-Value="farmhouseDto.Address" />
                     <MudTextField T="string" Label="Phone" @bind-Value="farmhouseDto.Phone" />
+                    <MudTextField T="string" Label="Email" @bind-Value="farmhouseDto.Email" />
                     <MudSelect T="string" Label="Payment methods" MultiSelection="true" SelectAll="true" Required="true" @bind-Value="@farmhouseDto.PaymentMethods" @bind-SelectedValues="SelectedPayment">
                         @foreach (var method in PaymentMethodInfo.PaymentMethods)
                         {
