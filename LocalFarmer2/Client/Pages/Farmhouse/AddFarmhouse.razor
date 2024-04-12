@@ -13,8 +13,7 @@
             <MudItem xs="12">
                 <MudText Class="d-flex justify-center" Typo="Typo.h6">Add farmhouse</MudText>
                 <MudPaper Class="pa-4">
-
-                    <MudTextField T="string" Label="Farmhouse name" @bind-Value="farmhouseDto.Name" Required="true" RequiredError="Farmhouse name is required!" />
+                    <MudTextField T="string" Label="Farmhouse name" @bind-Value="farmhouseDto.Name" @ref="farmhouseNameField" Required="true" RequiredError="Farmhouse name is required!" />
                     <MudTextField T="string" Label="Description" @bind-Value="farmhouseDto.Description" />
                     <MudTextField T="string" Label="Address" @bind-Value="farmhouseDto.Address" />
                     <MudTextField T="string" Label="Phone" @bind-Value="farmhouseDto.Phone" />
@@ -47,7 +46,7 @@
     public int Id { get; set; }
     private AddFarmhouseDto farmhouseDto = new AddFarmhouseDto();
     private IEnumerable<string> SelectedPayment { get; set; } = PaymentMethodInfo.DefaultPayment;
-
+    private MudTextField<string> farmhouseNameField;
 
     protected async override Task OnInitializedAsync()
     {
@@ -64,6 +63,8 @@
 
     private async void OnValidSubmit(EditContext context)
     {
+        context.Validate();
+
         if (module != null)
         {
             latitude = await module.InvokeAsync<string>("getValueById", "latitude_input");
@@ -77,7 +78,7 @@
         if (farmhouseDto.IdUser == null)
         {
             throw new Exception("null iduser");
-        }
+        }     
         var idFarmhouse = await FarmhouseService.AddFarmhouse(farmhouseDto);
         UserStateService.CurrentUser.FarmhouseName = farmhouseDto.Name;
         UserStateService.CurrentUser.IdFarmhouse = idFarmhouse;
@@ -89,6 +90,7 @@
     {
         if (firstRender)
         {
+            await farmhouseNameField.FocusAsync();
             module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
             if (module != null)
             {
