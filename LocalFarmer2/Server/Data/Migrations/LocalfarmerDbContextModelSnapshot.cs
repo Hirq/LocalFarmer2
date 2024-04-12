@@ -79,6 +79,9 @@ namespace LocalFarmer2.Server.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsClose")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsOpen")
                         .HasColumnType("bit");
 

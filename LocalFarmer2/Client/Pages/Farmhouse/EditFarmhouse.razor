@@ -121,6 +121,7 @@ else
 
     private async void OnValidSubmit(EditContext context)
     {
+        context.Validate();
         if (module != null)
         {
             latitude = await module.InvokeAsync<string>("getValueById", "latitude_input");

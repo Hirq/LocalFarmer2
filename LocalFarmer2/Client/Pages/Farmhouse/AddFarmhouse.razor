@@ -13,8 +13,7 @@
             <MudItem xs="12">
                 <MudText Class="d-flex justify-center" Typo="Typo.h6">Add farmhouse</MudText>
                 <MudPaper Class="pa-4">
-
-                    <MudTextField T="string" Label="Farmhouse name" @bind-Value="farmhouseDto.Name" Required="true" RequiredError="Farmhouse name is required!" />
+                    <MudTextField T="string" Label="Farmhouse name" @bind-Value="farmhouseDto.Name" @ref="farmhouseNameField" Required="true" RequiredError="Farmhouse name is required!" />
                     <MudTextField T="string" Label="Description" @bind-Value="farmhouseDto.Description" />
                     <MudTextField T="string" Label="Address" @bind-Value="farmhouseDto.Address" />
                     <MudTextField T="string" Label="Phone" @bind-Value="farmhouseDto.Phone" />
@@ -25,8 +24,8 @@
                             <MudSelectItem T="string" Value="@method">@method</MudSelectItem>
                         }
                     </MudSelect>
-                    <MudTextField Disabled Id="latitude_input" Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
-                    <MudTextField Disabled Id="longitude_input"Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
+                    <MudTextField Disabled Id="latitude_input" Label="Latitude" @bind-Value="farmhouseDto.Latitude" @ref="latitudeField" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
+                    <MudTextField Disabled Id="longitude_input" Label="Longitude" @bind-Value="farmhouseDto.Longitude" @ref="longitudeField" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
                 </MudPaper>
                 <MudPaper Class="pa-4 mt-4">
                     <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
@@ -37,7 +36,7 @@
     <div id="map" style="height: 400px;"></div>
 
 </AuthorizeView>
- @code {
+@code {
     private IJSObjectReference? module;
     private string? result;
     private string? latitude;
@@ -47,7 +46,9 @@
     public int Id { get; set; }
     private AddFarmhouseDto farmhouseDto = new AddFarmhouseDto();
     private IEnumerable<string> SelectedPayment { get; set; } = PaymentMethodInfo.DefaultPayment;
-
+    private MudTextField<string> farmhouseNameField;
+    private MudTextField<string> latitudeField;
+    private MudTextField<string> longitudeField;
 
     protected async override Task OnInitializedAsync()
     {
@@ -64,20 +65,39 @@
 
     private async void OnValidSubmit(EditContext context)
     {
+        Console.WriteLine("START");
+
         if (module != null)
         {
             latitude = await module.InvokeAsync<string>("getValueById", "latitude_input");
             longitude = await module.InvokeAsync<string>("getValueById", "longitude_input");
         }
+        Console.WriteLine("Po module ");
 
         farmhouseDto.Latitude = latitude;
         farmhouseDto.Longitude = longitude;
+
+        Console.WriteLine("1: " + farmhouseDto.Longitude);
+        Console.WriteLine("2: " + farmhouseDto.Latitude);
+
+        context.Validate();
+        //Dodatkowa walidacja
+        if (string.IsNullOrEmpty(farmhouseDto.Latitude))
+        {
+            latitudeField.Validate();
+            return;
+        }        
+        if (string.IsNullOrEmpty(farmhouseDto.Longitude))
+        {
+            longitudeField.Validate();
+            return;
+        }
 
         farmhouseDto.IdUser = UserStateService.CurrentUser?.IdUser;
         if (farmhouseDto.IdUser == null)
         {
             throw new Exception("null iduser");
-        }
+        }     
         var idFarmhouse = await FarmhouseService.AddFarmhouse(farmhouseDto);
         UserStateService.CurrentUser.FarmhouseName = farmhouseDto.Name;
         UserStateService.CurrentUser.IdFarmhouse = idFarmhouse;
@@ -89,6 +109,7 @@
     {
         if (firstRender)
         {
+            await farmhouseNameField.FocusAsync();
             module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
             if (module != null)
             {
