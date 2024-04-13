@@ -49,7 +49,6 @@
     private MudTextField<string> farmhouseNameField;
     private MudTextField<string> latitudeField;
     private MudTextField<string> longitudeField;
-
     protected async override Task OnInitializedAsync()
     {
         // isUserSignUp = await AccountService.IsUserSignUp();
@@ -65,23 +64,17 @@
 
     private async void OnValidSubmit(EditContext context)
     {
-        Console.WriteLine("START");
-
         if (module != null)
         {
             latitude = await module.InvokeAsync<string>("getValueById", "latitude_input");
             longitude = await module.InvokeAsync<string>("getValueById", "longitude_input");
         }
-        Console.WriteLine("Po module ");
 
         farmhouseDto.Latitude = latitude;
         farmhouseDto.Longitude = longitude;
 
-        Console.WriteLine("1: " + farmhouseDto.Longitude);
-        Console.WriteLine("2: " + farmhouseDto.Latitude);
-
+        //TODO: Walidacje osobno funkcja albo coś takiego
         context.Validate();
-        //Dodatkowa walidacja
         if (string.IsNullOrEmpty(farmhouseDto.Latitude))
         {
             latitudeField.Validate();
@@ -98,6 +91,7 @@
         {
             throw new Exception("null iduser");
         }     
+
         var idFarmhouse = await FarmhouseService.AddFarmhouse(farmhouseDto);
         UserStateService.CurrentUser.FarmhouseName = farmhouseDto.Name;
         UserStateService.CurrentUser.IdFarmhouse = idFarmhouse;
