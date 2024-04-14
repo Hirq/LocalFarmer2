@@ -6,6 +6,8 @@
 @inject IAlertService AlertService
 @inject UserStateService UserStateService
 @inject NavigationManager NavigationManager
+@inject ValidateService ValidateService
+
 <AuthorizeView>
     <EditForm Model="farmhouseDto" OnValidSubmit="OnValidSubmit" Context="editForm">
         <DataAnnotationsValidator />
@@ -18,7 +20,7 @@
                     <MudTextField T="string" Label="Address" @bind-Value="farmhouseDto.Address" />
                     <MudTextField T="string" Label="Phone" @bind-Value="farmhouseDto.Phone" />
                     <MudTextField T="string" Label="Email" @bind-Value="farmhouseDto.Email" />
-                    <MudSelect T="string" Label="Payment methods" MultiSelection="true" SelectAll="true" Required="true" @bind-Value="@farmhouseDto.PaymentMethods" @bind-SelectedValues="SelectedPayment">
+                    <MudSelect T="string" Label="Payment methods" MultiSelection="true" SelectAll="true" @ref="paymentMethodsField" Required="true" @bind-Value="@farmhouseDto.PaymentMethods" @bind-SelectedValues="SelectedPayment">
                         @foreach (var method in PaymentMethodInfo.PaymentMethods)
                         {
                             <MudSelectItem T="string" Value="@method">@method</MudSelectItem>
@@ -36,7 +38,7 @@
     <div id="map" style="height: 400px;"></div>
 
 </AuthorizeView>
-@code {
+ @code {
     private IJSObjectReference? module;
     private string? result;
     private string? latitude;
@@ -49,6 +51,7 @@
     private MudTextField<string> farmhouseNameField;
     private MudTextField<string> latitudeField;
     private MudTextField<string> longitudeField;
+    private MudSelect<string> paymentMethodsField;
     protected async override Task OnInitializedAsync()
     {
         // isUserSignUp = await AccountService.IsUserSignUp();
@@ -73,16 +76,18 @@
         farmhouseDto.Latitude = latitude;
         farmhouseDto.Longitude = longitude;
 
-        //TODO: Walidacje osobno funkcja albo coś takiego
+        var fieldsToValidate = new (object Field, string Value)[]
+        {
+            (latitudeField, farmhouseDto.Latitude),
+            (longitudeField, farmhouseDto.Longitude),
+            (paymentMethodsField, farmhouseDto.PaymentMethods),
+        };
+
+        //TODO: Moze tego IdUser też do ValidationService przerzucić
+
         context.Validate();
-        if (string.IsNullOrEmpty(farmhouseDto.Latitude))
+        if (await ValidateService.ValidateMudTextFields(fieldsToValidate))
         {
-            latitudeField.Validate();
-            return;
-        }        
-        if (string.IsNullOrEmpty(farmhouseDto.Longitude))
-        {
-            longitudeField.Validate();
             return;
         }
 

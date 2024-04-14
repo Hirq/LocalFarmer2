@@ -7,6 +7,7 @@
 @inject IJSRuntime JSRuntime
 @inject IAlertService AlertService
 @inject NavigationManager NavigationManager
+@inject ValidateService ValidateService
 
 @if (farmhouseDto == null)
 {
@@ -23,19 +24,19 @@ else
                     @if (@currentUser?.IdFarmhouse != null)
                     {
                         <MudPaper Class="pa-4">
-                            <MudTextField T="String" Label="Farmhouse name" @bind-Value="farmhouseDto.Name" Required="true" RequiredError="Farmhouse name is required!" />
+                            <MudTextField T="String" Label="Farmhouse name" @bind-Value="farmhouseDto.Name" @ref="farmhouseNameField" Required="true" RequiredError="Farmhouse name is required!" />
                             <MudTextField T="String" Label="Description" @bind-Value="farmhouseDto.Description" />
                             <MudTextField T="String" Label="Address" @bind-Value="farmhouseDto.Address" />
                             <MudTextField T="String" Label="Phone" @bind-Value="farmhouseDto.Phone" />
                             <MudTextField T="String" Label="Email" @bind-Value="farmhouseDto.Email" />
-                            <MudSelect T="string" Label="Payment methods" MultiSelection="true" SelectAll="true" Required="true" @bind-Value="@farmhouseDto.PaymentMethods" @bind-SelectedValues="SelectedPayment">
+                            <MudSelect T="string" Label="Payment methods" MultiSelection="true" SelectAll="true" @ref="paymentMethodsField" Required="true" @bind-Value="@farmhouseDto.PaymentMethods" @bind-SelectedValues="SelectedPayment">
                                 @foreach (var method in PaymentMethodInfo.PaymentMethods)
                                 {
                                     <MudSelectItem T="string" Value="@method">@method</MudSelectItem>
                                 }
                             </MudSelect>
-                            <MudTextField T="String" Id="latitude_input" Disabled Label="Latitude" @bind-Value="farmhouseDto.Latitude" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
-                             <MudTextField T="String" Id="longitude_input" Disabled Label="Longitude" @bind-Value="farmhouseDto.Longitude" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
+                            <MudTextField T="String" Id="latitude_input" Disabled Label="Latitude" @bind-Value="farmhouseDto.Latitude" @ref="latitudeField" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
+                             <MudTextField T="String" Id="longitude_input" Disabled Label="Longitude" @bind-Value="farmhouseDto.Longitude" @ref="longitudeField" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
                              <MudCheckBox T="Boolean" Checked="farmhouseDto.IsOpen" CheckedChanged="HandleCheckedChanged" Color="Color.Primary" Label="Active" />
                          </MudPaper>
                     }
@@ -64,6 +65,11 @@ else
     private UserDto? currentUser;
     private bool isUserSignUp;
     private IEnumerable<string> SelectedPayment { get; set; } = PaymentMethodInfo.DefaultPayment;
+    private MudTextField<string> farmhouseNameField;
+    private MudTextField<string> latitudeField;
+    private MudTextField<string> longitudeField;
+    private MudSelect<string> paymentMethodsField;
+
     public int Id { get; set; }
     public bool initIsOpen;
 
@@ -81,6 +87,7 @@ else
                 farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
                 SelectedPayment = farmhouseDto.PaymentMethods.Split(',').Select(s => s.Trim());
                 initIsOpen = farmhouseDto.IsOpen;
+                // await farmhouseNameField.FocusAsync();
             }
             else
             {
@@ -121,7 +128,6 @@ else
 
     private async void OnValidSubmit(EditContext context)
     {
-        context.Validate();
         if (module != null)
         {
             latitude = await module.InvokeAsync<string>("getValueById", "latitude_input");
@@ -130,6 +136,22 @@ else
 
         farmhouseDto.Latitude = latitude;
         farmhouseDto.Longitude = longitude;
+
+        var fieldsToValidate = new (object Field, string Value)[]
+        {
+            (latitudeField, farmhouseDto.Latitude),
+            (longitudeField, farmhouseDto.Longitude),
+            (paymentMethodsField, farmhouseDto.PaymentMethods),
+        };
+
+        //TODO: Moze tego IdUser też do ValidationService przerzucić
+
+        context.Validate();
+        if (await ValidateService.ValidateMudTextFields(fieldsToValidate))
+        {
+            return;
+        }
+
         FarmhouseDto dto = mapper.Map<FarmhouseDto>(farmhouseDto);
         await FarmhouseService.EditFarmhouse(dto, (int)currentUser?.IdFarmhouse!);
         UserStateService.CurrentUser.FarmhouseName = farmhouseDto.Name;

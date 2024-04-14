@@ -28,6 +28,7 @@ builder.Services.AddScoped<IOpinionService, OpinionService>();
 builder.Services.AddScoped<IAlertService, AlertService>();
 builder.Services.AddScoped<UserStateService>();
 builder.Services.AddSingleton<UtilsService>();
+builder.Services.AddSingleton<ValidateService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
