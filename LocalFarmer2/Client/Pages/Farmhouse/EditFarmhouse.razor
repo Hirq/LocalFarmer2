@@ -147,7 +147,7 @@ else
         //TODO: Moze tego IdUser też do ValidationService przerzucić
 
         context.Validate();
-        if (await ValidateService.ValidateMudTextFields(fieldsToValidate))
+        if (ValidateService.ValidateMudTextFields(fieldsToValidate))
         {
             return;
         }

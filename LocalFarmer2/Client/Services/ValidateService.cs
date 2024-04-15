@@ -4,7 +4,7 @@ namespace LocalFarmer2.Client.Services
 {
     public class ValidateService
     {
-        public async Task<bool> ValidateMudTextFields((object Field, string Value)[] mudTextValues)
+        public bool ValidateMudTextFields((object Field, string Value)[] mudTextValues)
         {
             bool validationFailed = false;
 

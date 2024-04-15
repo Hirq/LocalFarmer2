@@ -43,8 +43,8 @@
     private string? result;
     private string? latitude;
     private string? longitude;
-    private UserDto? currentUser;
-    private bool isUserSignUp;
+    // private UserDto? currentUser;
+    // private bool isUserSignUp;
     public int Id { get; set; }
     private AddFarmhouseDto farmhouseDto = new AddFarmhouseDto();
     private IEnumerable<string> SelectedPayment { get; set; } = PaymentMethodInfo.DefaultPayment;
@@ -52,18 +52,19 @@
     private MudTextField<string> latitudeField;
     private MudTextField<string> longitudeField;
     private MudSelect<string> paymentMethodsField;
-    protected async override Task OnInitializedAsync()
-    {
-        // isUserSignUp = await AccountService.IsUserSignUp();
 
-        // if (isUserSignUp)
-        // {
-        //     currentUser = await AccountService.GetCurrentUser();
-        //     UserStateService.CurrentUser = currentUser;
-        //     var farmhouse = await FarmhouseService.GetFarmhouse((int)currentUser?.IdFarmhouse!);
-        //     farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
-        // }
-    }
+    // protected async override Task OnInitializedAsync()
+    // {
+    //     isUserSignUp = await AccountService.IsUserSignUp();
+
+    //     if (isUserSignUp)
+    //     {
+    //         currentUser = await AccountService.GetCurrentUser();
+    //         UserStateService.CurrentUser = currentUser;
+    //         var farmhouse = await FarmhouseService.GetFarmhouse((int)currentUser?.IdFarmhouse!);
+    //         farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
+    //     }
+    // }
 
     private async void OnValidSubmit(EditContext context)
     {
@@ -86,7 +87,7 @@
         //TODO: Moze tego IdUser też do ValidationService przerzucić
 
         context.Validate();
-        if (await ValidateService.ValidateMudTextFields(fieldsToValidate))
+        if (ValidateService.ValidateMudTextFields(fieldsToValidate))
         {
             return;
         }

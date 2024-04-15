@@ -12,11 +12,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        if (Id == null)
-        {
-
-        }
-        else
+        if (Id != 0)
         {
             product = await ProductService.GetProduct(Id);
         }
