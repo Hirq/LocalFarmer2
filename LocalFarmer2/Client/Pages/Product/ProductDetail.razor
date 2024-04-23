@@ -4,6 +4,12 @@
 <PageTitle>Product</PageTitle>
 
 <h2>@product.Name - @product.Id</h2>
+
+@if (product.ImageData != null && !string.IsNullOrEmpty(product.ImageMimeType))
+{
+    <img src="@($"data:{product.ImageMimeType};base64,{Convert.ToBase64String(product.ImageData)}")" alt="Product Image" />
+}
+
 @code {
     [Parameter]
     public int Id { get; set; }

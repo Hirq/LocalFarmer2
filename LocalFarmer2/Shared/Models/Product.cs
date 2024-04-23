@@ -13,6 +13,8 @@ namespace LocalFarmer2.Shared.Models
         public string CountAll { get; set; }
         public string CountMinOne { get; set; }
         public string PrizeOne { get; set; }
+        public byte[] ImageData { get; set; }
+        public string ImageMimeType { get; set; } = string.Empty;
 
         [ForeignKey(nameof(Farmhouse))]
         public int IdFarmhouse { get; set; }

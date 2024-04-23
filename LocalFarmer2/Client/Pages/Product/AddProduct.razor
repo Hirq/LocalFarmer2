@@ -25,6 +25,7 @@
                                   @bind-Value="product.PrizeOne" Required For="@(() => product.PrizeOne)" />
                     <MudTextField Label="Count all"
                                   @bind-Value="product.CountAll" Required For="@(() => product.CountAll)" />
+                     <InputFile OnChange="HandleFileSelected" />
                 </MudCardContent>
                 <MudCardActions>
                     <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Add product</MudButton>
@@ -49,5 +50,19 @@
 
         AlertService.SetSuccessAlert($"Successfully add product {product.Name}");
         NavigationManager.NavigateTo("/myproducts");
+    }
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+
+        if (file != null)
+        {
+            var buffer = new byte[file.Size];
+            await file.OpenReadStream().ReadAsync(buffer);
+
+            product.ImageData = buffer;
+            product.ImageMimeType = file.ContentType;
+        }
     }
 }
