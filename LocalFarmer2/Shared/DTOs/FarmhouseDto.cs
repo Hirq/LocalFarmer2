@@ -21,5 +21,7 @@ namespace LocalFarmer2.Shared.DTOs
         public string Longitude { get; set; }
         public bool IsOpen { get; set; }
         public string PaymentMethods { get; set; }
+        public byte[]? ImageData { get; set; }
+        public string ImageMimeType { get; set; }
     }
 }

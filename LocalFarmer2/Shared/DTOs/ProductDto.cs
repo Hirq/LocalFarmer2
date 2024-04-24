@@ -19,7 +19,7 @@ namespace LocalFarmer2.Shared.DTOs
         [Required]
         public string PrizeOne { get; set; }
 
-        public byte[] ImageData { get; set; }
+        public byte[]? ImageData { get; set; }
         public string ImageMimeType { get; set; } = string.Empty;
     }
 }

@@ -18,5 +18,7 @@ namespace LocalFarmer2.Shared.DTOs
         public string IdUser { get; set; } = string.Empty;
         public bool IsOpen { get; set; } = true;
         public string PaymentMethods { get; set; } = string.Empty;
+        public byte[]? ImageData { get; set; } = null;
+        public string ImageMimeType { get; set; } = string.Empty;
     }
 }

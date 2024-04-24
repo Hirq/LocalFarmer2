@@ -8,6 +8,10 @@
 
 <h2>Name: @farmhouse.Name</h2>
 <h2>Id: @farmhouse.Id</h2>
+@if (farmhouse.ImageData != null && !string.IsNullOrEmpty(farmhouse.ImageMimeType))
+{
+    <img src="@($"data:{farmhouse.ImageMimeType};base64,{Convert.ToBase64String(farmhouse.ImageData)}")" alt="Farmhouse Image" />
+}
 @if (listOpinion.Count > 0)
 {
     <h2>Average opinion: @average</h2>
