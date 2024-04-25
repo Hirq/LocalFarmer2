@@ -36,8 +36,32 @@ else
                                 }
                             </MudSelect>
                             <MudTextField T="String" Id="latitude_input" Disabled Label="Latitude" @bind-Value="farmhouseDto.Latitude" @ref="latitudeField" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
-                             <MudTextField T="String" Id="longitude_input" Disabled Label="Longitude" @bind-Value="farmhouseDto.Longitude" @ref="longitudeField" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
-                             <MudCheckBox T="Boolean" Checked="farmhouseDto.IsOpen" CheckedChanged="HandleCheckedChanged" Color="Color.Primary" Label="Active" />
+                            <MudTextField T="String" Id="longitude_input" Disabled Label="Longitude" @bind-Value="farmhouseDto.Longitude" @ref="longitudeField" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
+                            <MudCheckBox T="Boolean" Checked="farmhouseDto.IsOpen" CheckedChanged="HandleCheckedChanged" Color="Color.Primary" Label="Active" />
+@*                             <MudFileUpload T="IBrowserFile" FilesChanged="UploadFiles">
+                                <ButtonTemplate>
+                                    <MudButton HtmlTag="label"
+                                               Variant="Variant.Filled"
+                                               Color="Color.Primary"
+                                               StartIcon="@Icons.Material.Filled.CloudUpload"
+                                               for="@context.Id">
+                                        Upload Files
+                                    </MudButton>
+                                </ButtonTemplate>
+                            </MudFileUpload> *@
+                             @if (files != null)
+                            {
+                                <MudText Typo="@Typo.h6">@files.Count() File@(files.Count() == 1 ? "" : "s"):</MudText>
+                                <MudList>
+                                    @foreach (var file in files)
+                                    {
+                                        <MudListItem Icon="@Icons.Material.Filled.AttachFile" @key="@file">
+                                            @file.Name <code>@file.Size bytes</code>
+                                        </MudListItem>
+                                    }
+                                </MudList>
+                            }
+                            <InputFile OnChange="HandleFileSelected" />
                          </MudPaper>
                     }
                     <MudPaper Class="pa-4 mt-4">
@@ -69,6 +93,7 @@ else
     private MudTextField<string> latitudeField;
     private MudTextField<string> longitudeField;
     private MudSelect<string> paymentMethodsField;
+    IList<IBrowserFile> files = new List<IBrowserFile>();
 
     public int Id { get; set; }
     public bool initIsOpen;
@@ -87,6 +112,11 @@ else
                 farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
                 SelectedPayment = farmhouseDto.PaymentMethods.Split(',').Select(s => s.Trim());
                 initIsOpen = farmhouseDto.IsOpen;
+                if (farmhouseDto.ImageData != null)
+                {
+
+                    // files.Add(x);
+                }
                 // await farmhouseNameField.FocusAsync();
             }
             else
@@ -152,6 +182,7 @@ else
             return;
         }
 
+        //TODO: Czy to mapowanie jest potrzebne?
         FarmhouseDto dto = mapper.Map<FarmhouseDto>(farmhouseDto);
         await FarmhouseService.EditFarmhouse(dto, (int)currentUser?.IdFarmhouse!);
         UserStateService.CurrentUser.FarmhouseName = farmhouseDto.Name;
@@ -200,5 +231,26 @@ else
     private void HandleCheckedChanged(bool isChecked)
     {
         farmhouseDto.IsOpen = isChecked;
+    }
+
+    // private void UploadFiles(IBrowserFile file)
+    // {
+    //     files.Add(file);
+    //     //TODO upload the files to the server
+    // }
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+
+        if (file != null)
+        {
+            files.Add(file);
+            var buffer = new byte[file.Size];
+            await file.OpenReadStream().ReadAsync(buffer);
+
+            farmhouseDto.ImageData = buffer;
+            farmhouseDto.ImageMimeType = file.ContentType;
+        }
     }
 }
