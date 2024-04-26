@@ -38,17 +38,25 @@ else
                             <MudTextField T="String" Id="latitude_input" Disabled Label="Latitude" @bind-Value="farmhouseDto.Latitude" @ref="latitudeField" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
                             <MudTextField T="String" Id="longitude_input" Disabled Label="Longitude" @bind-Value="farmhouseDto.Longitude" @ref="longitudeField" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
                             <MudCheckBox T="Boolean" Checked="farmhouseDto.IsOpen" CheckedChanged="HandleCheckedChanged" Color="Color.Primary" Label="Active" />
-@*                             <MudFileUpload T="IBrowserFile" FilesChanged="UploadFiles">
-                                <ButtonTemplate>
-                                    <MudButton HtmlTag="label"
-                                               Variant="Variant.Filled"
-                                               Color="Color.Primary"
-                                               StartIcon="@Icons.Material.Filled.CloudUpload"
-                                               for="@context.Id">
-                                        Upload Files
-                                    </MudButton>
-                                </ButtonTemplate>
-                            </MudFileUpload> *@
+@* 
+                             <MudFileUpload T="IBrowserFile" Context="fileInput" FilesChanged="UploadFiles">
+                                 <ButtonTemplate>
+                                     <MudButton HtmlTag="label"
+                                                Variant="Variant.Filled"
+                                                Color="Color.Primary"
+                                                StartIcon="@Icons.Material.Filled.CloudUpload"
+                                                for="@fileInput">
+                                         Upload Files
+                                     </MudButton>
+                                     <MudButton OnClick="@fileInput.Actions.ClearAsync"
+                                                Variant="Variant.Filled"
+                                                Color="Color.Primary"
+                                                StartIcon="@Icons.Material.Filled.Clear">
+                                         Clear Files
+                                     </MudButton>
+                                 </ButtonTemplate>
+                             </MudFileUpload>
+
                              @if (files != null)
                             {
                                 <MudText Typo="@Typo.h6">@files.Count() File@(files.Count() == 1 ? "" : "s"):</MudText>
@@ -61,7 +69,48 @@ else
                                     }
                                 </MudList>
                             }
-                            <InputFile OnChange="HandleFileSelected" />
+                            <InputFile OnChange="HandleFileSelected" /> *@
+
+                        <MudFileUpload T="IReadOnlyList<IBrowserFile>"
+                                       AppendMultipleFiles
+                                       OnFilesChanged="OnInputFileChanged"
+                                       Hidden="@false"
+                                       InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20"
+                                       InputStyle="opacity:0"
+                                       Context="fileInput"
+                                       @ondragenter="@SetDragClass"
+                                       @ondragleave="@ClearDragClass"
+                                       @ondragend="@ClearDragClass">
+                            <ButtonTemplate>
+                                <MudPaper Height="300px"
+                                          Outlined="true"
+                                          Class="@_dragClass">
+                                    <MudText Typo="Typo.h6">
+                                        Drag and drop files here or click
+                                    </MudText>
+                                    @foreach (var file in _fileNames)
+                                    {
+                                        <MudChip Color="Color.Dark" Text="@file" />
+                                    }
+                                </MudPaper>
+                                <MudToolBar DisableGutters="true"
+                                            Class="relative d-flex justify-end gap-4 z-30">
+                                    <MudButton HtmlTag="label"
+                                               Color="Color.Primary"
+                                                   for="@fileInput"
+                                               Variant="Variant.Filled">
+                                        Open file picker
+                                    </MudButton>
+                                    <MudButton OnClick="@Clear"
+                                               Color="Color.Error"
+                                               Disabled="@(!_fileNames.Any())"
+                                               Variant="Variant.Filled">
+                                        Clear
+                                    </MudButton>
+                                </MudToolBar>
+                            </ButtonTemplate>
+                        </MudFileUpload>
+
                          </MudPaper>
                     }
                     <MudPaper Class="pa-4 mt-4">
@@ -233,11 +282,11 @@ else
         farmhouseDto.IsOpen = isChecked;
     }
 
-    // private void UploadFiles(IBrowserFile file)
-    // {
-    //     files.Add(file);
-    //     //TODO upload the files to the server
-    // }
+    private void UploadFiles(IBrowserFile file)
+    {
+        files.Add(file);
+        //TODO upload the files to the server
+    }
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
@@ -253,4 +302,32 @@ else
             farmhouseDto.ImageMimeType = file.ContentType;
         }
     }
+
+
+    private const string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full z-10";
+    private string _dragClass = DefaultDragClass;
+    private readonly List<string> _fileNames = new();
+
+    private async Task Clear()
+    {
+        _fileNames.Clear();
+        ClearDragClass();
+        await Task.Delay(100);
+    }
+
+    private void OnInputFileChanged(InputFileChangeEventArgs e)
+    {
+        ClearDragClass();
+        var files = e.GetMultipleFiles();
+        foreach (var file in files)
+        {
+            _fileNames.Add(file.Name);
+        }
+    }
+
+    private void SetDragClass()
+        => _dragClass = $"{DefaultDragClass} mud-border-primary";
+
+    private void ClearDragClass()
+        => _dragClass = DefaultDragClass;
 }
