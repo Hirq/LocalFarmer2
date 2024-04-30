@@ -41,15 +41,15 @@ else
                             <MudText Typo="Typo.h6">Photo farmhouse</MudText>
                             <MudFileUpload T="IBrowserFile" OnFilesChanged="OnInputFileChanged" Context="fileInput">
                                 <ButtonTemplate>
-                                        @if (_fileNames != null)
+                                    @if (_fileNames != null)
+                                    {
+                                        @foreach (var file in _fileNames)
                                         {
-                                            @foreach (var file in _fileNames)
-                                            {
-                                                <MudListItem Icon="@Icons.Material.Filled.AttachFile" @key="@file">
-                                                    <MudChip Color="Color.Dark" Text="@file" />
-                                                </MudListItem>
-                                            }
+                                            <MudListItem Icon="@Icons.Material.Filled.AttachFile" @key="@file">
+                                                <MudChip Color="Color.Dark" Text="@file" />
+                                            </MudListItem>
                                         }
+                                    }
                                     <MudToolBar DisableGutters="true" >
                                         <MudButton HtmlTag="label"
                                                    Color="Color.Primary"

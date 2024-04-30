@@ -29,6 +29,7 @@ builder.Services.AddScoped<IAlertService, AlertService>();
 builder.Services.AddScoped<UserStateService>();
 builder.Services.AddSingleton<UtilsService>();
 builder.Services.AddSingleton<ValidateService>();
+builder.Services.AddSingleton<FileService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
