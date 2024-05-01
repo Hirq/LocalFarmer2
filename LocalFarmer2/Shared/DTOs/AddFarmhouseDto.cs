@@ -2,7 +2,7 @@
 
 namespace LocalFarmer2.Shared.DTOs
 {
-    public class AddFarmhouseDto
+    public class AddFarmhouseDto : IDtoWithImage
     {
         [Required]
         public string Name { get; set; } = string.Empty;

@@ -2,7 +2,7 @@
 
 namespace LocalFarmer2.Shared.DTOs
 {
-    public class ProductDto
+    public class ProductDto : IDtoWithImage
     {
         [Required]
         public string Name { get; set; }

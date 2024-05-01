@@ -1,9 +1,8 @@
-﻿using LocalFarmer2.Shared.Utilities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace LocalFarmer2.Shared.DTOs
 {
-    public class FarmhouseDto
+    public class FarmhouseDto : IDtoWithImage
     {
         [Required]
         public string Name { get; set; }

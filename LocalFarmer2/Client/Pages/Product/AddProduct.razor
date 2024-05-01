@@ -5,6 +5,7 @@
 @inject UtilsService UtilsService
 @inject NavigationManager NavigationManager
 @inject UserStateService UserStateService
+@inject FileService FileService
 
 <PageTitle>Add product</PageTitle>
 
@@ -25,7 +26,7 @@
                                   @bind-Value="product.PrizeOne" Required For="@(() => product.PrizeOne)" />
                     <MudTextField Label="Count all"
                                   @bind-Value="product.CountAll" Required For="@(() => product.CountAll)" />
-                     <InputFile OnChange="HandleFileSelected" />
+                     <InputFile OnChange="(e) => FileService.HandleFileSelected(e, product)" />
                 </MudCardContent>
                 <MudCardActions>
                     <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Add product</MudButton>
@@ -52,17 +53,4 @@
         NavigationManager.NavigateTo("/myproducts");
     }
 
-    private async Task HandleFileSelected(InputFileChangeEventArgs e)
-    {
-        var file = e.File;
-
-        if (file != null)
-        {
-            var buffer = new byte[file.Size];
-            await file.OpenReadStream().ReadAsync(buffer);
-
-            product.ImageData = buffer;
-            product.ImageMimeType = file.ContentType;
-        }
-    }
 }
