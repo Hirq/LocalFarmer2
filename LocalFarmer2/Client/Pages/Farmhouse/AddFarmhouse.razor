@@ -7,6 +7,7 @@
 @inject UserStateService UserStateService
 @inject NavigationManager NavigationManager
 @inject ValidateService ValidateService
+@inject FileService FileService
 
 <AuthorizeView>
     <EditForm Model="farmhouseDto" OnValidSubmit="OnValidSubmit" Context="editForm">
@@ -26,7 +27,7 @@
                             <MudSelectItem T="string" Value="@method">@method</MudSelectItem>
                         }
                     </MudSelect>
-                    <InputFile OnChange="HandleFileSelected" />
+                    <InputFile OnChange="(e) => FileService.HandleFileSelected(e, farmhouseDto)" />
                     <MudTextField Disabled Id="latitude_input" Label="Latitude" @bind-Value="farmhouseDto.Latitude" @ref="latitudeField" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
                     <MudTextField Disabled Id="longitude_input" Label="Longitude" @bind-Value="farmhouseDto.Longitude" @ref="longitudeField" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
                 </MudPaper>
@@ -120,17 +121,4 @@
         }
     }
 
-    private async Task HandleFileSelected(InputFileChangeEventArgs e)
-    {
-        var file = e.File;
-
-        if (file != null)
-        {
-            var buffer = new byte[file.Size];
-            await file.OpenReadStream().ReadAsync(buffer);
-
-            farmhouseDto.ImageData = buffer;
-            farmhouseDto.ImageMimeType = file.ContentType;
-        }
-    }
 }
