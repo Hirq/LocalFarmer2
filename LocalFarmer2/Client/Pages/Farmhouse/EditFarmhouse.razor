@@ -8,6 +8,7 @@
 @inject IAlertService AlertService
 @inject NavigationManager NavigationManager
 @inject ValidateService ValidateService
+@inject FileService FileService
 
 @if (farmhouseDto == null)
 {
@@ -39,11 +40,11 @@ else
                             <MudTextField T="String" Id="longitude_input" Disabled Label="Longitude" @bind-Value="farmhouseDto.Longitude" @ref="longitudeField" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
                             <MudCheckBox T="Boolean" Checked="farmhouseDto.IsOpen" CheckedChanged="HandleCheckedChanged" Color="Color.Primary" Label="Active" />
                             <MudText Typo="Typo.h6">Photo farmhouse</MudText>
-                            <MudFileUpload T="IBrowserFile" OnFilesChanged="OnInputFileChanged" Context="fileInput">
+                            <MudFileUpload T="IBrowserFile" OnFilesChanged="(e) => FileService.OnInputFileChanged(e, farmhouseDto)" Context="fileInput">
                                 <ButtonTemplate>
-                                    @if (_fileNames != null)
+                                    @if (@FileService.fileNames != null)
                                     {
-                                        @foreach (var file in _fileNames)
+                                        @foreach (var file in FileService.fileNames)
                                         {
                                             <MudListItem Icon="@Icons.Material.Filled.AttachFile" @key="@file">
                                                 <MudChip Color="Color.Dark" Text="@file" />
@@ -57,9 +58,9 @@ else
                                                    Variant="Variant.Filled">
                                             Open file picker
                                         </MudButton>
-                                        <MudButton OnClick="@Clear"
+                                        <MudButton OnClick="(e) => FileService.Clear(farmhouseDto)"
                                                    Color="Color.Error"
-                                                   Disabled="@(!_fileNames.Any())"
+                                                   Disabled="@(!FileService.fileNames.Any())"
                                                    Variant="Variant.Filled">
                                             Clear
                                         </MudButton>
@@ -97,8 +98,6 @@ else
     private MudTextField<string> latitudeField;
     private MudTextField<string> longitudeField;
     private MudSelect<string> paymentMethodsField;
-    IList<IBrowserFile> files = new List<IBrowserFile>();
-    private readonly List<string> _fileNames = new();
 
     public int Id { get; set; }
     public bool initIsOpen;
@@ -120,7 +119,7 @@ else
                 if (farmhouseDto.ImageData != null && !string.IsNullOrEmpty(farmhouseDto.ImageMimeType))
                 {
                     //TODO: Zapisać nazwę tego zdjęcia do bazy - lub w jakiś inny sposób poinformować o tym, że zdjęcie jest ustawione
-                    _fileNames.Add("Image for farmhouse is set");
+                    FileService.fileNames.Add("Image for farmhouse is set");
                 }
                 // await farmhouseNameField.FocusAsync();
             }
@@ -236,32 +235,5 @@ else
     private void HandleCheckedChanged(bool isChecked)
     {
         farmhouseDto.IsOpen = isChecked;
-    }
-
-    private async Task Clear()
-    {
-        _fileNames.Clear();
-        files.Clear();
-        farmhouseDto.ImageData = null;
-        farmhouseDto.ImageMimeType = string.Empty;
-        await Task.Delay(100);
-    }
-
-    private async Task OnInputFileChanged(InputFileChangeEventArgs e)
-    {
-        var file = e.File;
-
-        if (file != null)
-        {
-            _fileNames.Clear();
-            files.Add(file);
-            _fileNames.Add(file.Name);
-
-            var buffer = new byte[file.Size];
-            await file.OpenReadStream().ReadAsync(buffer);
-
-            farmhouseDto.ImageData = buffer;
-            farmhouseDto.ImageMimeType = file.ContentType;
-        }
     }
 }
