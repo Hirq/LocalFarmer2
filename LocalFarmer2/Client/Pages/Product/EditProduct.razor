@@ -5,6 +5,7 @@
 @inject IFavoriteFarmhouseService FavoriteFarmhouseService
 @inject NavigationManager NavigationManager
 @inject UserStateService UserStateService
+@inject FileService FileService
 
 <PageTitle>Edit product</PageTitle>
 
@@ -25,6 +26,36 @@
                                   @bind-Value="model.PrizeOne" Required For="@(() => model.PrizeOne)" />
                     <MudTextField Label="Count all"
                                   @bind-Value="model.CountAll" Required For="@(() => model.CountAll)" />
+
+                     <MudText Typo="Typo.h6">Photo product</MudText>
+                     <MudFileUpload T="IBrowserFile" OnFilesChanged="(e) => FileService.OnInputFileChanged(e, model)" Context="fileInput">
+                         <ButtonTemplate>
+                             @if (@FileService.fileNames != null)
+                            {
+                                @foreach (var file in FileService.fileNames)
+                                {
+                                    <MudListItem Icon="@Icons.Material.Filled.AttachFile" @key="@file">
+                                        <MudChip Color="Color.Dark" Text="@file" />
+                                    </MudListItem>
+                                }
+                            }
+                            <MudToolBar DisableGutters="true">
+                                <MudButton HtmlTag="label"
+                                           Color="Color.Primary"
+                                           for="@fileInput"
+                                           Variant="Variant.Filled">
+                                    Open file picker
+                                </MudButton>
+                                <MudButton OnClick="(e) => FileService.Clear(model)"
+                                           Color="Color.Error"
+                                           Disabled="@(!FileService.fileNames.Any())"
+                                           Variant="Variant.Filled">
+                                    Clear
+                                </MudButton>
+                            </MudToolBar>
+                        </ButtonTemplate>
+                    </MudFileUpload>
+
                 </MudCardContent>
                 <MudCardActions>
                     <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Edit product</MudButton>
@@ -44,6 +75,12 @@
     {
         var product = await ProductService.GetProduct(Id);
         model = mapper.Map<ProductDto>(product);
+
+        if (model.ImageData != null && !string.IsNullOrEmpty(model.ImageMimeType))
+        {
+            //TODO: Zapisać nazwę tego zdjęcia do bazy - lub w jakiś inny sposób poinformować o tym, że zdjęcie jest ustawione
+            FileService.fileNames.Add("Image for product is set");
+        }
     }
 
     private async void OnValidSubmit(EditContext context)
