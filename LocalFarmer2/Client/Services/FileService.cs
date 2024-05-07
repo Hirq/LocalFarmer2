@@ -1,5 +1,4 @@
-﻿using LocalFarmer2.Shared.DTOs;
-using Microsoft.AspNetCore.Components.Forms;
+﻿using Microsoft.AspNetCore.Components.Forms;
 
 namespace LocalFarmer2.Client.Services
 {
