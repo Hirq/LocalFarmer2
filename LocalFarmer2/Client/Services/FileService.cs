@@ -23,11 +23,16 @@ namespace LocalFarmer2.Client.Services
 
         public async Task Clear(IDtoWithImage dto)
         {
-            fileNames.Clear();
-            files.Clear();
+            ClearVariables();
             dto.ImageData = null;
             dto.ImageMimeType = string.Empty;
             await Task.Delay(100);
+        }
+
+        public void SetName(string name)
+        {
+            ClearVariables();
+            fileNames.Add(name);
         }
 
         public async Task OnInputFileChanged(InputFileChangeEventArgs e, IDtoWithImage dto)
@@ -46,6 +51,12 @@ namespace LocalFarmer2.Client.Services
                 dto.ImageData = buffer;
                 dto.ImageMimeType = file.ContentType;
             }
+        }
+
+        private void ClearVariables()
+        {
+            fileNames.Clear();
+            files.Clear();
         }
     }
 }
