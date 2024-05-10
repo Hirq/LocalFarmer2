@@ -45,7 +45,7 @@ else
                     <MudPaper Class="pa-4 mt-4">
                         <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
                         <MudButton OnClick="() => UnlockMap()" id="buttonChangeMarker" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Change marker</MudButton>
-                        <MudButton OnClick="() => DeleteFarmhouse()" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Error">Delete</MudButton>
+                        <PopupDelete Name="Delete" Content="Are u sure delete this farmhouse?" ColorButton="@Color.Error" Action="() => DeleteFarmhouse()"> </PopupDelete>
                     </MudPaper>
                 </MudItem>
             </MudGrid>
