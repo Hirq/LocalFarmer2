@@ -1,4 +1,6 @@
-﻿<MudButton Variant="Variant.Filled" Color="@ColorButton" OnClick="@ToggleOpen">@Name</MudButton>
+﻿@namespace LocalFarmer2.Client.Pages
+
+<MudButton Variant="Variant.Filled" Color="@ColorButton" OnClick="@ToggleOpen">@Name</MudButton>
 
 <MudPopover Open="@_isOpen" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.CenterCenter" TransformOrigin="Origin.CenterCenter">
     <div class="d-flex flex-column">
