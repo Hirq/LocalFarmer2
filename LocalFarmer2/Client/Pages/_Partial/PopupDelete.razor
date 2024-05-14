@@ -1,14 +1,15 @@
 ﻿@namespace LocalFarmer2.Client.Pages
 
 <MudButton Variant="Variant.Filled" Color="@ColorButton" OnClick="@ToggleOpen">@Name</MudButton>
-
-<MudPopover Open="@_isOpen" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.CenterCenter" TransformOrigin="Origin.CenterCenter">
-    <div class="d-flex flex-column">
-        <MudText>@Content</MudText>
-        <MudButton OnClick="@Action" Class="ml-auto mr-n3 mb-1" Variant="Variant.Filled" Color="@ColorButton">@Name</MudButton>
-        <MudButton OnClick="@ToggleOpen" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
-    </div>
-</MudPopover>
+    <div class="popup-delete" tabindex="0" @onkeydown="HandleKeyDown">
+    <MudPopover Open="@_isOpen" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.CenterCenter" TransformOrigin="Origin.CenterCenter" >
+        <div class="d-flex flex-column">
+            <MudText>@Content</MudText>
+            <MudButton OnClick="@Action" Class="ml-auto mr-n3 mb-1" Variant="Variant.Filled" Color="@ColorButton">@Name</MudButton>
+            <MudButton OnClick="@ToggleOpen" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
+        </div>
+    </MudPopover>
+</div>
 
 @code {
     [Parameter]
@@ -32,4 +33,22 @@
         else
             _isOpen = true;
     }   
+
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Escape")
+        {
+            _isOpen = false;
+        }
+    }
+
 }
+
+<style>
+    .popup-delete {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>

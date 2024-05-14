@@ -42,10 +42,15 @@ else
                             <EditFile Name="Photo farmhouse" Model="@farmhouseDto" />
                          </MudPaper>
                     }
-                    <MudPaper Class="pa-4 mt-4">
-                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
-                        <MudButton OnClick="() => UnlockMap()" id="buttonChangeMarker" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Change marker</MudButton>
-                        <PopupDelete Name="Delete" Content="Are u sure delete this farmhouse?" ColorButton="@Color.Error" Action="() => DeleteFarmhouse()" />
+                    <MudPaper Class="pa-4 mt-4 d-flex justify-space-between">
+                        <div>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
+                            <MudButton OnClick="() => UnlockMap()" id="buttonChangeMarker" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Change marker</MudButton>
+                            <PopupDelete Name="Delete" Content="Are u sure delete this farmhouse?" ColorButton="@Color.Error" Action="() => DeleteFarmhouse()" />
+                        </div>
+                        <div>
+                            <PopupDelete Name="Delete" Content="Are u sure delete this farmhouse?" ColorButton="@Color.Error" Action="() => DeleteFarmhouse()" />
+                        </div>
                     </MudPaper>
                 </MudItem>
             </MudGrid>
