@@ -2,11 +2,13 @@
 
 <MudButton Variant="Variant.Filled" Color="@ColorButton" OnClick="@ToggleOpen">@Name</MudButton>
     <div class="popup-delete" tabindex="0" @onkeydown="HandleKeyDown">
-    <MudPopover Open="@_isOpen" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.CenterCenter" TransformOrigin="Origin.CenterCenter" >
+    <MudPopover Open="@_isOpen" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.CenterCenter" TransformOrigin="Origin.CenterCenter">
         <div class="d-flex flex-column">
             <MudText>@Content</MudText>
-            <MudButton OnClick="@Action" Class="ml-auto mr-n3 mb-1" Variant="Variant.Filled" Color="@ColorButton">@Name</MudButton>
-            <MudButton OnClick="@ToggleOpen" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
+            <div class="d-flex flex-row justify-space-between mt-7 mb-2">
+                <MudButton OnClick="@Action" Class="mb-1" Variant="Variant.Filled" Color="@ColorButton">@Name</MudButton>
+                <MudButton OnClick="@ToggleOpen" Class="mb-1" Color="Color.Error">Close</MudButton>
+            </div>
         </div>
     </MudPopover>
 </div>
