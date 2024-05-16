@@ -9,6 +9,7 @@
 @inject NavigationManager NavigationManager
 @inject ValidateService ValidateService
 @inject FileService FileService
+@inject IDialogService DialogService
 
 @if (farmhouseDto == null)
 {
@@ -49,6 +50,9 @@ else
                         </div>
                         <div>
                             <PopupDelete Name="Delete" Content="Are u sure delete this farmhouse?" ColorButton="@Color.Error" Action="() => DeleteFarmhouse()" />
+                            <MudButton OnClick="() => OpenDialog()" Variant="Variant.Filled" Color="Color.Primary">
+                                Options Dialog
+                            </MudButton>
                         </div>
                     </MudPaper>
                 </MudItem>
@@ -78,6 +82,12 @@ else
 
     public int Id { get; set; }
     public bool initIsOpen;
+
+    private void OpenDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        DialogService.Show<PopupDeleteNew>("Simple Dialog", options);
+    }
 
     protected async override Task OnInitializedAsync()
     {

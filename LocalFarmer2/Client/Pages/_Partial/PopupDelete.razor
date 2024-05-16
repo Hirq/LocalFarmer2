@@ -1,7 +1,7 @@
 ﻿@namespace LocalFarmer2.Client.Pages
 
 <MudButton Variant="Variant.Filled" Color="@ColorButton" OnClick="@ToggleOpen">@Name</MudButton>
-    <div class="popup-delete" tabindex="0" @onkeydown="HandleKeyDown">
+    <div class="popup-delete">
     <MudPopover Open="@_isOpen" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.CenterCenter" TransformOrigin="Origin.CenterCenter">
         <div class="d-flex flex-column">
             <MudText>@Content</MudText>
@@ -13,7 +13,7 @@
     </MudPopover>
 </div>
 
-@code {
+    @code {
     [Parameter]
     public string Name { get; set; }  
 
@@ -35,15 +35,6 @@
         else
             _isOpen = true;
     }   
-
-    private void HandleKeyDown(KeyboardEventArgs e)
-    {
-        if (e.Key == "Escape")
-        {
-            _isOpen = false;
-        }
-    }
-
 }
 
 <style>
