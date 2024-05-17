@@ -9,7 +9,7 @@
 @inject NavigationManager NavigationManager
 @inject ValidateService ValidateService
 @inject FileService FileService
-@inject IDialogService DialogService
+@inject UtilsService UtilsService
 
 @if (farmhouseDto == null)
 {
@@ -49,10 +49,7 @@ else
                             <MudButton OnClick="() => UnlockMap()" id="buttonChangeMarker" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Change marker</MudButton>
                         </div>
                         <div>
-                            <PopupDelete Name="Delete" Content="Are u sure delete this farmhouse?" ColorButton="@Color.Error" Action="() => DeleteFarmhouse()" />
-                            <MudButton OnClick="() => OpenDialog()" Variant="Variant.Filled" Color="Color.Primary">
-                                Options Dialog
-                            </MudButton>
+                            <MudButton OnClick='() => UtilsService.OpenDialog(buttonDeleteTitle, buttonDeleteName, buttonDeleteContent, () => DeleteFarmhouse(), Color.Error)' Variant="Variant.Filled" Color="Color.Error">Delete</MudButton>
                         </div>
                     </MudPaper>
                 </MudItem>
@@ -68,6 +65,10 @@ else
     [Parameter]
     public FarmhouseDto farmhouseDto { get; set; }
 
+    private string buttonDeleteTitle = "Delete farmhouse";
+    private string buttonDeleteName = "Delete";
+    private string buttonDeleteContent = "Are you sure delete this farmhouse?";
+
     private IJSObjectReference? module;
     private string? result;
     private string? latitude;
@@ -82,12 +83,6 @@ else
 
     public int Id { get; set; }
     public bool initIsOpen;
-
-    private void OpenDialog()
-    {
-        var options = new DialogOptions { CloseOnEscapeKey = true };
-        DialogService.Show<PopupDeleteNew>("Simple Dialog", options);
-    }
 
     protected async override Task OnInitializedAsync()
     {

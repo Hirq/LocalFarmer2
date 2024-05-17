@@ -2,26 +2,29 @@
 
 <MudDialog>
     <DialogContent>
-        Dialog Content
+        @Content
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+        <MudButton OnClick="@Action" Color="@ColorButton" Variant="Variant.Filled">@ButtonName</MudButton>
     </DialogActions>
 </MudDialog>
+
 @code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public string ButtonName { get; set; }
+
+    [Parameter]
+    public MudBlazor.Color ColorButton { get; set; }
+
+    [Parameter]
+    public string Content { get; set; }
+
+    [Parameter]
+    public Action Action { get; set; }
 
     void Submit() => MudDialog.Close(DialogResult.Ok(true));
     void Cancel() => MudDialog.Cancel();
 }
-
-
-<style>
-    .popup-delete {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-</style>
