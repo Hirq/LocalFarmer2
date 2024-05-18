@@ -27,7 +27,7 @@
             <MudTd DataLabel="Count all">@context.CountAll</MudTd>
             <MudTd DataLabel="Edit">
                 <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => EditProduct(context.Id)">Edit</MudButton>
-                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Medium" OnClick="() => DeleteProduct(context.Id)" />
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(buttonDeleteTitle, buttonDeleteName, buttonDeleteContent, () => DeleteProduct(context.Id), Color.Error)' />
             </MudTd>
         </RowTemplate>
         <PagerContent>
@@ -35,9 +35,12 @@
         </PagerContent>
     </MudTable>
 
-    @code {
+@code {
     IEnumerable<Product> ListProducts = new List<Product>();
     int idFarmhouse;
+    private string buttonDeleteTitle = "Delete product";
+    private string buttonDeleteName = "Delete";
+    private string buttonDeleteContent = "Are you sure delete this product?";
 
     protected override async Task OnInitializedAsync()
     {

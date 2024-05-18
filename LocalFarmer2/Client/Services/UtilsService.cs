@@ -1,5 +1,5 @@
-﻿using LocalFarmer2.Client.Pages;
-using MudBlazor;
+﻿using MudBlazor;
+using LocalFarmer2.Client.Pages;
 
 namespace LocalFarmer2.Client.Services
 {
@@ -15,11 +15,13 @@ namespace LocalFarmer2.Client.Services
         public void OpenDialog(string title, string buttonName, string content, Action action, MudBlazor.Color buttonColor)
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
-            var parameters = new DialogParameters();
-            parameters.Add("ButtonName", buttonName);
-            parameters.Add("Content", content);
-            parameters.Add("Action", action);
-            parameters.Add("ColorButton", buttonColor);
+            var parameters = new DialogParameters
+            {
+                { "ButtonName", buttonName },
+                { "Content", content },
+                { "Action", action },
+                { "ColorButton", buttonColor }
+            };
 
             _dialogService.Show<PopupDialog>(title, parameters, options);
         }
