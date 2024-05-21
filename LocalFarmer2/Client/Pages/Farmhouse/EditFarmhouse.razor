@@ -40,7 +40,7 @@ else
                             <MudTextField T="String" Id="latitude_input" Disabled Label="Latitude" @bind-Value="farmhouseDto.Latitude" @ref="latitudeField" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
                             <MudTextField T="String" Id="longitude_input" Disabled Label="Longitude" @bind-Value="farmhouseDto.Longitude" @ref="longitudeField" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
                             <MudCheckBox T="Boolean" Checked="farmhouseDto.IsOpen" CheckedChanged="HandleCheckedChanged" Color="Color.Primary" Label="Active" />
-                            <EditFile Name="Photo farmhouse" Model="@farmhouseDto" />
+                            <EditFile Name="Photo farmhouse" Model="@farmhouseDto" Link=@($"farmhouse/{UserStateService.CurrentUser?.IdFarmhouse}") />
                          </MudPaper>
                     }
                     <MudPaper Class="pa-4 mt-4 d-flex justify-space-between">
@@ -80,8 +80,8 @@ else
     private MudTextField<string> latitudeField;
     private MudTextField<string> longitudeField;
     private MudSelect<string> paymentMethodsField;
-
     public int Id { get; set; }
+
     public bool initIsOpen;
 
     protected async override Task OnInitializedAsync()
