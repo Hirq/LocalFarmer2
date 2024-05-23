@@ -1,18 +1,35 @@
 ﻿@page "/account/logindisplay"
+@using System.Globalization
+
 @inject IAccountService AccountService
+@inject SharedResources SharedResources
 @inject UserStateService UserStateService
+@inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
 
 <AuthorizeView>
     <Authorized>
+        <div>@SharedResources["Hello World"]</div>
         <div>IdUser: @UserStateService.CurrentUser?.IdUser</div>
         <div>FullName: @UserStateService.CurrentUser?.FullName</div>
         <div>UserName: @UserStateService.CurrentUser?.UserName</div>
         <div>FarmhouseId: @UserStateService.CurrentUser?.IdFarmhouse</div>
         <div>Farmhouse: @UserStateService.CurrentUser?.FarmhouseName</div>
+
+        <button @onclick="ChangeCulture">Change Culture</button>
     </Authorized>
 </AuthorizeView>
 
 @code {
+    private async Task ChangeCulture()
+    {
+        var culture = CultureInfo.CurrentCulture.Name == "en-US" ? "pl-PL" : "en-US";
+        await JSRuntime.InvokeVoidAsync("blazorCulture.set", culture);
+        CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(culture);
+        CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(culture);
+        Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
+    }
+
     // private UserDto currentUser = new UserDto()
     //     {
     //         UserName = "",
