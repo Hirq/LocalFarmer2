@@ -1,24 +1,26 @@
 global using AutoMapper;
+global using System.Net.Http.Json;
+global using LocalFarmer2.Shared.Models;
 global using LocalFarmer2.Shared.DTOs;
 global using LocalFarmer2.Shared.ENUMs;
-global using LocalFarmer2.Shared.Models;
 global using LocalFarmer2.Shared.Resources;
-global using System.Net.Http.Json;
+global using Microsoft.Extensions.Localization;
 using Blazored.LocalStorage;
 using LocalFarmer2.Client;
 using LocalFarmer2.Client.Services;
 using LocalFarmer2.Client.Utilities;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.JSInterop;
 using MudBlazor.Services;
 using System.Globalization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.JSInterop;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddMudServices();
 builder.Services.AddBlazoredLocalStorage();
@@ -35,10 +37,8 @@ builder.Services.AddScoped<UserStateService>();
 builder.Services.AddScoped<UtilsService>();
 builder.Services.AddSingleton<ValidateService>();
 builder.Services.AddSingleton<FileService>();
+builder.Services.AddScoped<SharedResourcesClient>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-builder.Services.AddLocalization(options => options.ResourcesPath = "../Shared/Resources");
-builder.Services.AddScoped<SharedResources>();
 
 var host = builder.Build();
 
@@ -46,20 +46,7 @@ var host = builder.Build();
 var jsInterop = host.Services.GetRequiredService<IJSRuntime>();
 var result = await jsInterop.InvokeAsync<string>("blazorCulture.get");
 var culture = result ?? "en-US";
-var cultureInfo = new CultureInfo(culture);
-CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
-CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
-CultureInfo.CurrentUICulture = cultureInfo;
-
-// Konfiguracja lokalizacji
-//var supportedCultures = new[] { new CultureInfo("en-US"), new CultureInfo("pl-PL") };
-
-//builder.Services.Configure<RequestLocalizationOptions>(options =>
-//{
-//    options.DefaultRequestCulture = new RequestCulture("en-US");
-//    options.SupportedCultures = supportedCultures;
-//    options.SupportedUICultures = supportedCultures;
-//});
-
+CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(culture);
+CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(culture);
 
 await host.RunAsync();
