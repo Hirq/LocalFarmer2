@@ -24,7 +24,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Shared\LocalFarmer2.Shared.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
 </Project>

@@ -37,7 +37,6 @@ builder.Services.AddScoped<UserStateService>();
 builder.Services.AddScoped<UtilsService>();
 builder.Services.AddSingleton<ValidateService>();
 builder.Services.AddSingleton<FileService>();
-builder.Services.AddScoped<SharedResourcesClient>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var host = builder.Build();

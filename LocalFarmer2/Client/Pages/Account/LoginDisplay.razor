@@ -2,14 +2,14 @@
 @using System.Globalization
 
 @inject IAccountService AccountService
-@inject IStringLocalizer<Test> SharedResources
+@inject IStringLocalizer Loc
 @inject UserStateService UserStateService
 @inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
 
 <AuthorizeView>
     <Authorized>
-        <div>@SharedResources["Hey"]</div>
+        <div>@Loc["Hey"]</div>
         <div>IdUser: @UserStateService.CurrentUser?.IdUser</div>
         <div>FullName: @UserStateService.CurrentUser?.FullName</div>
         <div>UserName: @UserStateService.CurrentUser?.UserName</div>
