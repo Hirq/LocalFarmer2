@@ -17,6 +17,7 @@ namespace LocalFarmer2.Server.Controllers
         private readonly IConfiguration _configuration;
         private readonly IApplicationUserRepository _applicationUserRepository;
         private readonly IFarmhouseRepository _farmhouseRepository;
+        private readonly IStringLocalizer<SharedResources> _localizer;
 
 
         public AccountController(
@@ -24,13 +25,15 @@ namespace LocalFarmer2.Server.Controllers
             SignInManager<IdentityUser> signInManager,
             IConfiguration configuration,
             IApplicationUserRepository applicationUserRepository,
-            IFarmhouseRepository farmhouseRepository)
+            IFarmhouseRepository farmhouseRepository,
+            IStringLocalizer<SharedResources> localizer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
             _applicationUserRepository = applicationUserRepository;
             _farmhouseRepository = farmhouseRepository;
+            _localizer = localizer;
         }
 
         [HttpPost]
@@ -74,7 +77,7 @@ namespace LocalFarmer2.Server.Controllers
                 return BadRequest(new LoginResult
                 {
                     Successful = false,
-                    Error = "User and password isn't correct"
+                    Error = _localizer["Account_Error_Login"]
                 });
             }
 

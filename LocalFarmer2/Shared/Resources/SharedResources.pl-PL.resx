@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Hello World" xml:space="preserve">
-    <value>Cześć świecie</value>
-  </data>
   <data name="Hey" xml:space="preserve">
-    <value>Tekst jakis</value>
+    <value>Czesc</value>
+  </data>
+  <data name="Account_Error_Login" xml:space="preserve">
+    <value>Email lub hasło jest nie poprawne</value>
   </data>
 </root>

@@ -3,6 +3,8 @@ global using LocalFarmer2.Shared.Models;
 global using LocalFarmer2.Server.Repositories;
 global using LocalFarmer2.Shared.DTOs;
 global using LocalFarmer2.Server.Data;
+global using LocalFarmer2.Shared.Resources;
+global using Microsoft.Extensions.Localization;
 using LocalFarmer2.Server.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -18,7 +20,6 @@ builder.Services.AddControllers()
         .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen(s =>
 {
     s.OperationFilter<ReApplyOptionalRouteParameterOperationFilter>();
@@ -64,7 +65,17 @@ builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
            .AllowAnyHeader();
 }));
 
+builder.Services.AddLocalization();
+
 var app = builder.Build();
+
+string[] supportedCultures = ["pl-PL", "en-US"];
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+
+app.UseRequestLocalization(localizationOptions);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

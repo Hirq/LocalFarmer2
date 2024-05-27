@@ -1,10 +1,10 @@
 global using AutoMapper;
-global using System.Net.Http.Json;
-global using LocalFarmer2.Shared.Models;
 global using LocalFarmer2.Shared.DTOs;
 global using LocalFarmer2.Shared.ENUMs;
+global using LocalFarmer2.Shared.Models;
 global using LocalFarmer2.Shared.Resources;
 global using Microsoft.Extensions.Localization;
+global using System.Net.Http.Json;
 using Blazored.LocalStorage;
 using LocalFarmer2.Client;
 using LocalFarmer2.Client.Services;
@@ -12,15 +12,12 @@ using LocalFarmer2.Client.Utilities;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.JSInterop;
 using MudBlazor.Services;
 using System.Globalization;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.JSInterop;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
-builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddMudServices();
 builder.Services.AddBlazoredLocalStorage();
@@ -39,9 +36,11 @@ builder.Services.AddSingleton<ValidateService>();
 builder.Services.AddSingleton<FileService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddLocalization();
+
 var host = builder.Build();
 
-// Ustawienie kultury z localStorage
+//Ustawienie kultury z localStorage
 var jsInterop = host.Services.GetRequiredService<IJSRuntime>();
 var result = await jsInterop.InvokeAsync<string>("blazorCulture.get");
 var culture = result ?? "en-US";

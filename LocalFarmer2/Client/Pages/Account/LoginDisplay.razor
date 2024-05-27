@@ -1,15 +1,17 @@
 ﻿@page "/account/logindisplay"
 @using System.Globalization
-
 @inject IAccountService AccountService
-@inject IStringLocalizer Loc
+@inject IStringLocalizer<SharedResources> localizer
 @inject UserStateService UserStateService
 @inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
 
 <AuthorizeView>
     <Authorized>
-        <div>@Loc["Hey"]</div>
+        @Thread.CurrentThread.CurrentCulture;
+        @Thread.CurrentThread.CurrentUICulture;
+        <h1>@localizer["Hey"]</h1>
+
         <div>IdUser: @UserStateService.CurrentUser?.IdUser</div>
         <div>FullName: @UserStateService.CurrentUser?.FullName</div>
         <div>UserName: @UserStateService.CurrentUser?.UserName</div>
