@@ -9,6 +9,7 @@ namespace LocalFarmer2.Shared.ViewModels
         public string Description { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
+        public bool IsOpen { get; set; } = false;
         public bool ShowDetails { get; set; } = false;
         public bool IsFavorite { get; set; } = false;
         public bool IsCommented { get; set; } = false;

@@ -8,17 +8,15 @@
 
 <AuthorizeView>
     <Authorized>
-        @Thread.CurrentThread.CurrentCulture;
-        @Thread.CurrentThread.CurrentUICulture;
-        <h1>@localizer["Hey"]</h1>
-
+        <button @onclick="ChangeCulture">Change Culture</button>
+        <div>@localizer["Hey"]</div>
+        <br />
+        
         <div>IdUser: @UserStateService.CurrentUser?.IdUser</div>
         <div>FullName: @UserStateService.CurrentUser?.FullName</div>
         <div>UserName: @UserStateService.CurrentUser?.UserName</div>
         <div>FarmhouseId: @UserStateService.CurrentUser?.IdFarmhouse</div>
         <div>Farmhouse: @UserStateService.CurrentUser?.FarmhouseName</div>
-
-        <button @onclick="ChangeCulture">Change Culture</button>
     </Authorized>
 </AuthorizeView>
 

@@ -32,6 +32,7 @@ else
             <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Description)">Description</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Address)">Address</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Phone)">Phone</MudTableSortLabel></MudTh>
+            <MudTh>Open</MudTh>
             <MudTh>Detail</MudTh>
             <MudTh>Products</MudTh>
             <AuthorizeView>
@@ -48,6 +49,7 @@ else
                 <MudTd DataLabel="Name">@row.Description</MudTd>
                 <MudTd DataLabel="Position">@row.Address</MudTd>
                 <MudTd DataLabel="Molar mass">@row.Phone</MudTd>
+                <MudTd DataLabel="Molar mass">@row.IsOpen</MudTd>
                 <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(row.Id)">Go to detail</MudButton></MudTd>
                 <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProducts(row.Id)">Show products</MudButton></MudTd>
                 <AuthorizeView>
