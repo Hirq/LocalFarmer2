@@ -25,29 +25,34 @@ else
                     <MudText Class="d-flex justify-center" Typo="Typo.h6">Edit farmhouse</MudText>
                     @if (@currentUser?.IdFarmhouse != null)
                     {
-                        <MudPaper Class="pa-4">
-                            <MudTextField T="String" Label="Farmhouse name" @bind-Value="farmhouseDto.Name" @ref="farmhouseNameField" Required="true" RequiredError="Farmhouse name is required!" />
-                            <MudTextField T="String" Label="Description" @bind-Value="farmhouseDto.Description" />
-                            <MudTextField T="String" Label="Address" @bind-Value="farmhouseDto.Address" />
-                            <MudTextField T="String" Label="Phone" @bind-Value="farmhouseDto.Phone" />
-                            <MudTextField T="String" Label="Email" @bind-Value="farmhouseDto.Email" />
-                            <MudSelect T="string" Label="Payment methods" MultiSelection="true" SelectAll="true" @ref="paymentMethodsField" Required="true" @bind-Value="@farmhouseDto.PaymentMethods" @bind-SelectedValues="SelectedPayment">
-                                @foreach (var method in PaymentMethodInfo.PaymentMethods)
-                                {
-                                    <MudSelectItem T="string" Value="@method">@method</MudSelectItem>
-                                }
-                            </MudSelect>
-                            <MudTextField T="String" Id="latitude_input" Disabled Label="Latitude" @bind-Value="farmhouseDto.Latitude" @ref="latitudeField" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
-                            <MudTextField T="String" Id="longitude_input" Disabled Label="Longitude" @bind-Value="farmhouseDto.Longitude" @ref="longitudeField" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
-                            <MudCheckBox T="Boolean" Checked="farmhouseDto.IsOpen" CheckedChanged="HandleCheckedChanged" Color="Color.Primary" Label="Active" />
-                            <EditFile Name="Photo farmhouse" Model="@farmhouseDto" Link=@($"farmhouse/{UserStateService.CurrentUser?.IdFarmhouse}") />
+                        <MudPaper Class="pa-4 d-flex justify-space-between">
+                            <div>
+                                <MudTextField T="String" Label="Farmhouse name" @bind-Value="farmhouseDto.Name" @ref="farmhouseNameField" Required="true" RequiredError="Farmhouse name is required!" />
+                                <MudTextField T="String" Label="Description" @bind-Value="farmhouseDto.Description" />
+                                <MudTextField T="String" Label="Address" @bind-Value="farmhouseDto.Address" />
+                                <MudTextField T="String" Label="Phone" @bind-Value="farmhouseDto.Phone" />
+                                <MudTextField T="String" Label="Email" @bind-Value="farmhouseDto.Email" />
+                                <MudSelect T="string" Label="Payment methods" MultiSelection="true" SelectAll="true" @ref="paymentMethodsField" Required="true" @bind-Value="@farmhouseDto.PaymentMethods" @bind-SelectedValues="SelectedPayment">
+                                    @foreach (var method in PaymentMethodInfo.PaymentMethods)
+                                    {
+                                        <MudSelectItem T="string" Value="@method">@method</MudSelectItem>
+                                    }
+                                </MudSelect>
+                                <MudTextField T="String" Id="latitude_input" Disabled Label="Latitude" @bind-Value="farmhouseDto.Latitude" @ref="latitudeField" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
+                                <MudTextField T="String" Id="longitude_input" Disabled Label="Longitude" @bind-Value="farmhouseDto.Longitude" @ref="longitudeField" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
+                                <MudCheckBox T="Boolean" Checked="farmhouseDto.IsOpen" CheckedChanged="HandleCheckedChanged" Color="Color.Primary" Label="Active" />
+                                <EditFile Name="Photo farmhouse" Model="@farmhouseDto"/>
+                                <MudButton OnClick="() => OpenImageInNewTab()" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Dark">Open photo</MudButton>
+                            </div>
+                            <div>
+                                 <MudButton OnClick="() => ShowFarmhouse((int)UserStateService.CurrentUser.IdFarmhouse)" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Go to details</MudButton>
+                            </div>
                          </MudPaper>
                     }
                     <MudPaper Class="pa-4 mt-4 d-flex justify-space-between">
                         <div>
                             <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
                             <MudButton OnClick="() => UnlockMap()" id="buttonChangeMarker" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Change marker</MudButton>
-                            <MudButton OnClick="() => OpenImageInNewTab()" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Dark">Open photo</MudButton>
                         </div>
                         <div>
                             <MudButton OnClick='() => UtilsService.OpenDialog(buttonDeleteTitle, buttonDeleteName, buttonDeleteContent, () => DeleteFarmhouse(), Color.Error)' Variant="Variant.Filled" Color="Color.Error">Delete</MudButton>
@@ -235,6 +240,11 @@ else
     {
         var imageSrc = GetImageSrc();
         await JSRuntime.InvokeVoidAsync("open", imageSrc, "_blank");
+    }
+
+    private void ShowFarmhouse(int id)
+    {
+        NavigationManager.NavigateTo($"farmhouse/{id}");
     }
 
 }

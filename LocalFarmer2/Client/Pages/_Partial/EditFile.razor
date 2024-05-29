@@ -9,7 +9,7 @@
         {
             @foreach (var file in FileService.fileNames)
             {
-                <MudListItem Icon="@Icons.Material.Filled.AttachFile" @key="@file" OnClick="() => NavigationManager.NavigateTo(Link)">
+                <MudListItem Icon="@Icons.Material.Filled.AttachFile" @key="@file">
                     <MudChip Color="Color.Dark" Text="@file" />
                 </MudListItem>
             }
@@ -37,9 +37,6 @@
     
     [Parameter]
     public string Name { get; set; }       
-
-    [Parameter]
-    public string Link { get; set; }   
 }
 
 
