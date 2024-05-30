@@ -42,7 +42,6 @@ else
                                 <MudTextField T="String" Id="longitude_input" Disabled Label="Longitude" @bind-Value="farmhouseDto.Longitude" @ref="longitudeField" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
                                 <MudCheckBox T="Boolean" Checked="farmhouseDto.IsOpen" CheckedChanged="HandleCheckedChanged" Color="Color.Primary" Label="Active" />
                                 <EditFile Name="Photo farmhouse" Model="@farmhouseDto"/>
-                                <MudButton OnClick="() => OpenImageInNewTab()" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Dark">Open photo</MudButton>
                             </div>
                             <div>
                                  <MudButton OnClick="() => ShowFarmhouse((int)UserStateService.CurrentUser.IdFarmhouse)" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Go to details</MudButton>
@@ -246,5 +245,4 @@ else
     {
         NavigationManager.NavigateTo($"farmhouse/{id}");
     }
-
 }

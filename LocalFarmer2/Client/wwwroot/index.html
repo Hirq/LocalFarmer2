@@ -52,6 +52,26 @@
             }
         })();
     </script>
+    <script>
+        function openBase64Image(imageSrc, mimeType) {
+            var byteCharacters = atob(imageSrc);
+            var byteNumbers = new Array(byteCharacters.length);
+            for (var i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            var byteArray = new Uint8Array(byteNumbers);
+            var blob = new Blob([byteArray], { type: mimeType });
+            var blobUrl = URL.createObjectURL(blob);
+            var newWindow = window.open(blobUrl, '_blank');
+            if (newWindow) {
+                newWindow.onload = function () {
+                    URL.revokeObjectURL(blobUrl);
+                };
+            } else {
+                alert('Pop-up blocked. Please allow pop-ups for this site.');
+            }
+        }
+    </script>
 </body>
 
 </html>

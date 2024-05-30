@@ -1,10 +1,17 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.JSInterop;
 
 namespace LocalFarmer2.Client.Services
 {
     public class FileService
     {
+        private readonly IJSRuntime _jsRuntime;
+
+        public FileService(IJSRuntime jsRuntime)
+        {
+            _jsRuntime = jsRuntime;
+        }
+
         public IList<IBrowserFile> files = new List<IBrowserFile>();
         public List<string> fileNames = new List<string>();
 
@@ -28,6 +35,24 @@ namespace LocalFarmer2.Client.Services
             dto.ImageData = null;
             dto.ImageMimeType = string.Empty;
             await Task.Delay(100);
+        }
+
+        private (string Base64Data, string MimeType) GetImageSrc(IDtoWithImage dto)
+        {
+            if (dto.ImageData == null)
+            {
+                return (string.Empty, string.Empty);
+            }
+
+            var base64 = Convert.ToBase64String(dto.ImageData);
+            return (base64, dto.ImageMimeType);
+        }
+
+        public async Task OpenImageInNewTab(IDtoWithImage dto)
+        {
+            var (base64Data, mimeType) = GetImageSrc(dto);
+            await _jsRuntime.InvokeVoidAsync("openBase64Image", base64Data, mimeType);
+
         }
 
         public void SetName(string name)

@@ -27,6 +27,13 @@
                        Variant="Variant.Filled">
                 Clear
             </MudButton>
+            <MudButton OnClick="(e) => FileService.OpenImageInNewTab(Model)"
+                       Color="Color.Dark"
+                       Disabled="@(!FileService.fileNames.Any())"
+                       ButtonType="ButtonType.Button"
+                       Variant="Variant.Filled">
+                Open photo
+            </MudButton>
         </MudToolBar>
     </ButtonTemplate>
 </MudFileUpload>
@@ -38,64 +45,3 @@
     [Parameter]
     public string Name { get; set; }       
 }
-
-
-
-@* <MudText Typo="Typo.h6">Photo product</MudText>
-    <MudFileUpload T="IBrowserFile" OnFilesChanged="(e) => FileService.OnInputFileChanged(e, model)" Context="fileInput">
-        <ButtonTemplate>
-            @if (@FileService.fileNames != null)
-        {
-            @foreach (var file in FileService.fileNames)
-            {
-                <MudListItem Icon="@Icons.Material.Filled.AttachFile" @key="@file">
-                    <MudChip Color="Color.Dark" Text="@file" />
-                </MudListItem>
-            }
-        }
-        <MudToolBar DisableGutters="true">
-            <MudButton HtmlTag="label"
-                        Color="Color.Primary"
-                        for="@fileInput"
-                        Variant="Variant.Filled">
-                Open file picker
-            </MudButton>
-            <MudButton OnClick="(e) => FileService.Clear(model)"
-                        Color="Color.Error"
-                        Disabled="@(!FileService.fileNames.Any())"
-                        Variant="Variant.Filled">
-                Clear
-            </MudButton>
-        </MudToolBar>
-    </ButtonTemplate>
-</MudFileUpload> *@
-
-
-@* <MudText Typo="Typo.h6">Photo farmhouse</MudText>
-<MudFileUpload T="IBrowserFile" OnFilesChanged="(e) => FileService.OnInputFileChanged(e, farmhouseDto)" Context="fileInput">
-    <ButtonTemplate>
-        @if (@FileService.fileNames != null)
-        {
-            @foreach (var file in FileService.fileNames)
-            {
-                <MudListItem Icon="@Icons.Material.Filled.AttachFile" @key="@file">
-                    <MudChip Color="Color.Dark" Text="@file" />
-                </MudListItem>
-            }
-        }
-        <MudToolBar DisableGutters="true" >
-            <MudButton HtmlTag="label"
-                        Color="Color.Primary"
-                            for="@fileInput"
-                        Variant="Variant.Filled">
-                Open file picker
-            </MudButton>
-            <MudButton OnClick="(e) => FileService.Clear(farmhouseDto)"
-                        Color="Color.Error"
-                        Disabled="@(!FileService.fileNames.Any())"
-                        Variant="Variant.Filled">
-                Clear
-            </MudButton>
-        </MudToolBar>
-    </ButtonTemplate>
-</MudFileUpload> *@
