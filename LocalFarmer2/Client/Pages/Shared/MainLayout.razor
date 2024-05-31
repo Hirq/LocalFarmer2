@@ -38,7 +38,10 @@
                             {
                                 <MudMenuItem>@alert.Message</MudMenuItem>
                             }
-                            <MudDivider DividerType="DividerType.Middle" Style="height: 3px" />
+                            @if(alerts.Count > 0)
+                            {
+                                <MudDivider DividerType="DividerType.Middle" Style="height: 3px" />
+                            }
                             <MudTooltip Text="Open history">
                                 <MudMenuItem Avatar="@Icons.Material.Filled.History" Href="/myalerts">All alerts</MudMenuItem>
                             </MudTooltip>
@@ -84,6 +87,8 @@
 
     private async Task MenuStateChanged(bool isOpen)
     {
+        Console.WriteLine("1:" + isOpen);
+        Console.WriteLine("2:" + UserStateService.CurrentUser.IdUser);
         if (!isOpen)
         {
             await AlertService.SetAllAlertsAsReadForUser(UserStateService.CurrentUser.IdUser);
