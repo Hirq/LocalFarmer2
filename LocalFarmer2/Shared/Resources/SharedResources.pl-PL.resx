@@ -123,4 +123,31 @@
   <data name="Account_Error_Login" xml:space="preserve">
     <value>Email lub hasło jest nie poprawne</value>
   </data>
+  <data name="Product_My_Products" xml:space="preserve">
+    <value>Moje produkty</value>
+  </data>
+  <data name="Product_Add_Product" xml:space="preserve">
+    <value>Dodaj produkt</value>
+  </data>
+  <data name="Farmhouse_Edit_Farmhouse" xml:space="preserve">
+    <value>Edytuj gospodarstwo</value>
+  </data>
+  <data name="Farmhouse_Add_Farmhouse" xml:space="preserve">
+    <value>Dodaj gospodarstwo</value>
+  </data>
+  <data name="Farmhouse_List_Farmhouses" xml:space="preserve">
+    <value>Lista gospodarstw</value>
+  </data>
+  <data name="Account_Create_Account" xml:space="preserve">
+    <value>Utwórz konto</value>
+  </data>
+  <data name="Dashboard_Hello" xml:space="preserve">
+    <value>Cześć, tutaj łatwo znajdziesz lokalnych gospodarzy.</value>
+  </data>
+  <data name="Dashboard_LocalFarmer" xml:space="preserve">
+    <value>Lokalny gospodarz</value>
+  </data>
+  <data name="Dashboard_Hello2" xml:space="preserve">
+    <value>Szukasz świeżych warzyw lub owoców? Sprawdź swój region i kup od lokalnego gospodarza.</value>
+  </data>
 </root>

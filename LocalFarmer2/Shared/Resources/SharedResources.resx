@@ -123,4 +123,31 @@
   <data name="Account_Error_Login" xml:space="preserve">
     <value>Email or password isn't correct</value>
   </data>
+  <data name="Product_My_Products" xml:space="preserve">
+    <value>My products</value>
+  </data>
+  <data name="Product_Add_Product" xml:space="preserve">
+    <value>Add product</value>
+  </data>
+  <data name="Farmhouse_Edit_Farmhouse" xml:space="preserve">
+    <value>Edit farmhouse</value>
+  </data>
+  <data name="Farmhouse_Add_Farmhouse" xml:space="preserve">
+    <value>Add farmhouse</value>
+  </data>
+  <data name="Farmhouse_List_Farmhouses" xml:space="preserve">
+    <value>List farmhouses</value>
+  </data>
+  <data name="Account_Create_Account" xml:space="preserve">
+    <value>Create account</value>
+  </data>
+  <data name="Dashboard_Hello" xml:space="preserve">
+    <value>Hello! Here you easy find local farmers.</value>
+  </data>
+  <data name="Dashboard_Hello2" xml:space="preserve">
+    <value>Are u need fresh vegetables or preserve? Check you region and buy from farmhouse.</value>
+  </data>
+  <data name="Dashboard_LocalFarmer" xml:space="preserve">
+    <value>Local Farmer</value>
+  </data>
 </root>
