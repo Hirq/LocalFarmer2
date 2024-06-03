@@ -1,7 +1,6 @@
 ﻿@page "/account/logindisplay"
 @using System.Globalization
 @inject IAccountService AccountService
-@inject IStringLocalizer<SharedResources> localizer
 @inject UserStateService UserStateService
 @inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
@@ -9,7 +8,7 @@
 <AuthorizeView>
     <Authorized>
         <button @onclick="ChangeCulture">Change Culture</button>
-        <div>@localizer["Hey"]</div>
+        <div>@loc["Hey"]</div>
         <br />
         
         <div>IdUser: @UserStateService.CurrentUser?.IdUser</div>

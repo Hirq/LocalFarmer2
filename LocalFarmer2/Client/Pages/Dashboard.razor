@@ -1,12 +1,11 @@
 ﻿@page "/"
 @inject UserStateService UserStateService
-@inject IStringLocalizer<SharedResources> localizer
 
 <PageTitle>Index</PageTitle>
 
 <MudGrid Class="m-0 w-100">
     <MudItem xs="12" Class="dashboard-paper-name-farmhouse">
-        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">- @localizer["Dashboard_LocalFarmer"] -</MudPaper>
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">- @loc["Dashboard_LocalFarmer"] -</MudPaper>
     </MudItem>
 
     <AuthorizeView>
@@ -14,37 +13,37 @@
             @if (UserStateService.CurrentUser?.IdFarmhouse != null)
             {
                 <MudItem xs="12" sm="6" Class="dashboard-button">
-                    <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/myproducts">@localizer["Product_My_Products"]</MudButton>
+                    <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/myproducts">@loc["Product_My_Products"]</MudButton>
                 </MudItem>
                 <MudItem xs="12" sm="6" Class="dashboard-button">
-                    <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/addproduct">@localizer["Product_Add_Product"]</MudButton>
+                    <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/addproduct">@loc["Product_Add_Product"]</MudButton>
                 </MudItem>
                 <MudItem xs="12" sm="6" Class="dashboard-button">
-                    <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/editfarmhouse">@localizer["Farmhouse_Edit_Farmhouse"]</MudButton>
+                    <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/editfarmhouse">@loc["Farmhouse_Edit_Farmhouse"]</MudButton>
                 </MudItem>
             }
             else
             {
                 <MudItem xs="12" sm="6" Class="dashboard-button">
-                    <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/addFarmhouse">@localizer["Farmhouse_Add_Farmhouse"]</MudButton>
+                    <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/addFarmhouse">@loc["Farmhouse_Add_Farmhouse"]</MudButton>
                 </MudItem>
                 <MudItem xs="12" sm="6" Class="dashboard-button">
-                    <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/farmhouses">@localizer["Farmhouse_List_Farmhouses"]</MudButton>
+                    <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/farmhouses">@loc["Farmhouse_List_Farmhouses"]</MudButton>
                 </MudItem>
             }
         </Authorized>
         <NotAuthorized>
             <MudItem xs="12" Class="dashboard-paper-name-farmhouse">
                 <MudPaper Class="d-flex flex-column align-center mud-width-full py-8">
-                    <MudText Typo="Typo.h5">@localizer["Dashboard_Hello"] </MudText>
-                        <MudText Typo="Typo.h5">@localizer["Dashboard_Hello2"] </MudText>
+                    <MudText Typo="Typo.h5">@loc["Dashboard_Hello"] </MudText>
+                        <MudText Typo="Typo.h5">@loc["Dashboard_Hello2"] </MudText>
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" sm="6" Class="dashboard-button">
-                <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/register">@localizer["Account_Create_Account"]</MudButton>
+                <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/register">@loc["Account_Create_Account"]</MudButton>
             </MudItem>
             <MudItem xs="12" sm="6" Class="dashboard-button">
-                <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/farmhouses">@localizer["Farmhouse_List_Farmhouses"]</MudButton>
+                <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/farmhouses">@loc["Farmhouse_List_Farmhouses"]</MudButton>
             </MudItem>
         </NotAuthorized>
     </AuthorizeView>
