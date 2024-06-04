@@ -27,7 +27,7 @@
                             <MudSelectItem T="string" Value="@method">@method</MudSelectItem>
                         }
                     </MudSelect>
-                    <InputFile OnChange="(e) => FileService.HandleFileSelected(e, farmhouseDto)" />
+                    <EditFile Name="Photo farmhouse" Model="@farmhouseDto" IsOpenPhoto=false />
                     <MudTextField Disabled Id="latitude_input" Label="Latitude" @bind-Value="farmhouseDto.Latitude" @ref="latitudeField" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
                     <MudTextField Disabled Id="longitude_input" Label="Longitude" @bind-Value="farmhouseDto.Longitude" @ref="longitudeField" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
                 </MudPaper>

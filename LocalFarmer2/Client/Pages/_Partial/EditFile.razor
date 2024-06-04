@@ -27,13 +27,16 @@
                        Variant="Variant.Filled">
                 Clear
             </MudButton>
-            <MudButton OnClick="(e) => FileService.OpenImageInNewTab(Model)"
-                       Color="Color.Dark"
-                       Disabled="@(!FileService.fileNames.Any())"
-                       ButtonType="ButtonType.Button"
-                       Variant="Variant.Filled">
-                Open photo
-            </MudButton>
+            @if (IsOpenPhoto)
+            {
+                <MudButton OnClick="(e) => FileService.OpenImageInNewTab(Model)"
+                           Color="Color.Dark"
+                           Disabled="@(!FileService.fileNames.Any())"
+                           ButtonType="ButtonType.Button"
+                           Variant="Variant.Filled">
+                    Open photo
+                </MudButton>
+            }
         </MudToolBar>
     </ButtonTemplate>
 </MudFileUpload>
@@ -41,7 +44,10 @@
 @code {
     [Parameter]
     public IDtoWithImage Model { get; set; }    
-    
+
     [Parameter]
-    public string Name { get; set; }       
+    public string Name { get; set; }
+
+    [Parameter]
+    public bool IsOpenPhoto { get; set; } = true;
 }
