@@ -150,4 +150,10 @@
   <data name="Dashboard_LocalFarmer" xml:space="preserve">
     <value>Local Farmer</value>
   </data>
+  <data name="Account_My_Acccount" xml:space="preserve">
+    <value>My account</value>
+  </data>
+  <data name="Alert_All_Alerts" xml:space="preserve">
+    <value>All alerts</value>
+  </data>
 </root>

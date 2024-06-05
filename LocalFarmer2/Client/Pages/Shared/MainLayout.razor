@@ -25,7 +25,7 @@
                                 }
                                 <MudDivider DividerType="DividerType.Middle" Style="height: 3px" />
                                 <MudTooltip Text="Open history">
-                                    <MudMenuItem Avatar="@Icons.Material.Filled.History" Href="/myalerts">All alerts</MudMenuItem>
+                                    <MudMenuItem Avatar="@Icons.Material.Filled.History" Href="/myalerts">@loc["Alert_All_Alerts"]</MudMenuItem>
                                 </MudTooltip>
                             </MudMenu>
 
@@ -43,7 +43,7 @@
                                 <MudDivider DividerType="DividerType.Middle" Style="height: 3px" />
                             }
                             <MudTooltip Text="Open history">
-                                <MudMenuItem Avatar="@Icons.Material.Filled.History" Href="/myalerts">All alerts</MudMenuItem>
+                                <MudMenuItem Avatar="@Icons.Material.Filled.History" Href="/myalerts">@loc["Alert_All_Alerts"]</MudMenuItem>
                             </MudTooltip>
                         </MudMenu>
                     }
@@ -52,13 +52,13 @@
                 <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.MoreVert" TransformOrigin="Origin.TopRight" Color="Color.Inherit">
                     @if (UserStateService.CurrentUser?.IdFarmhouse != null)
                     {
-                        <MudMenuItem Href="/editfarmhouse">Edit farmhouse</MudMenuItem>
-                        <MudMenuItem Href="/myaccount">My account</MudMenuItem>
+                        <MudMenuItem Href="/editfarmhouse">@loc["Farmhouse_Edit_Farmhouse"]</MudMenuItem>
+                        <MudMenuItem Href="/myaccount">@loc["Account_My_Acccount"]</MudMenuItem>
                     }
                     else
                     {
-                        <MudMenuItem Href="/addfarmhouse">Set farmhouse</MudMenuItem>
-                        <MudMenuItem Href="/myaccount">My account</MudMenuItem>
+                        <MudMenuItem Href="/addfarmhouse">@loc["Farmhouse_Add_Farmhouse"]</MudMenuItem>
+                        <MudMenuItem Href="/myaccount">@loc["Account_My_Acccount"]</MudMenuItem>
                     }
                 </MudMenu>
             </AuthorizeView>

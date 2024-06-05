@@ -150,4 +150,10 @@
   <data name="Dashboard_Hello2" xml:space="preserve">
     <value>Szukasz świeżych warzyw lub owoców? Sprawdź swój region i kup od lokalnego gospodarza.</value>
   </data>
+  <data name="Account_My_Acccount" xml:space="preserve">
+    <value>Moje konto</value>
+  </data>
+  <data name="Alert_All_Alerts" xml:space="preserve">
+    <value>Wszystkie alerty</value>
+  </data>
 </root>

@@ -79,6 +79,24 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to My account.
+        /// </summary>
+        internal static string Account_My_Acccount {
+            get {
+                return ResourceManager.GetString("Account_My_Acccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All alerts.
+        /// </summary>
+        internal static string Alert_All_Alerts {
+            get {
+                return ResourceManager.GetString("Alert_All_Alerts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hello! Here you easy find local farmers..
         /// </summary>
         internal static string Dashboard_Hello {
