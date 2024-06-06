@@ -79,7 +79,7 @@ namespace LocalFarmer2.Client.Services
             }
         }
 
-        private void ClearVariables()
+        public void ClearVariables()
         {
             fileNames.Clear();
             files.Clear();

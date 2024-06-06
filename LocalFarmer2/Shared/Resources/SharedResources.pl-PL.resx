@@ -156,4 +156,88 @@
   <data name="Alert_All_Alerts" xml:space="preserve">
     <value>Wszystkie alerty</value>
   </data>
+  <data name="Account_Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Account_Register" xml:space="preserve">
+    <value>Rejestracja</value>
+  </data>
+  <data name="Button_Submit" xml:space="preserve">
+    <value>Potwierdź</value>
+  </data>
+  <data name="Account_Password" xml:space="preserve">
+    <value>Hasło</value>
+  </data>
+  <data name="Account_Password_Confirm" xml:space="preserve">
+    <value>Potwierdź hasło</value>
+  </data>
+  <data name="Account_Email_Address" xml:space="preserve">
+    <value>Adres email</value>
+  </data>
+  <data name="Dashboard_Map" xml:space="preserve">
+    <value>Mapa</value>
+  </data>
+  <data name="X_Farmhouses" xml:space="preserve">
+    <value>Gospodarstwa</value>
+  </data>
+  <data name="X_Products" xml:space="preserve">
+    <value>Produkty</value>
+  </data>
+  <data name="Dashboard_Dashboard" xml:space="preserve">
+    <value>Panel startowy</value>
+  </data>
+  <data name="X_Loading" xml:space="preserve">
+    <value>Wczytywanie...</value>
+  </data>
+  <data name="Product_Name" xml:space="preserve">
+    <value>Nazwa</value>
+  </data>
+  <data name="Product_Description" xml:space="preserve">
+    <value>Opis</value>
+  </data>
+  <data name="Product_Minimal_Amount" xml:space="preserve">
+    <value>Minimalna ilość</value>
+  </data>
+  <data name="Product_Prize_One" xml:space="preserve">
+    <value>Cena za 1 sztukę</value>
+  </data>
+  <data name="Product_Total_Quantity" xml:space="preserve">
+    <value>Ilość całkowita</value>
+  </data>
+  <data name="X_Details" xml:space="preserve">
+    <value>Szczegóły</value>
+  </data>
+  <data name="Table_Rows_Per_page" xml:space="preserve">
+    <value>Wierszy na stronie</value>
+  </data>
+  <data name="Dashboard_Favorites_Farmhouses" xml:space="preserve">
+    <value>Ulubione gospodarstwa</value>
+  </data>
+  <data name="Dashboard_My_Opinions" xml:space="preserve">
+    <value>Moje opinie</value>
+  </data>
+  <data name="Account_Start_Text" xml:space="preserve">
+    <value>Proszę wprowadź dane</value>
+  </data>
+  <data name="Product_Products_All" xml:space="preserve">
+    <value>Wszystkie produkty</value>
+  </data>
+  <data name="X_Farmhouse" xml:space="preserve">
+    <value>Gospodarstwo</value>
+  </data>
+  <data name="Farmhouse_Name" xml:space="preserve">
+    <value>Nazwa</value>
+  </data>
+  <data name="Farmhouse_Description" xml:space="preserve">
+    <value>Opis</value>
+  </data>
+  <data name="Farmhouse_Address" xml:space="preserve">
+    <value>Adres</value>
+  </data>
+  <data name="Farmhouse_Phone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="Farmhouse_IsOpen" xml:space="preserve">
+    <value>Czy otwarte</value>
+  </data>
 </root>

@@ -1,37 +1,37 @@
 ﻿<AuthorizeView>
     <Authorized>
         <MudNavMenu>
-            <MudText Typo="Typo.h6" Class="px-4">Local Farmer</MudText>
+            <MudText Typo="Typo.h6" Class="px-4">@loc["Dashboard_LocalFarmer"]</MudText>
             <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">
                 <LoginDisplay></LoginDisplay>
             </MudText>
             <MudDivider Class="my-2" />
-            <MudNavLink Href="/" Icon="@Icons.Material.Filled.Dashboard" Match="NavLinkMatch.All">Dashboard</MudNavLink>
-            <MudNavLink Href="/farmhouses" Icon="@Icons.Material.Filled.Storage" Match="NavLinkMatch.Prefix">Farmhouses</MudNavLink>
-            <MudNavLink Href="/favoritefarmhouses" Icon="@Icons.Material.Filled.StarBorderPurple500" Match="NavLinkMatch.Prefix">Favorites Farmhouses</MudNavLink>
-            <MudNavLink Href="/myopinionsfarmhouses" Icon="@Icons.Material.Filled.TextSnippet" Match="NavLinkMatch.Prefix">My Opinions</MudNavLink>
-            <MudNavLink Href="/products" Icon="@Icons.Material.Filled.ShoppingBasket" Match="NavLinkMatch.Prefix">Products</MudNavLink>
-            <MudNavLink Href="/mapfarmhouses" Icon="@Icons.Material.Filled.Map" Match="NavLinkMatch.Prefix">Map</MudNavLink>
+            <MudNavLink Href="/" Icon="@Icons.Material.Filled.Dashboard" Match="NavLinkMatch.All">@loc["Dashboard_Dashboard"]</MudNavLink>
+            <MudNavLink Href="/farmhouses" Icon="@Icons.Material.Filled.Storage" Match="NavLinkMatch.Prefix">@loc["Dashboard_Farmhouses"]</MudNavLink>
+            <MudNavLink Href="/favoritefarmhouses" Icon="@Icons.Material.Filled.StarBorderPurple500" Match="NavLinkMatch.Prefix">@loc["Dashboard_Favorites_Farmhouses"]</MudNavLink>
+            <MudNavLink Href="/myopinionsfarmhouses" Icon="@Icons.Material.Filled.TextSnippet" Match="NavLinkMatch.Prefix">@loc["Dashboard_My_Opinions"]</MudNavLink>
+            <MudNavLink Href="/products" Icon="@Icons.Material.Filled.ShoppingBasket" Match="NavLinkMatch.Prefix">@loc["X_Products"]</MudNavLink>
+            <MudNavLink Href="/mapfarmhouses" Icon="@Icons.Material.Filled.Map" Match="NavLinkMatch.Prefix">@loc["Dashboard_Map"]</MudNavLink>
         </MudNavMenu>
         <MudNavMenu Style="margin-top: auto">
-            <MudNavLink Href="/Logout" Icon="@Icons.Material.Filled.CarRepair" Match="NavLinkMatch.Prefix" Class="">Logout</MudNavLink>
+                <MudNavLink Href="/Logout" Icon="@Icons.Material.Filled.CarRepair" Match="NavLinkMatch.Prefix" Class="">@loc["X_Farmhouses"]</MudNavLink>
         </MudNavMenu>
     </Authorized>
     <NotAuthorized>
         <MudNavMenu>
-            <MudText Typo="Typo.h6" Class="px-4">Local Farmer</MudText>
+                <MudText Typo="Typo.h6" Class="px-4">@loc["Dashboard_LocalFarmer"]</MudText>
             <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">
                 ---
             </MudText>
             <MudDivider Class="my-2" />
-            <MudNavLink Href="/" Icon="@Icons.Material.Filled.Dashboard" Match="NavLinkMatch.All">Dashboard</MudNavLink>
-            <MudNavLink Href="/farmhouses" Icon="@Icons.Material.Filled.Storage" Match="NavLinkMatch.Prefix">Farmhouses</MudNavLink>
-            <MudNavLink Href="/products" Icon="@Icons.Material.Filled.ShoppingBasket" Match="NavLinkMatch.Prefix">Products</MudNavLink>
-            <MudNavLink Href="/mapfarmhouses" Icon="@Icons.Material.Filled.Map" Match="NavLinkMatch.Prefix">Map</MudNavLink>
+            <MudNavLink Href="/" Icon="@Icons.Material.Filled.Dashboard" Match="NavLinkMatch.All">@loc["Dashboard_Dashboard"]</MudNavLink>
+            <MudNavLink Href="/farmhouses" Icon="@Icons.Material.Filled.Storage" Match="NavLinkMatch.Prefix">@loc["X_Farmhouses"]</MudNavLink>
+            <MudNavLink Href="/products" Icon="@Icons.Material.Filled.ShoppingBasket" Match="NavLinkMatch.Prefix">@loc["X_Products"]</MudNavLink>
+            <MudNavLink Href="/mapfarmhouses" Icon="@Icons.Material.Filled.Map" Match="NavLinkMatch.Prefix">@loc["Dashboard_Map"]</MudNavLink>
         </MudNavMenu>
         <MudNavMenu Style="margin-top: auto">
-            <MudNavLink Href="/register" Icon="@Icons.Material.Filled.CarRepair" Match="NavLinkMatch.Prefix" Class="">Register</MudNavLink>
-            <MudNavLink Href="/login" Icon="@Icons.Material.Filled.Male" Match="NavLinkMatch.Prefix">Login</MudNavLink>
+            <MudNavLink Href="/register" Icon="@Icons.Material.Filled.CarRepair" Match="NavLinkMatch.Prefix">@loc["Account_Register"]</MudNavLink>
+            <MudNavLink Href="/login" Icon="@Icons.Material.Filled.Male" Match="NavLinkMatch.Prefix">@loc["Account_Login"]</MudNavLink>
         </MudNavMenu>
     </NotAuthorized>
 </AuthorizeView>

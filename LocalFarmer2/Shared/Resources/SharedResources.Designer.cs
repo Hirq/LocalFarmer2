@@ -70,11 +70,29 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email address.
+        /// </summary>
+        internal static string Account_Email_Address {
+            get {
+                return ResourceManager.GetString("Account_Email_Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email or password isn&apos;t correct.
         /// </summary>
         internal static string Account_Error_Login {
             get {
                 return ResourceManager.GetString("Account_Error_Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        internal static string Account_Login {
+            get {
+                return ResourceManager.GetString("Account_Login", resourceCulture);
             }
         }
         
@@ -88,11 +106,74 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        internal static string Account_Password {
+            get {
+                return ResourceManager.GetString("Account_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Password.
+        /// </summary>
+        internal static string Account_Password_Confirm {
+            get {
+                return ResourceManager.GetString("Account_Password_Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        internal static string Account_Register {
+            get {
+                return ResourceManager.GetString("Account_Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter your details.
+        /// </summary>
+        internal static string Account_Start_Text {
+            get {
+                return ResourceManager.GetString("Account_Start_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All alerts.
         /// </summary>
         internal static string Alert_All_Alerts {
             get {
                 return ResourceManager.GetString("Alert_All_Alerts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        internal static string Button_Submit {
+            get {
+                return ResourceManager.GetString("Button_Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dashboard.
+        /// </summary>
+        internal static string Dashboard_Dashboard {
+            get {
+                return ResourceManager.GetString("Dashboard_Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Favorites farmhouses.
+        /// </summary>
+        internal static string Dashboard_Favorites_Farmhouses {
+            get {
+                return ResourceManager.GetString("Dashboard_Favorites_Farmhouses", resourceCulture);
             }
         }
         
@@ -124,11 +205,47 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Map.
+        /// </summary>
+        internal static string Dashboard_Map {
+            get {
+                return ResourceManager.GetString("Dashboard_Map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My opinions.
+        /// </summary>
+        internal static string Dashboard_My_Opinions {
+            get {
+                return ResourceManager.GetString("Dashboard_My_Opinions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add farmhouse.
         /// </summary>
         internal static string Farmhouse_Add_Farmhouse {
             get {
                 return ResourceManager.GetString("Farmhouse_Add_Farmhouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        internal static string Farmhouse_Address {
+            get {
+                return ResourceManager.GetString("Farmhouse_Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        internal static string Farmhouse_Description {
+            get {
+                return ResourceManager.GetString("Farmhouse_Description", resourceCulture);
             }
         }
         
@@ -142,11 +259,38 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is open.
+        /// </summary>
+        internal static string Farmhouse_IsOpen {
+            get {
+                return ResourceManager.GetString("Farmhouse_IsOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List farmhouses.
         /// </summary>
         internal static string Farmhouse_List_Farmhouses {
             get {
                 return ResourceManager.GetString("Farmhouse_List_Farmhouses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string Farmhouse_Name {
+            get {
+                return ResourceManager.GetString("Farmhouse_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone.
+        /// </summary>
+        internal static string Farmhouse_Phone {
+            get {
+                return ResourceManager.GetString("Farmhouse_Phone", resourceCulture);
             }
         }
         
@@ -169,11 +313,119 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        internal static string Product_Description {
+            get {
+                return ResourceManager.GetString("Product_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimal amount.
+        /// </summary>
+        internal static string Product_Minimal_Amount {
+            get {
+                return ResourceManager.GetString("Product_Minimal_Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to My products.
         /// </summary>
         internal static string Product_My_Products {
             get {
                 return ResourceManager.GetString("Product_My_Products", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string Product_Name {
+            get {
+                return ResourceManager.GetString("Product_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prize for 1 piece.
+        /// </summary>
+        internal static string Product_Prize_One {
+            get {
+                return ResourceManager.GetString("Product_Prize_One", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Products all.
+        /// </summary>
+        internal static string Product_Products_All {
+            get {
+                return ResourceManager.GetString("Product_Products_All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total quantity.
+        /// </summary>
+        internal static string Product_Total_Quantity {
+            get {
+                return ResourceManager.GetString("Product_Total_Quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rows per page.
+        /// </summary>
+        internal static string Table_Rows_Per_page {
+            get {
+                return ResourceManager.GetString("Table_Rows_Per_page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        internal static string X_Details {
+            get {
+                return ResourceManager.GetString("X_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Farmhouse.
+        /// </summary>
+        internal static string X_Farmhouse {
+            get {
+                return ResourceManager.GetString("X_Farmhouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Farmhouses.
+        /// </summary>
+        internal static string X_Farmhouses {
+            get {
+                return ResourceManager.GetString("X_Farmhouses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        internal static string X_Loading {
+            get {
+                return ResourceManager.GetString("X_Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Products.
+        /// </summary>
+        internal static string X_Products {
+            get {
+                return ResourceManager.GetString("X_Products", resourceCulture);
             }
         }
     }

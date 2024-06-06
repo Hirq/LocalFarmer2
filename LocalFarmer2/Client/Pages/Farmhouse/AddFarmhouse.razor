@@ -55,18 +55,20 @@
     private MudTextField<string> longitudeField;
     private MudSelect<string> paymentMethodsField;
 
-    // protected async override Task OnInitializedAsync()
-    // {
-    //     isUserSignUp = await AccountService.IsUserSignUp();
+    protected async override Task OnInitializedAsync()
+    {
+        // isUserSignUp = await AccountService.IsUserSignUp();
 
-    //     if (isUserSignUp)
-    //     {
-    //         currentUser = await AccountService.GetCurrentUser();
-    //         UserStateService.CurrentUser = currentUser;
-    //         var farmhouse = await FarmhouseService.GetFarmhouse((int)currentUser?.IdFarmhouse!);
-    //         farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
-    //     }
-    // }
+        // if (isUserSignUp)
+        // {
+        //     currentUser = await AccountService.GetCurrentUser();
+        //     UserStateService.CurrentUser = currentUser;
+        //     var farmhouse = await FarmhouseService.GetFarmhouse((int)currentUser?.IdFarmhouse!);
+        //     farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
+        // }
+
+        FileService.ClearVariables();
+    }
 
     private async void OnValidSubmit(EditContext context)
     {

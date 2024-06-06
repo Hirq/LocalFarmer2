@@ -38,7 +38,11 @@
 
  @code {
     ProductDto product = new ProductDto();
-    //TODO: Jeżeli nie wypełnione to cofnąć
+
+    protected async override Task OnInitializedAsync()
+    {
+        FileService.ClearVariables();
+    }
 
     private async void OnValidSubmit(EditContext context)
     {
@@ -52,5 +56,4 @@
         AlertService.SetSuccessAlert($"Successfully add product {product.Name}");
         NavigationManager.NavigateTo("/myproducts");
     }
-
 }

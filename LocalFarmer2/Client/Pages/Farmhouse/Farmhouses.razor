@@ -10,16 +10,16 @@
 @inject UserStateService UserStateService
 @inject IJSRuntime JSRuntime
 
-<PageTitle>Farmhouses</PageTitle>
+<PageTitle>@loc["X_Farmhouses"]</PageTitle>
 @if (ListFarmhousesVM == null)
 {
-    <p><em>Loading...</em></p>
+    <p><em>@loc["X_Loading"]</em></p>
 }
 else
 {
     <MudTable Items="@ListFarmhousesVM" SortLabel="Sort By" Hover="true" Filter="new Func<FarmhouseViewModel,bool>(FilterFunc)" CommitEditTooltip="Commit Edit">
         <ToolBarContent>
-            <MudText Typo="Typo.h6">Farmhouses</MudText>
+            <MudText Typo="Typo.h6">@loc["X_Farmhouses"]</MudText>
             <MudSpacer />
             <MudButton OnClick="@(() => FilterFavorite())"> Only favorite </MudButton>
             <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
@@ -27,14 +27,14 @@ else
 
         <HeaderContent>
             <MudTh></MudTh>
-            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FarmhouseViewModel, object>(x=>x.Id)">Nr</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Name)">Sign</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Description)">Description</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Address)">Address</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Phone)">Phone</MudTableSortLabel></MudTh>
-            <MudTh>Open</MudTh>
-            <MudTh>Detail</MudTh>
-            <MudTh>Products</MudTh>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FarmhouseViewModel, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Name)">@loc["Farmhouse_Name"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Description)">@loc["Farmhouse_Description"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Address)">@loc["Farmhouse_Address"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Phone)">@loc["Farmhouse_Phone"]</MudTableSortLabel></MudTh>
+            <MudTh>@loc["Farmhouse_IsOpen"]</MudTh>
+                <MudTh>@loc["X_Details"]</MudTh>
+            <MudTh>@loc["X_Products"]</MudTh>
             <AuthorizeView>
                 <Authorized>
                     <MudTh>Subscribe</MudTh>
