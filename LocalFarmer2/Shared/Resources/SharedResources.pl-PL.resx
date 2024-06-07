@@ -240,4 +240,7 @@
   <data name="Farmhouse_IsOpen" xml:space="preserve">
     <value>Czy otwarte</value>
   </data>
+  <data name="Account_Logout" xml:space="preserve">
+    <value>Wyloguj</value>
+  </data>
 </root>

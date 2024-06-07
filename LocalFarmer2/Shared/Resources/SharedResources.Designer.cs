@@ -97,6 +97,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Logout.
+        /// </summary>
+        internal static string Account_Logout {
+            get {
+                return ResourceManager.GetString("Account_Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to My account.
         /// </summary>
         internal static string Account_My_Acccount {
