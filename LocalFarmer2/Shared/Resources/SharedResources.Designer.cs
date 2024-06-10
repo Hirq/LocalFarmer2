@@ -22,7 +22,7 @@ namespace LocalFarmer2.Shared.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class SharedResources {
+    internal class SharedResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -313,6 +313,24 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comment.
+        /// </summary>
+        internal static string Opinion_Comment {
+            get {
+                return ResourceManager.GetString("Opinion_Comment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rating.
+        /// </summary>
+        internal static string Opinion_Rating {
+            get {
+                return ResourceManager.GetString("Opinion_Rating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add product.
         /// </summary>
         internal static string Product_Add_Product {
@@ -390,6 +408,15 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string Table_Rows_Per_page {
             get {
                 return ResourceManager.GetString("Table_Rows_Per_page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        internal static string X_Action {
+            get {
+                return ResourceManager.GetString("X_Action", resourceCulture);
             }
         }
         

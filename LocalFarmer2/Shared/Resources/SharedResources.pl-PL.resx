@@ -243,4 +243,13 @@
   <data name="Account_Logout" xml:space="preserve">
     <value>Wyloguj</value>
   </data>
+  <data name="X_Action" xml:space="preserve">
+    <value>Akcja</value>
+  </data>
+  <data name="Opinion_Rating" xml:space="preserve">
+    <value>Ocena</value>
+  </data>
+  <data name="Opinion_Comment" xml:space="preserve">
+    <value>Komentarz</value>
+  </data>
 </root>
