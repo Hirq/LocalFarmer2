@@ -22,7 +22,7 @@ else
             <MudText Typo="Typo.h6">@loc["X_Farmhouses"]</MudText>
             <MudSpacer />
             <MudButton OnClick="@(() => FilterFavorite())"> Only favorite </MudButton>
-            <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            <MudTextField @bind-Value="searchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         </ToolBarContent>
 
         <HeaderContent>
@@ -37,8 +37,8 @@ else
             <MudTh>@loc["X_Products"]</MudTh>
             <AuthorizeView>
                 <Authorized>
-                    <MudTh>Subscribe</MudTh>
-                    <MudTh>Add opinion</MudTh>
+                    <MudTh>@loc["Farmhouse_Subscribe"]</MudTh>
+                    <MudTh>@loc["Opinion_Add_Opinion"]</MudTh>
                 </Authorized>
             </AuthorizeView>
         </HeaderContent>
@@ -128,7 +128,7 @@ else
         </ChildRowContent>
 
         <PagerContent>
-            <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+            <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
         </PagerContent>
     </MudTable>
 }

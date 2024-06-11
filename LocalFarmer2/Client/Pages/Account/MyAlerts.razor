@@ -2,21 +2,21 @@
 @inject IAlertService AlertService
 @inject UserStateService UserStateService
 
-<PageTitle>Alerts</PageTitle>
+<PageTitle>@loc["X_Alerts"]</PageTitle>
 
 <MudTable Items="@ListAlert" SortLabel="Sort By" Hover="true" Filter="new Func<Alert,bool>(FilterFunc)" CommitEditTooltip="Commit Edit">
     <ToolBarContent>
-        <MudText Typo="Typo.h6">Alerts</MudText>
+        <MudText Typo="Typo.h6">@loc["X_Alerts"]</MudText>
         <MudSpacer />
-        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <MudTextField @bind-Value="searchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
 
     <HeaderContent>
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.IdFarmhouse)">Id Farmhouse</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.Farmhouse.Name)">Name Farmhouse</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.Message)">Message</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.DateCreated)">Date</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.IdFarmhouse)">Id @loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.Farmhouse.Name)">@loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.Message)">@loc["Alert_Message"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.DateCreated)">@loc["X_Date"]</MudTableSortLabel></MudTh>
         @* <MudTh>Action</MudTh> *@
     </HeaderContent>
     <RowTemplate>
@@ -43,7 +43,7 @@
             </MudTd> *@
     </RowTemplate>
     <PagerContent>
-        <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+        <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
     </PagerContent>
 </MudTable>
 

@@ -8,9 +8,9 @@
 <MudTable Items="@ListProducts" SortLabel="Sort By" Hover="true" Filter="new Func<Product,bool>(FilterFunc)" CommitEditTooltip="Commit Edit">
 
     <ToolBarContent>
-        <MudText Typo="Typo.h6">@loc["Dashboard_Products"]</MudText>
+        <MudText Typo="Typo.h6">@loc["X_Products"]</MudText>
         <MudSpacer />
-        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <MudTextField @bind-Value="searchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
 
     <HeaderContent>
@@ -34,7 +34,7 @@
         <MudTd DataLabel="Farmhouse"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.IdFarmhouse)">Go to farmhouse</MudButton></MudTd>
     </RowTemplate>
     <PagerContent>
-        <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+        <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
     </PagerContent>
 </MudTable>
 

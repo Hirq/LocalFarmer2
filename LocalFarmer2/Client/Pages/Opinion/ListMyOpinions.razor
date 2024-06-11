@@ -4,22 +4,22 @@
 @inject IAlertService AlertService
 @inject UserStateService UserStateService
 
-<PageTitle>My Opinions</PageTitle>
+<PageTitle>@loc["Dashboard_My_Opinions"]</PageTitle>
 
 <MudTable Items="@ListMyOpinionsFarmhouse" SortLabel="Sort By" Hover="true" Filter="new Func<Opinion,bool>(FilterFunc)" CommitEditTooltip="Commit Edit">
     <ToolBarContent>
-        <MudText Typo="Typo.h6">My Opinions</MudText>
+            <MudText Typo="Typo.h6">@loc["Dashboard_My_Opinions"]</MudText>
         <MudSpacer />
-        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <MudTextField @bind-Value="searchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent> 
 
     <HeaderContent>
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.IdFarmhouse)">Id Farmhouse</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Farmhouse.Name)">Name Farmhouse</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Comment)">Comment</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Rating)">Rating</MudTableSortLabel></MudTh>
-        <MudTh>Action</MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.IdFarmhouse)">Id @loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Farmhouse.Name)">@loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Comment)">@loc["Opinion_Comment"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Rating)">@loc["Opinion_Rating"]</MudTableSortLabel></MudTh>
+        <MudTh>@loc["X_Action"]</MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Nr">@context.Id</MudTd>
@@ -28,24 +28,24 @@
         <MudTd DataLabel="Nr">@context.Comment</MudTd>
         <MudTd DataLabel="Nr">@context.Rating</MudTd>
         <MudTd DataLabel="Edit">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => DeleteOpinion(context.Id)">Delete</MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OpenMessageBoxEditOpinion(context.Id)">Edit</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => DeleteOpinion(context.Id)">@loc["X_Delete"]</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OpenMessageBoxEditOpinion(context.Id)">@loc["X_Edit"]</MudButton>
             <MudMessageBox @ref="mbox" Title="Edit opinion" CancelText="Cancel">
                 <MessageContent>
                     <div class="d-flex flex-column align-center">
                         <MudRating @bind-SelectedValue="opinionDto.Rating" />
-                        <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">Your opinion!</MudText>
+                        <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">@loc["Opinion_Your_OpinionYour"]</MudText>
                     </div>
-                    <MudTextField T="string" @bind-Value="opinionDto.Comment" Label="Comment" Variant="Variant.Outlined" Lines="3" Placeholder="Set star and add your opinion" />
+                    <MudTextField T="string" @bind-Value="opinionDto.Comment" Label="@loc["Opinion_Comment"]" Variant="Variant.Outlined" Lines="3" Placeholder="@loc["Opinion_Placeholder"]" />
                 </MessageContent>
                 <YesButton>
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.AddBox" OnClick="() => EditOpinion(context.Id)">Edit!</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.AddBox" OnClick="() => EditOpinion(context.Id)">@loc["X_Edit"]</MudButton>
                 </YesButton>
             </MudMessageBox>
         </MudTd>
         </RowTemplate>
     <PagerContent>
-        <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+        <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
     </PagerContent>
 </MudTable>
 

@@ -207,7 +207,7 @@
   <data name="X_Details" xml:space="preserve">
     <value>Szczegóły</value>
   </data>
-  <data name="Table_Rows_Per_page" xml:space="preserve">
+  <data name="Table_Rows_Per_Page" xml:space="preserve">
     <value>Wierszy na stronie</value>
   </data>
   <data name="Dashboard_Favorites_Farmhouses" xml:space="preserve">
@@ -251,5 +251,44 @@
   </data>
   <data name="Opinion_Comment" xml:space="preserve">
     <value>Komentarz</value>
+  </data>
+  <data name="Alert_Message" xml:space="preserve">
+    <value>Wiadomość</value>
+  </data>
+  <data name="X_Date" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="X_Alerts" xml:space="preserve">
+    <value>Powiadomienia</value>
+  </data>
+  <data name="Farmhouse_Subscribe" xml:space="preserve">
+    <value>Subskrypcja</value>
+  </data>
+  <data name="Opinion_Add_Opinion" xml:space="preserve">
+    <value>Dodaj opinie</value>
+  </data>
+  <data name="X_Save" xml:space="preserve">
+    <value>Zapisz</value>
+  </data>
+  <data name="X_Delete" xml:space="preserve">
+    <value>Usuń</value>
+  </data>
+  <data name="Map_Change_Marker" xml:space="preserve">
+    <value>Zmień położenie</value>
+  </data>
+  <data name="X_Opinions" xml:space="preserve">
+    <value>Opinie</value>
+  </data>
+  <data name="X_Edit" xml:space="preserve">
+    <value>Edytuj</value>
+  </data>
+  <data name="Opinion_Your_Opinion" xml:space="preserve">
+    <value>Twoja opinia!</value>
+  </data>
+  <data name="Opinion_Placeholder" xml:space="preserve">
+    <value>Ustaw swoją ocenę i dodaj opinie</value>
+  </data>
+  <data name="X_Search" xml:space="preserve">
+    <value>Wyszukaj</value>
   </data>
 </root>

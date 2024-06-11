@@ -3,20 +3,20 @@
 @inject IAlertService AlertService
 @inject UserStateService UserStateService
 
-<PageTitle>Farmhouses</PageTitle>
+<PageTitle>@loc["Dashboard_Favorites_Farmhouses"]</PageTitle>
 
 <MudTable Items="@ListFavoritesFarmhouse" SortLabel="Sort By" Hover="true" Filter="new Func<FavoriteFarmhouse,bool>(FilterFunc)" CommitEditTooltip="Commit Edit">
     <ToolBarContent>
-        <MudText Typo="Typo.h6">Farmhouses</MudText>
+        <MudText Typo="Typo.h6">@loc["Dashboard_Favorites_Farmhouses"]</MudText>
         <MudSpacer />
-        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <MudTextField @bind-Value="searchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent> 
 
     <HeaderContent>
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FavoriteFarmhouse, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FavoriteFarmhouse, object>(x=>x.IdFarmhouse)">Id Farmhouse</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FavoriteFarmhouse, object>(x=>x.Farmhouse.Name)">Name Farmhouse</MudTableSortLabel></MudTh>
-        <MudTh>Action</MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FavoriteFarmhouse, object>(x=>x.IdFarmhouse)">Id @loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FavoriteFarmhouse, object>(x=>x.Farmhouse.Name)">@loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
+        <MudTh>@loc["X_Action"]</MudTh>
         @*        <MudTh>Products</MudTh> *@
     </HeaderContent>
     <RowTemplate>
@@ -25,7 +25,7 @@
         <MudTd DataLabel="Nr">@context.IdFarmhouse</MudTd>
         <MudTd DataLabel="Nr">@context.Farmhouse.Name</MudTd>
         <MudTd DataLabel="Edit">
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => DeleteFavorite(context.Id)">Delete</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => DeleteFavorite(context.Id)">@loc["X_Delete"]</MudButton>
             @* <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Medium" OnClick="() => DeleteProduct(context.Id)" /> *@
         </MudTd>
 @*             <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.Id)">Go to detail</MudButton></MudTd>
@@ -69,7 +69,7 @@
     </ChildRowContent> *@
 
     <PagerContent>
-        <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+        <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
     </PagerContent>
 </MudTable>
 
