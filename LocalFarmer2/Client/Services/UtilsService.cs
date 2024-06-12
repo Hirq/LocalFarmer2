@@ -12,7 +12,7 @@ namespace LocalFarmer2.Client.Services
             _dialogService = dialogService;
         }
 
-        public void OpenDialog(string title, string buttonName, string content, Action action, MudBlazor.Color buttonColor)
+        public void OpenDialog(string title, string buttonName, string content, Action action, Color buttonColor)
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
             var parameters = new DialogParameters
@@ -24,6 +24,20 @@ namespace LocalFarmer2.Client.Services
             };
 
             _dialogService.Show<PopupDialog>(title, parameters, options);
+        }
+
+        public void OpenDialogSendMessage(string title, string buttonName, Action action, string emailTo, Color buttonColor)
+        {
+            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var parameters = new DialogParameters
+            {
+                { "ButtonName", buttonName },
+                { "Action", action },
+                { "EmailTo", emailTo },
+                { "ColorButton", buttonColor }
+            };
+
+            _dialogService.Show<PopupDialogSendMessage>(title, parameters, options);
         }
     }
 }

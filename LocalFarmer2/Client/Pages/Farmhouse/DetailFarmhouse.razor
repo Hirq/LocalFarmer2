@@ -3,6 +3,7 @@
 @inject IFarmhouseService FarmhouseService
 @inject IOpinionService OpinionService
 @inject IJSRuntime JSRuntime
+@inject UtilsService UtilsService
 @implements IAsyncDisposable
 <PageTitle>Farmhouse</PageTitle>
 
@@ -25,6 +26,8 @@
         </div>
     }
 }
+<MudButton OnClick='() => UtilsService.OpenDialogSendMessage(loc["Farmhouse_Contact_Form"], loc["Farmhouse_Send"], () => Test(), farmhouse.Email, Color.Primary)' Variant="Variant.Filled" Color="Color.Info">@loc["Farmhouse_Send_Message"]</MudButton>
+
 @* Może ilość ocen też dodać gdzieś? i jakieś 5 ostatnich ocen? lub jakis random  *@
 <h2>Latitude: @farmhouse.Latitude </h2>
 <h2>Longitude: @farmhouse.Longitude</h2>
@@ -91,5 +94,10 @@
         {
             await module.DisposeAsync();
         }
+    }
+
+    private void Test()
+    {
+        Console.WriteLine("Test work");
     }
 }

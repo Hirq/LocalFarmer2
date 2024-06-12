@@ -5,6 +5,7 @@ global using LocalFarmer2.Shared.Models;
 global using LocalFarmer2.Shared.Resources;
 global using Microsoft.Extensions.Localization;
 global using System.Net.Http.Json;
+global using System.Net.Mail;
 using Blazored.LocalStorage;
 using LocalFarmer2.Client;
 using LocalFarmer2.Client.Services;

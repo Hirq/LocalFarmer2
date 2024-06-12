@@ -1,0 +1,66 @@
+﻿@namespace LocalFarmer2.Client.Pages
+
+
+<MudDialog>
+    <DialogContent>
+        <MudTextField T="string" Label="Email" Variant="Variant.Text" @bind-Value="EmailFrom"></MudTextField>
+        <MudTextField T="string" Label="@loc["Farmhouse_Message"]" Variant="Variant.Outlined" Lines="3" @bind-Value="Message" Class="mt-4" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">@loc["X_Cancel"]</MudButton>
+        <MudButton OnClick="() => SendMessage()" Color="@ColorButton" Variant="Variant.Filled">@ButtonName</MudButton>
+    </DialogActions>
+</MudDialog>
+
+    @code {
+    [Parameter]
+    public string ButtonName { get; set; }
+
+    [Parameter]
+    public MudBlazor.Color ColorButton { get; set; }
+
+    [Parameter]
+    public Action Action { get; set; }
+    
+    [Parameter]
+    public string EmailTo { get; set; }
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    private string EmailFrom = "";
+    private string Message = "";
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+    void Cancel() => MudDialog.Cancel();
+
+    private void SendMessage()
+    {
+        Console.WriteLine("Message send");
+        Console.WriteLine("From:" + EmailFrom);
+        Console.WriteLine(Message);
+        Console.WriteLine("To:" + EmailTo);
+
+
+        string to = "jane@contoso.com";
+        string from = "ben@contoso.com";
+        MailMessage message = new MailMessage(from, to);
+        message.Subject = "Using the new SMTP client.";
+        message.Body = @"Using this new feature, you can send an email message from an application very easily.";
+        SmtpClient client = new SmtpClient(server);
+        // Credentials are necessary if the server requires the client
+        // to authenticate before it will send email on the client's behalf.
+        client.UseDefaultCredentials = true;
+
+        try
+        {
+            client.Send(message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Exception caught in CreateTestMessage2(): {0}",
+                ex.ToString());
+        }
+
+        Submit();
+    }
+}

@@ -291,4 +291,19 @@
   <data name="X_Search" xml:space="preserve">
     <value>Wyszukaj</value>
   </data>
+  <data name="Farmhouse_Message" xml:space="preserve">
+    <value>Wiadomość</value>
+  </data>
+  <data name="X_Cancel" xml:space="preserve">
+    <value>Cofnij</value>
+  </data>
+  <data name="Farmhouse_Contact_Form" xml:space="preserve">
+    <value>Formularz kontaktowy</value>
+  </data>
+  <data name="Farmhouse_Send" xml:space="preserve">
+    <value>Wyślij</value>
+  </data>
+  <data name="Farmhouse_Send_Message" xml:space="preserve">
+    <value>Wyślij wiadomość</value>
+  </data>
 </root>

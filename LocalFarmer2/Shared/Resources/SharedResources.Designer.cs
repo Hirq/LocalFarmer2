@@ -259,6 +259,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contact form.
+        /// </summary>
+        internal static string Farmhouse_Contact_Form {
+            get {
+                return ResourceManager.GetString("Farmhouse_Contact_Form", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         internal static string Farmhouse_Description {
@@ -295,6 +304,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Message.
+        /// </summary>
+        internal static string Farmhouse_Message {
+            get {
+                return ResourceManager.GetString("Farmhouse_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         internal static string Farmhouse_Name {
@@ -309,6 +327,24 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string Farmhouse_Phone {
             get {
                 return ResourceManager.GetString("Farmhouse_Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send.
+        /// </summary>
+        internal static string Farmhouse_Send {
+            get {
+                return ResourceManager.GetString("Farmhouse_Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send message.
+        /// </summary>
+        internal static string Farmhouse_Send_Message {
+            get {
+                return ResourceManager.GetString("Farmhouse_Send_Message", resourceCulture);
             }
         }
         
@@ -480,6 +516,15 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string X_Alerts {
             get {
                 return ResourceManager.GetString("X_Alerts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string X_Cancel {
+            get {
+                return ResourceManager.GetString("X_Cancel", resourceCulture);
             }
         }
         
