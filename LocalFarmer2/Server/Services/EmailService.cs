@@ -3,6 +3,8 @@ using MimeKit.Text;
 using MimeKit;
 using MailKit.Net.Smtp;
 
+//OK, gmail działa - trzeba zrobić dla niego nowego maila i można podziałać póki co zapisuje te dane u siebie
+//lokalnie, a potem po testach stwroze nowe konto
 namespace LocalFarmer2.Server.Services
 {
     public class EmailService : IEmailService
