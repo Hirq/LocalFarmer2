@@ -349,6 +349,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Subject.
+        /// </summary>
+        internal static string Farmhouse_Subject {
+            get {
+                return ResourceManager.GetString("Farmhouse_Subject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subscribe.
         /// </summary>
         internal static string Farmhouse_Subscribe {

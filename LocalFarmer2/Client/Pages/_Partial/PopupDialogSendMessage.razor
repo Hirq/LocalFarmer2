@@ -1,10 +1,10 @@
 ﻿@namespace LocalFarmer2.Client.Pages
 
-
 <MudDialog>
     <DialogContent>
-        <MudTextField T="string" Label="Email" Variant="Variant.Text" @bind-Value="EmailFrom"></MudTextField>
-        <MudTextField T="string" Label="@loc["Farmhouse_Message"]" Variant="Variant.Outlined" Lines="3" @bind-Value="Message" Class="mt-4" />
+        <MudTextField T="string" Label="Email" Variant="Variant.Text" @bind-Value="emailDto.From"></MudTextField>
+        <MudTextField T="string" Label="@loc["Farmhouse_Subject"]" Variant="Variant.Text" @bind-Value="emailDto.Subject"></MudTextField>
+        <MudTextField T="string" Label="@loc["Farmhouse_Message"]" Variant="Variant.Outlined" Lines="3" @bind-Value="emailDto.Body" Class="mt-4" />
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">@loc["X_Cancel"]</MudButton>
@@ -20,14 +20,10 @@
 
     [Parameter]
     public Action Action { get; set; }
-    
-    [Parameter]
-    public string EmailTo { get; set; }
 
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
-    private string EmailFrom = "";
-    private string Message = "";
+    private EmailDto emailDto = new EmailDto();
 
     void Submit() => MudDialog.Close(DialogResult.Ok(true));
     void Cancel() => MudDialog.Cancel();

@@ -306,4 +306,7 @@
   <data name="Farmhouse_Send_Message" xml:space="preserve">
     <value>Wyślij wiadomość</value>
   </data>
+  <data name="Farmhouse_Subject" xml:space="preserve">
+    <value>Temat</value>
+  </data>
 </root>
