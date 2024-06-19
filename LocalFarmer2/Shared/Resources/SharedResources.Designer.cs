@@ -178,6 +178,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contact.
+        /// </summary>
+        internal static string Dashboard_Contact {
+            get {
+                return ResourceManager.GetString("Dashboard_Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dashboard.
         /// </summary>
         internal static string Dashboard_Dashboard {

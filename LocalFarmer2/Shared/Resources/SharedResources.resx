@@ -309,4 +309,7 @@
   <data name="Farmhouse_Subject" xml:space="preserve">
     <value>Subject</value>
   </data>
+  <data name="Dashboard_Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
 </root>
