@@ -7,12 +7,14 @@ namespace LocalFarmer2.Client.Services
     {
         private readonly IDialogService _dialogService;
         private readonly HttpClient _httpClient;
+        private readonly IStringLocalizer<SharedResources> _loc;
 
 
-        public UtilsService(IDialogService dialogService, HttpClient httpClient)
+        public UtilsService(IDialogService dialogService, HttpClient httpClient, IStringLocalizer<SharedResources> loc)
         {
             _dialogService = dialogService;
             _httpClient = httpClient;
+            _loc = loc;
         }
 
         public void OpenDialog(string title, string buttonName, string content, Action action, Color buttonColor)
@@ -29,20 +31,16 @@ namespace LocalFarmer2.Client.Services
             _dialogService.Show<PopupDialog>(title, parameters, options);
         }
 
-        public async Task OpenDialogSendMessage(string title, string buttonName, string emailFrom, Color buttonColor)
+        public async Task OpenDialogSendMessage()
         {
-            EmailDto emailDto = new EmailDto();
-            var result = await _httpClient.PostAsJsonAsync("api/Email", emailDto);
-
             var options = new DialogOptions { CloseOnEscapeKey = true };
-            var parameters = new DialogParameters
-            {
-                { "ButtonName", buttonName },
-                { "EmailFrom", emailFrom },
-                { "ColorButton", buttonColor }
-            };
+            
+            _dialogService.Show<PopupDialogSendMessage>(_loc["Farmhouse_Contact_Form"], options);
+        }
 
-            _dialogService.Show<PopupDialogSendMessage>(title, parameters, options);
+        public async Task SendMessage(EmailDto emailDto)
+        {
+            await _httpClient.PostAsJsonAsync("api/Email", emailDto);
         }
     }
 }

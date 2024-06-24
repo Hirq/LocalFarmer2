@@ -3,7 +3,7 @@
 
 
 <h3>Contact</h3>
-<MudButton OnClick='() => UtilsService.OpenDialogSendMessage(loc["Farmhouse_Contact_Form"], loc["Farmhouse_Send"], email, Color.Primary)' Variant="Variant.Filled" Color="Color.Info">@loc["Farmhouse_Send_Message"]</MudButton>
+<MudButton OnClick='() => UtilsService.OpenDialogSendMessage()' Variant="Variant.Filled" Color="Color.Info">@loc["Farmhouse_Send_Message"]</MudButton>
 
 @code {
     private string email = "Hey to probny email";

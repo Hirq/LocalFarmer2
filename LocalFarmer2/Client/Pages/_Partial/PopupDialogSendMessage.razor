@@ -1,4 +1,6 @@
 ﻿@namespace LocalFarmer2.Client.Pages
+@inject UtilsService UtilsService
+@using System.Text
 
 <MudDialog>
     <DialogContent>
@@ -8,24 +10,24 @@
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">@loc["X_Cancel"]</MudButton>
+            <MudButton OnClick="SendMessage" Color="Color.Secondary" Variant="Variant.Filled">@loc["Farmhouse_Send"]</MudButton>
     </DialogActions>
 </MudDialog>
 
     @code {
-    [Parameter]
-    public string ButtonName { get; set; }
-
-    [Parameter]
-    public MudBlazor.Color ColorButton { get; set; }
-
-    // [Parameter]
-    // public Action Action { get; set; }
-
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
-    private EmailDto emailDto = new EmailDto();
+    private EmailDto emailDto = new EmailDto()
+    {
+        From = "wpisujeswoj@gmail.com"
+    };
 
     void Submit() => MudDialog.Close(DialogResult.Ok(true));
     void Cancel() => MudDialog.Cancel();
 
+    async Task SendMessage()
+    {
+        await UtilsService.SendMessage(emailDto);
+        Submit();
+    }
 }
