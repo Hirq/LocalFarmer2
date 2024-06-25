@@ -1,21 +1,25 @@
 ﻿@namespace LocalFarmer2.Client.Pages
 @inject UtilsService UtilsService
+@inject ValidateService ValidateService
 @using System.Text
 
 <MudDialog>
     <DialogContent>
         <MudTextField T="string" Label="Email" Variant="Variant.Text" @bind-Value="emailDto.From"></MudTextField>
-        <MudTextField T="string" Label="@loc["Farmhouse_Subject"]" Variant="Variant.Text" @bind-Value="emailDto.Subject"></MudTextField>
-        <MudTextField T="string" Label="@loc["Farmhouse_Message"]" Variant="Variant.Outlined" Lines="3" @bind-Value="emailDto.Body" Class="mt-4" />
+        <MudTextField T="string" @ref="subjectField" Required Label="@loc["Farmhouse_Subject"]" RequiredError="Wymagany (2 jezyki zrobic)" Variant="Variant.Text" @bind-Value="emailDto.Subject"></MudTextField>
+        <MudTextField T="string" @ref="bodyField" Required Label="@loc["Farmhouse_Message"]" Variant="Variant.Outlined" Lines="3" @bind-Value="emailDto.Body" Class="mt-4" />
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">@loc["X_Cancel"]</MudButton>
-            <MudButton OnClick="SendMessage" Color="Color.Secondary" Variant="Variant.Filled">@loc["Farmhouse_Send"]</MudButton>
+        <MudButton OnClick="SendMessage" Color="Color.Secondary" Variant="Variant.Filled">@loc["Farmhouse_Send"]</MudButton>
     </DialogActions>
 </MudDialog>
 
     @code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    private MudTextField<string> subjectField;
+    private MudTextField<string> bodyField;
 
     private EmailDto emailDto = new EmailDto()
     {
@@ -27,6 +31,16 @@
 
     async Task SendMessage()
     {
+        var fieldsToValidate = new (object Field, string Value)[]
+        {
+            (subjectField, emailDto.Subject),
+            (bodyField, emailDto.Body),
+        };
+        if (ValidateService.ValidateMudTextFields(fieldsToValidate))
+        {
+            return;
+        }
+
         await UtilsService.SendMessage(emailDto);
         Submit();
     }
