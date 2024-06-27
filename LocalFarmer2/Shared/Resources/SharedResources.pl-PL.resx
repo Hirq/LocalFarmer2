@@ -312,4 +312,7 @@
   <data name="Dashboard_Contact" xml:space="preserve">
     <value>Kontakt</value>
   </data>
+  <data name="X_Contact" xml:space="preserve">
+    <value>Kontakt</value>
+  </data>
 </root>
