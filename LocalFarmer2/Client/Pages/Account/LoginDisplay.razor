@@ -17,6 +17,9 @@
         <div>FarmhouseId: @UserStateService.CurrentUser?.IdFarmhouse</div>
         <div>Farmhouse: @UserStateService.CurrentUser?.FarmhouseName</div>
     </Authorized>
+    <NotAuthorized>
+        <button @onclick="ChangeCulture">Change Culture</button>
+    </NotAuthorized>
 </AuthorizeView>
 
 @code {
