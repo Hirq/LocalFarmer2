@@ -17,7 +17,7 @@
                 <MudText Class="d-flex justify-center" Typo="Typo.h6">Add farmhouse</MudText>
                 <MudPaper Class="pa-4">
                     <MudTextField T="string" Label="Farmhouse name" @bind-Value="farmhouseDto.Name" @ref="farmhouseNameField" Required="true" RequiredError="Farmhouse name is required!" />
-                    <MudTextField T="string" Label="Description" @bind-Value="farmhouseDto.Description" />
+                    <MudTextField T="string" Label="@loc["X_Description"]" @bind-Value="farmhouseDto.Description" />
                     <MudTextField T="string" Label="Address" @bind-Value="farmhouseDto.Address" />
                     <MudTextField T="string" Label="Phone" @bind-Value="farmhouseDto.Phone" />
                     <MudTextField T="string" Label="Email" @bind-Value="farmhouseDto.Email" />

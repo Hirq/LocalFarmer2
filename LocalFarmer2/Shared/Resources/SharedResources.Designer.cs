@@ -277,15 +277,6 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description.
-        /// </summary>
-        internal static string Farmhouse_Description {
-            get {
-                return ResourceManager.GetString("Farmhouse_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Edit farmhouse.
         /// </summary>
         internal static string Farmhouse_Edit_Farmhouse {
@@ -304,11 +295,29 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Latitude.
+        /// </summary>
+        internal static string Farmhouse_Latitude {
+            get {
+                return ResourceManager.GetString("Farmhouse_Latitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List farmhouses.
         /// </summary>
         internal static string Farmhouse_List_Farmhouses {
             get {
                 return ResourceManager.GetString("Farmhouse_List_Farmhouses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude.
+        /// </summary>
+        internal static string Farmhouse_Longitude {
+            get {
+                return ResourceManager.GetString("Farmhouse_Longitude", resourceCulture);
             }
         }
         
@@ -327,6 +336,15 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string Farmhouse_Name {
             get {
                 return ResourceManager.GetString("Farmhouse_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment methods.
+        /// </summary>
+        internal static string Farmhouse_Payment_Methods {
+            get {
+                return ResourceManager.GetString("Farmhouse_Payment_Methods", resourceCulture);
             }
         }
         
@@ -448,15 +466,6 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description.
-        /// </summary>
-        internal static string Product_Description {
-            get {
-                return ResourceManager.GetString("Product_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Minimal amount.
         /// </summary>
         internal static string Product_Minimal_Amount {
@@ -570,6 +579,15 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string X_Delete {
             get {
                 return ResourceManager.GetString("X_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        internal static string X_Description {
+            get {
+                return ResourceManager.GetString("X_Description", resourceCulture);
             }
         }
         

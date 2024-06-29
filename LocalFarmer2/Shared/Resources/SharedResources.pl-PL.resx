@@ -192,9 +192,6 @@
   <data name="Product_Name" xml:space="preserve">
     <value>Nazwa</value>
   </data>
-  <data name="Product_Description" xml:space="preserve">
-    <value>Opis</value>
-  </data>
   <data name="Product_Minimal_Amount" xml:space="preserve">
     <value>Minimalna ilość</value>
   </data>
@@ -228,7 +225,7 @@
   <data name="Farmhouse_Name" xml:space="preserve">
     <value>Nazwa</value>
   </data>
-  <data name="Farmhouse_Description" xml:space="preserve">
+  <data name="X_Description" xml:space="preserve">
     <value>Opis</value>
   </data>
   <data name="Farmhouse_Address" xml:space="preserve">
@@ -314,5 +311,14 @@
   </data>
   <data name="X_Contact" xml:space="preserve">
     <value>Kontakt</value>
+  </data>
+  <data name="Farmhouse_Payment_Methods" xml:space="preserve">
+    <value>Metody płatoności</value>
+  </data>
+  <data name="Farmhouse_Latitude" xml:space="preserve">
+    <value>Szerokość geograficzna</value>
+  </data>
+  <data name="Farmhouse_Longitude" xml:space="preserve">
+    <value>Długość geograficzna</value>
   </data>
 </root>

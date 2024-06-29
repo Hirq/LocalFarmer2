@@ -18,7 +18,7 @@
                 <MudCardContent>
                     <MudTextField Label="Name product"
                                   @bind-Value="product.Name" Required For="@(() => product.Name)" />
-                    <MudTextField Label="Description"
+                    <MudTextField Label="@loc["X_Description"]"
                                   @bind-Value="product.Description" Required For="@(() => product.Description)"/>
                     <MudTextField Label="Count min"
                                   @bind-Value="product.CountMinOne" Required For="@(() => product.CountMinOne)" />
