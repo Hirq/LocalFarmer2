@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using LocalFarmer2.Shared.ENUMs;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -35,6 +35,10 @@ namespace LocalFarmer2.Shared.Models
         // Wyśle zapytanie przez formularz - BRAK -> Brak formularza *@
 
         public bool InfoFromFarmhouse { get; set; }
+
+        // Dodać ENUM, który wskazuje na dany rodzaj alertu / do filtrowania tego i łatwiej wyświetlać wtedy dwujęzyczne teksty - bo tutaj bedzie opis czego dotyczy,
+        // a wiadomość co została wpisana w polu Message lub pusto tam 
+        public MessageAlertEnum AlertEnum { get; set; }
 
         public ApplicationUser User { get; set; }
 

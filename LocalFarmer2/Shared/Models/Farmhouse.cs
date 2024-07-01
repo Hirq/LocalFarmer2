@@ -28,7 +28,7 @@ namespace LocalFarmer2.Shared.Models
 
         public bool IsOpen { get; set; }
         public string PaymentMethods { get; set; }
-        public byte[]? ImageData { get; set; }
+        public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; } = string.Empty;
 
         public virtual IList<Product> Products { get; set; }

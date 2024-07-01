@@ -2,14 +2,14 @@
 {
     public enum MessageAlertEnum
     {
-        MessageIsOpen,
+        FarmhouseIsOpen,
         NewProduct,
         EditProduct,
         EditDetails,
         //
         NewSubscriber,
         NewOpinion,
-        //NewMessageFromForm
+        //NewMessageFromForm - nowa wiadomość z formularza
     }
 
     public class MessageAlert
@@ -31,7 +31,7 @@
         {
             switch (AlertEnum)
             {
-                case MessageAlertEnum.MessageIsOpen:
+                case MessageAlertEnum.FarmhouseIsOpen:
                     return $"Farmhouse {Value} is actually {((bool)IsOpen ? "open" : "close")}";
                 case MessageAlertEnum.NewProduct:
                     return $"Farmhouse {Value} add new product {Value2}";

@@ -671,5 +671,14 @@ namespace LocalFarmer2.Shared.Resources {
                 return ResourceManager.GetString("X_Search", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        internal static string X_Type {
+            get {
+                return ResourceManager.GetString("X_Type", resourceCulture);
+            }
+        }
     }
 }

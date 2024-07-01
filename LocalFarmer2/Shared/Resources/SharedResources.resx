@@ -321,4 +321,7 @@
   <data name="Farmhouse_Longitude" xml:space="preserve">
     <value>Longitude</value>
   </data>
+  <data name="X_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
 </root>

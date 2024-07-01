@@ -15,6 +15,7 @@
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.IdFarmhouse)">Id @loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.Farmhouse.Name)">@loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.AlertEnum)">@loc["X_Type"]</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.Message)">@loc["Alert_Message"]</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.DateCreated)">@loc["X_Date"]</MudTableSortLabel></MudTh>
         @* <MudTh>Action</MudTh> *@
@@ -23,6 +24,7 @@
         <MudTd DataLabel="Nr">@context.Id</MudTd>
             <MudTd DataLabel="Nr">@context.IdFarmhouse</MudTd>
             <MudTd DataLabel="Nr">@context.Farmhouse.Name</MudTd>
+            <MudTd DataLabel="Nr">@context.AlertEnum</MudTd>
             <MudTd DataLabel="Nr">@context.Message</MudTd>
             <MudTd DataLabel="Nr">@context.DateCreated</MudTd>
 @*             <MudTd DataLabel="Edit">
