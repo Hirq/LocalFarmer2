@@ -189,7 +189,7 @@
   <data name="X_Loading" xml:space="preserve">
     <value>Loading...</value>
   </data>
-  <data name="Product_Name" xml:space="preserve">
+  <data name="X_Name" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="Product_Minimal_Amount" xml:space="preserve">
@@ -221,9 +221,6 @@
   </data>
   <data name="X_Farmhouse" xml:space="preserve">
     <value>Farmhouse</value>
-  </data>
-  <data name="Farmhouse_Name" xml:space="preserve">
-    <value>Name</value>
   </data>
   <data name="X_Description" xml:space="preserve">
     <value>Description</value>
@@ -323,5 +320,8 @@
   </data>
   <data name="X_Type" xml:space="preserve">
     <value>Type</value>
+  </data>
+  <data name="Product_Photo" xml:space="preserve">
+    <value>Product photo </value>
   </data>
 </root>

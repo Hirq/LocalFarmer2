@@ -331,15 +331,6 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        internal static string Farmhouse_Name {
-            get {
-                return ResourceManager.GetString("Farmhouse_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Payment methods.
         /// </summary>
         internal static string Farmhouse_Payment_Methods {
@@ -484,11 +475,11 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
+        ///   Looks up a localized string similar to Product photo .
         /// </summary>
-        internal static string Product_Name {
+        internal static string Product_Photo {
             get {
-                return ResourceManager.GetString("Product_Name", resourceCulture);
+                return ResourceManager.GetString("Product_Photo", resourceCulture);
             }
         }
         
@@ -633,6 +624,15 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string X_Loading {
             get {
                 return ResourceManager.GetString("X_Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string X_Name {
+            get {
+                return ResourceManager.GetString("X_Name", resourceCulture);
             }
         }
         

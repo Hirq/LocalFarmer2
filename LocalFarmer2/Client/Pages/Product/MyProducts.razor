@@ -11,12 +11,12 @@
 <MudTable Items="@ListProducts" Hover="true" SortLabel="Sort By">
     <HeaderContent>
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Product, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.Description)">Description</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountMinOne)">Count min one</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.PrizeOne)">Prize one</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountAll)">Count all</MudTableSortLabel></MudTh>
-        <MudTh>Actions</MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.Name)">@loc["X_Name"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.Description)">@loc["X_Description"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountMinOne)">@loc["Product_Minimal_Amount"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.PrizeOne)">@loc["Product_Prize_One"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountAll)">@loc["Product_Total_Quantity"]</MudTableSortLabel></MudTh>
+        <MudTh>@loc["X_Action"]</MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Id">@context.Id</MudTd>
