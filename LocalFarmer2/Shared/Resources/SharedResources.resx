@@ -322,6 +322,9 @@
     <value>Type</value>
   </data>
   <data name="Product_Photo" xml:space="preserve">
-    <value>Product photo </value>
+    <value>Product photo</value>
+  </data>
+  <data name="Product_Edit_Product" xml:space="preserve">
+    <value>Edit product</value>
   </data>
 </root>

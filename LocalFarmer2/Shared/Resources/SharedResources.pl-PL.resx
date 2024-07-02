@@ -321,6 +321,9 @@
   <data name="X_Type" xml:space="preserve">
     <value>Typ</value>
   </data>
+  <data name="Product_Edit_Product" xml:space="preserve">
+    <value>Edytuj produkt</value>
+  </data>
   <data name="Product_Photo" xml:space="preserve">
     <value>Zdjęcie produktu</value>
   </data>

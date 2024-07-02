@@ -7,30 +7,25 @@
 @inject UserStateService UserStateService
 @inject FileService FileService
 
-<PageTitle>Edit product</PageTitle>
+<PageTitle>@loc["Product_Edit_Product"]</PageTitle>
 
 <EditForm Model="model" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
-    <MudText Class="d-flex justify-center" Typo="Typo.h6">Edit product</MudText>
+    <MudText Class="d-flex justify-center" Typo="Typo.h6">@loc["Product_Edit_Product"]</MudText>
     <MudGrid>
         <MudItem xs="12">
             <MudCard>
                 <MudCardContent>
-                    <MudTextField Label="Name product"
-                                  @bind-Value="model.Name" Required For="@(() => model.Name)"/>
-                    <MudTextField Label="@loc["X_Description"]"
-                                  @bind-Value="model.Description" Required For="@(() => model.Description)" />
-                    <MudTextField Label="Count min"
-                                  @bind-Value="model.CountMinOne" Required For="@(() => model.CountMinOne)" />
-                    <MudTextField Label="Prize for one"
-                                  @bind-Value="model.PrizeOne" Required For="@(() => model.PrizeOne)" />
-                    <MudTextField Label="Count all"
-                                  @bind-Value="model.CountAll" Required For="@(() => model.CountAll)" />
-                    <EditFile Name="Photo product" Model="@model" />
+                    <MudTextField Label="@loc["X_Name"]" @bind-Value="model.Name" Required For="@(() => model.Name)" />
+                    <MudTextField Label="@loc["X_Description"]" @bind-Value="model.Description" Required For="@(() => model.Description)" />
+                    <MudTextField Label="@loc["Product_Minimal_Amount"]" @bind-Value="model.CountMinOne" Required For="@(() => model.CountMinOne)" />
+                    <MudTextField Label="@loc["Product_Prize_One"]" @bind-Value="model.PrizeOne" Required For="@(() => model.PrizeOne)" />
+                    <MudTextField Label="@loc["Product_Total_Quantity"]" @bind-Value="model.CountAll" Required For="@(() => model.CountAll)" />
+                    <EditFile Name="@loc["Product_Photo"]" Model="@model" />
                 </MudCardContent>
             </MudCard>
             <MudCardActions>
-                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Edit product</MudButton>
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">@loc["Product_Edit_Product"]</MudButton>
             </MudCardActions>
         </MudItem>
     </MudGrid>
