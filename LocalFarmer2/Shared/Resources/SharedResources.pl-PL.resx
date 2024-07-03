@@ -327,4 +327,7 @@
   <data name="Product_Photo" xml:space="preserve">
     <value>Zdjęcie produktu</value>
   </data>
+  <data name="Validation_Required" xml:space="preserve">
+    <value>Wymagany</value>
+  </data>
 </root>

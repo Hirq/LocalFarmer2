@@ -327,4 +327,7 @@
   <data name="Product_Edit_Product" xml:space="preserve">
     <value>Edit product</value>
   </data>
+  <data name="Validation_Required" xml:space="preserve">
+    <value>Required</value>
+  </data>
 </root>

@@ -18,7 +18,7 @@ namespace LocalFarmer2.Server.Services
         {
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
-            email.To.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
+            email.To.Add(MailboxAddress.Parse(request.To == string.Empty ? _config.GetSection("EmailUsername").Value : request.To));
             email.Subject = $"LocalFarmer: {request.Subject}";
             email.Body = new TextPart(TextFormat.Html) 
             { 

@@ -5,9 +5,11 @@
 
 <MudDialog>
     <DialogContent>
+        <p>@isContactToAdmin</p>
+        <p>@emailTo</p>
         <MudTextField T="string" Label="Email" Variant="Variant.Text" @bind-Value="emailDto.From"></MudTextField>
-        <MudTextField T="string" @ref="subjectField" Required Label="@loc["Farmhouse_Subject"]" RequiredError="Wymagany (2 jezyki zrobic)" Variant="Variant.Text" @bind-Value="emailDto.Subject"></MudTextField>
-        <MudTextField T="string" @ref="bodyField" Required Label="@loc["Farmhouse_Message"]" Variant="Variant.Outlined" Lines="3" @bind-Value="emailDto.Body" Class="mt-4" />
+        <MudTextField T="string" @ref="subjectField" Required Label="@loc["Farmhouse_Subject"]" RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="emailDto.Subject"></MudTextField>
+        <MudTextField T="string" @ref="bodyField" Required Label="@loc["Farmhouse_Message"]" RequiredError="@loc["Validation_Required"]" Variant="Variant.Outlined" Lines="3" @bind-Value="emailDto.Body" Class="mt-4" />
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">@loc["X_Cancel"]</MudButton>
@@ -16,6 +18,12 @@
 </MudDialog>
 
     @code {
+    [Parameter]
+    public bool isContactToAdmin { get; set; }
+
+    [Parameter]
+    public string? emailTo { get; set; }
+
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
     private MudTextField<string> subjectField;
@@ -36,11 +44,17 @@
             (subjectField, emailDto.Subject),
             (bodyField, emailDto.Body),
         };
+
         if (ValidateService.ValidateMudTextFields(fieldsToValidate))
         {
             return;
         }
 
+        if (!string.IsNullOrEmpty(emailTo))
+        {
+            emailDto.To = emailTo;
+        }
+        
         await UtilsService.SendMessage(emailDto);
         Submit();
     }

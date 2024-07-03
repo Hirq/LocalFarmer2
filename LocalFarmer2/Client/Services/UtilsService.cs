@@ -31,11 +31,15 @@ namespace LocalFarmer2.Client.Services
             _dialogService.Show<PopupDialog>(title, parameters, options);
         }
 
-        public async Task OpenDialogSendMessage()
+        public async Task OpenDialogSendMessage(bool isContactToAdmin = true, string? emailTo = null)
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
-            
-            _dialogService.Show<PopupDialogSendMessage>(_loc["Farmhouse_Contact_Form"], options);
+            var parameters = new DialogParameters
+            {
+                { "isContactToAdmin", isContactToAdmin },
+                { "emailTo", emailTo }
+            };
+            _dialogService.Show<PopupDialogSendMessage>(_loc["Farmhouse_Contact_Form"], parameters, options);
         }
 
         public async Task SendMessage(EmailDto emailDto)

@@ -15,7 +15,7 @@ namespace LocalFarmer2.Server.Controllers
         }
 
         [HttpPost]
-        public IActionResult SendEmail(EmailDto request)
+        public IActionResult SendEmai(EmailDto request)
         {
             _emailService.SendEmail(request);
             return Ok();

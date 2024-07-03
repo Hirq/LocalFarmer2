@@ -26,7 +26,7 @@
         </div>
     }
 }
-@* <MudButton OnClick='() => UtilsService.OpenDialogSendMessage()' Variant="Variant.Filled" Color="Color.Info">@loc["Farmhouse_Send_Message"]</MudButton> *@
+<MudButton OnClick='() => UtilsService.OpenDialogSendMessage(isContactToAdmin: false, emailTo: farmhouse.Email)' Variant="Variant.Filled" Color="Color.Info">@loc["Farmhouse_Send_Message"]</MudButton>
 
 @* Może ilość ocen też dodać gdzieś? i jakieś 5 ostatnich ocen? lub jakis random  *@
 <h2>Latitude: @farmhouse.Latitude </h2>
