@@ -7,9 +7,9 @@
     <DialogContent>
         <p>@isContactToAdmin</p>
         <p>@emailTo</p>
-        <MudTextField T="string" Label="Email" Variant="Variant.Text" @bind-Value="emailDto.From"></MudTextField>
-        <MudTextField T="string" @ref="subjectField" Required Label="@loc["Farmhouse_Subject"]" RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="emailDto.Subject"></MudTextField>
-        <MudTextField T="string" @ref="bodyField" Required Label="@loc["Farmhouse_Message"]" RequiredError="@loc["Validation_Required"]" Variant="Variant.Outlined" Lines="3" @bind-Value="emailDto.Body" Class="mt-4" />
+        <MudTextField T="string" @ref="emailField" Label="Email" Required=@(!isContactToAdmin) RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="emailDto.From"></MudTextField>
+        <MudTextField T="string" @ref="subjectField" Label="@loc["Farmhouse_Subject"]" Required RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="emailDto.Subject"></MudTextField>
+        <MudTextField T="string" @ref="bodyField" Label="@loc["Farmhouse_Message"]" Required RequiredError="@loc["Validation_Required"]" Variant="Variant.Outlined" Lines="3" @bind-Value="emailDto.Body" Class="mt-4" />
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">@loc["X_Cancel"]</MudButton>
@@ -26,6 +26,7 @@
 
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
+    private MudTextField<string> emailField;
     private MudTextField<string> subjectField;
     private MudTextField<string> bodyField;
 
@@ -39,11 +40,16 @@
 
     async Task SendMessage()
     {
-        var fieldsToValidate = new (object Field, string Value)[]
+        var fieldsToValidate = new List<(object Field, string Value)>
         {
             (subjectField, emailDto.Subject),
             (bodyField, emailDto.Body),
         };
+
+        if (!isContactToAdmin)
+        {
+            fieldsToValidate.Add((emailField, emailDto.From));
+        }
 
         if (ValidateService.ValidateMudTextFields(fieldsToValidate))
         {

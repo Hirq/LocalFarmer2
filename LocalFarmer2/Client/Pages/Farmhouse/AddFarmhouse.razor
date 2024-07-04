@@ -81,7 +81,7 @@
         farmhouseDto.Latitude = latitude;
         farmhouseDto.Longitude = longitude;
 
-        var fieldsToValidate = new (object Field, string Value)[]
+        var fieldsToValidate = new List<(object Field, string Value)>
         {
             (latitudeField, farmhouseDto.Latitude),
             (longitudeField, farmhouseDto.Longitude),
