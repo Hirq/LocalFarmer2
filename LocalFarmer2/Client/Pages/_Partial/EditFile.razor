@@ -19,13 +19,13 @@
                        Color="Color.Primary"
                        for="@fileInput"
                        Variant="Variant.Filled">
-                Open file picker
+                @loc["Button_Open_File_Picker"]
             </MudButton>
             <MudButton OnClick="(e) => FileService.Clear(Model)"
                        Color="Color.Error"
                        Disabled="@(!FileService.fileNames.Any())"
                        Variant="Variant.Filled">
-                Clear
+                @loc["Button_Clear"]
             </MudButton>
             @if (IsOpenPhoto)
             {
@@ -34,7 +34,7 @@
                            Disabled="@(!FileService.fileNames.Any())"
                            ButtonType="ButtonType.Button"
                            Variant="Variant.Filled">
-                    Open photo
+                    @loc["Button_Open_Photo"]
                 </MudButton>
             }
         </MudToolBar>

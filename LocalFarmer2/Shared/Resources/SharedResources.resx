@@ -330,4 +330,13 @@
   <data name="Validation_Required" xml:space="preserve">
     <value>Required</value>
   </data>
+  <data name="Button_Open_File_Picker" xml:space="preserve">
+    <value>Open file picker</value>
+  </data>
+  <data name="Button_Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Button_Open_Photo" xml:space="preserve">
+    <value>Open photo</value>
+  </data>
 </root>
