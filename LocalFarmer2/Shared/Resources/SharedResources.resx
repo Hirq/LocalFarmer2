@@ -150,7 +150,7 @@
   <data name="Dashboard_LocalFarmer" xml:space="preserve">
     <value>Local Farmer</value>
   </data>
-  <data name="Account_My_Acccount" xml:space="preserve">
+  <data name="Account_My_Account" xml:space="preserve">
     <value>My account</value>
   </data>
   <data name="Alert_All_Alerts" xml:space="preserve">
@@ -338,5 +338,8 @@
   </data>
   <data name="Button_Open_Photo" xml:space="preserve">
     <value>Open photo</value>
+  </data>
+  <data name="Button_Save" xml:space="preserve">
+    <value>Save</value>
   </data>
 </root>
