@@ -1,5 +1,6 @@
 ﻿@page "/mapfarmhouses"
 @using Newtonsoft.Json.Linq
+@using System.Globalization
 @inject IFarmhouseService FarmhouseService
 @inject IJSRuntime JSRuntime
 @implements IAsyncDisposable
@@ -17,7 +18,26 @@
 
     protected override async Task OnInitializedAsync()
     {
-        farmhouses = (await FarmhouseService.GetFarmhouses()).Where(x => x.IsOpen).ToList();
+        farmhouses = (await FarmhouseService.GetFarmhouses()).Where(x => x.IsOpen && IsValidLatitude(x.Latitude) && IsValidLongitude(x.Longitude)).ToList();
+    }
+
+
+    bool IsValidLatitude(string latStr)
+    {
+        if (double.TryParse(latStr, NumberStyles.Float, CultureInfo.InvariantCulture, out double lat))
+        {
+            return lat >= -90 && lat <= 90;
+        }
+        return false;
+    }
+
+    bool IsValidLongitude(string lonStr)
+    {
+        if (double.TryParse(lonStr, NumberStyles.Float, CultureInfo.InvariantCulture, out double lon))
+        {
+            return lon >= -180 && lon <= 180;
+        }
+        return false;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
