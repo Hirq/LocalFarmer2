@@ -3,6 +3,7 @@
 @using System.Globalization
 @inject IFarmhouseService FarmhouseService
 @inject IJSRuntime JSRuntime
+@inject ValidateService ValidateService
 @implements IAsyncDisposable
 <PageTitle>Map with all farmhouses</PageTitle>
 
@@ -18,26 +19,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        farmhouses = (await FarmhouseService.GetFarmhouses()).Where(x => x.IsOpen && IsValidLatitude(x.Latitude) && IsValidLongitude(x.Longitude)).ToList();
-    }
-
-
-    bool IsValidLatitude(string latStr)
-    {
-        if (double.TryParse(latStr, NumberStyles.Float, CultureInfo.InvariantCulture, out double lat))
-        {
-            return lat >= -90 && lat <= 90;
-        }
-        return false;
-    }
-
-    bool IsValidLongitude(string lonStr)
-    {
-        if (double.TryParse(lonStr, NumberStyles.Float, CultureInfo.InvariantCulture, out double lon))
-        {
-            return lon >= -180 && lon <= 180;
-        }
-        return false;
+        farmhouses = (await FarmhouseService.GetFarmhouses()).Where(x => x.IsOpen && ValidateService.IsValidLatitude(x.Latitude) && ValidateService.IsValidLongitude(x.Longitude)).ToList();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

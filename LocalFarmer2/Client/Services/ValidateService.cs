@@ -1,4 +1,5 @@
 ﻿using MudBlazor;
+using System.Globalization;
 
 namespace LocalFarmer2.Client.Services
 {
@@ -49,5 +50,24 @@ namespace LocalFarmer2.Client.Services
 
             return validationFailed;
         }
+
+        public bool IsValidLatitude(string latStr)
+        {
+            if (double.TryParse(latStr, NumberStyles.Float, CultureInfo.InvariantCulture, out double lat))
+            {
+                return lat >= -90 && lat <= 90;
+            }
+            return false;
+        }
+
+        public bool IsValidLongitude(string lonStr)
+        {
+            if (double.TryParse(lonStr, NumberStyles.Float, CultureInfo.InvariantCulture, out double lon))
+            {
+                return lon >= -180 && lon <= 180;
+            }
+            return false;
+        }
+
     }
 }
