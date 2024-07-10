@@ -53,12 +53,12 @@
                     @if (UserStateService.CurrentUser?.IdFarmhouse != null)
                     {
                         <MudMenuItem Href="/editfarmhouse">@loc["Farmhouse_Edit_Farmhouse"]</MudMenuItem>
-                        <MudMenuItem Href="/myaccount">@loc["Account_My_Acccount"]</MudMenuItem>
+                        <MudMenuItem Href="/myaccount">@loc["Account_My_Account"]</MudMenuItem>
                     }
                     else
                     {
                         <MudMenuItem Href="/addfarmhouse">@loc["Farmhouse_Add_Farmhouse"]</MudMenuItem>
-                        <MudMenuItem Href="/myaccount">@loc["Account_My_Acccount"]</MudMenuItem>
+                        <MudMenuItem Href="/myaccount">@loc["Account_My_Account"]</MudMenuItem>
                     }
                 </MudMenu>
             </AuthorizeView>

@@ -169,20 +169,20 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add image.
+        /// </summary>
+        internal static string Button_Add_Image {
+            get {
+                return ResourceManager.GetString("Button_Add_Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear.
         /// </summary>
         internal static string Button_Clear {
             get {
                 return ResourceManager.GetString("Button_Clear", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Open file picker.
-        /// </summary>
-        internal static string Button_Open_File_Picker {
-            get {
-                return ResourceManager.GetString("Button_Open_File_Picker", resourceCulture);
             }
         }
         
