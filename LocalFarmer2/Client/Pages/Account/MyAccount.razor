@@ -19,10 +19,10 @@ else
                 <MudItem xs="12">
                     <MudText Class="d-flex justify-center" Typo="Typo.h6">@loc["Account_My_Account"]</MudText>
                     <MudPaper Class="pa-4">
-                        <MudTextField T="string" Label="FullName" @bind-Value="userDto.FullName" Required="true" RequiredError="@loc["Validation_Required"]" />
+                        <MudTextField T="string" Label="@loc["Account_Full_Name"]" @bind-Value="userDto.FullName" Required="true" RequiredError="@loc["Validation_Required"]" />
                     </MudPaper>
                     <MudPaper Class="pa-4 mt-4">
-                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">@loc["Button_Save"]</MudButton>
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">@loc["X_Save"]</MudButton>
                     </MudPaper>
                 </MudItem>
             </MudGrid>

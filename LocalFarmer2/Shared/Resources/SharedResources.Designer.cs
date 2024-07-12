@@ -88,6 +88,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Full name.
+        /// </summary>
+        internal static string Account_Full_Name {
+            get {
+                return ResourceManager.GetString("Account_Full_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
         internal static string Account_Login {
@@ -192,15 +201,6 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string Button_Open_Photo {
             get {
                 return ResourceManager.GetString("Button_Open_Photo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save.
-        /// </summary>
-        internal static string Button_Save {
-            get {
-                return ResourceManager.GetString("Button_Save", resourceCulture);
             }
         }
         
@@ -381,6 +381,15 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string Farmhouse_Phone {
             get {
                 return ResourceManager.GetString("Farmhouse_Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Farmhouse photo.
+        /// </summary>
+        internal static string Farmhouse_Photo {
+            get {
+                return ResourceManager.GetString("Farmhouse_Photo", resourceCulture);
             }
         }
         

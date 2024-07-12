@@ -339,7 +339,10 @@
   <data name="Button_Open_Photo" xml:space="preserve">
     <value>Open photo</value>
   </data>
-  <data name="Button_Save" xml:space="preserve">
-    <value>Save</value>
+  <data name="Account_Full_Name" xml:space="preserve">
+    <value>Full name</value>
+  </data>
+  <data name="Farmhouse_Photo" xml:space="preserve">
+    <value>Farmhouse photo</value>
   </data>
 </root>

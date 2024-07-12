@@ -14,25 +14,25 @@
         <DataAnnotationsValidator />
         <MudGrid>
             <MudItem xs="12">
-                <MudText Class="d-flex justify-center" Typo="Typo.h6">Add farmhouse</MudText>
+                <MudText Class="d-flex justify-center" Typo="Typo.h6">@loc["Farmhouse_Add_Farmhouse"]</MudText>
                 <MudPaper Class="pa-4">
-                    <MudTextField T="string" Label="Farmhouse name" @bind-Value="farmhouseDto.Name" @ref="farmhouseNameField" Required="true" RequiredError="Farmhouse name is required!" />
+                        <MudTextField T="string" Label="@loc["X_Name"]" @bind-Value="farmhouseDto.Name" @ref="farmhouseNameField" Required="true" RequiredError="@loc["Validation_Required"]" />
                     <MudTextField T="string" Label="@loc["X_Description"]" @bind-Value="farmhouseDto.Description" />
-                    <MudTextField T="string" Label="Address" @bind-Value="farmhouseDto.Address" />
-                    <MudTextField T="string" Label="Phone" @bind-Value="farmhouseDto.Phone" />
+                    <MudTextField T="string" Label="@loc["Farmhouse_Address"]" @bind-Value="farmhouseDto.Address" />
+                    <MudTextField T="string" Label="@loc["Farmhouse_Phone"]" @bind-Value="farmhouseDto.Phone" />
                     <MudTextField T="string" Label="Email" @bind-Value="farmhouseDto.Email" />
-                    <MudSelect T="string" Label="Payment methods" MultiSelection="true" SelectAll="true" @ref="paymentMethodsField" Required="true" @bind-Value="@farmhouseDto.PaymentMethods" @bind-SelectedValues="SelectedPayment">
+                    <MudSelect T="string" Label="@loc["Farmhouse_Payment_Methods"]" MultiSelection="true" SelectAll="true" @ref="paymentMethodsField" Required="true" @bind-Value="@farmhouseDto.PaymentMethods" @bind-SelectedValues="SelectedPayment">
                         @foreach (var method in PaymentMethodInfo.PaymentMethods)
                         {
                             <MudSelectItem T="string" Value="@method">@method</MudSelectItem>
                         }
                     </MudSelect>
-                    <EditFile Name="Photo farmhouse" Model="@farmhouseDto" IsOpenPhoto=false />
-                    <MudTextField Disabled Id="latitude_input" Label="Latitude" @bind-Value="farmhouseDto.Latitude" @ref="latitudeField" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
-                    <MudTextField Disabled Id="longitude_input" Label="Longitude" @bind-Value="farmhouseDto.Longitude" @ref="longitudeField" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
+                    <EditFile Name="@loc["Farmhouse_Photo"]" Model="@farmhouseDto" IsOpenPhoto=false />
+                    <MudTextField Disabled Id="latitude_input" Label="@loc["Farmhouse_Latitude"]" @bind-Value="farmhouseDto.Latitude" @ref="latitudeField" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
+                    <MudTextField Disabled Id="longitude_input" Label="@loc["Farmhouse_Longitude"]" @bind-Value="farmhouseDto.Longitude" @ref="longitudeField" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
                 </MudPaper>
                 <MudPaper Class="pa-4 mt-4">
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">@loc["X_Save"]</MudButton>
                 </MudPaper>
             </MudItem>
         </MudGrid>
