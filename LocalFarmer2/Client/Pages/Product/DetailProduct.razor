@@ -8,18 +8,29 @@
 <h2> Może zrobić dla produkty farmhouse jako tabele lub jako zakładki np 4 kolumny - czyli 4 CARD i w kazdej mały opis ze zdjęciem i dostępny przełącznik od widoku</h2>
 <h2>@product.Name - @product.Id</h2>
 
-<p> For image https://mudblazor.com/components/collapse#simple-usage </p>
-
 @if (product.ImageData != null && !string.IsNullOrEmpty(product.ImageMimeType))
 {
-    <img src="@($"data:{product.ImageMimeType};base64,{Convert.ToBase64String(product.ImageData)}")" alt="Product Image" />
+    <MudPaper Class="pa-4">
+        <MudStack Spacing="2">
+            <MudButton OnClick="OnExpandCollapseClick">@(_expanded ? @loc["Button_Hide_Photo"] : @loc["Button_Show_Photo"])</MudButton>
+            <MudDivider />
+            <MudCollapse Expanded="_expanded">
+                <img src="@($"data:{product.ImageMimeType};base64,{Convert.ToBase64String(product.ImageData)}")" alt="Product Image" />
+            </MudCollapse>
+        </MudStack>
+    </MudPaper>
 }
 
 @code {
     [Parameter]
     public int Id { get; set; }
-
+    private bool _expanded = false;
     Product product = new Product();
+
+    private void OnExpandCollapseClick()
+    {
+        _expanded = !_expanded;
+    }
 
     protected override async Task OnParametersSetAsync()
     {

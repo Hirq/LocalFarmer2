@@ -345,4 +345,10 @@
   <data name="Farmhouse_Photo" xml:space="preserve">
     <value>Zdjęcie gospodarstwa</value>
   </data>
+  <data name="Button_Show_Photo" xml:space="preserve">
+    <value>Pokaż zdjęcie</value>
+  </data>
+  <data name="Button_Hide_Photo" xml:space="preserve">
+    <value>Ukryj zdjęcie</value>
+  </data>
 </root>

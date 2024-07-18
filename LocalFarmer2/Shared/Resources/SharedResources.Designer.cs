@@ -196,11 +196,29 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hide photo.
+        /// </summary>
+        internal static string Button_Hide_Photo {
+            get {
+                return ResourceManager.GetString("Button_Hide_Photo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open photo.
         /// </summary>
         internal static string Button_Open_Photo {
             get {
                 return ResourceManager.GetString("Button_Open_Photo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show photo.
+        /// </summary>
+        internal static string Button_Show_Photo {
+            get {
+                return ResourceManager.GetString("Button_Show_Photo", resourceCulture);
             }
         }
         

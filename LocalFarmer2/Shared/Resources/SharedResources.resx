@@ -345,4 +345,10 @@
   <data name="Farmhouse_Photo" xml:space="preserve">
     <value>Farmhouse photo</value>
   </data>
+  <data name="Button_Show_Photo" xml:space="preserve">
+    <value>Show photo</value>
+  </data>
+  <data name="Button_Hide_Photo" xml:space="preserve">
+    <value>Hide photo</value>
+  </data>
 </root>
