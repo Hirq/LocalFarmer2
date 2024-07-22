@@ -351,4 +351,10 @@
   <data name="Button_Hide_Photo" xml:space="preserve">
     <value>Ukryj zdjęcie</value>
   </data>
+  <data name="Button_Basic_Info" xml:space="preserve">
+    <value>Podstawowe informacje</value>
+  </data>
+  <data name="Button_Prize_Info" xml:space="preserve">
+    <value>Cenowe informacje</value>
+  </data>
 </root>

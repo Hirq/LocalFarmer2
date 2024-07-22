@@ -8,34 +8,46 @@
 <h2> Może zrobić dla produkty farmhouse jako tabele lub jako zakładki np 4 kolumny - czyli 4 CARD i w kazdej mały opis ze zdjęciem i dostępny przełącznik od widoku</h2>
 <h2>@product.Name - @product.Id</h2>
 
-<div class="d-flex flex-grow-1 gap-4">
-    <div class="flex-none d-flex fw-bolder py-1"> @loc["X_Name"] </div>
-    <div class="flex-initial d-flex py-1"> @product.Name </div>
-</div>
-<div class="d-flex flex-grow-1 gap-4">
-    <div class="flex-none d-flex fw-bolder py-1"> @loc["X_Description"] </div>
-    <div class="flex-initial d-flex py-1"> @product.Description </div>
-</div>
-<div class="d-flex flex-grow-1 gap-4">
-    <div class="flex-none d-flex fw-bolder py-1"> @loc["Product_Minimal_Amount"] </div>
-    <div class="flex-initial d-flex py-1"> @product.CountMinOne </div>
-</div>
-<div class="d-flex flex-grow-1 gap-4">
-    <div class="flex-none d-flex fw-bolder py-1"> @loc["Product_Prize_One"] </div>
-    <div class="flex-initial d-flex py-1"> @product.PrizeOne </div>
-</div>
-<div class="d-flex flex-grow-1 gap-4">
-    <div class="flex-none d-flex fw-bolder py-1"> @loc["Product_Total_Quantity"] </div>
-    <div class="flex-initial d-flex py-1"> @product.CountAll </div>
-</div>
+<MudPaper Class="pa-4">
+    <MudStack Spacing="2">
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapsePrimary">@(_expandedPrimary ? @loc["Button_Basic_Info"] : @loc["Button_Basic_Info"])</MudButton>
+        <MudDivider />
+        <MudCollapse Expanded="_expandedPrimary">
+            <div class="d-flex flex-grow-1 gap-4">
+                <div class="flex-none d-flex fw-bolder py-1"> @loc["X_Name"] </div>
+                <div class="flex-initial d-flex py-1"> @product.Name </div>
+            </div>
+            <div class="d-flex flex-grow-1 gap-4">
+                <div class="flex-none d-flex fw-bolder py-1"> @loc["X_Description"] </div>
+                <div class="flex-initial d-flex py-1"> @product.Description </div>
+            </div>
+        </MudCollapse>
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapsePrice">@(_expandedPrice ? @loc["Button_Prize_Info"] : @loc["Button_Prize_Info"])</MudButton>
+        <MudDivider />
+        <MudCollapse Expanded="_expandedPrice">
+            <div class="d-flex flex-grow-1 gap-4">
+                <div class="flex-none d-flex fw-bolder py-1"> @loc["Product_Minimal_Amount"] </div>
+                <div class="flex-initial d-flex py-1"> @product.CountMinOne </div>
+            </div>
+            <div class="d-flex flex-grow-1 gap-4">
+                <div class="flex-none d-flex fw-bolder py-1"> @loc["Product_Prize_One"] </div>
+                <div class="flex-initial d-flex py-1"> @product.PrizeOne </div>
+            </div>
+            <div class="d-flex flex-grow-1 gap-4">
+                <div class="flex-none d-flex fw-bolder py-1"> @loc["Product_Total_Quantity"] </div>
+                <div class="flex-initial d-flex py-1"> @product.CountAll </div>
+            </div>
+        </MudCollapse>
+    </MudStack>
+</MudPaper>
 
 @if (product.ImageData != null && !string.IsNullOrEmpty(product.ImageMimeType))
 {
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-1 mb-1" OnClick="OnExpandCollapsePhoto">@(_expandedPhoto ? @loc["Button_Hide_Photo"] : @loc["Button_Show_Photo"])</MudButton>
     <MudPaper Class="pa-4">
         <MudStack Spacing="2">
-            <MudButton OnClick="OnExpandCollapseClick">@(_expanded ? @loc["Button_Hide_Photo"] : @loc["Button_Show_Photo"])</MudButton>
             <MudDivider />
-            <MudCollapse Expanded="_expanded">
+            <MudCollapse Expanded="_expandedPhoto">
                 <img src="@($"data:{product.ImageMimeType};base64,{Convert.ToBase64String(product.ImageData)}")" alt="Product Image" />
             </MudCollapse>
         </MudStack>
@@ -45,12 +57,24 @@
 @code {
     [Parameter]
     public int Id { get; set; }
-    private bool _expanded = false;
+    private bool _expandedPhoto = false;
+    private bool _expandedPrimary = false;
+    private bool _expandedPrice = false;
     Product product = new Product();
 
-    private void OnExpandCollapseClick()
+    private void OnExpandCollapsePhoto()
     {
-        _expanded = !_expanded;
+        _expandedPhoto = !_expandedPhoto;
+    }
+
+    private void OnExpandCollapsePrimary()
+    {
+        _expandedPrimary = !_expandedPrimary;
+    }
+
+    private void OnExpandCollapsePrice()
+    {
+        _expandedPrice = !_expandedPrice;
     }
 
     protected override async Task OnParametersSetAsync()
