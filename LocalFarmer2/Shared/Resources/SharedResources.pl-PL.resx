@@ -357,4 +357,10 @@
   <data name="Button_Prize_Info" xml:space="preserve">
     <value>Cenowe informacje</value>
   </data>
+  <data name="Button_Other_Products" xml:space="preserve">
+    <value>Inne produkty</value>
+  </data>
+  <data name="Button_All_Products" xml:space="preserve">
+    <value>Wszystkie produkty</value>
+  </data>
 </root>

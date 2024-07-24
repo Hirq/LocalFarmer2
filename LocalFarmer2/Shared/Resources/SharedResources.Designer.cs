@@ -187,6 +187,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All products.
+        /// </summary>
+        internal static string Button_All_Products {
+            get {
+                return ResourceManager.GetString("Button_All_Products", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Basic information.
         /// </summary>
         internal static string Button_Basic_Info {
@@ -219,6 +228,15 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string Button_Open_Photo {
             get {
                 return ResourceManager.GetString("Button_Open_Photo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other products.
+        /// </summary>
+        internal static string Button_Other_Products {
+            get {
+                return ResourceManager.GetString("Button_Other_Products", resourceCulture);
             }
         }
         
