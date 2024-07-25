@@ -1,4 +1,6 @@
-﻿namespace LocalFarmer2.Client.Services
+﻿using System;
+
+namespace LocalFarmer2.Client.Services
 {
     public class ProductService : IProductService
     {
@@ -39,6 +41,20 @@
             return result;
         }
 
+        public async Task<List<Product>> GetRandomProductsFarmhouse(int idFarmhouse, int count)
+        {
+            var result = await _http.GetFromJsonAsync<List<Product>>($"api/Product/ListProductsFarmhouse/{idFarmhouse}");
+            
+            if (result == null)
+            {
+                throw new Exception("Not found products");
+            }
+            
+            Random.Shared.Shuffle(result.ToArray());
+
+            return result;
+        }
+
         public async Task<Product> GetProduct(int id)
         {
             var result = await _http.GetFromJsonAsync<Product>($"api/Product/Product/{id}");
@@ -67,5 +83,6 @@
         {
             await _http.DeleteAsync($"api/Product/DeleteProduct/{idProduct}");
         }
+
     }
 }
