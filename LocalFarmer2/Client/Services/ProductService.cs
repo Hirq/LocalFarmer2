@@ -1,4 +1,5 @@
 ﻿using System;
+using static MudBlazor.CategoryTypes;
 
 namespace LocalFarmer2.Client.Services
 {
@@ -41,7 +42,7 @@ namespace LocalFarmer2.Client.Services
             return result;
         }
 
-        public async Task<List<Product>> GetRandomProductsFarmhouse(int idFarmhouse, int count)
+        public async Task<List<Product>> GetRandomProductsFarmhouse(int idFarmhouse, int withoutProductId, int count)
         {
             var result = await _http.GetFromJsonAsync<List<Product>>($"api/Product/ListProductsFarmhouse/{idFarmhouse}");
             
@@ -50,9 +51,12 @@ namespace LocalFarmer2.Client.Services
                 throw new Exception("Not found products");
             }
             
-            Random.Shared.Shuffle(result.ToArray());
+            Random rng = new Random();
+            var shuffledcards = result.Where(x => x.Id != withoutProductId).OrderBy(_ => rng.Next()).ToList();
 
-            return result;
+            var resultCount = shuffledcards.Take(count);
+
+            return resultCount.ToList();
         }
 
         public async Task<Product> GetProduct(int id)

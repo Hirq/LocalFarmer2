@@ -66,50 +66,20 @@
         <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapseOtherProducts">@(_expandedOtherProducts ? @loc["Button_Other_Products"] : @loc["Button_Other_Products"])</MudButton>
         <MudCollapse Expanded="_expandedOtherProducts">
             <MudGrid>
-                <MudItem xs="3">
-                    <MudCard Outlined="true">
-                        <MudCardContent>
-                            <MudText>Story of the day</MudText>
-                            <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
-                        </MudCardContent>
-                        <MudCardActions>
-                            <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
-                        </MudCardActions>
-                    </MudCard>
-                </MudItem>
-                <MudItem xs="3">
-                    <MudCard Outlined="true">
-                        <MudCardContent>
-                            <MudText>Story of the day</MudText>
-                            <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
-                        </MudCardContent>
-                        <MudCardActions>
-                            <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
-                        </MudCardActions>
-                    </MudCard>
-                </MudItem>
-                <MudItem xs="3">
-                    <MudCard Outlined="true">
-                        <MudCardContent>
-                            <MudText>Story of the day</MudText>
-                            <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
-                        </MudCardContent>
-                        <MudCardActions>
-                            <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
-                        </MudCardActions>
-                    </MudCard>
-                </MudItem>
-                <MudItem xs="3">
-                    <MudCard Outlined="true">
-                        <MudCardContent>
-                            <MudText>Story of the day</MudText>
-                            <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
-                        </MudCardContent>
-                        <MudCardActions>
-                            <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
-                        </MudCardActions>
-                    </MudCard>
-                </MudItem>
+                @foreach(var card in productsCards)
+                {
+                    <MudItem xs="3">
+                        <MudCard Outlined="true">
+                            <MudCardContent>
+                                <MudText>@card.Name</MudText>
+                                <MudText Typo="Typo.body2">@card.Description</MudText>
+                            </MudCardContent>
+                            <MudCardActions>
+                                <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="() => ShowProductsFromCard(card.Id)">@loc["X_Details"]</MudButton>
+                            </MudCardActions>
+                        </MudCard>
+                    </MudItem>
+                }
                 <MudItem xs="12">
                     <MudButton Class="product-details-button" Variant="Variant.Filled" Color="Color.Primary" OnClick="ShowAllProducts">@loc["Button_All_Products"]</MudButton>
                 </MudItem>
@@ -120,7 +90,7 @@
 
 
 
-@code {
+    @code {
     [Parameter]
     public int Id { get; set; }
     private bool _expandedPhoto = false;
@@ -128,6 +98,7 @@
     private bool _expandedPrice = false;
     private bool _expandedOtherProducts = false;
     Product product = new Product();
+    List<Product> productsCards = new List<Product>();
 
     private void OnExpandCollapsePhoto()
     {
@@ -158,12 +129,23 @@
     {
         NavigationManager.NavigateTo($"farmhouse/{product.IdFarmhouse}");
     }
+    
+    private void ShowProductsFromCard(int id)
+    {
+        NavigationManager.NavigateTo($"product/{id}");
+    }
 
     protected override async Task OnParametersSetAsync()
     {
         if (Id != 0)
         {
             product = await ProductService.GetProduct(Id);
+            productsCards = await ProductService.GetRandomProductsFarmhouse(product.IdFarmhouse, Id, 4);
+            Console.WriteLine(productsCards.Count);
+            foreach (var pro in productsCards)
+            {
+                Console.WriteLine(pro.Name);
+            }
         }
     }
 }
