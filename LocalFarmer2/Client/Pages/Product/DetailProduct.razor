@@ -63,7 +63,7 @@
                 <img src="@($"data:{product.ImageMimeType};base64,{Convert.ToBase64String(product.ImageData)}")" alt="Product Image" />
             </MudCollapse>
         }
-        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapseOtherProducts">@(_expandedOtherProducts ? @loc["Button_Other_Products"] : @loc["Button_Other_Products"])</MudButton>
+        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" Disabled=!isOtherProducts OnClick="OnExpandCollapseOtherProducts">@(_expandedOtherProducts ? @loc["Button_Other_Products"] : @loc["Button_Other_Products"])</MudButton>
         <MudCollapse Expanded="_expandedOtherProducts">
             <MudGrid>
                 @foreach(var card in productsCards)
@@ -88,8 +88,6 @@
     </MudStack>
 </MudPaper>
 
-
-
     @code {
     [Parameter]
     public int Id { get; set; }
@@ -97,6 +95,7 @@
     private bool _expandedPrimary = false;
     private bool _expandedPrice = false;
     private bool _expandedOtherProducts = false;
+    private bool isOtherProducts = false;
     Product product = new Product();
     List<Product> productsCards = new List<Product>();
 
@@ -129,7 +128,7 @@
     {
         NavigationManager.NavigateTo($"farmhouse/{product.IdFarmhouse}");
     }
-    
+
     private void ShowProductsFromCard(int id)
     {
         NavigationManager.NavigateTo($"product/{id}");
@@ -141,10 +140,9 @@
         {
             product = await ProductService.GetProduct(Id);
             productsCards = await ProductService.GetRandomProductsFarmhouse(product.IdFarmhouse, Id, 4);
-            Console.WriteLine(productsCards.Count);
-            foreach (var pro in productsCards)
+            if (productsCards.Count() > 0)
             {
-                Console.WriteLine(pro.Name);
+                isOtherProducts = true;
             }
         }
     }
