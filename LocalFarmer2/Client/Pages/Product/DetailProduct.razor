@@ -33,7 +33,11 @@
                 </MudItem>
             </MudGrid>
         </MudCollapse>
-        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapsePrice">@(_expandedPrice ? @loc["Button_Prize_Info"] : @loc["Button_Prize_Info"])</MudButton>
+        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapsePrice" EndIcon="@(_expandedPrice ? Icons.Material.Filled.ArrowDropUp : Icons.Material.Filled.ArrowDropDown)">
+            @(_expandedPrice 
+            ?  @loc["Button_Prize_Info"] 
+            : @loc["Button_Prize_Info"])
+        </MudButton>
         <MudCollapse Expanded="_expandedPrice">
             <MudGrid>
                 <MudItem xs="1">
