@@ -5,6 +5,7 @@
 <PageTitle>Product</PageTitle>
 
 <h2> A tu dla tego widoku zrobić jak na zdjęciu z pulpitu - rozwijane zakładki z informacjami + 2 kolumny NAME Z DB | Wartość </h2>
+<h2> Czy zrobić wszystkie card o takich samych wymiarach? chyba tak </h2>
 
 <MudPaper Class="pa-4">
     <MudStack Spacing="2">
@@ -76,7 +77,7 @@
                         <MudCard Outlined="true">
                             <MudCardContent>
                                 <MudText>@card.Name</MudText>
-                                <MudText Typo="Typo.body2">@card.Description</MudText>
+                                    <MudText Typo="Typo.body2">@(card.Description.Length > 100 ? card.Description.Substring(0, 95) + "..." : card.Description)</MudText>
                             </MudCardContent>
                             <MudCardActions>
                                 <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="() => ShowProductsFromCard(card.Id)">@loc["X_Details"]</MudButton>
@@ -95,9 +96,9 @@
     @code {
     [Parameter]
     public int Id { get; set; }
-    private bool _expandedPhoto = false;
-    private bool _expandedPrimary = false;
+    private bool _expandedPrimary = true;
     private bool _expandedPrice = false;
+    private bool _expandedPhoto = false;
     private bool _expandedOtherProducts = false;
     private bool isOtherProducts = false;
     Product product = new Product();
