@@ -54,30 +54,6 @@
                 </MudItem>
             </MudGrid>
         </MudCollapse>
-        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapsePrice" EndIcon="@(_expandedPrice ? Icons.Material.Filled.ArrowDropUp : Icons.Material.Filled.ArrowDropDown)">
-            @(_expandedPrice
-                ? @loc["Button_Prize_Info"]
-                : @loc["Button_Prize_Info"])
-        </MudButton>
-        <MudCollapse Expanded="_expandedPrice">
-            <MudGrid>
-                <MudItem xs="1">
-                    <div class="fw-bolder"> @loc["Product_Minimal_Amount"] </div>
-                </MudItem>
-                <MudItem xs="11">
-                </MudItem>
-                <MudItem xs="1">
-                    <div class="fw-bolder"> @loc["Product_Prize_One"] </div>
-                </MudItem>
-                <MudItem xs="11">
-                </MudItem>
-                <MudItem xs="1">
-                    <div class="fw-bolder"> @loc["Product_Total_Quantity"] </div>
-                </MudItem>
-                <MudItem xs="11">
-                </MudItem>
-            </MudGrid>
-        </MudCollapse>
         @if (farmhouse.ImageData != null && !string.IsNullOrEmpty(farmhouse.ImageMimeType))
         {
             <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapsePhoto">@(_expandedPhoto ? @loc["Button_Hide_Photo"] : @loc["Button_Show_Photo"])</MudButton>
