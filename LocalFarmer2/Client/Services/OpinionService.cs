@@ -85,11 +85,25 @@
 
             if (opinions == null)
             {
-                throw new Exception("TODO");
+                throw new Exception("Not found opinions");
             }
 
             return opinions;
         }
+
+        public async Task<List<Opinion>> GetRandomOpinionsForFarmhouse(int idFarmhouse, int count)
+        {
+            Random rng = new Random();
+
+            var opinions = await AllOpinionsForFarmhouse(idFarmhouse);
+
+            var shuffledOpinion = opinions.OrderBy(_ => rng.Next()).ToList();
+
+            var chosenOpinions = shuffledOpinion.Take(count);
+
+            return chosenOpinions.ToList();
+        }
+
         public async Task<double?> AverageForFarmhouse(int idFarmhouse)
         {
             var average = await _httpClient.GetFromJsonAsync<double?>($"api/Opinion/AverageForFarmhouse/{idFarmhouse}");

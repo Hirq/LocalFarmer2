@@ -363,4 +363,7 @@
   <data name="Button_All_Products" xml:space="preserve">
     <value>All products</value>
   </data>
+  <data name="X_Product" xml:space="preserve">
+    <value>Product</value>
+  </data>
 </root>

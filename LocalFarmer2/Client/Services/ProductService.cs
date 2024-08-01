@@ -44,19 +44,15 @@ namespace LocalFarmer2.Client.Services
 
         public async Task<List<Product>> GetRandomProductsFarmhouse(int idFarmhouse, int withoutProductId, int count)
         {
-            var result = await _http.GetFromJsonAsync<List<Product>>($"api/Product/ListProductsFarmhouse/{idFarmhouse}");
-            
-            if (result == null)
-            {
-                throw new Exception("Not found products");
-            }
-            
             Random rng = new Random();
-            var shuffledcards = result.Where(x => x.Id != withoutProductId).OrderBy(_ => rng.Next()).ToList();
 
-            var resultCount = shuffledcards.Take(count);
+            var products = await GetProductsFarmhouse(idFarmhouse);
 
-            return resultCount.ToList();
+            var shuffledProducts = products.Where(x => x.Id != withoutProductId).OrderBy(_ => rng.Next()).ToList();
+
+            var chosenProducts = shuffledProducts.Take(count);
+
+            return chosenProducts.ToList();
         }
 
         public async Task<Product> GetProduct(int id)

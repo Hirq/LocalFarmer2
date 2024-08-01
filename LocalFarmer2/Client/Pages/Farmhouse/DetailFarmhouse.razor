@@ -4,36 +4,120 @@
 @inject IOpinionService OpinionService
 @inject IJSRuntime JSRuntime
 @inject UtilsService UtilsService
+@inject NavigationManager NavigationManager
 @implements IAsyncDisposable
-<PageTitle>Farmhouse</PageTitle>
 
-<h2>Name: @farmhouse.Name</h2>
-<h2>Id: @farmhouse.Id</h2>
-@if (farmhouse.ImageData != null && !string.IsNullOrEmpty(farmhouse.ImageMimeType))
-{
-    <img src="@($"data:{farmhouse.ImageMimeType};base64,{Convert.ToBase64String(farmhouse.ImageData)}")" alt="Farmhouse Image" />
-}
-@if (listOpinion.Count > 0)
-{
-    <h2>Average opinion: @average</h2>
-    <h2>Opinion about this farmhouse</h2>
-    foreach (var opinion in listOpinion)
-    {
-        <div>
-            <p>Rating: @opinion.Rating</p>
-            <p>@opinion.Comment </p>
-            <br />
+<PageTitle>@loc["X_Farmhouse"]</PageTitle>
+
+<MudPaper Class="pa-4">
+    <MudStack Spacing="2">
+        <div class="d-flex justify-space-between">
+            <div>
+                <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapsePrimary">@(_expandedPrimary ? @loc["Button_Basic_Info"] : @loc["Button_Basic_Info"])</MudButton>
+            </div>
+            <div>
+                <MudButton Class="product-details-button" Variant="Variant.Filled" Color="Color.Primary" OnClick="ShowAllProducts">@loc["Button_All_Products"]</MudButton>
+            </div>
         </div>
-    }
-}
-<MudButton OnClick='() => UtilsService.OpenDialogSendMessage(isContactToAdmin: false, emailTo: farmhouse.Email)' Variant="Variant.Filled" Color="Color.Info">@loc["Farmhouse_Send_Message"]</MudButton>
 
-@* Może ilość ocen też dodać gdzieś? i jakieś 5 ostatnich ocen? lub jakis random  *@
-<h2>Latitude: @farmhouse.Latitude </h2>
-<h2>Longitude: @farmhouse.Longitude</h2>
-<h2>Tip: Network => disable cache set true</h2>
-<h2>MAPA</h2>
-<div id="map" style="height:70vh; width: 100%"></div>
+        <MudCollapse Expanded="_expandedPrimary">
+            <MudGrid>
+                <MudItem xs="1">
+                        <div class="fw-bolder"> @loc["X_Name"] </div>
+                </MudItem>
+                <MudItem xs="11">
+                    @farmhouse.Name
+                </MudItem>
+                <MudItem xs="1">
+                    <div class="fw-bolder"> @loc["X_Description"] </div>
+                </MudItem>
+                <MudItem xs="11">
+                    @farmhouse.Description
+                </MudItem>
+                <MudItem xs="1">
+                    <div class="fw-bolder"> @loc["Farmhouse_Address"] </div>
+                </MudItem>
+                <MudItem xs="11">
+                    @farmhouse.Address
+                </MudItem>
+                <MudItem xs="1">
+                    <div class="fw-bolder"> @loc["Farmhouse_Phone"] </div>
+                </MudItem>
+                <MudItem xs="11">
+                    @farmhouse.Phone
+                </MudItem>
+                <MudItem xs="1">
+                    <div class="fw-bolder"> Email </div>
+                </MudItem>
+                <MudItem xs="11">
+                    @farmhouse.Email
+                </MudItem>
+            </MudGrid>
+        </MudCollapse>
+        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapsePrice" EndIcon="@(_expandedPrice ? Icons.Material.Filled.ArrowDropUp : Icons.Material.Filled.ArrowDropDown)">
+            @(_expandedPrice
+                ? @loc["Button_Prize_Info"]
+                : @loc["Button_Prize_Info"])
+        </MudButton>
+        <MudCollapse Expanded="_expandedPrice">
+            <MudGrid>
+                <MudItem xs="1">
+                    <div class="fw-bolder"> @loc["Product_Minimal_Amount"] </div>
+                </MudItem>
+                <MudItem xs="11">
+                </MudItem>
+                <MudItem xs="1">
+                    <div class="fw-bolder"> @loc["Product_Prize_One"] </div>
+                </MudItem>
+                <MudItem xs="11">
+                </MudItem>
+                <MudItem xs="1">
+                    <div class="fw-bolder"> @loc["Product_Total_Quantity"] </div>
+                </MudItem>
+                <MudItem xs="11">
+                </MudItem>
+            </MudGrid>
+        </MudCollapse>
+        @if (farmhouse.ImageData != null && !string.IsNullOrEmpty(farmhouse.ImageMimeType))
+        {
+            <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapsePhoto">@(_expandedPhoto ? @loc["Button_Hide_Photo"] : @loc["Button_Show_Photo"])</MudButton>
+            <MudCollapse Expanded="_expandedPhoto">
+                <img src="@($"data:{farmhouse.ImageMimeType};base64,{Convert.ToBase64String(farmhouse.ImageData)}")" alt="Product Image" />
+            </MudCollapse>
+        }
+        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" Disabled=!isHaveOpinion OnClick="OnExpandCollapseOpinions">@(_expandedOpinions ? @loc["X_Opinions"] : @loc["X_Opinions"])</MudButton>
+        <MudCollapse Expanded="_expandedOpinions">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudText>Średnia ocen: @average</MudText>
+                </MudItem>
+                @foreach (var card in listOpinion)
+                {
+                    <MudItem xs="2">
+                        <MudCard Outlined="true">
+                            <MudCardContent>
+                                <MudText>@card.Rating</MudText>
+                                <MudText Typo="Typo.body2">@(card.Comment.Length > 100 ? card.Comment.Substring(0, 95) + "..." : card.Comment)</MudText>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                }
+                <MudItem xs="12">
+                    <MudButton Class="product-details-button" Variant="Variant.Filled" Color="Color.Primary" OnClick="ShowAllProducts">Wszystkie opinie - @listOpinion.Count()</MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudCollapse>
+        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" Disabled=!isHaveOpinion OnClick='() => UtilsService.OpenDialogSendMessage(isContactToAdmin: false, emailTo: farmhouse.Email)'>@loc["Farmhouse_Send_Message"]</MudButton>
+        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapseMaps">@(_expandedMap ? @loc["Dashboard_Map"] : @loc["Dashboard_Map"])</MudButton>
+        <MudCollapse Expanded="_expandedMap">
+            <h2>Latitude: @farmhouse.Latitude </h2>
+            <h2>Longitude: @farmhouse.Longitude</h2>
+            <h2>Tip: Network => disable cache set true</h2>
+            <div id="map" style="height:70vh; width: 100%"></div>
+        </MudCollapse>
+    </MudStack>
+</MudPaper>
+
 @code {
     [Parameter]
     public int Id { get; set; }
@@ -46,6 +130,44 @@
 
     Farmhouse farmhouse = new Farmhouse();
 
+    private bool _expandedPrimary = true;
+    private bool _expandedPrice = false;
+    private bool _expandedPhoto = false;
+    private bool _expandedOpinions = false;
+    private bool _expandedMap = true;
+    private bool isHaveOpinion = false;
+
+    private void OnExpandCollapsePhoto()
+    {
+        _expandedPhoto = !_expandedPhoto;
+    }
+
+    private void OnExpandCollapsePrimary()
+    {
+        _expandedPrimary = !_expandedPrimary;
+    }
+
+    private void OnExpandCollapsePrice()
+    {
+        _expandedPrice = !_expandedPrice;
+    }
+
+    private void OnExpandCollapseOpinions()
+    {
+        _expandedOpinions = !_expandedOpinions;
+    }
+
+    private void OnExpandCollapseMaps()
+    {
+        _expandedMap = !_expandedMap;
+    }
+
+    private void ShowAllProducts()
+    {
+        NavigationManager.NavigateTo($"productsFarmhouse/{Id}");
+    }
+
+
     protected override async Task OnInitializedAsync()
     {
         farmhouse = await FarmhouseService.GetFarmhouse(Id);
@@ -53,6 +175,8 @@
         if (listOpinion.Count > 0)
         {
             average = await OpinionService.AverageForFarmhouse(Id);
+            isHaveOpinion = true;
+            listOpinion = await OpinionService.GetRandomOpinionsForFarmhouse(Id, 6);
         }
     }
 
