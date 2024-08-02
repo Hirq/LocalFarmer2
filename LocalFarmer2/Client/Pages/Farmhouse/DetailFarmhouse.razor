@@ -65,9 +65,9 @@
         <MudCollapse Expanded="_expandedOpinions">
             <MudGrid>
                 <MudItem xs="12">
-                    <MudText>Średnia ocen: @average</MudText>
+                    <MudText>Średnia ocen: @(average?.ToString().Length >= 4 ? average.ToString().Substring(0,4) : average.ToString())</MudText>
                 </MudItem>
-                @foreach (var card in listOpinion)
+                @foreach (var card in listOpinionSelected)
                 {
                     <MudItem xs="2">
                         <MudCard Outlined="true">
@@ -79,7 +79,8 @@
                     </MudItem>
                 }
                 <MudItem xs="12">
-                    <MudButton Class="product-details-button" Variant="Variant.Filled" Color="Color.Primary" OnClick="ShowAllProducts">Wszystkie opinie - @listOpinion.Count()</MudButton>
+                    <MudButton Class="product-details-button" Variant="Variant.Filled" Color="Color.Primary"
+                               OnClick='() => UtilsService.OpenDialogWithCards("All opinions", listOpinionAll)'>Wszystkie opinie - @listOpinionAll.Count()</MudButton>
                 </MudItem>
             </MudGrid>
         </MudCollapse>
@@ -98,7 +99,8 @@
     [Parameter]
     public int Id { get; set; }
 
-    public List<Opinion> listOpinion = new List<Opinion>();
+    public List<Opinion> listOpinionSelected = new List<Opinion>();
+    public List<Opinion> listOpinionAll = new List<Opinion>();
     public double? average { get; set; }
 
     private IJSObjectReference? module;
@@ -147,12 +149,12 @@
     protected override async Task OnInitializedAsync()
     {
         farmhouse = await FarmhouseService.GetFarmhouse(Id);
-        listOpinion = await OpinionService.AllOpinionsForFarmhouse(Id);
-        if (listOpinion.Count > 0)
+        listOpinionAll = await OpinionService.AllOpinionsForFarmhouse(Id);
+        if (listOpinionAll.Count > 0)
         {
             average = await OpinionService.AverageForFarmhouse(Id);
             isHaveOpinion = true;
-            listOpinion = await OpinionService.GetRandomOpinionsForFarmhouse(Id, 6);
+            listOpinionSelected = await OpinionService.GetRandomOpinionsForFarmhouse(Id, 6);
         }
     }
 

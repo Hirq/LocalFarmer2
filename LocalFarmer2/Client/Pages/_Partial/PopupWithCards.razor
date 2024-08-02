@@ -1,0 +1,30 @@
+﻿@namespace LocalFarmer2.Client.Pages
+<MudDialog>
+    <DialogContent>
+        @foreach(var card in ListOpinion)
+        {
+            <MudCard Class="mb-2" Outlined="true">
+                <MudCardContent>
+                    <MudText>@card.Rating</MudText>
+                     <MudText Typo="Typo.body2">@card.Comment</MudText>
+                </MudCardContent>
+            </MudCard>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">@loc["X_Cancel"]</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public List<LocalFarmer2.Shared.Models.Opinion> ListOpinion { get; set; }
+
+    // [Parameter]
+    // public Action Action { get; set; }
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+    void Cancel() => MudDialog.Cancel();
+}
