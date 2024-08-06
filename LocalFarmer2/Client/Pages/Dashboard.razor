@@ -81,6 +81,13 @@
 Zrobić PLAN działania
 1. Potwierdzenie czy na pewno chcesz usunąć - Moje opinie - jest popup tylko trzeba go użyć
      <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(buttonDeleteTitle, buttonDeleteName, buttonDeleteContent, () => DeleteProduct(context.Id), Color.Error)' />
+
+         private string buttonDeleteTitle = "Delete opinion";
+    private string buttonDeleteName = "Delete";
+    private string buttonDeleteContent = "Are you sure delete this opinoin?";
+
+    powinny byc te zmienne w serwisie i ustalane na poczatku kazdego page
+
 1. Alerty dokończyć
 2. Tłuaczenie robić przy okazji
 3. UI poprawić 

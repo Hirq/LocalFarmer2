@@ -3,6 +3,7 @@
 @inject IMapper Mapper
 @inject IAlertService AlertService
 @inject UserStateService UserStateService
+@inject UtilsService UtilsService
 
 <PageTitle>@loc["Dashboard_My_Opinions"]</PageTitle>
 
@@ -28,6 +29,7 @@
         <MudTd DataLabel="Nr">@context.Comment</MudTd>
         <MudTd DataLabel="Nr">@context.Rating</MudTd>
         <MudTd DataLabel="Edit">
+            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick='() => UtilsService.OpenDialog(buttonDeleteTitle, buttonDeleteName, buttonDeleteContent, () => DeleteOpinion(context.Id), Color.Error)' />
             <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => DeleteOpinion(context.Id)">@loc["X_Delete"]</MudButton>
             <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OpenMessageBoxEditOpinion(context.Id)">@loc["X_Edit"]</MudButton>
             <MudMessageBox @ref="mbox" Title="Edit opinion" CancelText="Cancel">
@@ -52,6 +54,10 @@
 
 
     @code {
+    private string buttonDeleteTitle = "Delete opinion";
+    private string buttonDeleteName = "Delete";
+    private string buttonDeleteContent = "Are you sure delete this opinoin?";
+
     List<Opinion> ListMyOpinionsFarmhouse = new List<Opinion>();
     private string searchString = null;
     private string userId = null;
