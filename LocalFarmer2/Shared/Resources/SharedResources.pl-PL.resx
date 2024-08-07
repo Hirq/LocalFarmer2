@@ -366,4 +366,7 @@
   <data name="X_Product" xml:space="preserve">
     <value>Produkt</value>
   </data>
+  <data name="X_Are_You_Sure" xml:space="preserve">
+    <value>Jesteś pewien, że chcesz</value>
+  </data>
 </root>

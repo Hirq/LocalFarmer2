@@ -22,7 +22,7 @@ namespace LocalFarmer2.Shared.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class SharedResources {
+    internal class SharedResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -651,6 +651,15 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string X_Alerts {
             get {
                 return ResourceManager.GetString("X_Alerts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are yuo sure.
+        /// </summary>
+        internal static string X_Are_You_Sure {
+            get {
+                return ResourceManager.GetString("X_Are_You_Sure", resourceCulture);
             }
         }
         
