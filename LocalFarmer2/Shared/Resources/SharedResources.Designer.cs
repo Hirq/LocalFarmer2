@@ -808,6 +808,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to this.
+        /// </summary>
+        internal static string X_This {
+            get {
+                return ResourceManager.GetString("X_This", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type.
         /// </summary>
         internal static string X_Type {
