@@ -29,14 +29,13 @@
         <MudTd DataLabel="Nr">@context.Comment</MudTd>
         <MudTd DataLabel="Nr">@context.Rating</MudTd>
         <MudTd DataLabel="Edit">
-            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick='() => UtilsService.OpenDialog(buttonDeleteTitle, buttonDeleteName, buttonDeleteContent, () => DeleteOpinion(context.Id), Color.Error)' />
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => DeleteOpinion(context.Id)">@loc["X_Delete"]</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick='() => UtilsService.OpenDialog(buttonDeleteTitle, buttonDeleteName, buttonDeleteContent, () => DeleteOpinion(context.Id), Color.Error)'>@loc["X_Delete"]</MudButton>
             <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OpenMessageBoxEditOpinion(context.Id)">@loc["X_Edit"]</MudButton>
             <MudMessageBox @ref="mbox" Title="Edit opinion" CancelText="Cancel">
                 <MessageContent>
                     <div class="d-flex flex-column align-center">
                         <MudRating @bind-SelectedValue="opinionDto.Rating" />
-                        <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">@loc["Opinion_Your_OpinionYour"]</MudText>
+                        <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">@loc["Opinion_Your_Opinion"]</MudText>
                     </div>
                     <MudTextField T="string" @bind-Value="opinionDto.Comment" Label="@loc["Opinion_Comment"]" Variant="Variant.Outlined" Lines="3" Placeholder="@loc["Opinion_Placeholder"]" />
                 </MessageContent>

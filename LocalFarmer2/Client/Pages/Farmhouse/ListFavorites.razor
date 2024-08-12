@@ -25,7 +25,7 @@
         <MudTd DataLabel="Nr">@context.IdFarmhouse</MudTd>
         <MudTd DataLabel="Nr">@context.Farmhouse.Name</MudTd>
         <MudTd DataLabel="Edit">
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => DeleteFavorite(context.Id)">@loc["X_Delete"]</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="() => DeleteFavorite(context.Id)">@loc["X_Delete"]</MudButton>
             @* <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Medium" OnClick="() => DeleteProduct(context.Id)" /> *@
         </MudTd>
 @*             <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.Id)">Go to detail</MudButton></MudTd>

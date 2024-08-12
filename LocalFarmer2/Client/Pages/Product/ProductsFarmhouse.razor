@@ -4,51 +4,71 @@
 @inject NavigationManager NavigationManager
 
 <PageTitle>Products Farmhouse @farmhouse.Name</PageTitle>
-@farmhouse.Name
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>@loc["X_Description"]</th>
-            <th>CountMinOne</th>
-            <th>PrizeOne</th>
-            <th>CountAll</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var product in farmhouse.Products)
-        {
-            <tr>
-                <th>@product.Name</th>
-                <th>@product.Description</th>
-                <th>@product.CountMinOne</th>
-                <th>@product.PrizeOne</th>
-                <th>@product.CountAll</th>
-                <td>
-                    <button class="btn btn-primary" @onclick="(() => ShowProduct(product.Id))">
-                        <i class="oi oi-pencil"></i>
-                    </button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
 
-@code {
+<MudText Typo="Typo.h4">@loc["X_Farmhouse"]: @farmhouse.Name</MudText>
+<MudTable Items="@ListProducts" SortLabel="Sort By" Hover="true" Filter="new Func<Product,bool>(FilterFunc)" CommitEditTooltip="Commit Edit">
+
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">@loc["X_Products"]</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+
+    <HeaderContent>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Product, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.Name)">@loc["X_Name"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.Description)">@loc["X_Description"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountMinOne)">@loc["Product_Minimal_Amount"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.PrizeOne)">@loc["Product_Prize_One"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountAll)">@loc["Product_Total_Quantity"]</MudTableSortLabel></MudTh>
+        <MudTh>@loc["X_Details"]</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Id">@context.Id</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="@loc["X_Description"]">@context.Description</MudTd>
+        <MudTd DataLabel="Count min one">@context.CountMinOne</MudTd>
+        <MudTd DataLabel="Prize one">@context.PrizeOne</MudTd>
+        <MudTd DataLabel="Count all">@context.CountAll</MudTd>
+        <MudTd DataLabel="Details"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProduct(context.Id)">Go to detail</MudButton></MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
+    </PagerContent>
+</MudTable>
+
+    @code {
     [Parameter]
     public int Id { get; set; }
 
     Farmhouse farmhouse = new Farmhouse();
+    List<Product> ListProducts = new List<Product>();
+    private string searchString = null;
 
     protected override async Task OnInitializedAsync()
     {
-        farmhouse.Products = new List<Product>();
+        // farmhouse.Products = new List<Product>();
         farmhouse = await FarmhouseService.GetFarmhouse(Id);
+        ListProducts = farmhouse.Products.ToList();
     }
 
     void ShowProduct(int id)
     {
         NavigationManager.NavigateTo($"product/{id}");
+    }
+
+    private bool FilterFunc(Product product)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (product.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (product.CountMinOne.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (product.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if ($"{product.PrizeOne} {product.Id}".Contains(searchString))
+            return true;
+        return false;
     }
 }
