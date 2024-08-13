@@ -2,6 +2,7 @@
 @inject IFavoriteFarmhouseService FavoriteFarmhouseService
 @inject IAlertService AlertService
 @inject UserStateService UserStateService
+@inject UtilsService UtilsService
 
 <PageTitle>@loc["Dashboard_Favorites_Farmhouses"]</PageTitle>
 
@@ -25,7 +26,9 @@
         <MudTd DataLabel="Nr">@context.IdFarmhouse</MudTd>
         <MudTd DataLabel="Nr">@context.Farmhouse.Name</MudTd>
         <MudTd DataLabel="Edit">
-            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="() => DeleteFavorite(context.Id)">@loc["X_Delete"]</MudButton>
+            @* <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="() => DeleteFavorite(context.Id)">@loc["X_Delete"]</MudButton> *@
+            <MudButton OnClick='() => UtilsService.OpenDialog(buttonDeleteTitle, buttonDeleteName, buttonDeleteContent, () => DeleteFavorite(context.Id), Color.Error)' Variant="Variant.Filled" Color="Color.Error">Delete</MudButton>
+
             @* <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Medium" OnClick="() => DeleteProduct(context.Id)" /> *@
         </MudTd>
 @*             <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.Id)">Go to detail</MudButton></MudTd>
@@ -79,6 +82,10 @@
     List <FavoriteFarmhouse> ListFavoritesFarmhouse = new List<FavoriteFarmhouse>();
     private string searchString = null;
     private string userId = null;
+
+    private string buttonDeleteTitle = "Delete subscription";
+    private string buttonDeleteName = "Delete";
+    private string buttonDeleteContent = "Are you sure delete this subscription?";
 
     protected override async Task OnInitializedAsync()
     {
