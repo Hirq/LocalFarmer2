@@ -202,7 +202,7 @@ else
             await FarmhouseService.DeleteFarmhouse((int)currentUser.IdFarmhouse);
             UserStateService.CurrentUser.FarmhouseName = null;
             UserStateService.CurrentUser.IdFarmhouse = null;
-            AlertService.SetSuccessAlert($"Deleted farmhouse {farmhouseDto.Name}");
+            AlertService.SetDeleteAlert($"Deleted farmhouse {farmhouseDto.Name}");
             NavigationManager.NavigateTo("/");
         }
     }
