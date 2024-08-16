@@ -27,7 +27,7 @@
         <MudTd DataLabel="Nr">@context.Farmhouse.Name</MudTd>
         <MudTd DataLabel="Edit">
             @* <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="() => DeleteFavorite(context.Id)">@loc["X_Delete"]</MudButton> *@
-            <MudButton OnClick='() => UtilsService.OpenDialog(buttonDeleteTitle, buttonDeleteName, buttonDeleteContent, () => DeleteFavorite(context.Id), Color.Error)' Variant="Variant.Filled" Color="Color.Error">Delete</MudButton>
+            <MudButton OnClick='() => UtilsService.OpenDialog(buttonDeleteTitle, buttonDeleteName, buttonDeleteContent, () => DeleteFavorite(context.Id), Color.Error)' Variant="Variant.Filled" Color="Color.Error">@loc["X_Delete"]</MudButton>
 
             @* <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Medium" OnClick="() => DeleteProduct(context.Id)" /> *@
         </MudTd>
@@ -84,7 +84,7 @@
     private string userId = null;
 
     private string buttonDeleteTitle = "Delete subscription";
-    private string buttonDeleteName = "Delete";
+    private string buttonDeleteName = "Delete - do serwisu z page przenies";
     private string buttonDeleteContent = "Are you sure delete this subscription?";
 
     protected override async Task OnInitializedAsync()
