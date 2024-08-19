@@ -27,7 +27,7 @@
             <MudTd DataLabel="Count all">@context.CountAll</MudTd>
             <MudTd DataLabel="Edit">
                 <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => EditProduct(context.Id)">Edit</MudButton>
-                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(buttonDeleteTitle, buttonDeleteName, buttonDeleteContent, () => DeleteProduct(context.Id), Color.Error)' />
+                @* <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(buttonDeleteTitle, buttonDeleteName, buttonDeleteContent, () => DeleteProduct(context.Id), Color.Error)' /> *@
             </MudTd>
         </RowTemplate>
         <PagerContent>

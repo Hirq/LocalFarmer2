@@ -1,4 +1,5 @@
 ﻿@page "/favoritefarmhouses"
+@using static LocalFarmer2.Client.Services.UtilsService
 @inject IFavoriteFarmhouseService FavoriteFarmhouseService
 @inject IAlertService AlertService
 @inject UserStateService UserStateService
@@ -27,7 +28,7 @@
         <MudTd DataLabel="Nr">@context.Farmhouse.Name</MudTd>
         <MudTd DataLabel="Edit">
             @* <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="() => DeleteFavorite(context.Id)">@loc["X_Delete"]</MudButton> *@
-            <MudButton OnClick='() => UtilsService.OpenDialog(buttonDeleteTitle, buttonDeleteName, buttonDeleteContent, () => DeleteFavorite(context.Id), Color.Error)' Variant="Variant.Filled" Color="Color.Error">@loc["X_Delete"]</MudButton>
+            <MudButton OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteFavorite(context.Id), Color.Error)' Variant="Variant.Filled" Color="Color.Error">@loc["X_Delete"]</MudButton>
 
             @* <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Medium" OnClick="() => DeleteProduct(context.Id)" /> *@
         </MudTd>
@@ -82,15 +83,19 @@
     List <FavoriteFarmhouse> ListFavoritesFarmhouse = new List<FavoriteFarmhouse>();
     private string searchString = null;
     private string userId = null;
-
-    private string buttonDeleteTitle = "Delete subscription";
-    private string buttonDeleteName = "Delete - do serwisu z page przenies";
-    private string buttonDeleteContent = "Are you sure delete this subscription?";
+    public DialogData dialogData = new DialogData();
 
     protected override async Task OnInitializedAsync()
     {
         userId = UserStateService.CurrentUser.IdUser;
         ListFavoritesFarmhouse = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUser(userId);
+
+        dialogData = new DialogData()
+        {
+            Title = loc["X_Search"],
+            ButtonName = loc["X_Delete"],
+            Content = "Are you sure delete this subscription?",
+        };
     }
 
     private async void DeleteFavorite(int idFarmhouse)

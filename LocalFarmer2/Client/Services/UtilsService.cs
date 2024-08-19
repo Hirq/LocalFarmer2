@@ -9,6 +9,12 @@ namespace LocalFarmer2.Client.Services
         private readonly HttpClient _httpClient;
         private readonly IStringLocalizer<SharedResources> _loc;
 
+        public class DialogData
+        {
+            public string Title { get; set; }
+            public string ButtonName { get; set; }
+            public string Content { get; set; }
+        }
 
         public UtilsService(IDialogService dialogService, HttpClient httpClient, IStringLocalizer<SharedResources> loc)
         {
@@ -17,18 +23,18 @@ namespace LocalFarmer2.Client.Services
             _loc = loc;
         }
 
-        public void OpenDialog(string title, string buttonName, string content, Action action, Color buttonColor)
+        public void OpenDialog(DialogData dialogData, Action action, Color buttonColor)
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
             var parameters = new DialogParameters
             {
-                { "ButtonName", buttonName },
-                { "Content", content },
+                { "ButtonName", dialogData.ButtonName },
+                { "Content", dialogData.Content },
                 { "Action", action },
                 { "ColorButton", buttonColor }
             };
 
-            _dialogService.Show<PopupDialog>(title, parameters, options);
+            _dialogService.Show<PopupDialog>(dialogData.Title, parameters, options);
         }    
         
         public void OpenDialogWithCards(string title, List<Opinion> content)

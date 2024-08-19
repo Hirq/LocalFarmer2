@@ -29,7 +29,7 @@
         <MudTd DataLabel="Nr">@context.Comment</MudTd>
         <MudTd DataLabel="Nr">@context.Rating</MudTd>
         <MudTd DataLabel="Edit">
-            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick='() => UtilsService.OpenDialog(buttonDeleteTitle, buttonDeleteName, buttonDeleteContent, () => DeleteOpinion(context.Id), Color.Error)'>@loc["X_Delete"]</MudButton>
+            @* <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick='() => UtilsService.OpenDialog(buttonDeleteTitle, buttonDeleteName, buttonDeleteContent, () => DeleteOpinion(context.Id), Color.Error)'>@loc["X_Delete"]</MudButton> *@
             <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OpenMessageBoxEditOpinion(context.Id)">@loc["X_Edit"]</MudButton>
             <MudMessageBox @ref="mbox" Title="Edit opinion" CancelText="Cancel">
                 <MessageContent>
