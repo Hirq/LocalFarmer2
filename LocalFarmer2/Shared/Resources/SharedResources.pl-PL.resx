@@ -366,10 +366,13 @@
   <data name="X_Product" xml:space="preserve">
     <value>Produkt</value>
   </data>
-  <data name="X_Are_You_Sure" xml:space="preserve">
-    <value>Jesteś pewien, że chcesz</value>
+  <data name="X_Are_You_Sure_Delete_This" xml:space="preserve">
+    <value>Czy na pewno chcesz usunąć</value>
   </data>
-  <data name="X_This" xml:space="preserve">
-    <value>ten</value>
+  <data name="X_Are_You_Sure_Edit_This" xml:space="preserve">
+    <value>Czy na pewno chcesz zedytować</value>
+  </data>
+  <data name="X_Subscription" xml:space="preserve">
+    <value>Subskrypcje</value>
   </data>
 </root>

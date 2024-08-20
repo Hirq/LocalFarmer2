@@ -655,11 +655,20 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are yuo sure.
+        ///   Looks up a localized string similar to Are you sure delete this.
         /// </summary>
-        internal static string X_Are_You_Sure {
+        internal static string X_Are_You_Sure_Delete_This {
             get {
-                return ResourceManager.GetString("X_Are_You_Sure", resourceCulture);
+                return ResourceManager.GetString("X_Are_You_Sure_Delete_This", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure edit this.
+        /// </summary>
+        internal static string X_Are_You_Sure_Edit_This {
+            get {
+                return ResourceManager.GetString("X_Are_You_Sure_Edit_This", resourceCulture);
             }
         }
         
@@ -808,11 +817,11 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to this.
+        ///   Looks up a localized string similar to Subscription.
         /// </summary>
-        internal static string X_This {
+        internal static string X_Subscription {
             get {
-                return ResourceManager.GetString("X_This", resourceCulture);
+                return ResourceManager.GetString("X_Subscription", resourceCulture);
             }
         }
         

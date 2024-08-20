@@ -54,7 +54,7 @@ else
                             <MudButton OnClick="() => UnlockMap()" id="buttonChangeMarker" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Change marker</MudButton>
                         </div>
                         <div>
-                            @* <MudButton OnClick='() => UtilsService.OpenDialog(buttonDeleteTitle, buttonDeleteName, buttonDeleteContent, () => DeleteFarmhouse(), Color.Error)' Variant="Variant.Filled" Color="Color.Error">Delete</MudButton> *@
+                            <MudButton OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteFarmhouse(), Color.Error)' Variant="Variant.Filled" Color="Color.Error">Delete</MudButton>
                         </div>
                     </MudPaper>
                 </MudItem>
@@ -70,10 +70,6 @@ else
     [Parameter]
     public FarmhouseDto farmhouseDto { get; set; }
 
-    private string buttonDeleteTitle = "Delete farmhouse";
-    private string buttonDeleteName = "Delete";
-    private string buttonDeleteContent = "Are you sure delete this farmhouse?";
-
     private IJSObjectReference? module;
     private string? result;
     private string? latitude;
@@ -86,12 +82,19 @@ else
     private MudTextField<string> longitudeField;
     private MudSelect<string> paymentMethodsField;
     public int Id { get; set; }
+    public DialogData dialogData = new DialogData();
 
     public bool initIsOpen;
 
     protected async override Task OnInitializedAsync()
     {
         isUserSignUp = await AccountService.IsUserSignUp();
+        dialogData = new DialogData()
+        {
+            Title = $"{loc["X_Delete"]} {loc["X_Farmhouse"]}",
+            ButtonName = loc["X_Delete"],
+            Content = $"{loc["X_Are_You_Sure_Delete_This"]} {loc["X_Farmhouse"]}",
+        };
 
         if (isUserSignUp)
         {
