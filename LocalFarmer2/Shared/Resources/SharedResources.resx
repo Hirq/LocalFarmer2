@@ -375,4 +375,7 @@
   <data name="X_Subscription" xml:space="preserve">
     <value>Subscription</value>
   </data>
+  <data name="X_Opinion" xml:space="preserve">
+    <value>Opnion</value>
+  </data>
 </root>

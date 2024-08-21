@@ -772,6 +772,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Opnion.
+        /// </summary>
+        internal static string X_Opinion {
+            get {
+                return ResourceManager.GetString("X_Opinion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Opinions.
         /// </summary>
         internal static string X_Opinions {
