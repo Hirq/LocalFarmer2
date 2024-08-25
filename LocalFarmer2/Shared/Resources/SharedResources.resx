@@ -378,4 +378,7 @@
   <data name="X_Opinion" xml:space="preserve">
     <value>Opnion</value>
   </data>
+  <data name="X_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
 </root>

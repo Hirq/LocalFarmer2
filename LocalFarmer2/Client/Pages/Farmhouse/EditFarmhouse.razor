@@ -40,7 +40,7 @@ else
                                 </MudSelect>
                                 <MudTextField T="String" Id="latitude_input" Disabled Label="@loc["Farmhouse_Latitude"]" @bind-Value="farmhouseDto.Latitude" @ref="latitudeField" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
                                 <MudTextField T="String" Id="longitude_input" Disabled Label="@loc["Farmhouse_Longitude"]" @bind-Value="farmhouseDto.Longitude" @ref="longitudeField" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
-                                <MudCheckBox T="Boolean" Checked="farmhouseDto.IsOpen" CheckedChanged="HandleCheckedChanged" Color="Color.Primary" Label="Active" />
+                                <MudCheckBox T="Boolean" Checked="farmhouseDto.IsOpen" CheckedChanged="HandleCheckedChanged" Color="Color.Primary" Label="@loc["X_Active"]" />
                                 <EditFile Name="Photo farmhouse" Model="@farmhouseDto"/>
                             </div>
                             <div>
