@@ -54,6 +54,7 @@ namespace LocalFarmer2.Client.Services
             IsSuccessAlert = true;
             IsDeleteAlert = false;
             Text = text;
+            Task.Delay(2000).ContinueWith(_ => ClearAlert());
         }
 
         public void SetDeleteAlert(string text)
@@ -61,6 +62,15 @@ namespace LocalFarmer2.Client.Services
             IsSuccessAlert = false;
             IsDeleteAlert = true;
             Text = text;
+            OnAlert?.Invoke();
+        }
+
+        public void ClearAlert()
+        {
+            Text = string.Empty;
+            IsSuccessAlert = false;
+            IsDeleteAlert = false;
+            OnAlert?.Invoke(); 
         }
 
         public async Task<List<Alert>> GetAllForUser(string idUser, int? idFarmhouse)

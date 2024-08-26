@@ -36,7 +36,7 @@
         </PagerContent>
     </MudTable>
 
-@code {
+    @code {
     IEnumerable<Product> ListProducts = new List<Product>();
     int idFarmhouse;
     public DialogData dialogData = new DialogData();
@@ -67,7 +67,8 @@
         await ProductService.DeleteProduct(id);
         AlertService.SetDeleteAlert($"Delete product {product.Name}");
         ListProducts = await ProductService.GetProductsFarmhouse(idFarmhouse);
-        StateHasChanged();
         NavigationManager.NavigateTo("/myproducts");
+        AlertService.ClearAlert();
+        StateHasChanged();
     }
 }
