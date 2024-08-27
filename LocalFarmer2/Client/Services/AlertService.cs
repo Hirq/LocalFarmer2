@@ -1,13 +1,12 @@
-﻿
-using LocalFarmer2.Shared.DTOs;
-
-namespace LocalFarmer2.Client.Services
+﻿namespace LocalFarmer2.Client.Services
 {
     public class AlertService : IAlertService
     {
         private bool _isSuccessAlert = false;
         private bool _isDeleteAlert = false;
         private string _text = string.Empty;
+        private readonly HttpClient _httpClient;
+        public event Action OnAlert;
 
         public bool IsSuccessAlert
         {
@@ -38,8 +37,6 @@ namespace LocalFarmer2.Client.Services
                 OnAlert?.Invoke();
             }
         }
-        private readonly HttpClient _httpClient;
-        public event Action OnAlert;
 
 
         public AlertService(HttpClient httpClient)
@@ -54,7 +51,7 @@ namespace LocalFarmer2.Client.Services
             IsSuccessAlert = true;
             IsDeleteAlert = false;
             Text = text;
-            Task.Delay(2000).ContinueWith(_ => ClearAlert());
+            OnAlert?.Invoke();
         }
 
         public void SetDeleteAlert(string text)
@@ -65,13 +62,15 @@ namespace LocalFarmer2.Client.Services
             OnAlert?.Invoke();
         }
 
-        public void ClearAlert()
+        public async Task ClearAlertAfterDelay()
         {
+            await Task.Delay(2000);
             Text = string.Empty;
-            IsSuccessAlert = false;
             IsDeleteAlert = false;
-            OnAlert?.Invoke(); 
+            IsSuccessAlert = false;
+            OnAlert?.Invoke();
         }
+
 
         public async Task<List<Alert>> GetAllForUser(string idUser, int? idFarmhouse)
         {

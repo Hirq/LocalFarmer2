@@ -45,7 +45,6 @@
     {
         idFarmhouse = (int)UserStateService.CurrentUser?.IdFarmhouse;
         ListProducts = await ProductService.GetProductsFarmhouse(idFarmhouse);
-
         dialogData = new DialogData()
         {
             Title = $"{loc["X_Delete"]} {loc["X_Product"]}",
@@ -59,16 +58,13 @@
         NavigationManager.NavigateTo($"editproduct/{id}");
     }
 
-    //TODO: Poprawić wyświetlanei alertów + X zamyka poprawnie, ale po odczekaniu 2,5sec i usunieciu kolejnego nie pojawia sie alert
-
     async void DeleteProduct(int id)
     {
         var product = await ProductService.GetProduct(id);
         await ProductService.DeleteProduct(id);
-        AlertService.SetDeleteAlert($"Delete product {product.Name}");
         ListProducts = await ProductService.GetProductsFarmhouse(idFarmhouse);
-        NavigationManager.NavigateTo("/myproducts");
-        AlertService.ClearAlert();
         StateHasChanged();
+        AlertService.SetDeleteAlert($"Delete product {product.Name}");
+        _ = AlertService.ClearAlertAfterDelay();
     }
 }

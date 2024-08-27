@@ -102,28 +102,9 @@
         _drawerOpen = !_drawerOpen;
     }
 
-    private void CloseAlertSuccess()
-    {
-        AlertService.IsSuccessAlert = false;
-    }
-
-    private void CloseAlertDelete()
-    {
-        AlertService.IsDeleteAlert = false;
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (AlertService.IsSuccessAlert || AlertService.IsDeleteAlert)
-        {
-            AlertService.IsSuccessAlert = false;
-            AlertService.IsDeleteAlert = false;
-            // await JSRuntime.InvokeVoidAsync("closeAlertAfterDelay");
-        }
-    }
-
     protected override async Task OnInitializedAsync()
     {
+        AlertService.OnAlert += OnAlertChanged;
         if (!isDataInitialized)
         {
             if (await AccountService.IsUserSignUp())
@@ -139,5 +120,25 @@
             }
             isDataInitialized = true;
         }
+    }
+
+    private void CloseAlertSuccess()
+    {
+        AlertService.IsSuccessAlert = false;
+    }
+
+    private void CloseAlertDelete()
+    {
+        AlertService.IsDeleteAlert = false;
+    }
+
+    private void OnAlertChanged()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        AlertService.OnAlert -= OnAlertChanged;
     }
 }
