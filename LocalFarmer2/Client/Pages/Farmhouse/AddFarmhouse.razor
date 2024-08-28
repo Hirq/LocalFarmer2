@@ -107,6 +107,7 @@
         UserStateService.CurrentUser.IdFarmhouse = idFarmhouse;
         AlertService.SetSuccessAlert($"Successfully add farmhouse {farmhouseDto.Name}");
         NavigationManager.NavigateTo("/");
+        _ = AlertService.ClearAlertAfterDelay();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

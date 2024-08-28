@@ -200,6 +200,7 @@ else
 
         AlertService.SetSuccessAlert($"Successfully edited farmhouse {farmhouseDto.Name}");
         NavigationManager.NavigateTo("/");
+        _ = AlertService.ClearAlertAfterDelay();
     }
 
     private async void DeleteFarmhouse()
@@ -211,6 +212,7 @@ else
             UserStateService.CurrentUser.IdFarmhouse = null;
             AlertService.SetDeleteAlert($"Deleted farmhouse {farmhouseDto.Name}");
             NavigationManager.NavigateTo("/");
+            _ = AlertService.ClearAlertAfterDelay();
         }
     }
 

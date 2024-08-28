@@ -56,5 +56,6 @@ else
         UserStateService.CurrentUser.FullName = editDto.FullName;
         AlertService.SetSuccessAlert($"You new Fullname is: {editDto.FullName}");
         NavigationManager.NavigateTo("/");
+        _ = AlertService.ClearAlertAfterDelay();
     }
 }

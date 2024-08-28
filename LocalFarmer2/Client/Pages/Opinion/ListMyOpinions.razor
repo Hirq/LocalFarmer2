@@ -82,6 +82,7 @@
             ListMyOpinionsFarmhouse.Remove(opinion);
             StateHasChanged();
             AlertService.SetDeleteAlert($"Deleted opinion about farmhouse {opinion.Farmhouse.Name}");
+            _ = AlertService.ClearAlertAfterDelay();
         }
     }
 
@@ -106,6 +107,7 @@
             opinion.Rating = opinionDto.Rating;
             StateHasChanged();
             AlertService.SetSuccessAlert($"Edit opinion about farmhouse {opinion.Farmhouse.Name}");
+            _ = AlertService.ClearAlertAfterDelay();
         }
     }
 

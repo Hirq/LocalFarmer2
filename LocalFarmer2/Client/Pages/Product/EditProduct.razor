@@ -61,5 +61,6 @@
 
         AlertService.SetSuccessAlert($"Successfully edited product {model.Name}");
         NavigationManager.NavigateTo("/myproducts");
+        _ = AlertService.ClearAlertAfterDelay();
     }
 }

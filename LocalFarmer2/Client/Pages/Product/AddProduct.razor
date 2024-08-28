@@ -50,5 +50,6 @@
 
         AlertService.SetSuccessAlert($"Successfully add product {product.Name}");
         NavigationManager.NavigateTo("/myproducts");
+        _ = AlertService.ClearAlertAfterDelay();
     }
 }

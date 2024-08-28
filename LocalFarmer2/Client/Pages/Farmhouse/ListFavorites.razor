@@ -107,6 +107,7 @@
             ListFavoritesFarmhouse.Remove(deletedFarmhouse);
             StateHasChanged();
             AlertService.SetDeleteAlert($"Deleted subscribe farmhouse {idFarmhouse}");
+            _ = AlertService.ClearAlertAfterDelay();
         }
     }
 

@@ -221,6 +221,7 @@ else
 
             StateHasChanged();
             AlertService.SetSuccessAlert($"Successfully added subscribe {idFarmhouse}");
+            _ = AlertService.ClearAlertAfterDelay();
         }
     }
 
@@ -248,6 +249,7 @@ else
 
             StateHasChanged();
             AlertService.SetSuccessAlert($"Successfully added opinion about {opinion.IdFarmhouse}");
+            _ = AlertService.ClearAlertAfterDelay();
         }
         opinion.Comment = "";
         opinion.Rating = 3;
