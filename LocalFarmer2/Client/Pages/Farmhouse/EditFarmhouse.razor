@@ -169,16 +169,15 @@ else
         };
 
         //TODO: Moze tego IdUser też do ValidationService przerzucić
-
         context.Validate();
         if (ValidateService.ValidateMudTextFields(fieldsToValidate))
         {
             return;
         }    
-        if (ValidateService.IsValidLatitude(farmhouseDto.Latitude) || ValidateService.IsValidLongitude(farmhouseDto.Longitude))
-        {
-            return;
-        }
+        // if (ValidateService.IsValidLatitude(farmhouseDto.Latitude) || ValidateService.IsValidLongitude(farmhouseDto.Longitude))
+        // {
+        //     return;
+        // }
 
         //TODO: Czy to mapowanie jest potrzebne?
         FarmhouseDto dto = mapper.Map<FarmhouseDto>(farmhouseDto);
