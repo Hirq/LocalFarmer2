@@ -1,4 +1,5 @@
-﻿using MudBlazor;
+﻿using LocalFarmer2.Shared.DTOs;
+using MudBlazor;
 using System.Globalization;
 
 namespace LocalFarmer2.Client.Services
