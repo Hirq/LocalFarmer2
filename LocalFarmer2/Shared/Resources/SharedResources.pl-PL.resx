@@ -154,7 +154,7 @@
     <value>Moje konto</value>
   </data>
   <data name="Alert_All_Alerts" xml:space="preserve">
-    <value>Wszystkie alerty</value>
+    <value>Wszystkie powiadomienia</value>
   </data>
   <data name="Account_Login" xml:space="preserve">
     <value>Login</value>
