@@ -24,3 +24,7 @@
 .product-details-button {
     width: 15rem;
 }
+
+.flex-column-gap {
+    column-gap: 4px;
+}

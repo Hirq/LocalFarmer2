@@ -41,7 +41,7 @@ else
                                 <MudTextField T="String" Id="latitude_input" Disabled Label="@loc["Farmhouse_Latitude"]" @bind-Value="farmhouseDto.Latitude" @ref="latitudeField" Required="true" Placeholder="Max 90" RequiredError="Latitude is required!" />
                                 <MudTextField T="String" Id="longitude_input" Disabled Label="@loc["Farmhouse_Longitude"]" @bind-Value="farmhouseDto.Longitude" @ref="longitudeField" Required="true" Placeholder="Max 180" RequiredError="Longitude is required!" />
                                 <MudCheckBox T="Boolean" Checked="farmhouseDto.IsOpen" CheckedChanged="HandleCheckedChanged" Color="Color.Primary" Label="@loc["X_Active"]" />
-                                <EditFile Name="Photo farmhouse" Model="@farmhouseDto"/>
+                                <EditFile Name="@loc["Farmhouse_Photo"]" Model="@farmhouseDto"/>
                             </div>
                             <div>
                                  <MudButton OnClick="() => ShowFarmhouse((int)UserStateService.CurrentUser.IdFarmhouse)" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Go to details</MudButton>
@@ -50,11 +50,11 @@ else
                     }
                     <MudPaper Class="pa-4 mt-4 d-flex justify-space-between">
                         <div>
-                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Save</MudButton>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">@loc["X_Save"]</MudButton>
                             <MudButton OnClick="() => UnlockMap()" id="buttonChangeMarker" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Change marker</MudButton>
                         </div>
                         <div>
-                            <MudButton OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteFarmhouse(), Color.Error)' Variant="Variant.Filled" Color="Color.Error">Delete</MudButton>
+                            <MudButton OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteFarmhouse(), Color.Error)' Variant="Variant.Filled" Color="Color.Error">@loc["X_Delete"]</MudButton>
                         </div>
                     </MudPaper>
                 </MudItem>
