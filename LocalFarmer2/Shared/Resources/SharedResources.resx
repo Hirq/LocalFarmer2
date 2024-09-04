@@ -381,4 +381,7 @@
   <data name="X_Active" xml:space="preserve">
     <value>Active</value>
   </data>
+  <data name="X_Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
 </root>
