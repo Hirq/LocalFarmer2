@@ -16,5 +16,6 @@ namespace LocalFarmer2.Server.Data
         public DbSet<FavoriteFarmhouse> FavoritesFarmhouses { get; set; }
         public DbSet<Opinion> Opinions { get; set; }
         public DbSet<Alert> Alerts { get; set; }
+        public DbSet<Note> Notes { get; set; }
     }
 }
