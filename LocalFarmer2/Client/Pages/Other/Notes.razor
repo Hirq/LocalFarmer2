@@ -4,12 +4,18 @@
 <MudButton Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => FilterArchive())"> Only favorite </MudButton>
 
 <MudGrid>
-    <MudItem xs="4">
-        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-            <MudText Typo="Typo.h4">Zakupy do zrobienia</MudText>
-            <MudText Typo="Typo.body1">Kupić to i tamto i tamto</MudText>
-        </MudPaper>
-    </MudItem>
+    @if(listNotes?.Count > 0)
+    {
+        @foreach(var item in listNotes)
+        {
+            <MudItem xs="4">
+                <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                    <MudText Typo="Typo.h4">@item.Name</MudText>
+                    <MudText Typo="Typo.body1">@item.Text</MudText>
+                </MudPaper>
+            </MudItem>
+        }
+    }
     <MudItem xs="4">
         <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
 
@@ -22,8 +28,8 @@
     </MudItem>
 </MudGrid>
 @code {
-    public List<Notes> listNotes { get; set; } 
-    public List<Notes> originalNotesList { get; set; }
+    public List<Note> listNotes { get; set; } 
+    public List<Note> originalNotesList { get; set; }
     private bool isArchiveFilterActive = false;
 
     private void FilterArchive()
