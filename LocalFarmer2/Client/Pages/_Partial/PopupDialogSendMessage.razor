@@ -24,7 +24,8 @@
     [Parameter]
     public string? emailTo { get; set; }
 
-    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [CascadingParameter] 
+    MudDialogInstance MudDialog { get; set; }
 
     private MudTextField<string> emailField;
     private MudTextField<string> subjectField;

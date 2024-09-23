@@ -1,0 +1,28 @@
+﻿@namespace LocalFarmer2.Client.Pages
+
+<MudDialog>
+    <DialogContent>
+        <MudTextField T="string" @ref="titleField" Label="Email" Required=@(!isContactToAdmin) RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="emailDto.From"></MudTextField>
+        <MudTextField T="string" @ref="textField" Label="@loc["Farmhouse_Subject"]" Required RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="emailDto.Subject"></MudTextField>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">@loc["X_Cancel"]</MudButton>
+        <MudButton OnClick="AddNote" Color="Color.Secondary" Variant="Variant.Filled">@loc["Farmhouse_Send"]</MudButton>
+    </DialogActions>
+</MudDialog>
+
+    @code {
+    [CascadingParameter] 
+    MudDialogInstance MudDialog { get; set; }
+
+    private MudTextField<string> titleField;
+    private MudTextField<string> textField;
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+    void Cancel() => MudDialog.Cancel();
+
+    async Task AddNote()
+    {
+        Console.WriteLine("added notes");
+    }
+}
