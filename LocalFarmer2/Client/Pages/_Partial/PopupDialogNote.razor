@@ -2,8 +2,8 @@
 
 <MudDialog>
     <DialogContent>
-        <MudTextField T="string" @ref="titleField" Label="Email" Required=@(!isContactToAdmin) RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="emailDto.From"></MudTextField>
-        <MudTextField T="string" @ref="textField" Label="@loc["Farmhouse_Subject"]" Required RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="emailDto.Subject"></MudTextField>
+        <MudTextField T="string" @ref="titleField" Label="Email" RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="Note.Name"></MudTextField>
+        <MudTextField T="string" @ref="textField" Label="@loc["Farmhouse_Subject"]" Required RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="Note.Text"></MudTextField>
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">@loc["X_Cancel"]</MudButton>
@@ -14,6 +14,12 @@
     @code {
     [CascadingParameter] 
     MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public Note Note { get; set; }
+
+    [Parameter]
+    public Action Action { get; set; }
 
     private MudTextField<string> titleField;
     private MudTextField<string> textField;

@@ -47,6 +47,18 @@ namespace LocalFarmer2.Client.Services
             };
 
             _dialogService.Show<PopupWithCards>(title, parameters, options);
+        }       
+
+        public void OpenDialogNoteCards(string title, Note note, Action action)
+        {
+            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var parameters = new DialogParameters
+            {
+                { "Note", note },
+                { "Action", action },
+            };
+
+            _dialogService.Show<PopupDialogNote>(title, parameters, options);
         }
 
         public async Task OpenDialogSendMessage(bool isContactToAdmin = true, string? emailTo = null)
