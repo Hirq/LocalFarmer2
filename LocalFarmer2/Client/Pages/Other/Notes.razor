@@ -1,7 +1,8 @@
 ﻿@page "/notes"
+@inject UtilsService UtilsService
 
 <h3>Notes</h3>
-<MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@(() => FilterArchive())"> Add note </MudButton>
+<MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@(() => UtilsService.OpenDialogNoteCards("Add note", note, () => AddNote()))"> Add note </MudButton>
 <MudButton Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => FilterArchive())"> Only favorite </MudButton>
 
 <MudGrid>
@@ -29,9 +30,15 @@
     </MudItem>
 </MudGrid>
 @code {
+    public Note note { get; set; } 
     public List<Note> listNotes { get; set; } 
     public List<Note> originalNotesList { get; set; }
     private bool isArchiveFilterActive = false;
+
+    private void AddNote()
+    {
+        Console.WriteLine("Add note");
+    }
 
     private void FilterArchive()
     {

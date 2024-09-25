@@ -384,4 +384,10 @@
   <data name="X_Notes" xml:space="preserve">
     <value>Notes</value>
   </data>
+  <data name="Note_Add_Note" xml:space="preserve">
+    <value>Add note</value>
+  </data>
+  <data name="Note_Edit_note" xml:space="preserve">
+    <value>Edit note</value>
+  </data>
 </root>

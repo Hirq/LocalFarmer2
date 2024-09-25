@@ -502,6 +502,24 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add note.
+        /// </summary>
+        internal static string Note_Add_Note {
+            get {
+                return ResourceManager.GetString("Note_Add_Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit note.
+        /// </summary>
+        internal static string Note_Edit_note {
+            get {
+                return ResourceManager.GetString("Note_Edit_note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add opinion.
         /// </summary>
         internal static string Opinion_Add_Opinion {
