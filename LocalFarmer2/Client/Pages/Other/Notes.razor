@@ -30,7 +30,7 @@
     </MudItem>
 </MudGrid>
 @code {
-    public Note note { get; set; } 
+    public Note note { get; set; } = new Note();
     public List<Note> listNotes { get; set; } 
     public List<Note> originalNotesList { get; set; }
     private bool isArchiveFilterActive = false;
