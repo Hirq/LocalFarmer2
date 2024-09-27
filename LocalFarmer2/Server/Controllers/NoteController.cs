@@ -2,6 +2,8 @@
 
 namespace LocalFarmer2.Server.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class NoteController : Controller
     {
         private readonly INoteRepository _noteRepository;
@@ -22,16 +24,18 @@ namespace LocalFarmer2.Server.Controllers
         }
         [HttpPost, Route("AddNote")]
 
-        public async Task<IActionResult> AddNote([FromBody] Note model)
+        public async Task<IActionResult> AddNote([FromBody] NoteDto model)
         {
-            await _noteRepository.AddAsync(model);
+            Note note = _mapper.Map<Note>(model);
+            note.IsArchive = false;
+            await _noteRepository.AddAsync(note);
             await _noteRepository.SaveChangesAsync();
 
             return Ok(model);
         }
 
         [HttpPut, Route("EditNote/{id}")]
-        public async Task<IActionResult> EditNote([FromBody] Note model, int id)
+        public async Task<IActionResult> EditNote([FromBody] NoteDto model, int id)
         {
             Note note = await _noteRepository.GetFirstOrDefaultAsync(x => x.Id == id);
             note.Name = model.Name;

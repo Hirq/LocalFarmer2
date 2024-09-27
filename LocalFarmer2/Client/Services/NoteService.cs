@@ -1,36 +1,69 @@
-﻿
-namespace LocalFarmer2.Client.Services
+﻿namespace LocalFarmer2.Client.Services
 {
     public class NoteService : INoteService
     {
-        Task INoteService.AddNote(Note dto)
+        private readonly HttpClient _httpClient;
+        private readonly IMapper _mapper;
+
+        public NoteService(HttpClient httpClient, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _httpClient = httpClient;
+            _mapper = mapper;
+        }
+        public async Task<List<Note>> GetAll()
+        {
+            var notes = await _httpClient.GetFromJsonAsync<List<Note>>("api/Note/AllNotes");
+
+            if (notes == null)
+            {
+                throw new Exception("Not found any notes");
+            }
+
+            return notes;
         }
 
-        Task INoteService.DeleteNote(int idNote)
+        public async Task<Note> GetNote(int idNote)
         {
-            throw new NotImplementedException();
+            var note = await _httpClient.GetFromJsonAsync<Note>($"api/Note/Note/{idNote}");
+
+            if (note == null)
+            {
+                throw new Exception($"Not found note id: {idNote}");
+            }
+
+            return note;
         }
 
-        Task INoteService.EditNote(Note dto, int idNote)
+        public async Task AddNote(Note dto)
         {
-            throw new NotImplementedException();
+            var note = _mapper.Map<NoteDto>(dto);
+
+            await _httpClient.PostAsJsonAsync($"api/Note/AddNote", note);
         }
 
-        Task<List<Note>> INoteService.GetAll()
+        public async Task DeleteNote(int idNote)
         {
-            throw new NotImplementedException();
+            await _httpClient.DeleteAsync($"api/Note/DeleteNote/{idNote}");
         }
 
-        Task<Note> INoteService.GetNote(int idNote)
+        public async Task EditNote(Note dto, int idNote)
         {
-            throw new NotImplementedException();
+            var note = _mapper.Map<NoteDto>(dto);
+
+            await _httpClient.PutAsJsonAsync($"api/Note/EditNote/{idNote}", note);
         }
 
-        Task<List<Note>> INoteService.GetNoteForUser(string userName)
+        //TODO:
+        public async Task<List<Note>> GetNoteForUser(string userName)
         {
-            throw new NotImplementedException();
+            var notesPerUser = await _httpClient.GetFromJsonAsync<List<Note>>($"api/Note/xxxx?idUser={userName}");
+
+            if (notesPerUser == null)
+            {
+                throw new Exception();
+            }
+
+            return notesPerUser;
         }
     }
 }

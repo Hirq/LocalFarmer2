@@ -56,6 +56,7 @@ builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository
 builder.Services.AddScoped<IFavoriteFarmhouseRepository, FavoriteFarmhouseRepository>();
 builder.Services.AddScoped<IOpinionRepository, OpinionRepository>();
 builder.Services.AddScoped<IAlertRepository, AlertRepository>();
+builder.Services.AddScoped<INoteRepository, NoteRepository>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

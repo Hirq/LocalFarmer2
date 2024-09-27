@@ -20,6 +20,8 @@ namespace LocalFarmer2.Shared.Profiles
             CreateMap<UserDto, EditUserDto>();
             CreateMap<AddOpinionDto, Opinion>();
             CreateMap<AddAlertDto, Alert>();
+            CreateMap<NoteDto, Note>();
+            CreateMap<Note, NoteDto>();
         }
     }
 }
