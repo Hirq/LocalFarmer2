@@ -1,5 +1,6 @@
 ﻿using MudBlazor;
 using LocalFarmer2.Client.Pages;
+using static LocalFarmer2.Client.Services.UtilsService;
 
 namespace LocalFarmer2.Client.Services
 {
@@ -49,11 +50,12 @@ namespace LocalFarmer2.Client.Services
             _dialogService.Show<PopupWithCards>(title, parameters, options);
         }       
 
-        public void OpenDialogNoteCards(string title, Note note, Action action)
+        public void OpenDialogNoteCards(string title, string buttonName, Note note, Action action)
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
             var parameters = new DialogParameters
             {
+                { "ButtonName", buttonName },
                 { "Note", note },
                 { "Action", action },
             };
