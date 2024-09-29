@@ -28,3 +28,45 @@
 .flex-column-gap {
     column-gap: 4px;
 }
+
+/* Note Start*/
+
+.flip-card {
+    perspective: 1000px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    /* Dodane do wycentrowania elementów */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flip-card-front {
+    /* Przednia strona, widoczna tylko przy braku obrotu */
+    background-color: #fff; /* Można dodać dowolne tło */
+}
+
+.flip-card-back {
+    /* Tylna strona, widoczna tylko po obrocie */
+    transform: rotateY(180deg);
+    background-color: #f0f0f0; /* Dodaj tło dla tylnej strony */
+}
+
+/* Note End*/
