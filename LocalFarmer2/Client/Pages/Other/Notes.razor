@@ -1,10 +1,11 @@
 ﻿@page "/notes"
 @inject UtilsService UtilsService
 @inject INoteService NoteService
+@inject IMapper Mapper
 
 <h3>Notes</h3>
-<MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@(() => UtilsService.OpenDialogNoteCards("Add note", @loc["X_Save"], note, () => AddNote()))"> Add note </MudButton>
-<MudButton Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => FilterArchive())"> Only favorite </MudButton>
+<MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@(() => UtilsService.OpenDialogNoteCards("Add note", @loc["X_Save"], note, async () => await AddNote()))"> Add note </MudButton>
+<MudButton Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => FilterArchive())"> @(isArchiveFilterActive ? "asd" : "asd222") </MudButton>
 
 @* <MudGrid>
     @if(originalNotesList?.Count > 0)
@@ -24,9 +25,9 @@
 </MudGrid> *@
 
 <MudGrid>
-    @if (originalNotesListTest?.Count > 0)
+    @if (listNotes?.Count > 0)
     {
-        @foreach (var item in originalNotesListTest)
+        @foreach (var item in listNotes)
         {
         <MudItem xs="4">
             <div class="flip-card @((item.IsFlipped ? "flipped" : ""))" @onclick="() => FlipCard(item)">
@@ -51,40 +52,41 @@
 
 @code {
     public Note note { get; set; } = new Note();
-    public List<Note> listNotes { get; set; } 
-    public List<Note> originalNotesList = new List<Note>();
-    public List<NoteViewModel> originalNotesListTest = new List<NoteViewModel>();
+    public List<NoteViewModel> listNotes { get; set; }
+    public List<NoteViewModel> originalNotesList = new List<NoteViewModel>();
     private bool isArchiveFilterActive = false;
 
     protected override async Task OnInitializedAsync()
     {
-        // originalNotesList = await NoteService.GetAll();
-
-        originalNotesListTest = new List<NoteViewModel>
-        {
-            new NoteViewModel { Name = "Note 1", Text = "This is the first note" },
-            new NoteViewModel { Name = "Note 2", Text = "This is the second note" }
-        };
-
+        await InitializeNotesList();
     }
 
-    private void AddNote()
+    private async Task InitializeNotesList()
     {
-        NoteService.AddNote(note);
+        var notesList = await NoteService.GetAll();
+        originalNotesList = Mapper.Map<List<NoteViewModel>>(notesList);
+        listNotes = originalNotesList;
+    }
+
+    private async Task AddNote()
+    {
+        await NoteService.AddNote(note);
+        await InitializeNotesList();
+        StateHasChanged();
     }
 
     private void FilterArchive()
     {
         isArchiveFilterActive = !isArchiveFilterActive;
 
-        // if (isArchiveFilterActive)
-        // {
-        //     ListFarmhousesVM = originalFarmhousesList.Where(x => x.IsFavorite).ToList();
-        // }
-        // else
-        // {
-        //     ListFarmhousesVM = originalFarmhousesList;
-        // }
+        if (isArchiveFilterActive)
+        {
+            listNotes = originalNotesList.Where(x => x.IsArchive).ToList();
+        }
+        else
+        {
+            listNotes = originalNotesList;
+        }
     }
 
     private void FlipCard(NoteViewModel item)

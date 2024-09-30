@@ -33,6 +33,7 @@
 
 .flip-card {
     perspective: 1000px;
+    margin-bottom: 3rem;
 }
 
 .flip-card-inner {
@@ -56,6 +57,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid #ccc !important;
+    border-radius: 16px;
 }
 
 .flip-card-front {
