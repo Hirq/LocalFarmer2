@@ -1,5 +1,6 @@
 ﻿@page "/notes"
 @inject UtilsService UtilsService
+@inject UserStateService UserStateService
 @inject INoteService NoteService
 @inject IMapper Mapper
 
@@ -59,6 +60,7 @@
     protected override async Task OnInitializedAsync()
     {
         await InitializeNotesList();
+        note.IdUser = UserStateService.CurrentUser.IdUser;
     }
 
     private async Task InitializeNotesList()
