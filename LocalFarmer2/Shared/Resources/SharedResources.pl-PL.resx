@@ -396,4 +396,13 @@
   <data name="X_Title" xml:space="preserve">
     <value>Tytuł</value>
   </data>
+  <data name="Filter_Show_Only_Active" xml:space="preserve">
+    <value>Pokaż tylko aktywne</value>
+  </data>
+  <data name="Filter_Show_Only_Archive" xml:space="preserve">
+    <value>Pokaż tylko archiwalne</value>
+  </data>
+  <data name="Filter_Show_All" xml:space="preserve">
+    <value>Pokaż wszystkie</value>
+  </data>
 </root>

@@ -6,7 +6,7 @@
 
 <h3>Notes</h3>
 <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@(() => UtilsService.OpenDialogNoteCards("Add note", @loc["X_Save"], note, async () => await AddNote()))"> Add note </MudButton>
-<MudButton Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => FilterArchive())"> @(isArchiveFilterActive ? "asd" : "asd222") </MudButton>
+<MudButton Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => ChangeFilter())">@FilterName</MudButton>
 
 @* <MudGrid>
     @if(originalNotesList?.Count > 0)
@@ -55,12 +55,19 @@
     public Note note { get; set; } = new Note();
     public List<NoteViewModel> listNotes { get; set; }
     public List<NoteViewModel> originalNotesList = new List<NoteViewModel>();
-    private bool isArchiveFilterActive = false;
+    /*
+    0 - All
+    1 - Only Active
+    2 - Only Archive
+    */
+    private int FilterNotes = 1;
+    private string FilterName;
 
     protected override async Task OnInitializedAsync()
     {
         await InitializeNotesList();
         note.IdUser = UserStateService.CurrentUser.IdUser;
+        ChangeFilter();
     }
 
     private async Task InitializeNotesList()
@@ -76,18 +83,28 @@
         await InitializeNotesList();
         StateHasChanged();
     }
+    //TODO: Przycisk jakby był a paskiem na dole, że można wybrać 1 z 3 filtrów podświetlony jaki jest aktwny.
 
-    private void FilterArchive()
+    private void ChangeFilter()
     {
-        isArchiveFilterActive = !isArchiveFilterActive;
-
-        if (isArchiveFilterActive)
-        {
-            listNotes = originalNotesList.Where(x => x.IsArchive).ToList();
-        }
-        else
+        if (FilterNotes == 0)
         {
             listNotes = originalNotesList;
+            FilterNotes = 1;
+            FilterName = loc["Filter_Show_Only_Active"];
+        }
+        else if (FilterNotes == 1)
+        {
+            listNotes = originalNotesList.Where(x => !x.IsArchive).ToList();
+            FilterNotes = 2;
+            FilterName = loc["Filter_Show_Only_Archive"];
+
+        }
+        else if (FilterNotes == 2)
+        {
+            listNotes = originalNotesList.Where(x => x.IsArchive).ToList();
+            FilterNotes = 0;
+            FilterName = loc["Filter_Show_All"];
         }
     }
 
