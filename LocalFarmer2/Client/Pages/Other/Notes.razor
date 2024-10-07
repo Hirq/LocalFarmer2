@@ -8,6 +8,12 @@
 <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@(() => UtilsService.OpenDialogNoteCards(@loc["Note_Add_Note"], @loc["X_Save"], note, async () => await AddNote()))">@loc["Note_Add_Note"]</MudButton>
 <MudButton Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => ChangeFilter())">@FilterName</MudButton>
 
+<div class="position-indicators">
+    <div class="indicator @(FilterNotes == 0 ? "active" : "")"></div>
+    <div class="indicator @(FilterNotes == 1 ? "active" : "")"></div>
+    <div class="indicator @(FilterNotes == 2 ? "active" : "")"></div>
+</div>
+
 @* <MudGrid>
     @if(originalNotesList?.Count > 0)
     {

@@ -72,4 +72,23 @@
     background-color: #f0f0f0; /* Dodaj tło dla tylnej strony */
 }
 
+.position-indicators {
+    display: flex; /* Flexbox dla wskaźników */
+    justify-content: space-between; /* Równomierne rozmieszczenie */
+    margin-top: 10px; /* Odstęp od przycisku */
+    width: 100%; /* Szerokość wskaźników taka sama jak szerokość przycisku */
+    max-width: 200px; /* Możesz ograniczyć maksymalną szerokość */
+}
+
+.indicator {
+    width: 30%; /* Każdy wskaźnik zajmuje 30% miejsca */
+    height: 10px; /* Wysokość wskaźnika */
+    background-color: #ccc; /* Domyślny kolor wskaźnika (szary) */
+    border-radius: 3px; /* Zaokrąglenie rogów */
+}
+
+    .indicator.active {
+        background-color: #ffc107; /* Kolor dla aktywnego wskaźnika (zgodny z przyciskiem Warning w MudBlazor) */
+    }
+
 /* Note End*/
