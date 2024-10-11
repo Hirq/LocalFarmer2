@@ -33,7 +33,7 @@
 
 .flip-card {
     perspective: 1000px;
-    margin-bottom: 3rem;
+    margin-bottom: 6rem;
 }
 
 .flip-card-inner {
@@ -52,6 +52,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
+    min-height: 112px;
     backface-visibility: hidden;
     /* Dodane do wycentrowania elementów */
     display: flex;
@@ -90,5 +91,11 @@
     .indicator.active {
         background-color: #ffc107; /* Kolor dla aktywnego wskaźnika (zgodny z przyciskiem Warning w MudBlazor) */
     }
+/*TODO: margin-left:10 px powinno być tylko jak jest dużo wierszy*/
+
+.noteText {
+    max-height: 91px;
+    overflow: scroll;
+}
 
 /* Note End*/

@@ -3,6 +3,7 @@
 @inject UserStateService UserStateService
 @inject INoteService NoteService
 @inject IMapper Mapper
+@inject IJSRuntime JSRuntime
 
 <h3>Notes</h3>
 <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@(() => UtilsService.OpenDialogNoteCards(@loc["Note_Add_Note"], @loc["X_Save"], note, async () => await AddNote()))">@loc["Note_Add_Note"]</MudButton>
@@ -40,14 +41,15 @@
             <div class="flip-card @((item.IsFlipped ? "flipped" : ""))" @onclick="() => FlipCard(item)">
                 <div class="flip-card-inner">
                     <div class="flip-card-front d-flex align-center justify-center mud-width-full py-8">
-                        <div class="d-flex flex-column">
+                            <div class="d-flex flex-column noteText">
                             <MudText Typo="Typo.h5">@item.Name</MudText>
                         </div>
                     </div>
                     <div class="flip-card-back d-flex align-center justify-center mud-width-full py-8">
-                        <div class="d-flex flex-column">
+                                <div class="d-flex flex-column noteText">
                             @* TODO: Wyświetlić jako zwykły string bez MudTextField - zapisać to w takim foramcie, aby wiedział kiedy ma zawijać linie i dodać scroll *@
-                            <MudTextField T="string" Label="Outlined" Variant="Variant.Outlined" Text="@item.Text" Typo="Typo.body1" Lines="3" />
+                            @* <MudTextField T="string" Label="Outlined" Variant="Variant.Outlined" Text="@item.Text" Typo="Typo.body1" Lines="3" /> *@
+                            <MudText Typo="Typo.body1">@item.Text</MudText>
                         </div>
                     </div>
                 </div>
@@ -118,6 +120,7 @@
     private void FlipCard(NoteViewModel item)
     {
         item.IsFlipped = !item.IsFlipped;
+        JSRuntime.InvokeVoidAsync("checkScrolls");
     }
 
 }
