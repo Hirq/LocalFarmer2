@@ -78,7 +78,7 @@
     justify-content: space-between; /* Równomierne rozmieszczenie */
     margin-top: 10px; /* Odstęp od przycisku */
     width: 100%; /* Szerokość wskaźników taka sama jak szerokość przycisku */
-    max-width: 200px; /* Możesz ograniczyć maksymalną szerokość */
+    max-width: 230px; /* Możesz ograniczyć maksymalną szerokość */
 }
 
 .indicator {
@@ -96,6 +96,15 @@
 .noteText {
     max-height: 91px;
     overflow: scroll;
+}
+
+.noteButtonFilter {
+    min-width: 230px !important;
+}
+
+#noteMudGrid {
+    width: 100% !important;
+    margin: 0px !important;
 }
 
 /* Note End*/
