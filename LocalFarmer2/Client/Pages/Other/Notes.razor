@@ -14,9 +14,9 @@
      <div>
         <MudButton Color="Color.Warning" Variant="Variant.Filled" Class="noteButtonFilter" OnClick="@(() => ChangeFilter())">@FilterName</MudButton>
         <div class="position-indicators">
-            <div class="indicator @(FilterNotes == 0 ? "active" : "")" onclick="@(() => ChangeFilter(true, 0))"></div>
-            <div class="indicator @(FilterNotes == 1 ? "active" : "")" onclick="@(() => ChangeFilter(true, 1))"></div>
-            <div class="indicator @(FilterNotes == 2 ? "active" : "")" onclick="@(() => ChangeFilter(true, 2))"></div>
+            <div class="indicator @(FilterNotes == 0 ? "active" : "")" onclick="@(() => setFilter(2))"></div>
+            <div class="indicator @(FilterNotes == 1 ? "active" : "")" onclick="@(() => setFilter(0))"></div>
+            <div class="indicator @(FilterNotes == 2 ? "active" : "")" onclick="@(() => setFilter(1))"></div>
         </div>
      </div>
  </MudPaper>
@@ -83,16 +83,15 @@
     }
     //TODO: Przycisk jakby był a paskiem na dole, że można wybrać 1 z 3 filtrów podświetlony jaki jest aktwny.
 
-    private void ChangeFilter(bool isManual = false, int filtr = 0)
+    private void setFilter(int filtr)
     {
-        if (isManual)
-        {
-            if (filtr == 0)
-            {
-                
-            }
-        }
+        FilterNotes = filtr;
+        ChangeFilter();
+    }
 
+
+    private void ChangeFilter()
+    {
         if (FilterNotes == 0)
         {
             listNotes = originalNotesList;
