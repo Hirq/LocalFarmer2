@@ -484,29 +484,29 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show all.
+        ///   Looks up a localized string similar to All.
         /// </summary>
-        internal static string Filter_Show_All {
+        internal static string Filter_All {
             get {
-                return ResourceManager.GetString("Filter_Show_All", resourceCulture);
+                return ResourceManager.GetString("Filter_All", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show only active.
+        ///   Looks up a localized string similar to Active.
         /// </summary>
-        internal static string Filter_Show_Only_Active {
+        internal static string Filter_Only_Active {
             get {
-                return ResourceManager.GetString("Filter_Show_Only_Active", resourceCulture);
+                return ResourceManager.GetString("Filter_Only_Active", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show only archive.
+        ///   Looks up a localized string similar to Archive.
         /// </summary>
-        internal static string Filter_Show_Only_Archive {
+        internal static string Filter_Only_Archive {
             get {
-                return ResourceManager.GetString("Filter_Show_Only_Archive", resourceCulture);
+                return ResourceManager.GetString("Filter_Only_Archive", resourceCulture);
             }
         }
         

@@ -14,9 +14,9 @@
      <div>
         <MudButton Color="Color.Warning" Variant="Variant.Filled" Class="noteButtonFilter" OnClick="@(() => ChangeFilter())">@FilterName</MudButton>
         <div class="position-indicators">
-            <div class="indicator @(FilterNotes == 0 ? "active" : "")" onclick="@(() => setFilter(2))"></div>
-            <div class="indicator @(FilterNotes == 1 ? "active" : "")" onclick="@(() => setFilter(0))"></div>
-            <div class="indicator @(FilterNotes == 2 ? "active" : "")" onclick="@(() => setFilter(1))"></div>
+            <div class="indicator @(FilterNotes == 1 ? "active" : "")" onclick="@(() => setFilter(1))"></div>
+            <div class="indicator @(FilterNotes == 2 ? "active" : "")" onclick="@(() => setFilter(2))"></div>
+            <div class="indicator @(FilterNotes == 0 ? "active" : "")" onclick="@(() => setFilter(0))"></div>
         </div>
      </div>
  </MudPaper>
@@ -82,34 +82,35 @@
         StateHasChanged();
     }
     //TODO: Przycisk jakby był a paskiem na dole, że można wybrać 1 z 3 filtrów podświetlony jaki jest aktwny.
-
+    // Od nowa te filtry 
+    // Aktywne -> archiwalne -> Wszystkie
     private void setFilter(int filtr)
     {
-        FilterNotes = filtr;
         ChangeFilter();
+        FilterNotes = filtr;
     }
 
 
     private void ChangeFilter()
     {
-        if (FilterNotes == 0)
+        if (FilterNotes == 1)
         {
             listNotes = originalNotesList;
-            FilterNotes = 1;
-            FilterName = loc["Filter_Show_Only_Active"];
-        }
-        else if (FilterNotes == 1)
-        {
-            listNotes = originalNotesList.Where(x => !x.IsArchive).ToList();
             FilterNotes = 2;
-            FilterName = loc["Filter_Show_Only_Archive"];
-
+            FilterName = loc["Filter_All"];
         }
         else if (FilterNotes == 2)
         {
-            listNotes = originalNotesList.Where(x => x.IsArchive).ToList();
+            listNotes = originalNotesList.Where(x => !x.IsArchive).ToList();
             FilterNotes = 0;
-            FilterName = loc["Filter_Show_All"];
+            FilterName = loc["Filter_Only_Active"];
+
+        }
+        else if (FilterNotes == 0)
+        {
+            listNotes = originalNotesList.Where(x => x.IsArchive).ToList();
+            FilterNotes = 1;
+            FilterName = loc["Filter_Only_Archive"];
         }
     }
 
