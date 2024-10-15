@@ -81,15 +81,12 @@
         await InitializeNotesList();
         StateHasChanged();
     }
-    //TODO: Przycisk jakby był a paskiem na dole, że można wybrać 1 z 3 filtrów podświetlony jaki jest aktwny.
-    // Od nowa te filtry 
-    // Aktywne -> archiwalne -> Wszystkie
+
     private void setFilter(int filtr)
     {
         ChangeFilter();
         FilterNotes = filtr;
     }
-
 
     private void ChangeFilter()
     {
