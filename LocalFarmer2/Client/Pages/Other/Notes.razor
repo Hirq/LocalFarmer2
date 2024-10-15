@@ -14,9 +14,9 @@
      <div>
         <MudButton Color="Color.Warning" Variant="Variant.Filled" Class="noteButtonFilter" OnClick="@(() => ChangeFilter())">@FilterName</MudButton>
         <div class="position-indicators">
-            <div class="indicator @(FilterNotes == 1 ? "active" : "")" onclick="@(() => setFilter(1))"></div>
             <div class="indicator @(FilterNotes == 2 ? "active" : "")" onclick="@(() => setFilter(2))"></div>
             <div class="indicator @(FilterNotes == 0 ? "active" : "")" onclick="@(() => setFilter(0))"></div>
+            <div class="indicator @(FilterNotes == 1 ? "active" : "")" onclick="@(() => setFilter(1))"></div>
         </div>
      </div>
  </MudPaper>
@@ -93,23 +93,21 @@
 
     private void ChangeFilter()
     {
+        FilterNotes = (FilterNotes + 1) % 3;
         if (FilterNotes == 1)
         {
             listNotes = originalNotesList;
-            FilterNotes = 2;
             FilterName = loc["Filter_All"];
         }
         else if (FilterNotes == 2)
         {
             listNotes = originalNotesList.Where(x => !x.IsArchive).ToList();
-            FilterNotes = 0;
             FilterName = loc["Filter_Only_Active"];
 
         }
         else if (FilterNotes == 0)
         {
             listNotes = originalNotesList.Where(x => x.IsArchive).ToList();
-            FilterNotes = 1;
             FilterName = loc["Filter_Only_Archive"];
         }
     }
