@@ -30,14 +30,16 @@
             <div class="flip-card @((item.IsFlipped ? "flipped" : ""))" @onclick="() => FlipCard(item)">
                 <div class="flip-card-inner">
                     <div class="flip-card-front d-flex align-center justify-center mud-width-full py-8">
-                            <div class="d-flex flex-column noteText">
-                            <MudText Typo="Typo.h5">@item.Name</MudText>
+                        <div class="d-flex flex-column noteText">
+                            <MudText Typo="Typo.h5" Class="text-center">@item.Name</MudText>
+                            <div class="text-center">
+                                <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" />
+                                <MudIconButton OnClick="@(async () => await DeleteNote(item.Id))" Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" />
+                            </div>
                         </div>
                     </div>
                     <div class="flip-card-back d-flex align-center justify-center mud-width-full py-8">
-                                <div class="d-flex flex-column noteText">
-                            @* TODO: Wyświetlić jako zwykły string bez MudTextField - zapisać to w takim foramcie, aby wiedział kiedy ma zawijać linie i dodać scroll *@
-                            @* <MudTextField T="string" Label="Outlined" Variant="Variant.Outlined" Text="@item.Text" Typo="Typo.body1" Lines="3" /> *@
+                        <div class="d-flex flex-column noteText">
                             <MudText Typo="Typo.body1">@item.Text</MudText>
                         </div>
                     </div>
@@ -75,13 +77,6 @@
         listNotes = originalNotesList;
     }
 
-    private async Task AddNote()
-    {
-        await NoteService.AddNote(note);
-        await InitializeNotesList();
-        StateHasChanged();
-    }
-
     private void setFilter(int filtr)
     {
         ChangeFilter();
@@ -115,4 +110,23 @@
         JSRuntime.InvokeVoidAsync("checkScrolls");
     }
 
+    private async Task AddNote()
+    {
+        await NoteService.AddNote(note);
+        await InitializeNotesList();
+        StateHasChanged();
+    }
+
+    private async Task EditNote(NoteViewModel item)
+    {
+        FlipCard(item);
+
+    }
+
+    private async Task DeleteNote(int id)
+    {
+        await NoteService.DeleteNote(id);
+        await InitializeNotesList();
+        StateHasChanged();
+    }
 }
