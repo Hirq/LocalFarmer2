@@ -34,11 +34,11 @@
             return note;
         }
 
-        public async Task AddNote(Note dto)
+        public async Task AddNote(Note model)
         {
-            var note = _mapper.Map<NoteDto>(dto);
+            var dto = _mapper.Map<NoteDto>(model);
 
-            await _httpClient.PostAsJsonAsync($"api/Note/AddNote", note);
+            await _httpClient.PostAsJsonAsync($"api/Note/AddNote", dto);
         }
 
         public async Task DeleteNote(int idNote)
@@ -46,11 +46,11 @@
             await _httpClient.DeleteAsync($"api/Note/DeleteNote/{idNote}");
         }
 
-        public async Task EditNote(Note dto, int idNote)
+        public async Task EditNote(Note model)
         {
-            var note = _mapper.Map<NoteDto>(dto);
+            var dto = _mapper.Map<NoteDto>(model);
 
-            await _httpClient.PutAsJsonAsync($"api/Note/EditNote/{idNote}", note);
+            await _httpClient.PutAsJsonAsync($"api/Note/EditNote/{model.Id}", dto);
         }
 
         //TODO:

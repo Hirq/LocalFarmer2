@@ -46,5 +46,15 @@ namespace LocalFarmer2.Server.Controllers
 
             return Ok(note);
         }
+
+        [HttpDelete, Route("DeleteNote/{id}")]
+        public async Task<IActionResult> DeleteNote(int id)
+        {
+            Note note = await _noteRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            await _noteRepository.DeleteAsync(note);
+            await _noteRepository.SaveChangesAsync();
+
+            return Ok(note);
+        }
     }
 }

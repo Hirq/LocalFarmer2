@@ -33,7 +33,7 @@
                         <div class="d-flex flex-column noteText">
                             <MudText Typo="Typo.h5" Class="text-center">@item.Name</MudText>
                             <div class="text-center">
-                                <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" />
+                                <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@(() => UtilsService.OpenDialogNoteCards(@loc["Note_Edit_Note"], @loc["X_Save"], note, async () => await EditNote(item)))"/>
                                 <MudIconButton OnClick="@(async () => await DeleteNote(item.Id))" Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" />
                             </div>
                         </div>
@@ -43,7 +43,7 @@
                             <MudText Typo="Typo.body1">@item.Text</MudText>
                         </div>
                     </div>
-                </div>
+                </div
             </div>
         </MudItem>
         }
@@ -110,6 +110,9 @@
         JSRuntime.InvokeVoidAsync("checkScrolls");
     }
 
+    // w momencie wywołania OpenDialogNoteCards nalezy ustawić note na string.Empty lub note.text dla Edit
+    // Wiec nalezałoby zrobic funkcje gdzie jest OpenDIalogNoteCards i warunke czy edit czy add
+
     private async Task AddNote()
     {
         await NoteService.AddNote(note);
@@ -119,8 +122,9 @@
 
     private async Task EditNote(NoteViewModel item)
     {
-        FlipCard(item);
-
+        await NoteService.EditNote(note);
+        await InitializeNotesList();
+        StateHasChanged();
     }
 
     private async Task DeleteNote(int id)
