@@ -9,7 +9,7 @@
 
 <MudPaper Class="pa-4 d-flex justify-space-between">
     <div>
-        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@(() => UtilsService.OpenDialogNoteCards(@loc["Note_Add_Note"], @loc["X_Save"], note, async () => await AddNote()))">@loc["Note_Add_Note"]</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@(() => AddNotePopup())">@loc["Note_Add_Note"]</MudButton>
      </div>
      <div>
         <MudButton Color="Color.Warning" Variant="Variant.Filled" Class="noteButtonFilter" OnClick="@(() => ChangeFilter())">@FilterName</MudButton>
@@ -118,6 +118,11 @@
         await NoteService.AddNote(note);
         await InitializeNotesList();
         StateHasChanged();
+    }
+
+    private async Task AddNotePopup()
+    {
+        UtilsService.OpenDialogNoteCards(@loc["Note_Add_Note"], @loc["X_Save"], note, async () => await AddNote());
     }
 
     private async Task EditNote(NoteViewModel item)
