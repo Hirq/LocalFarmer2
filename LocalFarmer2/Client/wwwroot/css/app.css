@@ -1,11 +1,23 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
-html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+:root {
+    --background-color: #f0f0f0;
+    --surface-color: #ffffff;
+    --button-warning: rgba(251,192,45,1);
+    --gray-primary: #ccc;
 }
 
-html, body * {
-    /*background-color: #75a668 !important;*/
+body.dark-mode {
+    --background-color: #333333;
+    --surface-color: #555555;
+    --button-warning: rgba(48,63,159,1);
+    --gray-primary: #1e1e1e;
+}
+
+/*--------------------------------------------------------------------------------------------*/
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 h1:focus {

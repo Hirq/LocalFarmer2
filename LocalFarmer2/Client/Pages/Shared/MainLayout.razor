@@ -4,9 +4,10 @@
 @inject IAccountService AccountService
 @inject IJSRuntime JSRuntime
 
-<MudThemeProvider />
+<MudThemeProvider @bind-IsDarkMode="@isDarkMode" Theme="@MainTheme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
+
 @if (isDataInitialized)
 {
     <MudLayout>
@@ -14,6 +15,10 @@
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
             <MudSpacer />
             <AuthorizeView>
+                <MudSwitch @bind-Checked="@isDarkMode"
+                           Color="Color.Primary"
+                           Label="Light/Dark"
+                           onclick="@(() =>ToggleTheme())" />
                 <div class="cursor-pointer">
                     @if(newAlerts > 0)
                     {
@@ -87,6 +92,8 @@
     private bool isDataInitialized = false;
     int newAlerts = 0;
     List<Alert> alerts = new List<Alert>();
+    private bool isDarkMode;
+    private MudThemeProvider mudThemeProvider;
 
     private async Task MenuStateChanged(bool isOpen)
     {
@@ -121,6 +128,36 @@
                 UserStateService.IsUserLogged = false;
             }
             isDataInitialized = true;
+        }
+    }
+
+    private MudTheme MainTheme = new MudTheme
+        {
+            Palette = new Palette
+            {
+                // Primary = Colors.Blue.Default,
+                // Background = "#fff",
+                // Surface = "#f0f0f0"
+                Warning = Colors.Yellow.Darken2
+            },
+
+            PaletteDark = new PaletteDark
+            {
+                
+                Warning = Colors.Indigo.Darken2
+            }
+        };
+
+    private async Task ToggleTheme()
+    {
+        isDarkMode = !isDarkMode;
+        if (isDarkMode)
+        {
+            await JSRuntime.InvokeVoidAsync("document.body.classList.add", "dark-mode");
+        }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("document.body.classList.remove", "dark-mode");
         }
     }
 

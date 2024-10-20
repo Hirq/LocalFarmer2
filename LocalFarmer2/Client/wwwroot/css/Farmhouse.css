@@ -54,7 +54,7 @@
     height: 100%;
     min-height: 112px;
     backface-visibility: hidden;
-    /* Dodane do wycentrowania elementów */
+    /* Center elements */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,35 +63,32 @@
 }
 
 .flip-card-front {
-    /* Przednia strona, widoczna tylko przy braku obrotu */
-    background-color: #fff; /* Można dodać dowolne tło */
+    background-color: var(--surface-color);
 }
 
 .flip-card-back {
-    /* Tylna strona, widoczna tylko po obrocie */
     transform: rotateY(180deg);
-    background-color: #f0f0f0; /* Dodaj tło dla tylnej strony */
+    background-color: var(--background-color);
 }
 
 .position-indicators {
-    display: flex; /* Flexbox dla wskaźników */
-    justify-content: space-between; /* Równomierne rozmieszczenie */
-    margin-top: 10px; /* Odstęp od przycisku */
-    width: 100%; /* Szerokość wskaźników taka sama jak szerokość przycisku */
-    max-width: 230px; /* Możesz ograniczyć maksymalną szerokość */
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    width: 100%;
+    max-width: 230px;
 }
 
 .indicator {
-    width: 30%; /* Każdy wskaźnik zajmuje 30% miejsca */
-    height: 10px; /* Wysokość wskaźnika */
-    background-color: #ccc; /* Domyślny kolor wskaźnika (szary) */
-    border-radius: 3px; /* Zaokrąglenie rogów */
+    width: 30%;
+    height: 10px;
+    background-color: var(--gray-primary);
+    border-radius: 3px;
 }
 
     .indicator.active {
-        background-color: #ffc107; /* Kolor dla aktywnego wskaźnika (zgodny z przyciskiem Warning w MudBlazor) */
+        background-color: var(--button-warning);
     }
-/*TODO: margin-left:10 px powinno być tylko jak jest dużo wierszy*/
 
 .noteText {
     max-height: 91px;
