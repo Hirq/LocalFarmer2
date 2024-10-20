@@ -33,8 +33,10 @@
                         <div class="d-flex flex-column noteText">
                             <MudText Typo="Typo.h5" Class="text-center">@item.Name</MudText>
                             <div class="text-center">
-                                <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@(() => UtilsService.OpenDialogNoteCards(@loc["Note_Edit_Note"], @loc["X_Save"], note, async () => await EditNote(item)))"/>
-                                <MudIconButton OnClick="@(async () => await DeleteNote(item.Id))" Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" />
+                                <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@(() => EditNotePopup(item))"/>
+                                @* <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteProduct(context.Id), Color.Error)' /> *@
+
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteNote(item.Id), Color.Error)'/>
                             </div>
                         </div>
                     </div>
@@ -55,6 +57,8 @@
     public Note note { get; set; } = new Note();
     public List<NoteViewModel> listNotes { get; set; }
     public List<NoteViewModel> originalNotesList = new List<NoteViewModel>();
+    public DialogData dialogData = new DialogData();
+
     /*
     0 - All
     1 - Only Active
@@ -67,6 +71,12 @@
     {
         await InitializeNotesList();
         note.IdUser = UserStateService.CurrentUser.IdUser;
+        dialogData = new DialogData()
+        {
+            Title = $"{loc["X_Delete"]} {loc["X_Note"]}",
+            ButtonName = loc["X_Delete"],
+            Content = $"{loc["X_Are_You_Sure_Delete_This"]} {loc["X_Note"]}",
+        };
         ChangeFilter();
     }
 
@@ -82,6 +92,8 @@
         ChangeFilter();
         FilterNotes = filtr;
     }
+
+    // TODO: Jak klikam na wskaznik lub przycisk to czasami się zmienia 2 razy napis
 
     private void ChangeFilter()
     {
@@ -110,9 +122,6 @@
         JSRuntime.InvokeVoidAsync("checkScrolls");
     }
 
-    // w momencie wywołania OpenDialogNoteCards nalezy ustawić note na string.Empty lub note.text dla Edit
-    // Wiec nalezałoby zrobic funkcje gdzie jest OpenDIalogNoteCards i warunke czy edit czy add
-
     private async Task AddNote()
     {
         await NoteService.AddNote(note);
@@ -122,14 +131,24 @@
 
     private async Task AddNotePopup()
     {
-        UtilsService.OpenDialogNoteCards(@loc["Note_Add_Note"], @loc["X_Save"], note, async () => await AddNote());
+        note.Name = string.Empty;
+        note.Text = string.Empty;
+        UtilsService.OpenDialogNoteCards(loc["Note_Add_Note"], loc["X_Save"], note, async () => await AddNote());
     }
 
     private async Task EditNote(NoteViewModel item)
     {
+        note.Id = item.Id;
         await NoteService.EditNote(note);
         await InitializeNotesList();
         StateHasChanged();
+    }
+
+    private async Task EditNotePopup(NoteViewModel item)
+    {
+        note.Name = item.Name;
+        note.Text = item.Text;
+        UtilsService.OpenDialogNoteCards(loc["Note_Edit_Note"], loc["X_Save"], note, async () => await EditNote(item));
     }
 
     private async Task DeleteNote(int id)

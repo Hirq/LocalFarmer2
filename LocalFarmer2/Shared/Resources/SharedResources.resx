@@ -387,7 +387,7 @@
   <data name="Note_Add_Note" xml:space="preserve">
     <value>Add note</value>
   </data>
-  <data name="Note_Edit_note" xml:space="preserve">
+  <data name="Note_Edit_Note" xml:space="preserve">
     <value>Edit note</value>
   </data>
   <data name="X_Text" xml:space="preserve">
@@ -404,5 +404,8 @@
   </data>
   <data name="Filter_Only_Archive" xml:space="preserve">
     <value>Archive</value>
+  </data>
+  <data name="X_Note" xml:space="preserve">
+    <value>Note</value>
   </data>
 </root>
