@@ -14,9 +14,9 @@
      <div>
         <MudButton Color="Color.Warning" Variant="Variant.Filled" Class="noteButtonFilter" OnClick="@(() => ChangeFilter())">@FilterName</MudButton>
         <div class="position-indicators">
-            <div class="indicator @(FilterNotes == 2 ? "active" : "")" onclick="@(() => setFilter(2))"></div>
-            <div class="indicator @(FilterNotes == 0 ? "active" : "")" onclick="@(() => setFilter(0))"></div>
-            <div class="indicator @(FilterNotes == 1 ? "active" : "")" onclick="@(() => setFilter(1))"></div>
+            <div class="indicator @(FilterNotes == 2 ? "active" : "")" onclick="@(() => setFilter(1))"></div>
+            <div class="indicator @(FilterNotes == 0 ? "active" : "")" onclick="@(() => setFilter(2))"></div>
+            <div class="indicator @(FilterNotes == 1 ? "active" : "")" onclick="@(() => setFilter(0))"></div>
         </div>
      </div>
  </MudPaper>
@@ -34,8 +34,6 @@
                             <MudText Typo="Typo.h5" Class="text-center">@item.Name</MudText>
                             <div class="text-center">
                                 <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@(() => EditNotePopup(item))"/>
-                                @* <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Outlined" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteProduct(context.Id), Color.Error)' /> *@
-
                                 <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteNote(item.Id), Color.Error)'/>
                             </div>
                         </div>
@@ -89,11 +87,9 @@
 
     private void setFilter(int filtr)
     {
-        ChangeFilter();
         FilterNotes = filtr;
+        ChangeFilter();
     }
-
-    // TODO: Jak klikam na wskaznik lub przycisk to czasami się zmienia 2 razy napis
 
     private void ChangeFilter()
     {

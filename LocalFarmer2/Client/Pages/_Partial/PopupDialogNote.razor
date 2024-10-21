@@ -2,9 +2,8 @@
 
 <MudDialog>
     <DialogContent>
-        <MudTextField T="string" @ref="titleField" Label="@loc["X_Title"]" RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="Note.Name"></MudTextField>
-        <MudTextField T="string" @ref="textField" Label="@loc["X_Text"]" Required RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="Note.Text" Lines="3" />
-        @* <MudTextField T="string" @ref="textField" Label="@loc["X_Text"]" Required RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="Note.Text"></MudTextField> *@
+        <MudTextField T="string" @ref="titleField" Label="@loc["X_Title"]" Required RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="Note.Name"></MudTextField>
+        <MudTextField T="string" @ref="textField" Label="@loc["X_Text"]" RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="Note.Text" Lines="3" />
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">@loc["X_Cancel"]</MudButton>
@@ -12,7 +11,7 @@
     </DialogActions>
 </MudDialog>
 
-    @code {
+@code {
     [CascadingParameter] 
     MudDialogInstance MudDialog { get; set; }
 
