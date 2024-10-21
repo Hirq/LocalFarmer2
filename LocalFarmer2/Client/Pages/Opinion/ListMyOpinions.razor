@@ -29,8 +29,8 @@
         <MudTd DataLabel="Nr">@context.Comment</MudTd>
         <MudTd DataLabel="Nr">@context.Rating</MudTd>
         <MudTd DataLabel="Edit">
-            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteOpinion(context.Id), Color.Error)'>@loc["X_Delete"]</MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OpenMessageBoxEditOpinion(context.Id)">@loc["X_Edit"]</MudButton>
+            <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="() => OpenMessageBoxEditOpinion(context.Id)" />
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteOpinion(context.Id), Color.Error)' />
             <MudMessageBox @ref="mbox" Title="Edit opinion" CancelText="Cancel">
                 <MessageContent>
                     <div class="d-flex flex-column align-center">

@@ -43,7 +43,7 @@
                             <MudText Typo="Typo.body1">@item.Text</MudText>
                         </div>
                     </div>
-                </div
+                </div>
             </div>
         </MudItem>
         }
@@ -52,8 +52,8 @@
 
 
 @code {
-    public Note note { get; set; } = new Note();
-    public List<NoteViewModel> listNotes { get; set; }
+    public Note note = new Note();
+    public List<NoteViewModel> listNotes = new List<NoteViewModel>();
     public List<NoteViewModel> originalNotesList = new List<NoteViewModel>();
     public DialogData dialogData = new DialogData();
 
@@ -63,7 +63,7 @@
     2 - Only Archive
     */
     private int FilterNotes = 1;
-    private string FilterName;
+    private string FilterName = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -125,7 +125,7 @@
         StateHasChanged();
     }
 
-    private async Task AddNotePopup()
+    private void AddNotePopup()
     {
         note.Name = string.Empty;
         note.Text = string.Empty;
@@ -140,7 +140,7 @@
         StateHasChanged();
     }
 
-    private async Task EditNotePopup(NoteViewModel item)
+    private void EditNotePopup(NoteViewModel item)
     {
         note.Name = item.Name;
         note.Text = item.Text;
