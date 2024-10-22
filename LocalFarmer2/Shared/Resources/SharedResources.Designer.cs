@@ -709,6 +709,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Archive.
+        /// </summary>
+        internal static string X_Archive {
+            get {
+                return ResourceManager.GetString("X_Archive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure delete this.
         /// </summary>
         internal static string X_Are_You_Sure_Delete_This {

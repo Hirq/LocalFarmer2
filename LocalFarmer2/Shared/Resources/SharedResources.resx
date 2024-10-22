@@ -408,4 +408,7 @@
   <data name="X_Note" xml:space="preserve">
     <value>Note</value>
   </data>
+  <data name="X_Archive" xml:space="preserve">
+    <value>Archive</value>
+  </data>
 </root>

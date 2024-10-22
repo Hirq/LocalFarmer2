@@ -40,6 +40,7 @@ namespace LocalFarmer2.Server.Controllers
             Note note = await _noteRepository.GetFirstOrDefaultAsync(x => x.Id == id);
             note.Name = model.Name;
             note.Text = model.Text;
+            note.IsArchive = model.IsArchive;
 
             _noteRepository.Update(note);
             await _noteRepository.SaveChangesAsync();

@@ -50,7 +50,7 @@ namespace LocalFarmer2.Client.Services
             _dialogService.Show<PopupWithCards>(title, parameters, options);
         }       
 
-        public void OpenDialogNoteCards(string title, string buttonName, Note note, Action action)
+        public void OpenDialogNoteCards(string title, string buttonName, Note note, Action action, bool isEdit, Action? actionArchive)
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
             var parameters = new DialogParameters
@@ -58,6 +58,8 @@ namespace LocalFarmer2.Client.Services
                 { "ButtonName", buttonName },
                 { "Note", note },
                 { "Action", action },
+                { "IsEdit", isEdit },
+                { "ActionArchive", actionArchive },
             };
 
             _dialogService.Show<PopupDialogNote>(title, parameters, options);
