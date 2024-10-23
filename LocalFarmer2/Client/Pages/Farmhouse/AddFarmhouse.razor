@@ -16,7 +16,7 @@
             <MudItem xs="12">
                 <MudText Class="d-flex justify-center" Typo="Typo.h6">@loc["Farmhouse_Add_Farmhouse"]</MudText>
                 <MudPaper Class="pa-4">
-                        <MudTextField T="string" Label="@loc["X_Name"]" @bind-Value="farmhouseDto.Name" @ref="farmhouseNameField" Required="true" RequiredError="@loc["Validation_Required"]" />
+                    <MudTextField T="string" Label="@loc["X_Name"]" @bind-Value="farmhouseDto.Name" @ref="farmhouseNameField" Required="true" RequiredError="@loc["Validation_Required"]" />
                     <MudTextField T="string" Label="@loc["X_Description"]" @bind-Value="farmhouseDto.Description" />
                     <MudTextField T="string" Label="@loc["Farmhouse_Address"]" @bind-Value="farmhouseDto.Address" />
                     <MudTextField T="string" Label="@loc["Farmhouse_Phone"]" @bind-Value="farmhouseDto.Phone" />

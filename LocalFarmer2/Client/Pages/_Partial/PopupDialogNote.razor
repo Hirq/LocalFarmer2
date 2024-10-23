@@ -1,20 +1,22 @@
 ﻿@namespace LocalFarmer2.Client.Pages
+@inject ValidateService ValidateService
 
 <MudDialog ClassActions="justify-content-between">
     <DialogContent>
         <MudTextField T="string" @ref="titleField" Label="@loc["X_Title"]" Required RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="Note.Name"></MudTextField>
-        <MudTextField T="string" @ref="textField" Label="@loc["X_Text"]" RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="Note.Text" Lines="3" />
+        <MudTextField T="string" Label="@loc["X_Text"]" Variant="Variant.Text" @bind-Value="Note.Text" Lines="3" />
+
     </DialogContent>
-     <DialogActions>
+        <DialogActions>
         <div>
             @if(IsEdit)
             {
-                <MudButton Color="Color.Tertiary" Variant="Variant.Filled" OnClick="() => { ActionArchive?.Invoke(); Submit(); }">@loc["X_Archive"]</MudButton>
+                <MudButton Color="Color.Tertiary" Variant="Variant.Filled" OnClick="() => ArchiveAction()">@loc["X_Archive"]</MudButton>
             }
         </div>
         <div>
             <MudButton OnClick="Cancel">@loc["X_Cancel"]</MudButton>
-            <MudButton Color="Color.Secondary" Variant="Variant.Filled" OnClick="() => { Action?.Invoke(); Submit(); }">@ButtonName</MudButton>
+            <MudButton Color="Color.Secondary" Variant="Variant.Filled" OnClick="() => PrimaryAction()">@ButtonName</MudButton>
         </div>
     </DialogActions>
 </MudDialog>
@@ -28,12 +30,12 @@
 
     [Parameter]
     public Action Action { get; set; }   
-    
+
     // 0 - Add
     // 1 - Edit
     [Parameter]
     public bool IsEdit { get; set; }    
-    
+
     [Parameter]
     public Action ActionArchive { get; set; }
 
@@ -41,8 +43,39 @@
     public string ButtonName { get; set; }
 
     private MudTextField<string> titleField;
-    private MudTextField<string> textField;
 
     void Submit() => MudDialog.Close(DialogResult.Ok(true));
     void Cancel() => MudDialog.Cancel();
+
+    bool Validate()
+    {
+        var fieldsToValidate = new List<(object Field, string Value)>
+        {
+            (titleField, Note.Name),
+        };
+
+        return ValidateService.ValidateMudTextFields(fieldsToValidate);
+    }
+
+    void PrimaryAction()
+    {
+        if (Validate())
+        {
+            return;
+        }
+
+        Action?.Invoke();
+        Submit();
+    } 
+
+    void ArchiveAction()
+    {
+        if (Validate())
+        {
+            return;
+        }
+
+        ActionArchive?.Invoke();
+        Submit();
+    }
 }
