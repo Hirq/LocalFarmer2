@@ -17,7 +17,7 @@
     </DialogActions>
 </MudDialog>
 
-@code {
+    @code {
     [Parameter]
     public bool isContactToAdmin { get; set; }
 
@@ -41,15 +41,17 @@
 
     async Task SendMessage()
     {
-        var fieldsToValidate = new List<(object Field, string Value)>
+        var fieldsToValidate = new List<FieldToValidate>
         {
-            (subjectField, emailDto.Subject),
-            (bodyField, emailDto.Body),
+            new FieldToValidate(subjectField, emailDto.Subject),
+            new FieldToValidate(bodyField, emailDto.Body)
         };
 
         if (!isContactToAdmin)
         {
-            fieldsToValidate.Add((emailField, emailDto.From));
+            fieldsToValidate.Add(
+                new FieldToValidate(emailField, emailDto.From)
+            );
         }
 
         if (ValidateService.ValidateMudTextFields(fieldsToValidate))

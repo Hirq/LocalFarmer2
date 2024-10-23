@@ -1,4 +1,4 @@
-﻿using LocalFarmer2.Shared.DTOs;
+﻿using LocalFarmer2.Client.Utilities;
 using MudBlazor;
 using System.Globalization;
 
@@ -6,16 +6,22 @@ namespace LocalFarmer2.Client.Services
 {
     public class ValidateService
     {
-        public bool ValidateMudTextFields(List<(object Field, string Value)> mudTextValues)
+
+        public bool ValidateMudTextFields(params FieldToValidate[] fieldsToValidate)
+        {
+            return ValidateMudTextFields(fieldsToValidate.ToList());
+        }
+
+        public bool ValidateMudTextFields(List<FieldToValidate> fieldsToValidate)
         {
             bool validationFailed = false;
 
-            foreach (var (field, value) in mudTextValues)
+            foreach (var field in fieldsToValidate)
             {
-                switch (field)
+                switch (field.Field)
                 {
                     case MudTextField<string> textField:
-                        if (string.IsNullOrEmpty(value))
+                        if (string.IsNullOrEmpty(field.Value))
                         {
                             textField.Validate();
                             validationFailed = true;
@@ -27,7 +33,7 @@ namespace LocalFarmer2.Client.Services
                         break;
 
                     case MudSelect<string> selectField:
-                        if (string.IsNullOrEmpty(value))
+                        if (string.IsNullOrEmpty(field.Value))
                         {
                             selectField.Validate();
                             validationFailed = true;

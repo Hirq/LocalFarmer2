@@ -21,7 +21,7 @@
     </DialogActions>
 </MudDialog>
 
-@code {
+    @code {
     [CascadingParameter] 
     MudDialogInstance MudDialog { get; set; }
 
@@ -49,12 +49,9 @@
 
     bool Validate()
     {
-        var fieldsToValidate = new List<(object Field, string Value)>
-        {
-            (titleField, Note.Name),
-        };
-
-        return ValidateService.ValidateMudTextFields(fieldsToValidate);
+        return ValidateService.ValidateMudTextFields(
+            new FieldToValidate(titleField, Note.Name)
+        );
     }
 
     void PrimaryAction()

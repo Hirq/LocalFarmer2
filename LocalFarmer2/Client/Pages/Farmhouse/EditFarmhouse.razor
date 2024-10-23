@@ -161,19 +161,21 @@ else
         farmhouseDto.Latitude = latitude;
         farmhouseDto.Longitude = longitude;
 
-        var fieldsToValidate = new List<(object Field, string Value)>
+        var fieldsToValidate = new List<FieldToValidate>
         {
-            (latitudeField, farmhouseDto.Latitude),
-            (longitudeField, farmhouseDto.Longitude),
-            (paymentMethodsField, farmhouseDto.PaymentMethods),
+            new FieldToValidate(latitudeField, farmhouseDto.Latitude),
+            new FieldToValidate(longitudeField, farmhouseDto.Longitude),
+            new FieldToValidate(paymentMethodsField, farmhouseDto.PaymentMethods)
         };
 
         //TODO: Moze tego IdUser też do ValidationService przerzucić
         context.Validate();
+
         if (ValidateService.ValidateMudTextFields(fieldsToValidate))
         {
             return;
         }
+
         if (!ValidateService.IsValidLatitude(farmhouseDto.Latitude) || !ValidateService.IsValidLongitude(farmhouseDto.Longitude))
         {
             return;
