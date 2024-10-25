@@ -27,12 +27,12 @@ else
                     {
                         <MudPaper Class="pa-4 d-flex justify-space-between">
                             <div>
-                                <MudTextField T="String" Label="@loc["X_Name"]" @bind-Value="farmhouseDto.Name" @ref="farmhouseNameField" Required="true" RequiredError="Farmhouse name is required!" />
+                                <MudTextField T="String" Label="@loc["X_Name"]" @bind-Value="farmhouseDto.Name" @ref="farmhouseNameField" Required RequiredError="Farmhouse name is required!" />
                                 <MudTextField T="String" Label="@loc["X_Description"]" @bind-Value="farmhouseDto.Description" />
                                 <MudTextField T="String" Label="@loc["Farmhouse_Address"]" @bind-Value="farmhouseDto.Address" />
                                 <MudTextField T="String" Label="@loc["Farmhouse_Phone"]" @bind-Value="farmhouseDto.Phone" />
                                 <MudTextField T="String" Label="Email" @bind-Value="farmhouseDto.Email" />
-                                <MudSelect T="string" Label="@loc["Farmhouse_Payment_Methods"]" MultiSelection="true" SelectAll="true" @ref="paymentMethodsField" Required="true" @bind-Value="@farmhouseDto.PaymentMethods" @bind-SelectedValues="SelectedPayment">
+                                <MudSelect T="string" Label="@loc["Farmhouse_Payment_Methods"]" MultiSelection="true" SelectAll="true" @ref="paymentMethodsField" Required @bind-Value="@farmhouseDto.PaymentMethods" @bind-SelectedValues="SelectedPayment">
                                     @foreach (var method in PaymentMethodInfo.PaymentMethods)
                                     {
                                         <MudSelectItem T="string" Value="@method">@method</MudSelectItem>
