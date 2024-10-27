@@ -1,4 +1,5 @@
 ﻿@namespace LocalFarmer2.Client.Pages
+
 <MudDialog>
     <DialogContent>
         @foreach(var card in ListOpinion)
@@ -17,13 +18,11 @@
 </MudDialog>
 
 @code {
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
     [Parameter]
     public List<LocalFarmer2.Shared.Models.Opinion> ListOpinion { get; set; }
-
-    // [Parameter]
-    // public Action Action { get; set; }
-
-    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
     void Submit() => MudDialog.Close(DialogResult.Ok(true));
     void Cancel() => MudDialog.Cancel();

@@ -18,31 +18,14 @@
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.AlertEnum)">@loc["X_Type"]</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.Message)">@loc["Alert_Message"]</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.DateCreated)">@loc["X_Date"]</MudTableSortLabel></MudTh>
-        @* <MudTh>Action</MudTh> *@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Nr">@context.Id</MudTd>
-            <MudTd DataLabel="Nr">@context.IdFarmhouse</MudTd>
-            <MudTd DataLabel="Nr">@context.Farmhouse.Name</MudTd>
-            <MudTd DataLabel="Nr">@context.AlertEnum</MudTd>
-            <MudTd DataLabel="Nr">@context.Message</MudTd>
-            <MudTd DataLabel="Nr">@context.DateCreated</MudTd>
-@*             <MudTd DataLabel="Edit">
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => DeleteOpinion(context.Id)">Delete</MudButton>
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OpenMessageBoxEditOpinion(context.Id)">Edit</MudButton>
-                <MudMessageBox @ref="mbox" Title="Edit opinion" CancelText="Cancel">
-                    <MessageContent>
-                        <div class="d-flex flex-column align-center">
-                            <MudRating @bind-SelectedValue="opinionDto.Rating" />
-                            <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">Your opinion!</MudText>
-                        </div>
-                        <MudTextField T="string" @bind-Value="opinionDto.Comment" Label="Comment" Variant="Variant.Outlined" Lines="3" Placeholder="Set star and add your opinion" />
-                    </MessageContent>
-                    <YesButton>
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.AddBox" OnClick="() => EditOpinion(context.Id)">Edit!</MudButton>
-                    </YesButton>
-                </MudMessageBox>
-            </MudTd> *@
+        <MudTd DataLabel="Nr">@context.IdFarmhouse</MudTd>
+        <MudTd DataLabel="Nr">@context.Farmhouse.Name</MudTd>
+        <MudTd DataLabel="Nr">@context.AlertEnum</MudTd>
+        <MudTd DataLabel="Nr">@context.Message</MudTd>
+        <MudTd DataLabel="Nr">@context.DateCreated</MudTd>
     </RowTemplate>
     <PagerContent>
         <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />

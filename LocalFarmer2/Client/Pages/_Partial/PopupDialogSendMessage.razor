@@ -1,7 +1,7 @@
 ﻿@namespace LocalFarmer2.Client.Pages
+@using System.Text
 @inject UtilsService UtilsService
 @inject ValidateService ValidateService
-@using System.Text
 
 <MudDialog>
     <DialogContent>
@@ -9,7 +9,7 @@
         <MudTextField Disabled Label="EmailTo" @bind-Value="emailTo"></MudTextField>
         <MudTextField T="string" @ref="emailField" Label="Email" Required=@(!isContactToAdmin) RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="emailDto.From"></MudTextField>
         <MudTextField T="string" @ref="subjectField" Label="@loc["Farmhouse_Subject"]" Required RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="emailDto.Subject"></MudTextField>
-        <MudTextField T="string" @ref="bodyField" Label="@loc["Farmhouse_Message"]" Required RequiredError="@loc["Validation_Required"]" Variant="Variant.Outlined" Lines="3" @bind-Value="emailDto.Body" Class="mt-4" />
+        <MudTextField T="string" @ref="bodyField" Label="@loc["Farmhouse_Message"]" Required RequiredError="@loc["Validation_Required"]" Variant="Variant.Outlined" Lines="3" @bind-Value="emailDto.Body" Class="mt-4"/>
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">@loc["X_Cancel"]</MudButton>
@@ -17,15 +17,15 @@
     </DialogActions>
 </MudDialog>
 
-    @code {
+@code {
+    [CascadingParameter] 
+    MudDialogInstance MudDialog { get; set; }
+
     [Parameter]
     public bool isContactToAdmin { get; set; }
 
     [Parameter]
     public string? emailTo { get; set; }
-
-    [CascadingParameter] 
-    MudDialogInstance MudDialog { get; set; }
 
     private MudTextField<string> emailField;
     private MudTextField<string> subjectField;

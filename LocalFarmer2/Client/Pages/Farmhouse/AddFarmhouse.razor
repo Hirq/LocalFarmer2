@@ -45,8 +45,6 @@
     private string? result;
     private string? latitude;
     private string? longitude;
-    // private UserDto? currentUser;
-    // private bool isUserSignUp;
     public int Id { get; set; }
     private AddFarmhouseDto farmhouseDto = new AddFarmhouseDto();
     private IEnumerable<string> SelectedPayment { get; set; } = PaymentMethodInfo.DefaultPayment;
@@ -57,17 +55,21 @@
 
     protected async override Task OnInitializedAsync()
     {
-        // isUserSignUp = await AccountService.IsUserSignUp();
-
-        // if (isUserSignUp)
-        // {
-        //     currentUser = await AccountService.GetCurrentUser();
-        //     UserStateService.CurrentUser = currentUser;
-        //     var farmhouse = await FarmhouseService.GetFarmhouse((int)currentUser?.IdFarmhouse!);
-        //     farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
-        // }
-
         FileService.ClearVariables();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await farmhouseNameField.FocusAsync();
+            module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
+            if (module != null)
+            {
+                result = await module.InvokeAsync<string>("setCoordinates", "map");
+                Console.WriteLine(result);
+            }
+        }
     }
 
     private async void OnValidSubmit(EditContext context)
@@ -109,20 +111,6 @@
         AlertService.SetSuccessAlert($"Successfully add farmhouse {farmhouseDto.Name}");
         NavigationManager.NavigateTo("/");
         _ = AlertService.ClearAlertAfterDelay();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await farmhouseNameField.FocusAsync();
-            module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
-            if (module != null)
-            {
-                result = await module.InvokeAsync<string>("setCoordinates", "map");
-                Console.WriteLine(result);
-            }
-        }
     }
 
 }

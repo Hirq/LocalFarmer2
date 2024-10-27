@@ -31,23 +31,4 @@
         CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(culture);
         Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
     }
-
-    // private UserDto currentUser = new UserDto()
-    //     {
-    //         UserName = "",
-    //         IdFarmhouse = 0,
-    //         FarmhouseName = ""
-    //     };
-    // private bool isUserSignUp;
-
-    // protected async override Task OnInitializedAsync()
-    // {
-    //     isUserSignUp = await AccountService.IsUserSignUp();
-
-    //     if (isUserSignUp)
-    //     {
-    //         currentUser = await AccountService.GetCurrentUser();
-    //         UserStateService.CurrentUser = currentUser;
-    //     }
-    // }
 }

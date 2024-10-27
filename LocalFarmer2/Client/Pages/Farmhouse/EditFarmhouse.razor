@@ -1,11 +1,11 @@
 ﻿@page "/editFarmhouse"
-@inject UserStateService UserStateService
 @inject IMapper mapper
 @inject IAccountService AccountService
 @inject IFarmhouseService FarmhouseService
 @inject IFavoriteFarmhouseService FavoriteFarmhouseService
 @inject IJSRuntime JSRuntime
 @inject IAlertService AlertService
+@inject UserStateService UserStateService
 @inject NavigationManager NavigationManager
 @inject ValidateService ValidateService
 @inject FileService FileService
@@ -83,7 +83,6 @@ else
     private MudSelect<string> paymentMethodsField;
     public int Id { get; set; }
     public DialogData dialogData = new DialogData();
-
     public bool initIsOpen;
 
     protected async override Task OnInitializedAsync()

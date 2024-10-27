@@ -36,10 +36,10 @@
         </PagerContent>
     </MudTable>
 
-    @code {
+@code {
     IEnumerable<Product> ListProducts = new List<Product>();
-    int idFarmhouse;
     public DialogData dialogData = new DialogData();
+    int idFarmhouse;
 
     protected override async Task OnInitializedAsync()
     {

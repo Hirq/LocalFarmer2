@@ -37,7 +37,7 @@
     </PagerContent>
 </MudTable>
 
-    @code {
+@code {
     [Parameter]
     public int Id { get; set; }
 
@@ -47,7 +47,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // farmhouse.Products = new List<Product>();
         farmhouse = await FarmhouseService.GetFarmhouse(Id);
         ListProducts = farmhouse.Products.ToList();
     }

@@ -90,16 +90,30 @@
     </MudStack>
 </MudPaper>
 
-    @code {
+@code {
     [Parameter]
     public int Id { get; set; }
+
+    Product product = new Product();
+    List<Product> productsCards = new List<Product>();
     private bool _expandedPrimary = true;
     private bool _expandedPrice = false;
     private bool _expandedPhoto = false;
     private bool _expandedOtherProducts = false;
     private bool isOtherProducts = false;
-    Product product = new Product();
-    List<Product> productsCards = new List<Product>();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id != 0)
+        {
+            product = await ProductService.GetProduct(Id);
+            productsCards = await ProductService.GetRandomProductsFarmhouse(product.IdFarmhouse, Id, 4);
+            if (productsCards.Count() > 0)
+            {
+                isOtherProducts = true;
+            }
+        }
+    }
 
     private void OnExpandCollapsePhoto()
     {
@@ -134,18 +148,5 @@
     private void ShowProductsFromCard(int id)
     {
         NavigationManager.NavigateTo($"product/{id}");
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        if (Id != 0)
-        {
-            product = await ProductService.GetProduct(Id);
-            productsCards = await ProductService.GetRandomProductsFarmhouse(product.IdFarmhouse, Id, 4);
-            if (productsCards.Count() > 0)
-            {
-                isOtherProducts = true;
-            }
-        }
     }
 }

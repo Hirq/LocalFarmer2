@@ -102,50 +102,16 @@
 
     public List<Opinion> listOpinionSelected = new List<Opinion>();
     public List<Opinion> listOpinionAll = new List<Opinion>();
-    public double? average { get; set; }
-
-    private IJSObjectReference? module;
-    private string? result;
-
     Farmhouse farmhouse = new Farmhouse();
-
+    private IJSObjectReference? module;
+    public double? average { get; set; }
+    private string? result;
     private bool _expandedPrimary = true;
     private bool _expandedPrice = false;
     private bool _expandedPhoto = false;
     private bool _expandedOpinions = false;
     private bool _expandedMap = true;
     private bool isHaveOpinion = false;
-
-    private void OnExpandCollapsePhoto()
-    {
-        _expandedPhoto = !_expandedPhoto;
-    }
-
-    private void OnExpandCollapsePrimary()
-    {
-        _expandedPrimary = !_expandedPrimary;
-    }
-
-    private void OnExpandCollapsePrice()
-    {
-        _expandedPrice = !_expandedPrice;
-    }
-
-    private void OnExpandCollapseOpinions()
-    {
-        _expandedOpinions = !_expandedOpinions;
-    }
-
-    private void OnExpandCollapseMaps()
-    {
-        _expandedMap = !_expandedMap;
-    }
-
-    private void ShowAllProducts()
-    {
-        NavigationManager.NavigateTo($"productsFarmhouse/{Id}");
-    }
-
 
     protected override async Task OnInitializedAsync()
     {
@@ -191,16 +157,41 @@
         }
     }
 
+    private void OnExpandCollapsePhoto()
+    {
+        _expandedPhoto = !_expandedPhoto;
+    }
+
+    private void OnExpandCollapsePrimary()
+    {
+        _expandedPrimary = !_expandedPrimary;
+    }
+
+    private void OnExpandCollapsePrice()
+    {
+        _expandedPrice = !_expandedPrice;
+    }
+
+    private void OnExpandCollapseOpinions()
+    {
+        _expandedOpinions = !_expandedOpinions;
+    }
+
+    private void OnExpandCollapseMaps()
+    {
+        _expandedMap = !_expandedMap;
+    }
+
+    private void ShowAllProducts()
+    {
+        NavigationManager.NavigateTo($"productsFarmhouse/{Id}");
+    }
+
     async ValueTask IAsyncDisposable.DisposeAsync()
     {
         if (module is not null)
         {
             await module.DisposeAsync();
         }
-    }
-
-    private void Test()
-    {
-        Console.WriteLine("Test work");
     }
 }
