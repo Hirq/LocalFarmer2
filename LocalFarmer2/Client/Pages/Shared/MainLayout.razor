@@ -24,17 +24,16 @@
                     {
                         <MudBadge id="badge" Content="@newAlerts" Color="Color.Error" Overlap="true" Class="mx-6 my-4">
                         <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.Notifications" TransformOrigin="Origin.TopRight" Color="Color.Inherit" IsOpenChanged="MenuStateChanged" MaxHeight="400">
-                                <MudText Typo="Typo.h6" Align="Align.Center">@loc["X_Alerts"]</MudText>
-                                <MudTooltip Text="Open history">
-                                    <MudMenuItem Avatar="@Icons.Material.Filled.History" Href="/myalerts">@loc["Alert_All_Alerts"]</MudMenuItem>
-                                </MudTooltip>
-                                <MudDivider DividerType="DividerType.Middle" Style="height: 3px" />
-                                @foreach (var alert in alerts)
-                                {
-                                    <MudMenuItem>@alert.Message</MudMenuItem>
-                                }
-                            </MudMenu>
-
+                            <MudText Typo="Typo.h6" Align="Align.Center">@loc["X_Alerts"]</MudText>
+                            <MudTooltip Text="Open history">
+                                <MudMenuItem Avatar="@Icons.Material.Filled.History" Href="/myalerts">@loc["Alert_All_Alerts"]</MudMenuItem>
+                            </MudTooltip>
+                            <MudDivider DividerType="DividerType.Middle" Style="height: 3px" />
+                            @foreach (var alert in alerts)
+                            {
+                                <MudMenuItem>@alert.Message</MudMenuItem>
+                            }
+                        </MudMenu>
                         </MudBadge>
                     }
                     else
@@ -96,7 +95,7 @@
     private MudThemeProvider mudThemeProvider;
     private MudTheme MainTheme = new MudTheme
     {
-        Palette = new Palette
+        Palette = new PaletteLight
         {
             // Primary = Colors.Blue.Default,
             // Background = "#fff",
