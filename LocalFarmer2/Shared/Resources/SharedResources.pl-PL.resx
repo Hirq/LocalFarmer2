@@ -328,7 +328,7 @@
     <value>Zdjęcie produktu</value>
   </data>
   <data name="Validation_Required" xml:space="preserve">
-    <value>Wymagany</value>
+    <value>To jest wymagane pole</value>
   </data>
   <data name="Button_Clear" xml:space="preserve">
     <value>Wyczyść</value>

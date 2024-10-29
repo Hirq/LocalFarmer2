@@ -328,7 +328,7 @@
     <value>Edit product</value>
   </data>
   <data name="Validation_Required" xml:space="preserve">
-    <value>Required</value>
+    <value>It is required field</value>
   </data>
   <data name="Button_Add_Image" xml:space="preserve">
     <value>Add image</value>

@@ -16,7 +16,7 @@
         <MudItem xs="12">
             <MudCard>
                 <MudCardContent>
-                    <MudTextField Label="@loc["X_Name"]" @bind-Value="product.Name" Required For="@(() => product.Name)" />
+                        <MudTextField Label="@loc["X_Name"]" @bind-Value="product.Name" Required ErrorText="@loc["Validation_Required"]" />
                     <MudTextField Label="@loc["X_Description"]" @bind-Value="product.Description" Required For="@(() => product.Description)" />
                     <MudTextField Label="@loc["Product_Minimal_Amount"]" @bind-Value="product.CountMinOne" Required For="@(() => product.CountMinOne)" />
                     <MudTextField Label="@loc["Product_Prize_One"]" @bind-Value="product.PrizeOne" Required For="@(() => product.PrizeOne)" />
@@ -31,7 +31,7 @@
     </MudGrid>
 </EditForm>
 
-@code {
+    @code {
     ProductDto product = new ProductDto();
 
     protected async override Task OnInitializedAsync()
@@ -41,6 +41,7 @@
 
     private async void OnValidSubmit(EditContext context)
     {
+        context.Validate();
         await ProductService.AddProduct(product, (int)UserStateService.CurrentUser.IdFarmhouse);
 
         //Alerts

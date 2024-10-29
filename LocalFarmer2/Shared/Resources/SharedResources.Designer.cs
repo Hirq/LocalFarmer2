@@ -673,7 +673,7 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Required.
+        ///   Looks up a localized string similar to It is required field.
         /// </summary>
         internal static string Validation_Required {
             get {
