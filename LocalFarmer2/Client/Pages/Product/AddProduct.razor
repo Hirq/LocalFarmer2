@@ -16,11 +16,11 @@
         <MudItem xs="12">
             <MudCard>
                 <MudCardContent>
-                        <MudTextField Label="@loc["X_Name"]" @bind-Value="product.Name" Required ErrorText="@loc["Validation_Required"]" />
-                    <MudTextField Label="@loc["X_Description"]" @bind-Value="product.Description" Required For="@(() => product.Description)" />
-                    <MudTextField Label="@loc["Product_Minimal_Amount"]" @bind-Value="product.CountMinOne" Required For="@(() => product.CountMinOne)" />
-                    <MudTextField Label="@loc["Product_Prize_One"]" @bind-Value="product.PrizeOne" Required For="@(() => product.PrizeOne)" />
-                    <MudTextField Label="@loc["Product_Total_Quantity"]" @bind-Value="product.CountAll" Required For="@(() => product.CountAll)" />
+                    <MudTextField Label="@loc["X_Name"]" @bind-Value="product.Name" Required For="@(() => product.Description)" ErrorText="@loc["Validation_Required"]" />
+                    <MudTextField Label="@loc["X_Description"]" @bind-Value="product.Description" Required For="@(() => product.Description)" ErrorText="@loc["Validation_Required"]" />
+                    <MudTextField Label="@loc["Product_Minimal_Amount"]" @bind-Value="product.CountMinOne" Required For="@(() => product.CountMinOne)" ErrorText="@loc["Validation_Required"]" />
+                    <MudTextField Label="@loc["Product_Prize_One"]" @bind-Value="product.PrizeOne" Required For="@(() => product.PrizeOne)" ErrorText="@loc["Validation_Required"]" />
+                    <MudTextField Label="@loc["Product_Total_Quantity"]" @bind-Value="product.CountAll" Required For="@(() => product.CountAll)" ErrorText="@loc["Validation_Required"]" />
                     <EditFile Name="@loc["Product_Photo"]" Model="@product" IsOpenPhoto=false />
                 </MudCardContent>
                 <MudCardActions>
@@ -41,7 +41,6 @@
 
     private async void OnValidSubmit(EditContext context)
     {
-        context.Validate();
         await ProductService.AddProduct(product, (int)UserStateService.CurrentUser.IdFarmhouse);
 
         //Alerts
