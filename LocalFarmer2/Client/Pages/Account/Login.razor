@@ -13,8 +13,10 @@
     </div>
 }
 
-<div class="card">
-    <div class="card-body">
+@* <div class="card"> *@
+    @* <div class="card-body"> *@
+<MudPaper Class="pa-4">
+
         <h5 class="card-title">@loc["Account_Start_Text"]</h5>
         <EditForm Model="loginModel" OnValidSubmit="HandleLogin">
             <DataAnnotationsValidator />
@@ -32,9 +34,10 @@
             </div>
             <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">@loc["Button_Submit"]</MudButton>
         </EditForm>
-    </div>
+        </MudPaper>
+@*     </div>
 </div>
-
+ *@
 @code {
     private LoginDto loginModel = new LoginDto();
     private bool ShowErrors;
