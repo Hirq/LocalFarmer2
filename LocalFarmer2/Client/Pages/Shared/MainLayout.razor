@@ -14,11 +14,11 @@
         <MudAppBar>
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
             <MudSpacer />
+            <MudSwitch @bind-Checked="@isDarkMode"
+                        ThumbIcon="@(!isDarkMode ? @Icons.Material.Filled.LightMode : Icons.Material.Filled.ModeNight)"
+                        ThumbIconColor="@(!isDarkMode ? Color.Warning : Color.Primary)"
+                        onclick="@(() =>ToggleTheme())" />
             <AuthorizeView>
-                <MudSwitch @bind-Checked="@isDarkMode"
-                           Color="Color.Primary"
-                           Label="Light/Dark"
-                           onclick="@(() =>ToggleTheme())" />
                 <div class="cursor-pointer">
                     @if(newAlerts > 0)
                     {
