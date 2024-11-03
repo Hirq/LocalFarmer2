@@ -107,10 +107,26 @@ namespace LocalFarmer2.Server.Controllers
         }
 
         [HttpGet]
-        [Route("User/{userName}")]
+        [Route("User/ByUserName/{userName}")]
         public async Task<IActionResult> GetCurrentUserAsync(string userName)
         {
             var user = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.UserName == userName, x => x.Farmhouse);
+            var userDto = new UserDto()
+            {
+                UserName = user.UserName,
+                IdUser = user.Id,
+                IdFarmhouse = user.IdFarmhouse,
+                FarmhouseName = user.Farmhouse?.Name,
+                FullName = user.FullName
+            };
+            return Ok(userDto);
+        }
+
+        [HttpGet]
+        [Route("User/ByFarmhouseId/{idFarmhouse}")]
+        public async Task<IActionResult> GetCurrentUserByFarmhouseIdAsync(int idFarmhouse)
+        {
+            var user = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.IdFarmhouse == idFarmhouse, x => x.Farmhouse);
             var userDto = new UserDto()
             {
                 UserName = user.UserName,

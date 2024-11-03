@@ -12,6 +12,6 @@
         public Task<List<Alert>> GetAllForUser(string idUser, int? idFarmhouse);
         public Task SetAllAlertsAsReadForUser(string idUser);
         public Task AddAlert(AddAlertDto dto);
-        public Task AddAlerts(List<string> dtos, int idFarmhouse, bool infoFromFarmhouse, MessageAlert messageAlert);
+        public Task AddAlerts(List<string> dtos, int? idFarmhouse, bool infoFromFarmhouse, MessageAlert messageAlert);
     }
 }

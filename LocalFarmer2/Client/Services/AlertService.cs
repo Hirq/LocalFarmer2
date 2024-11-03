@@ -98,7 +98,7 @@
             await _httpClient.PostAsJsonAsync($"api/Alert/Alert", dto);
         }
 
-        public async Task AddAlerts(List<string> dtos,int idFarmhouse, bool infoFromFarmhouse, MessageAlert messageAlert)
+        public async Task AddAlerts(List<string> dtos, int? idFarmhouse, bool infoFromFarmhouse, MessageAlert messageAlert)
         {
             foreach (var userId in dtos)
             {
@@ -107,7 +107,8 @@
                     IdFarmhouse = idFarmhouse,
                     Message = messageAlert.GetMessage(),
                     IdUser = userId,
-                    InfoFromFarmhouse = infoFromFarmhouse
+                    InfoFromFarmhouse = infoFromFarmhouse,
+                    AlertEnum = messageAlert.AlertEnum
                 };
                 await AddAlert(dtoAlert);
             }

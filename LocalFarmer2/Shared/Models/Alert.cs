@@ -17,7 +17,7 @@ namespace LocalFarmer2.Shared.Models
         public string IdUser { get; set; }
 
         [ForeignKey(nameof(Farmhouse))]
-        public int IdFarmhouse { get; set; }
+        public int? IdFarmhouse { get; set; }
 
         public bool IsOpen { get; set; }
 

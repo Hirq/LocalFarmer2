@@ -83,7 +83,14 @@ namespace LocalFarmer2.Client.Services
         {
             var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
             var user = authState.User;
-            var userDto = await _httpClient.GetFromJsonAsync<UserDto>($"api/Account/User/{user.Identity.Name}");
+            var userDto = await _httpClient.GetFromJsonAsync<UserDto>($"api/Account/User/ByUserName/{user.Identity.Name}");
+
+            return userDto;
+        }
+
+        public async Task<UserDto> GetCurrentUserByFarmhouseId(int idFarmhouse)
+        {
+            var userDto = await _httpClient.GetFromJsonAsync<UserDto>($"api/Account/User/ByFarmhouseId/{idFarmhouse}");
 
             return userDto;
         }

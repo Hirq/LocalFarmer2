@@ -8,6 +8,7 @@ namespace LocalFarmer2.Client.Services
         Task<LoginResult> Login(LoginDto loginModel);
         Task Logout();
         Task<UserDto> GetCurrentUser();
+        Task<UserDto> GetCurrentUserByFarmhouseId(int idFarmhouse);
         Task EditUser(EditUserDto dto);
         Task<bool> IsUserSignUp();
     }
