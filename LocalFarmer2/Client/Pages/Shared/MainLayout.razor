@@ -111,6 +111,13 @@
 
     protected override async Task OnInitializedAsync()
     {
+        var result = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "isDarkMode");
+        if (result != null && bool.TryParse(result, out var parsedResult))
+        {
+            isDarkMode = parsedResult;
+            UpdateBodyClass(isDarkMode); // Ustaw odpowiednią klasę na <body>
+        }
+
         AlertService.OnAlert += OnAlertChanged;
         if (!isDataInitialized)
         {
@@ -148,7 +155,13 @@
     private async Task ToggleTheme()
     {
         isDarkMode = !isDarkMode;
-        if (isDarkMode)
+        UpdateBodyClass(isDarkMode);
+        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "isDarkMode", isDarkMode.ToString());
+    }
+
+    private async void UpdateBodyClass(bool isDark)
+    {
+        if (isDark)
         {
             await JSRuntime.InvokeVoidAsync("document.body.classList.add", "dark-mode");
         }
