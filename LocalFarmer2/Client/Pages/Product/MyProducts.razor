@@ -9,11 +9,11 @@
 
 <PageTitle>@loc["Product_My_Products"]</PageTitle>
 
-<MudTable Items="@ListProducts" Hover="true" SortLabel="Sort By">
+<MudTable Items="@ListProducts" SortLabel="Sort By" Hover="true" Filter="new Func<Product,bool>(FilterFunc)" CommitEditTooltip="Commit Edit">
     <ToolBarContent>
         <MudText Typo="Typo.h6">@loc["Product_My_Products"]</MudText>
         <MudSpacer />
-        @* <MudTextField @bind-Value="searchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField> *@
+        <MudTextField @bind-Value="searchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
     <HeaderContent>
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Product, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
@@ -45,6 +45,7 @@
     IEnumerable<Product> ListProducts = new List<Product>();
     public DialogData dialogData = new DialogData();
     int idFarmhouse;
+    private string searchString = null;
 
     protected override async Task OnInitializedAsync()
     {
@@ -71,5 +72,18 @@
         StateHasChanged();
         AlertService.SetDeleteAlert($"Delete product {product.Name}");
         _ = AlertService.ClearAlertAfterDelay();
+    }
+
+    private bool FilterFunc(Product product)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (product.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (product.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if ($"{product.IdFarmhouse} {product.Id}".Contains(searchString))
+            return true;
+        return false;
     }
 }
