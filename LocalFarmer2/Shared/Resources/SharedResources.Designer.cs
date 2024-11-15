@@ -529,6 +529,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Map with all farmhouses.
+        /// </summary>
+        internal static string Map_With_All_Farmhouses {
+            get {
+                return ResourceManager.GetString("Map_With_All_Farmhouses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add note.
         /// </summary>
         internal static string Note_Add_Note {
