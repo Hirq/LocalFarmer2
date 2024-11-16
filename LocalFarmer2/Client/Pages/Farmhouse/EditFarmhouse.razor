@@ -18,11 +18,15 @@
 else
 {
     <AuthorizeView>
+        <MudPaper>
+        <div class="mud-table-toolbar titlePage">
+            <MudText Class="d-flex justify-center" Typo="Typo.h6">@loc["Farmhouse_Edit_Farmhouse"]</MudText>
+        </div>
+        </MudPaper>
         <EditForm Model="farmhouseDto" OnValidSubmit="OnValidSubmit" Context="editForm">
             <DataAnnotationsValidator />
             <MudGrid>
                 <MudItem xs="12">
-                    <MudText Class="d-flex justify-center" Typo="Typo.h6">Edit farmhouse</MudText>
                     @if (@currentUser?.IdFarmhouse != null)
                     {
                         <MudPaper Class="pa-4 d-flex justify-space-between">

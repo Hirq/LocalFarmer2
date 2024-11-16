@@ -9,9 +9,13 @@
 
 <PageTitle>@loc["Product_Add_Product"]</PageTitle>
 
+<MudPaper>
+    <div class="mud-table-toolbar titlePage">
+        <MudText Class="d-flex justify-center" Typo="Typo.h6">@loc["Product_Add_Product"]</MudText>
+    </div>
+</MudPaper>
 <EditForm Model="product" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
-    <MudText Class="d-flex justify-center" Typo="Typo.h6">@loc["Product_Add_Product"]</MudText>
     <MudGrid>
         <MudItem xs="12">
             <MudCard>

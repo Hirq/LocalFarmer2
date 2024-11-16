@@ -5,20 +5,23 @@
 @inject IMapper Mapper
 @inject IJSRuntime JSRuntime
 
-<MudText Class="d-flex justify-center" Typo="Typo.h6">@loc["X_Notes"]</MudText>
-
-<MudPaper Class="pa-4 d-flex justify-space-between">
-    <div>
-        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@(() => AddNotePopup())">@loc["Note_Add_Note"]</MudButton>
-     </div>
-     <div>
-        <MudButton Color="Color.Warning" Variant="Variant.Filled" Class="noteButtonFilter" OnClick="@(() => ChangeFilter())">@FilterName</MudButton>
-        <div class="position-indicators">
-            <div class="indicator @(FilterNotes == 2 ? "active" : "")" onclick="@(() => SetFilter(1))"></div>
-            <div class="indicator @(FilterNotes == 0 ? "active" : "")" onclick="@(() => SetFilter(2))"></div>
-            <div class="indicator @(FilterNotes == 1 ? "active" : "")" onclick="@(() => SetFilter(0))"></div>
-        </div>
-     </div>
+<MudPaper>
+    <div class="mud-table-toolbar titlePage">
+        <MudText Typo="Typo.h6">@loc["X_Notes"]</MudText>
+    </div>
+    <div class="pa-4 d-flex justify-space-between">
+        <div>
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@(() => AddNotePopup())">@loc["Note_Add_Note"]</MudButton>
+         </div>
+         <div>
+            <MudButton Color="Color.Warning" Variant="Variant.Filled" Class="noteButtonFilter" OnClick="@(() => ChangeFilter())">@FilterName</MudButton>
+            <div class="position-indicators">
+                <div class="indicator @(FilterNotes == 2 ? "active" : "")" onclick="@(() => SetFilter(1))"></div>
+                <div class="indicator @(FilterNotes == 0 ? "active" : "")" onclick="@(() => SetFilter(2))"></div>
+                <div class="indicator @(FilterNotes == 1 ? "active" : "")" onclick="@(() => SetFilter(0))"></div>
+            </div>
+         </div>
+    </div>
  </MudPaper>
 
 <MudGrid id="noteMudGrid">
