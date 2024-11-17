@@ -18,18 +18,18 @@
 else
 {
     <AuthorizeView>
-        <MudPaper>
+        <MudPaper Class="mudPaperTop">
         <div class="mud-table-toolbar titlePage">
             <MudText Class="d-flex justify-center" Typo="Typo.h6">@loc["Farmhouse_Edit_Farmhouse"]</MudText>
         </div>
         </MudPaper>
-        <EditForm Model="farmhouseDto" OnValidSubmit="OnValidSubmit" Context="editForm">
+            <EditForm Model="farmhouseDto" OnValidSubmit="OnValidSubmit" Context="editForm" >
             <DataAnnotationsValidator />
             <MudGrid>
                 <MudItem xs="12">
                     @if (@currentUser?.IdFarmhouse != null)
                     {
-                        <MudPaper Class="pa-4 d-flex justify-space-between">
+                        <MudPaper Class="pa-4 d-flex justify-space-between mudPaperBottom">
                             <div>
                                 <MudTextField T="String" Label="@loc["X_Name"]" @bind-Value="farmhouseDto.Name" @ref="farmhouseNameField" Required For="@(() => farmhouseDto.Name)" ErrorText="@loc["Validation_Required"]" />
                                 <MudTextField T="String" Label="@loc["X_Description"]" @bind-Value="farmhouseDto.Description" />
