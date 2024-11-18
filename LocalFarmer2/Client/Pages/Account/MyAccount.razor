@@ -12,12 +12,16 @@
 else
 {
     <AuthorizeView>
+        <MudPaper Class="mudPaperTop">
+            <div class="mud-table-toolbar titlePage">
+                <MudText Class="d-flex justify-center" Typo="Typo.h6">@loc["Account_My_Account"]</MudText>
+            </div>
+        </MudPaper>
         <EditForm Model="userDto" OnValidSubmit="OnValidSubmit" Context="editForm">
             <DataAnnotationsValidator />
             <MudGrid>
                 <MudItem xs="12">
-                    <MudText Class="d-flex justify-center" Typo="Typo.h6">@loc["Account_My_Account"]</MudText>
-                    <MudPaper Class="pa-4">
+                    <MudPaper Class="mudPaperBottom pa-4">
                         <MudTextField T="string" Label="@loc["Account_Full_Name"]" @bind-Value="userDto.FullName" Required="true" RequiredError="@loc["Validation_Required"]" />
                     </MudPaper>
                     <MudPaper Class="pa-4 mt-4">

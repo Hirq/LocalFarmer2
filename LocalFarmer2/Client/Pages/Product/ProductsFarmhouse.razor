@@ -3,13 +3,12 @@
 @inject IFarmhouseService FarmhouseService
 @inject NavigationManager NavigationManager
 
-<PageTitle>Products Farmhouse @farmhouse.Name</PageTitle>
+<PageTitle>Products Farmhouse: @farmhouse.Name</PageTitle>
 
-<MudText Typo="Typo.h4">@loc["X_Farmhouse"]: @farmhouse.Name</MudText>
 <MudTable Items="@ListProducts" SortLabel="Sort By" Hover="true" Filter="new Func<Product,bool>(FilterFunc)" CommitEditTooltip="Commit Edit">
 
     <ToolBarContent>
-        <MudText Typo="Typo.h6">@loc["X_Products"]</MudText>
+        <MudText Typo="Typo.h6">@loc["X_Products"] @loc["X_Farmhouse"]: @farmhouse.Name</MudText>
         <MudSpacer />
         <MudTextField @bind-Value="searchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
