@@ -9,6 +9,8 @@
 @inject NavigationManager NavigationManager
 @inject HttpClient httpClient
 @inject UserStateService UserStateService
+@inject SearchService SearchService
+@inject UtilsService UtilsService
 
 <PageTitle>@loc["X_Farmhouses"]</PageTitle>
 @if (ListFarmhousesVM == null)
@@ -17,12 +19,12 @@
 }
 else
 {
-    <MudTable Items="@ListFarmhousesVM" SortLabel="Sort By" Hover="true" Filter="new Func<FarmhouseViewModel,bool>(FilterFunc)" CommitEditTooltip="Commit Edit">
+    <MudTable Items="@ListFarmhousesVM" SortLabel="Sort By" Hover="true" Filter="@(farmhouse => UtilsService.FilterFunc(farmhouse, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
         <ToolBarContent>
             <MudText Typo="Typo.h6">@loc["X_Farmhouses"]</MudText>
             <MudSpacer />
             <MudButton Color="Color.Warning" Variant="Variant.Filled"  OnClick="@(() => FilterFavorite())"> Only favorite </MudButton>
-            <MudTextField @bind-Value="searchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         </ToolBarContent>
 
         <HeaderContent>

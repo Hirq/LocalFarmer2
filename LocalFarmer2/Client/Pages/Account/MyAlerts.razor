@@ -1,14 +1,16 @@
 ﻿@page "/myalerts"
 @inject IAlertService AlertService
 @inject UserStateService UserStateService
+@inject SearchService SearchService
+@inject UtilsService UtilsService
 
 <PageTitle>@loc["X_Alerts"]</PageTitle>
 
-<MudTable Items="@ListAlert" SortLabel="Sort By" Hover="true" Filter="new Func<Alert,bool>(FilterFunc)" CommitEditTooltip="Commit Edit">
+<MudTable Items="@ListAlert" SortLabel="Sort By" Hover="true" Filter="@(alert => UtilsService.FilterFunc(alert, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
     <ToolBarContent>
         <MudText Typo="Typo.h6">@loc["X_Alerts"]</MudText>
         <MudSpacer />
-        <MudTextField @bind-Value="searchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
 
     <HeaderContent>

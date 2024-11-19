@@ -2,15 +2,17 @@
 @inject IProductService ProductService
 @inject NavigationManager NavigationManager
 @inject HttpClient httpClient
+@inject UtilsService UtilsService
+@inject SearchService SearchService
 
 <PageTitle>@loc["Product_Products_All"]</PageTitle>
 
-<MudTable Items="@ListProducts" SortLabel="Sort By" Hover="true" Filter="new Func<Product,bool>(FilterFunc)" CommitEditTooltip="Commit Edit">
+    <MudTable Items="@ListProducts" SortLabel="Sort By" Hover="true" Filter="@(product => UtilsService.FilterFunc(product, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
 
     <ToolBarContent>
         <MudText Typo="Typo.h6">@loc["X_Products"]</MudText>
         <MudSpacer />
-        <MudTextField @bind-Value="searchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
 
     <HeaderContent>
@@ -54,20 +56,5 @@
     void ShowFarmhouse(int id)
     {
         NavigationManager.NavigateTo($"farmhouse/{id}");
-    }
-
-    private bool FilterFunc(Product product)
-    {
-        if (string.IsNullOrWhiteSpace(searchString))
-            return true;
-        if (product.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (product.CountMinOne.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (product.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if ($"{product.PrizeOne} {product.Id}".Contains(searchString))
-            return true;
-        return false;
     }
 }

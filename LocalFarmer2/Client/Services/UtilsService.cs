@@ -1,6 +1,5 @@
 ﻿using MudBlazor;
 using LocalFarmer2.Client.Pages;
-using static LocalFarmer2.Client.Services.UtilsService;
 
 namespace LocalFarmer2.Client.Services
 {
@@ -79,6 +78,25 @@ namespace LocalFarmer2.Client.Services
         public async Task SendMessage(EmailDto emailDto)
         {
             await _httpClient.PostAsJsonAsync("api/Email", emailDto);
+        }
+
+        public bool FilterFunc<T>(T item, string searchString)
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+
+            var properties = typeof(T).GetProperties();
+            foreach (var property in properties)
+            {
+                var value = property.GetValue(item)?.ToString();
+                if (!string.IsNullOrEmpty(value) &&
+                    value.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
