@@ -75,8 +75,6 @@
     </PagerContent>
 </MudTable>
 
-
-
 @code {
     List <FavoriteFarmhouse> ListFavoritesFarmhouse = new List<FavoriteFarmhouse>();
     private string searchString = null;
@@ -109,18 +107,4 @@
         }
     }
 
-    // private bool FilterFunc(FavoriteFarmhouse farmhouse)
-    // {
-    //     if (string.IsNullOrWhiteSpace(searchString))
-    //         return true;
-    //     // if (farmhouse.IdFarmhouse.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-    //     //     return true;
-    //     // if (farmhouse.Address.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-    //     //     return true;
-    //     // if (farmhouse.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-    //     //     return true;
-    //     if ($"{farmhouse.IdFarmhouse} {farmhouse.Id}".Contains(searchString))
-    //         return true;
-    //     return false;
-    // }
 }

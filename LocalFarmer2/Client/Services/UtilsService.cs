@@ -35,8 +35,8 @@ namespace LocalFarmer2.Client.Services
             };
 
             _dialogService.Show<PopupDialog>(dialogData.Title, parameters, options);
-        }    
-        
+        }
+
         public void OpenDialogWithCards(string title, List<Opinion> content)
         {
             var options = new DialogOptions { CloseOnEscapeKey = true };
@@ -47,7 +47,7 @@ namespace LocalFarmer2.Client.Services
             };
 
             _dialogService.Show<PopupWithCards>(title, parameters, options);
-        }       
+        }
 
         public void OpenDialogNoteCards(string title, string buttonName, Note note, Action action, bool isEdit, Action? actionArchive)
         {
@@ -84,6 +84,12 @@ namespace LocalFarmer2.Client.Services
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
+
+            if (item is FavoriteFarmhouse favoriteFarmhouse)
+            {
+                if (favoriteFarmhouse.Farmhouse?.Name?.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true)
+                    return true;
+            }
 
             var properties = typeof(T).GetProperties();
             foreach (var property in properties)
