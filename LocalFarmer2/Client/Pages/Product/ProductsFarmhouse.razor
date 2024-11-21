@@ -5,7 +5,7 @@
 @inject SearchService SearchService
 @inject UtilsService UtilsService
 
-<PageTitle>Products Farmhouse: @farmhouse.Name</PageTitle>
+<PageTitle>Products Farmhouse: @farmhouse.Name | @Globals.AppName</PageTitle>
 
 <MudTable Items="@ListProducts" SortLabel="Sort By" Hover="true" Filter="@(product => UtilsService.FilterFunc(product, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
 
