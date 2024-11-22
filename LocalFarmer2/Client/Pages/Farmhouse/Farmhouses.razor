@@ -262,21 +262,6 @@ else
         opinion.IdFarmhouse = 0;
     }
 
-    private bool FilterFunc(FarmhouseViewModel farmhouse)
-    {
-        if (string.IsNullOrWhiteSpace(searchString))
-            return true;
-        if (farmhouse.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (farmhouse.Address.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (farmhouse.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if ($"{farmhouse.Phone} {farmhouse.Id}".Contains(searchString))
-            return true;
-        return false;
-    }
-
     private void FilterFavorite()
     {
         isFavoriteFilterActive = !isFavoriteFilterActive;

@@ -111,19 +111,4 @@
             _ = AlertService.ClearAlertAfterDelay();
         }
     }
-
-    private bool FilterFunc(Opinion opinion)
-    {
-        if (string.IsNullOrWhiteSpace(searchString))
-            return true;
-        // if (farmhouse.IdFarmhouse.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-        //     return true;
-        // if (farmhouse.Address.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-        //     return true;
-        // if (farmhouse.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-        //     return true;
-        if ($"{opinion.IdFarmhouse} {opinion.Id}".Contains(searchString))
-            return true;
-        return false;
-    }
 }

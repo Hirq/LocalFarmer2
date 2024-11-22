@@ -56,19 +56,4 @@
     {
         NavigationManager.NavigateTo($"product/{id}");
     }
-
-    private bool FilterFunc(Product product)
-    {
-        if (string.IsNullOrWhiteSpace(searchString))
-            return true;
-        if (product.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (product.CountMinOne.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (product.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if ($"{product.PrizeOne} {product.Id}".Contains(searchString))
-            return true;
-        return false;
-    }
 }
