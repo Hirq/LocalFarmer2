@@ -6,7 +6,7 @@
 @inject UtilsService UtilsService
 @inject SearchService SearchService
 
-<PageTitle>@loc["Dashboard_My_Opinions"]</PageTitle>
+<PageTitle>@loc["Dashboard_My_Opinions"] | @Globals.AppName</PageTitle>
 
 <MudTable Items="@ListMyOpinionsFarmhouse" SortLabel="Sort By" Hover="true" Filter="@(opinion => UtilsService.FilterFunc(opinion, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
     <ToolBarContent>

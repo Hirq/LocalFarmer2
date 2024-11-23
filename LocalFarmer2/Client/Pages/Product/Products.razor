@@ -5,7 +5,7 @@
 @inject UtilsService UtilsService
 @inject SearchService SearchService
 
-<PageTitle>@loc["Product_Products_All"]</PageTitle>
+<PageTitle>@loc["Product_Products_All"] | @Globals.AppName</PageTitle>
 
     <MudTable Items="@ListProducts" SortLabel="Sort By" Hover="true" Filter="@(product => UtilsService.FilterFunc(product, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
 

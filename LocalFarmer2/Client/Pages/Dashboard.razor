@@ -1,7 +1,7 @@
 ﻿@page "/"
 @inject UserStateService UserStateService
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Index | @Globals.AppName</PageTitle>
 
 <MudGrid Class="m-0 w-100">
     <MudItem xs="12" Class="dashboard-paper-name-farmhouse">
@@ -86,9 +86,7 @@ Dodać odpowiednei komunikaty dla required
 Required For="@(() => product.CountAll)" ErrorText="@loc["Validation_Required"]" />
 
 Ujednolić:  
-
-page name (co na pasku u góry jest może LocalFarmer - name podstrony albo zostawić wszędzei 1 nazwę??)
-| @Globals.AppName trzeba dodać do każdej name page
+| @Globals.AppName dla innych podstron
 
 *@
 

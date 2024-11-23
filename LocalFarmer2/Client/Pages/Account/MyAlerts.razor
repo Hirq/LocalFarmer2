@@ -4,7 +4,7 @@
 @inject SearchService SearchService
 @inject UtilsService UtilsService
 
-<PageTitle>@loc["X_Alerts"]</PageTitle>
+<PageTitle>@loc["X_Alerts"] | @Globals.AppName</PageTitle>
 
 <MudTable Items="@ListAlert" SortLabel="Sort By" Hover="true" Filter="@(alert => UtilsService.FilterFunc(alert, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
     <ToolBarContent>
