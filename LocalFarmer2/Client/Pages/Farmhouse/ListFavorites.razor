@@ -8,7 +8,7 @@
 
 <PageTitle>@loc["Dashboard_Favorites_Farmhouses"] | @Globals.AppName</PageTitle>
 
-    <MudTable Items="@ListFavoritesFarmhouse" SortLabel="Sort By" Hover="true" Filter="@(farmhouse => UtilsService.FilterFunc(farmhouse, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
+<MudTable Items="@ListFavoritesFarmhouse" SortLabel="Sort By" Hover="true" Filter="@(farmhouse => UtilsService.FilterFunc(farmhouse, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
     <ToolBarContent>
         <MudText Typo="Typo.h6">@loc["Dashboard_Favorites_Farmhouses"]</MudText>
         <MudSpacer />

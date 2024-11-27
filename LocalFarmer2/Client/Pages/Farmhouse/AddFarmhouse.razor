@@ -9,6 +9,8 @@
 @inject ValidateService ValidateService
 @inject FileService FileService
 
+<PageTitle>@loc["Farmhouse_Add_Farmhouse"] | @Globals.AppName</PageTitle>
+
 <AuthorizeView>
     <EditForm Model="farmhouseDto" OnValidSubmit="OnValidSubmit" Context="editForm">
         <DataAnnotationsValidator />
