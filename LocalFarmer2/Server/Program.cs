@@ -26,7 +26,10 @@ builder.Services.AddSwaggerGen(s =>
     s.OperationFilter<ReApplyOptionalRouteParameterOperationFilter>();
     s.EnableAnnotations();
 });
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.ModelMetadataDetailsProviders.Add(new CustomValidationMetadataProvider());
+});
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<LocalfarmerDbContext>(
     dbContextOptions => dbContextOptions.UseSqlServer(

@@ -17,7 +17,6 @@ namespace LocalFarmer2.Shared.DTOs
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "Hasla msuza być takie same")]
         public string ConfirmPassword { get; set; }
 
     }
