@@ -414,4 +414,7 @@
   <data name="Map_With_All_Farmhouses" xml:space="preserve">
     <value>Mapa z wszystkimi gospodrastwami</value>
   </data>
+  <data name="ErrorRequired" xml:space="preserve">
+    <value>Pole jest wymagane</value>
+  </data>
 </root>

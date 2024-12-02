@@ -1,22 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LocalFarmer2.Shared.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace LocalFarmer2.Shared.DTOs
 {
     public class RegisterDto
     {
-        [Required]
-        [EmailAddress]
+        [LocalizedRequired("ErrorRequired")]
+        [EmailAddress(ErrorMessage = "Podaj poprawny adres email.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "Do zmiany"), MinLength(6)]
+        [LocalizedRequired("ErrorRequired")]
+        [StringLength(100, MinimumLength = 6, ErrorMessage = "Hasło musi mieć od {2} do {1} znaków.")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Hasło")]
         public string Password { get; set; }
 
+        [LocalizedRequired("ErrorRequired")]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Potwierdzenie hasła")]
+        [Compare("Password", ErrorMessage = "Hasła muszą być takie same.")]
         public string ConfirmPassword { get; set; }
 
     }

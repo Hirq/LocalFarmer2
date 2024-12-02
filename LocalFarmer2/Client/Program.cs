@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.JSInterop;
 using MudBlazor.Services;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);

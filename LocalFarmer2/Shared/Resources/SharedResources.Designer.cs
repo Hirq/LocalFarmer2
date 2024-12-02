@@ -340,6 +340,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Field is required.
+        /// </summary>
+        internal static string ErrorRequired {
+            get {
+                return ResourceManager.GetString("ErrorRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add farmhouse.
         /// </summary>
         internal static string Farmhouse_Add_Farmhouse {
