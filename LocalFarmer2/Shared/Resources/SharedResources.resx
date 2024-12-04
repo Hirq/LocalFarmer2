@@ -415,6 +415,6 @@
     <value>Map with all farmhouses</value>
   </data>
   <data name="ErrorRequired" xml:space="preserve">
-    <value>Field is required</value>
+    <value>is required</value>
   </data>
 </root>

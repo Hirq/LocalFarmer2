@@ -340,7 +340,7 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Field is required.
+        ///   Looks up a localized string similar to is required.
         /// </summary>
         internal static string ErrorRequired {
             get {

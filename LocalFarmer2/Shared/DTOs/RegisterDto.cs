@@ -10,13 +10,13 @@ namespace LocalFarmer2.Shared.DTOs
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [LocalizedRequired("ErrorRequired", "Password")]
+        [LocalizedRequired("ErrorRequired", "Account_Password")]
         [StringLength(100, MinimumLength = 6, ErrorMessage = "Hasło musi mieć od {2} do {1} znaków.")]
         [DataType(DataType.Password)]
         [Display(Name = "Hasło")]
         public string Password { get; set; }
 
-        [LocalizedRequired("ErrorRequired", "ConfirmPassword")]
+        [LocalizedRequired("ErrorRequired", "Account_Password_Confirm")]
         [DataType(DataType.Password)]
         [Display(Name = "Potwierdzenie hasła")]
         [Compare("Password", ErrorMessage = "Hasła muszą być takie same.")]

@@ -415,6 +415,6 @@
     <value>Mapa z wszystkimi gospodrastwami</value>
   </data>
   <data name="ErrorRequired" xml:space="preserve">
-    <value>Pole jest wymagane</value>
+    <value>jest wymagane</value>
   </data>
 </root>
