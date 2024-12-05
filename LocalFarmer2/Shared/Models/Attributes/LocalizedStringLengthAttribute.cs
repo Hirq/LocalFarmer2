@@ -4,18 +4,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LocalFarmer2.Shared.Models
 {
-    public class LocalizedRequiredAttribute : ValidationAttribute
+    public class LocalizedStringLengthAttribute : StringLengthAttribute
     {
         private readonly string _errorMessageKey;
         private readonly string _field;
 
-        public LocalizedRequiredAttribute(string errorMessageKey, string field)
+        public LocalizedStringLengthAttribute(int maximumLength, int minimumLength, string errorMessageKey, string field) : base(maximumLength)
         {
             _errorMessageKey = errorMessageKey;
             _field = field;
+            base.MinimumLength = minimumLength;
         }
-
-        //change IsValid on FormatErrorMessage
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {

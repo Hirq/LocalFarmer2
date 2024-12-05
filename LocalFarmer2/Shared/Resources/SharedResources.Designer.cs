@@ -340,6 +340,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to have to minimum 6 chars.
+        /// </summary>
+        internal static string ErrorMinimum6Chars {
+            get {
+                return ResourceManager.GetString("ErrorMinimum6Chars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to is required.
         /// </summary>
         internal static string ErrorRequired {

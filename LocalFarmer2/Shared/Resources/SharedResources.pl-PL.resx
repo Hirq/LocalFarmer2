@@ -417,4 +417,7 @@
   <data name="ErrorRequired" xml:space="preserve">
     <value>jest wymagane</value>
   </data>
+  <data name="ErrorMinimum6Chars" xml:space="preserve">
+    <value>musi zawierać minimum 6 znaków</value>
+  </data>
 </root>
