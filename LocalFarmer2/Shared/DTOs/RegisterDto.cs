@@ -10,7 +10,6 @@ namespace LocalFarmer2.Shared.DTOs
         public string Email { get; set; }
 
         [LocalizedRequired("ErrorRequired", "Account_Password")]
-        //[StringLength(100, MinimumLength = 6, ErrorMessage = "Hasło musi mieć od {2} do {1} znaków.")]
         [LocalizedStringLengthAttribute(100, 6, "ErrorMinimum6Chars", "Account_Password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }

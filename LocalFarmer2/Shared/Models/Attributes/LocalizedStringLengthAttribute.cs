@@ -19,12 +19,13 @@ namespace LocalFarmer2.Shared.Models
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var localizer = (IStringLocalizer)validationContext.GetService(typeof(IStringLocalizer<SharedResources>));
-
             var errorMessage = localizer[_errorMessageKey];
             var field = localizer[_field];
-            if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
+
+            if (value == null || value.ToString().Length < MinimumLength || value.ToString().Length > MaximumLength)
             {
-                return new ValidationResult(field + " " + errorMessage);
+                var formattedMessage = string.Format(errorMessage, field, MinimumLength, MaximumLength);
+                return new ValidationResult(formattedMessage);
             }
 
             return ValidationResult.Success;
