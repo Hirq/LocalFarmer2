@@ -1,15 +1,16 @@
 ﻿using LocalFarmer2.Shared.Resources;
 using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace LocalFarmer2.Shared.Models
 {
-    public class LocalizedRequiredAttribute : ValidationAttribute
+    public class LocalizedCompareAttribute : CompareAttribute
     {
         private readonly string _errorMessageKey;
         private readonly string _field;
 
-        public LocalizedRequiredAttribute(string errorMessageKey, string field)
+        public LocalizedCompareAttribute(string otherProperty, string errorMessageKey, string field) : base(otherProperty)
         {
             _errorMessageKey = errorMessageKey;
             _field = field;
@@ -21,7 +22,10 @@ namespace LocalFarmer2.Shared.Models
 
             var errorMessage = localizer[_errorMessageKey];
             var field = localizer[_field];
-            if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
+            var otherPropertyInfo = validationContext.ObjectType.GetRuntimeProperty(OtherProperty);
+
+            object? otherPropertyValue = otherPropertyInfo.GetValue(validationContext.ObjectInstance, null);
+            if (!Equals(value, otherPropertyValue))
             {
                 return new ValidationResult(field + " " + errorMessage);
             }

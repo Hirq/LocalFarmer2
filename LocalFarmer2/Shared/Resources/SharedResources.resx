@@ -418,6 +418,12 @@
     <value>is required</value>
   </data>
   <data name="ErrorMinimum6Chars" xml:space="preserve">
-    <value>have to minimum 6 chars</value>
+    <value>Password have to minimum 6 chars</value>
+  </data>
+  <data name="ErrorPasswordsTheSame" xml:space="preserve">
+    <value>have to the same</value>
+  </data>
+  <data name="Account_Passwords" xml:space="preserve">
+    <value>Passwords</value>
   </data>
 </root>

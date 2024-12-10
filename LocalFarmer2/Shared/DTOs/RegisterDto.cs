@@ -16,7 +16,7 @@ namespace LocalFarmer2.Shared.DTOs
 
         [LocalizedRequired("ErrorRequired", "Account_Password_Confirm")]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Hasła muszą być takie same.")]
+        [LocalizedCompareAttribute("Password", "ErrorPasswordsTheSame", "Account_Passwords")]
         public string ConfirmPassword { get; set; }
 
     }

@@ -142,6 +142,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Passwords.
+        /// </summary>
+        internal static string Account_Passwords {
+            get {
+                return ResourceManager.GetString("Account_Passwords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register.
         /// </summary>
         internal static string Account_Register {
@@ -340,11 +349,20 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to have to minimum 6 chars.
+        ///   Looks up a localized string similar to Password have to minimum 6 chars.
         /// </summary>
         internal static string ErrorMinimum6Chars {
             get {
                 return ResourceManager.GetString("ErrorMinimum6Chars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to have to the same.
+        /// </summary>
+        internal static string ErrorPasswordsTheSame {
+            get {
+                return ResourceManager.GetString("ErrorPasswordsTheSame", resourceCulture);
             }
         }
         

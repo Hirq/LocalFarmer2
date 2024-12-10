@@ -144,11 +144,11 @@
   <data name="Dashboard_Hello" xml:space="preserve">
     <value>Cześć, tutaj łatwo znajdziesz lokalnych gospodarzy.</value>
   </data>
-  <data name="Dashboard_LocalFarmer" xml:space="preserve">
-    <value>Lokalny gospodarz</value>
-  </data>
   <data name="Dashboard_Hello2" xml:space="preserve">
     <value>Szukasz świeżych warzyw lub owoców? Sprawdź swój region i kup od lokalnego gospodarza.</value>
+  </data>
+  <data name="Dashboard_LocalFarmer" xml:space="preserve">
+    <value>Lokalny gospodarz</value>
   </data>
   <data name="Account_My_Account" xml:space="preserve">
     <value>Moje konto</value>
@@ -165,17 +165,17 @@
   <data name="Button_Submit" xml:space="preserve">
     <value>Potwierdź</value>
   </data>
+  <data name="Account_Email_Address" xml:space="preserve">
+    <value>Adres email</value>
+  </data>
   <data name="Account_Password" xml:space="preserve">
     <value>Hasło</value>
   </data>
   <data name="Account_Password_Confirm" xml:space="preserve">
     <value>Potwierdź hasło</value>
   </data>
-  <data name="Account_Email_Address" xml:space="preserve">
-    <value>Adres email</value>
-  </data>
-  <data name="Dashboard_Map" xml:space="preserve">
-    <value>Mapa</value>
+  <data name="Dashboard_Dashboard" xml:space="preserve">
+    <value>Panel startowy</value>
   </data>
   <data name="X_Farmhouses" xml:space="preserve">
     <value>Gospodarstwa</value>
@@ -183,8 +183,8 @@
   <data name="X_Products" xml:space="preserve">
     <value>Produkty</value>
   </data>
-  <data name="Dashboard_Dashboard" xml:space="preserve">
-    <value>Panel startowy</value>
+  <data name="Dashboard_Map" xml:space="preserve">
+    <value>Mapa</value>
   </data>
   <data name="X_Loading" xml:space="preserve">
     <value>Wczytywanie...</value>
@@ -237,14 +237,14 @@
   <data name="Account_Logout" xml:space="preserve">
     <value>Wyloguj</value>
   </data>
-  <data name="X_Action" xml:space="preserve">
-    <value>Akcja</value>
+  <data name="Opinion_Comment" xml:space="preserve">
+    <value>Komentarz</value>
   </data>
   <data name="Opinion_Rating" xml:space="preserve">
     <value>Ocena</value>
   </data>
-  <data name="Opinion_Comment" xml:space="preserve">
-    <value>Komentarz</value>
+  <data name="X_Action" xml:space="preserve">
+    <value>Akcja</value>
   </data>
   <data name="Alert_Message" xml:space="preserve">
     <value>Wiadomość</value>
@@ -321,20 +321,20 @@
   <data name="X_Type" xml:space="preserve">
     <value>Typ</value>
   </data>
-  <data name="Product_Edit_Product" xml:space="preserve">
-    <value>Edytuj produkt</value>
-  </data>
   <data name="Product_Photo" xml:space="preserve">
     <value>Zdjęcie produktu</value>
+  </data>
+  <data name="Product_Edit_Product" xml:space="preserve">
+    <value>Edytuj produkt</value>
   </data>
   <data name="Validation_Required" xml:space="preserve">
     <value>To jest wymagane pole</value>
   </data>
-  <data name="Button_Clear" xml:space="preserve">
-    <value>Wyczyść</value>
-  </data>
   <data name="Button_Add_Image" xml:space="preserve">
     <value>Dodaj zdjęcie</value>
+  </data>
+  <data name="Button_Clear" xml:space="preserve">
+    <value>Wyczyść</value>
   </data>
   <data name="Button_Open_Photo" xml:space="preserve">
     <value>Otwórz zdjęcie</value>
@@ -396,14 +396,14 @@
   <data name="X_Title" xml:space="preserve">
     <value>Tytuł</value>
   </data>
+  <data name="Filter_All" xml:space="preserve">
+    <value>Wszystkie</value>
+  </data>
   <data name="Filter_Only_Active" xml:space="preserve">
     <value>Aktywne</value>
   </data>
   <data name="Filter_Only_Archive" xml:space="preserve">
     <value>Archiwalne</value>
-  </data>
-  <data name="Filter_All" xml:space="preserve">
-    <value>Wszystkie</value>
   </data>
   <data name="X_Note" xml:space="preserve">
     <value>Notatka</value>
@@ -418,6 +418,12 @@
     <value>jest wymagane</value>
   </data>
   <data name="ErrorMinimum6Chars" xml:space="preserve">
-    <value>musi zawierać minimum 6 znaków</value>
+    <value>Hasło musi zawierać minimum 6 znaków</value>
+  </data>
+  <data name="ErrorPasswordsTheSame" xml:space="preserve">
+    <value>muszą być takie same</value>
+  </data>
+  <data name="Account_Passwords" xml:space="preserve">
+    <value>Hasła</value>
   </data>
 </root>
