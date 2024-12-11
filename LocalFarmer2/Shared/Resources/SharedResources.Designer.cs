@@ -349,6 +349,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter a valid email address.
+        /// </summary>
+        internal static string ErrorEmailValid {
+            get {
+                return ResourceManager.GetString("ErrorEmailValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password have to minimum 6 chars.
         /// </summary>
         internal static string ErrorMinimum6Chars {

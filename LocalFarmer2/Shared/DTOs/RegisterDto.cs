@@ -6,7 +6,7 @@ namespace LocalFarmer2.Shared.DTOs
     public class RegisterDto
     {
         [LocalizedRequired("ErrorRequired", "Email")]
-        [EmailAddress(ErrorMessage = "Podaj poprawny adres email.")]
+        [LocalizedEmailAddressAttribute("ErrorEmailValid")]
         public string Email { get; set; }
 
         [LocalizedRequired("ErrorRequired", "Account_Password")]

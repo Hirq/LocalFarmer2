@@ -1,17 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LocalFarmer2.Shared.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace LocalFarmer2.Shared.DTOs
 {
     public class LoginDto
     {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        [LocalizedRequired("ErrorRequired", "Email")]
+        [LocalizedEmailAddressAttribute("ErrorEmailValid")]
         public string Email { get; set; }
 
-        [Required]
+        [LocalizedRequired("ErrorRequired", "Account_Password")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
         public string Password { get; set; }
 
     }
