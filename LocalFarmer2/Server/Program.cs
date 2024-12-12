@@ -28,6 +28,16 @@ builder.Services.AddSwaggerGen(s =>
 });
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Default Password settings.
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 0;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireDigit = false;
+});
 builder.Services.AddDbContext<LocalfarmerDbContext>(
     dbContextOptions => dbContextOptions.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")));
