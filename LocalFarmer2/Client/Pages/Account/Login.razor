@@ -1,5 +1,6 @@
 ﻿@page "/login"
 @inject IAccountService AuthService
+@inject IAlertService AlertService
 @inject NavigationManager NavigationManager
 @inject UserStateService UserStateService
 
@@ -44,7 +45,9 @@
 
         if (result.Successful)
         {
+            AlertService.SetSuccessAlert($"Successfully login");
             NavigationManager.NavigateTo("/");
+            _ = AlertService.ClearAlertAfterDelay();
         }
         else
         {

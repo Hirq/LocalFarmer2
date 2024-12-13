@@ -1,5 +1,6 @@
 ﻿@page "/register"
 @inject IAccountService AuthService
+@inject IAlertService AlertService
 @inject NavigationManager NavigationManager
 
 <PageTitle>@loc["Account_Register"] | @Globals.AppName</PageTitle>
@@ -54,7 +55,9 @@
 
         if (result.Successful)
         {
+            AlertService.SetSuccessAlert($"Successfully create account");
             NavigationManager.NavigateTo("/login");
+            _ = AlertService.ClearAlertAfterDelay();
         }
         else
         {
