@@ -55,7 +55,8 @@
 
         if (result.Successful)
         {
-            AlertService.SetSuccessAlert($"Successfully create account");
+            AlertService.SetSuccessAlert($"{@loc["Alert_Successfully"]} {@loc["Alert_Create_Account"]}");
+
             NavigationManager.NavigateTo("/login");
             _ = AlertService.ClearAlertAfterDelay();
         }

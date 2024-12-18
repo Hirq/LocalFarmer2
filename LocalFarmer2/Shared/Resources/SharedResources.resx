@@ -429,4 +429,16 @@
   <data name="ErrorEmailValid" xml:space="preserve">
     <value>Enter a valid email address</value>
   </data>
+  <data name="Alert_Successfully" xml:space="preserve">
+    <value>Successfully</value>
+  </data>
+  <data name="Alert_Login" xml:space="preserve">
+    <value>login</value>
+  </data>
+  <data name="Alert_Create_Account" xml:space="preserve">
+    <value>created account</value>
+  </data>
+  <data name="Alert_Add_Farmhouse" xml:space="preserve">
+    <value>added farmhouse</value>
+  </data>
 </root>

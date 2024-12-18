@@ -45,7 +45,7 @@
 
         if (result.Successful)
         {
-            AlertService.SetSuccessAlert($"Successfully login");
+            AlertService.SetSuccessAlert($"{@loc["Alert_Successfully"]} {@loc["Alert_Login"]}");
             NavigationManager.NavigateTo("/");
             _ = AlertService.ClearAlertAfterDelay();
         }

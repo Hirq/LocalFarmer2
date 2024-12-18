@@ -169,6 +169,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to added farmhouse.
+        /// </summary>
+        internal static string Alert_Add_Farmhouse {
+            get {
+                return ResourceManager.GetString("Alert_Add_Farmhouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All alerts.
         /// </summary>
         internal static string Alert_All_Alerts {
@@ -178,11 +187,38 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to created account.
+        /// </summary>
+        internal static string Alert_Create_Account {
+            get {
+                return ResourceManager.GetString("Alert_Create_Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to login.
+        /// </summary>
+        internal static string Alert_Login {
+            get {
+                return ResourceManager.GetString("Alert_Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Message.
         /// </summary>
         internal static string Alert_Message {
             get {
                 return ResourceManager.GetString("Alert_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully.
+        /// </summary>
+        internal static string Alert_Successfully {
+            get {
+                return ResourceManager.GetString("Alert_Successfully", resourceCulture);
             }
         }
         

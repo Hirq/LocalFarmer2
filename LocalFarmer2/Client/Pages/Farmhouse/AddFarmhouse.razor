@@ -110,7 +110,8 @@
         var idFarmhouse = await FarmhouseService.AddFarmhouse(farmhouseDto);
         UserStateService.CurrentUser.FarmhouseName = farmhouseDto.Name;
         UserStateService.CurrentUser.IdFarmhouse = idFarmhouse;
-        AlertService.SetSuccessAlert($"Successfully add farmhouse {farmhouseDto.Name}");
+        AlertService.SetSuccessAlert($"{@loc["Alert_Successfully"]} {@loc["Alert_Add_Farmhouse"]} {farmhouseDto.Name}");
+
         NavigationManager.NavigateTo("/");
         _ = AlertService.ClearAlertAfterDelay();
     }
