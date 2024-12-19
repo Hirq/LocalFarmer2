@@ -71,7 +71,7 @@
         await ProductService.DeleteProduct(id);
         ListProducts = await ProductService.GetProductsFarmhouse(idFarmhouse);
         StateHasChanged();
-        AlertService.SetDeleteAlert($"Delete product {product.Name}");
+        AlertService.SetDeleteAlert($"{@loc["Alert_Delete_Product"]} {product.Name}");
         _ = AlertService.ClearAlertAfterDelay();
     }
 }

@@ -205,7 +205,7 @@ else
         var messageAlertEdit = new MessageAlert(MessageAlertEnum.EditDetails, UserStateService.CurrentUser.FarmhouseName);
         await AlertService.AddAlerts(listUsersIds, (int)currentUser.IdFarmhouse, true, messageAlertEdit);
 
-        AlertService.SetSuccessAlert($"Successfully edited farmhouse {farmhouseDto.Name}");
+        AlertService.SetSuccessAlert($"{@loc["Alert_Successfully"]} {@loc["Alert_Edit_Farmhouse"]} {farmhouseDto.Name}");
         NavigationManager.NavigateTo("/");
         _ = AlertService.ClearAlertAfterDelay();
     }
@@ -217,7 +217,7 @@ else
             await FarmhouseService.DeleteFarmhouse((int)currentUser.IdFarmhouse);
             UserStateService.CurrentUser.FarmhouseName = null;
             UserStateService.CurrentUser.IdFarmhouse = null;
-            AlertService.SetDeleteAlert($"Deleted farmhouse {farmhouseDto.Name}");
+            AlertService.SetDeleteAlert($"{@loc["Alert_Delete_Farmhouse"]} {farmhouseDto.Name}");
             NavigationManager.NavigateTo("/");
             _ = AlertService.ClearAlertAfterDelay();
         }

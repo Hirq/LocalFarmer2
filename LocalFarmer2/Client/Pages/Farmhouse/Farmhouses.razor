@@ -225,7 +225,7 @@ else
             await AlertService.AddAlerts(listUsersIds, null, false, messageAlert);
 
             StateHasChanged();
-            AlertService.SetSuccessAlert($"Successfully added subscribe {idFarmhouse}");
+            AlertService.SetSuccessAlert($"{@loc["Alert_Successfully"]} {@loc["Alert_Add_Subscribe"]} {idFarmhouse}");
             _ = AlertService.ClearAlertAfterDelay();
         }
     }
@@ -255,7 +255,7 @@ else
 
             StateHasChanged();
             var farmhouse = await FarmhouseService.GetFarmhouse(opinion.IdFarmhouse);
-            AlertService.SetSuccessAlert($"Successfully added opinion about {farmhouse.Name}");
+            AlertService.SetSuccessAlert($"{@loc["Alert_Successfully"]} {@loc["Alert_Add_Opinion"]} {farmhouse.Name}");
             _ = AlertService.ClearAlertAfterDelay();
         }
         opinion.Comment = "";

@@ -441,4 +441,34 @@
   <data name="Alert_Add_Farmhouse" xml:space="preserve">
     <value>added farmhouse</value>
   </data>
+  <data name="Alert_Edit_Farmhouse" xml:space="preserve">
+    <value>edited farmhouse</value>
+  </data>
+  <data name="Alert_Add_Subscribe" xml:space="preserve">
+    <value>added subscribe</value>
+  </data>
+  <data name="Alert_Add_Opinion" xml:space="preserve">
+    <value>added opnion about</value>
+  </data>
+  <data name="Alert_Edit_Opinion" xml:space="preserve">
+    <value>edited opinion about</value>
+  </data>
+  <data name="Alert_Add_Product" xml:space="preserve">
+    <value>added product</value>
+  </data>
+  <data name="Alert_Edit_Product" xml:space="preserve">
+    <value>edited product</value>
+  </data>
+  <data name="Alert_Delete_Farmhouse" xml:space="preserve">
+    <value>Deleted farmhouse</value>
+  </data>
+  <data name="Alert_Delete_Subscribe" xml:space="preserve">
+    <value>Deleted subscribe farmhouse</value>
+  </data>
+  <data name="Alert_Delete_Opinion" xml:space="preserve">
+    <value>Deleted opinion about farmhouse</value>
+  </data>
+  <data name="Alert_Delete_Product" xml:space="preserve">
+    <value>Deleted product</value>
+  </data>
 </root>

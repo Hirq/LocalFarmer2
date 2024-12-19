@@ -82,7 +82,7 @@
             await OpinionService.DeleteOpinion(opinion.Id);
             ListMyOpinionsFarmhouse.Remove(opinion);
             StateHasChanged();
-            AlertService.SetDeleteAlert($"Deleted opinion about farmhouse {opinion.Farmhouse.Name}");
+            AlertService.SetDeleteAlert($"{@loc["Alert_Delete_Opinion"]} {opinion.Farmhouse.Name}");
             _ = AlertService.ClearAlertAfterDelay();
         }
     }
@@ -107,7 +107,7 @@
             opinion.Comment = opinionDto.Comment;
             opinion.Rating = opinionDto.Rating;
             StateHasChanged();
-            AlertService.SetSuccessAlert($"Edit opinion about farmhouse {opinion.Farmhouse.Name}");
+            AlertService.SetSuccessAlert($"{@loc["Alert_Successfully"]} {@loc["Alert_Edit_Opinion"]} {opinion.Farmhouse.Name}");
             _ = AlertService.ClearAlertAfterDelay();
         }
     }

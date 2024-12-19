@@ -178,6 +178,33 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to added opnion about.
+        /// </summary>
+        internal static string Alert_Add_Opinion {
+            get {
+                return ResourceManager.GetString("Alert_Add_Opinion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to added product.
+        /// </summary>
+        internal static string Alert_Add_Product {
+            get {
+                return ResourceManager.GetString("Alert_Add_Product", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to added subscribe.
+        /// </summary>
+        internal static string Alert_Add_Subscribe {
+            get {
+                return ResourceManager.GetString("Alert_Add_Subscribe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All alerts.
         /// </summary>
         internal static string Alert_All_Alerts {
@@ -192,6 +219,69 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string Alert_Create_Account {
             get {
                 return ResourceManager.GetString("Alert_Create_Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleted farmhouse.
+        /// </summary>
+        internal static string Alert_Delete_Farmhouse {
+            get {
+                return ResourceManager.GetString("Alert_Delete_Farmhouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleted opinion about farmhouse.
+        /// </summary>
+        internal static string Alert_Delete_Opinion {
+            get {
+                return ResourceManager.GetString("Alert_Delete_Opinion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleted product.
+        /// </summary>
+        internal static string Alert_Delete_Product {
+            get {
+                return ResourceManager.GetString("Alert_Delete_Product", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleted subscribe farmhouse.
+        /// </summary>
+        internal static string Alert_Delete_Subscribe {
+            get {
+                return ResourceManager.GetString("Alert_Delete_Subscribe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to edited farmhouse.
+        /// </summary>
+        internal static string Alert_Edit_Farmhouse {
+            get {
+                return ResourceManager.GetString("Alert_Edit_Farmhouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to edited opinion about.
+        /// </summary>
+        internal static string Alert_Edit_Opinion {
+            get {
+                return ResourceManager.GetString("Alert_Edit_Opinion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to edited product.
+        /// </summary>
+        internal static string Alert_Edit_Product {
+            get {
+                return ResourceManager.GetString("Alert_Edit_Product", resourceCulture);
             }
         }
         

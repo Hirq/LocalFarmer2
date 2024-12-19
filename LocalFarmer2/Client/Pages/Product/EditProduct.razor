@@ -59,7 +59,7 @@
         var messageAlert = new MessageAlert(MessageAlertEnum.EditProduct, UserStateService.CurrentUser.FarmhouseName, product.Name);
         await AlertService.AddAlerts(listUsersIds, (int)UserStateService.CurrentUser.IdFarmhouse, true, messageAlert);
 
-        AlertService.SetSuccessAlert($"Successfully edited product {model.Name}");
+        AlertService.SetSuccessAlert($"{@loc["Alert_Successfully"]} {@loc["Alert_Edit_Product"]} {model.Name}");
         NavigationManager.NavigateTo("/myproducts");
         _ = AlertService.ClearAlertAfterDelay();
     }

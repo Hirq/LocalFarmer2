@@ -102,7 +102,7 @@
             await FavoriteFarmhouseService.DeleteFavorite(idFarmhouse);
             ListFavoritesFarmhouse.Remove(deletedFarmhouse);
             StateHasChanged();
-            AlertService.SetDeleteAlert($"Deleted subscribe farmhouse {idFarmhouse}");
+            AlertService.SetDeleteAlert($"{@loc["Alert_Delete_Subscribe"]} {idFarmhouse}");
             _ = AlertService.ClearAlertAfterDelay();
         }
     }

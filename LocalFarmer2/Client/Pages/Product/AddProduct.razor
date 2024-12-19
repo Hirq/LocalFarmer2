@@ -52,7 +52,7 @@
         var messageAlert = new MessageAlert(MessageAlertEnum.NewProduct, UserStateService.CurrentUser.FarmhouseName, product.Name);
         await AlertService.AddAlerts(listUsersIds, (int)UserStateService.CurrentUser.IdFarmhouse, true, messageAlert);
 
-        AlertService.SetSuccessAlert($"Successfully add product {product.Name}");
+        AlertService.SetSuccessAlert($"{@loc["Alert_Successfully"]} {@loc["Alert_Add_Product"]} {product.Name}");
         NavigationManager.NavigateTo("/myproducts");
         _ = AlertService.ClearAlertAfterDelay();
     }
