@@ -358,6 +358,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only favorite.
+        /// </summary>
+        internal static string Button_Only_Favorite {
+            get {
+                return ResourceManager.GetString("Button_Only_Favorite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open photo.
         /// </summary>
         internal static string Button_Open_Photo {

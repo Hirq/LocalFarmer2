@@ -471,4 +471,7 @@
   <data name="Alert_Delete_Product" xml:space="preserve">
     <value>Deleted product</value>
   </data>
+  <data name="Button_Only_Favorite" xml:space="preserve">
+    <value>Only favorite</value>
+  </data>
 </root>
