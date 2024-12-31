@@ -9,6 +9,7 @@
         //
         NewSubscriber,
         NewOpinion,
+        Welcome,
         //NewMessageFromForm - nowa wiadomość z formularza
     }
 
@@ -43,6 +44,8 @@
                     return $"New Subscriber: {Value}";
                 case MessageAlertEnum.NewOpinion:
                     return $"New Opinion: {Value}";
+                case MessageAlertEnum.Welcome:
+                    return $"Welcome Localfarmer";
                 default:
                     return string.Empty;
             }

@@ -32,6 +32,7 @@ namespace LocalFarmer2.Shared.Models
         // Cz2 - FALSE
         // Ktoś polubi moj farmhouse
         // DOda opinie o moim farmhouse
+        // Przywitalny
         // Wyśle zapytanie przez formularz - BRAK -> Brak formularza *@
 
         public bool InfoFromFarmhouse { get; set; }
