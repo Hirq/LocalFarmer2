@@ -42,7 +42,7 @@
     </EditForm>
 </MudPaper>
 
-@code {
+    @code {
     private RegisterDto RegisterModel = new RegisterDto();
     private bool ShowErrors;
     private IEnumerable<string>? Errors;
@@ -55,6 +55,10 @@
 
         if (result.Successful)
         {
+            var messageAlert = new MessageAlert(MessageAlertEnum.Welcome, "Welcome");
+            List<string> listUsersIds = new List<string>();
+            listUsersIds.Add(result.Email);
+            await AlertService.AddAlerts(listUsersIds, null , false, messageAlert);
             AlertService.SetSuccessAlert($"{@loc["Alert_Successfully"]} {@loc["Alert_Create_Account"]}");
 
             NavigationManager.NavigateTo("/login");

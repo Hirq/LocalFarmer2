@@ -42,7 +42,8 @@ namespace LocalFarmer2.Client.Services
                 Errors = new List<string>
                 {
                      "Account create sucessfully!"
-                }
+                },
+                Email = registerModel.Email,
             };
         }
 
