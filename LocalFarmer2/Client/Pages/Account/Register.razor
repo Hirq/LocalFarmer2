@@ -56,8 +56,8 @@
         if (result.Successful)
         {
             var messageAlert = new MessageAlert(MessageAlertEnum.Welcome, "Welcome");
-            List<string> listUsersIds = new List<string>();
-            listUsersIds.Add(result.Email);
+            var user = await AuthService.GetUser(result.Email);
+            List<string> listUsersIds = new List<string> { user.IdUser };
             await AlertService.AddAlerts(listUsersIds, null , false, messageAlert);
             AlertService.SetSuccessAlert($"{@loc["Alert_Successfully"]} {@loc["Alert_Create_Account"]}");
 
