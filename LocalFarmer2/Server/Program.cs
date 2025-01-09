@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using LocalFarmer2.Server.Services;
+using LocalFarmer2.Server.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -68,6 +69,7 @@ builder.Services.AddScoped<IOpinionRepository, OpinionRepository>();
 builder.Services.AddScoped<IAlertRepository, AlertRepository>();
 builder.Services.AddScoped<INoteRepository, NoteRepository>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<ChatHub>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -79,6 +81,7 @@ builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
 }));
 
 builder.Services.AddLocalization();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -111,6 +114,8 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<ChatHub>("/chathub");
 
 app.MapRazorPages();
 app.MapControllers();

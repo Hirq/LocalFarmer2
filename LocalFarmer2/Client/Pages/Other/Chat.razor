@@ -1,0 +1,34 @@
+﻿@page "/chat"
+@inject NavigationManager NavigationManager
+@* @rendermode InteractiveWebAssemblyRenderMode  *@
+
+<h3>Chat</h3>
+
+@code {
+    private HubConnection hubConnection;
+    private List<string> messages = new List<string>();
+    private string userInput;
+    private string messageInput;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
+            .Build();
+
+        hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+        {
+            var encodedMsg = $"{user}: {message}";
+            messages.Add(encodedMsg);
+            StateHasChanged();
+        });
+
+        await hubConnection.StartAsync();
+    }
+
+    Task Send => hubConnection.SendAsync("SendMessage", userInput, messageInput);
+
+    public bool IsConnected => hubConnection.State == HubConnectionState.Connected;
+
+}
