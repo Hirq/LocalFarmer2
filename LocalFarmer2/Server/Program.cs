@@ -28,6 +28,7 @@ builder.Services.AddSwaggerGen(s =>
     s.EnableAnnotations();
 });
 builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR();
 builder.Services.AddRazorPages();
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -81,7 +82,7 @@ builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
 }));
 
 builder.Services.AddLocalization();
-builder.Services.AddSignalR();
+
 
 var app = builder.Build();
 
