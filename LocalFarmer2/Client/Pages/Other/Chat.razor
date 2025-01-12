@@ -6,8 +6,8 @@
 
 @if (IsConnected)
 {
-    <input type="text" @bind="userInput" />
-    <input type="text" @bind="messageInput" />
+    <input type="text" @bind="userInput" class="inputColor" />
+    <input type="text" @bind="messageInput" class="inputColor" />
     <button @onclick="Send">Send</button>
 
     <ul id="messagesList">
@@ -51,3 +51,9 @@ else
     public bool IsConnected => hubConnection.State == HubConnectionState.Connected;
 
 }
+
+<style>
+    .inputColor{
+        background-color: grey;
+    }
+</style>
