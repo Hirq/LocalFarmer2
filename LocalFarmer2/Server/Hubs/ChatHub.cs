@@ -1,28 +1,29 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using LocalFarmer2.Server.Repositories.Interfaces;
+using LocalFarmer2.Server.Services;
+using Microsoft.AspNetCore.SignalR;
 
 namespace LocalFarmer2.Server.Hubs
 {
     public class ChatHub : Hub
     {
-        public ChatHub()
+        private readonly IChatMessageService _chatMessageService;
+        public ChatHub(IChatMessageService chatMessageService)
         {
-               
+            _chatMessageService = chatMessageService;
         }
 
-        public async Task SendMessage(string user, string message)
+        public async Task SendMessage(ChatMessageDto dto)
         {
-            string senderId = "";
-            string receiverId = "";
+            var message = await _chatMessageService.SendMessage(dto);
 
             List<string> users = new List<string>()
             {
-                senderId,
-                receiverId
+                message.IdUserSender,
+                message.IdUserReceiver
             };
-
             
-            await Clients.Users(users).SendAsync("ReceiveMessage", user, message);
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
+            await Clients.Users(users).SendAsync("ReceiveMessage", users, dto.Message);
+            //await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
     }
 }
