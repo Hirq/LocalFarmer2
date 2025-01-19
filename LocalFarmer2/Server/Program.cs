@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using LocalFarmer2.Server.Services;
 using LocalFarmer2.Server.Hubs;
+using LocalFarmer2.Server.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -70,6 +71,8 @@ builder.Services.AddScoped<IOpinionRepository, OpinionRepository>();
 builder.Services.AddScoped<IAlertRepository, AlertRepository>();
 builder.Services.AddScoped<INoteRepository, NoteRepository>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IChatMessageRepository, ChatMessageRepository>();
+builder.Services.AddScoped<IChatMessageService, ChatMessageService>();
 builder.Services.AddScoped<ChatHub>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

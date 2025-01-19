@@ -37,6 +37,13 @@ Szyfrowanie end-to-end (E2EE)
 *@
 
 @code {
+    public ChatMessageDto dto = new ChatMessageDto()
+    {
+        Message = "string",
+        IdUserReceiver = "53898801-370c-4fbc-a99c-86243f159fe5",
+        IdUserSender = "8e339c44-2ccf-4e17-b774-626a7c9c8c1b"
+    };
+
     private HubConnection hubConnection;
     private List<string> messages = new List<string>();
     private string userInput;
@@ -59,7 +66,7 @@ Szyfrowanie end-to-end (E2EE)
         await hubConnection.StartAsync();
     }
 
-    Task Send() => hubConnection.SendAsync("SendMessage", userInput, messageInput);
+    Task Send() => hubConnection.SendAsync("SendMessage", dto);
 
     public bool IsConnected => hubConnection.State == HubConnectionState.Connected;
 

@@ -27,6 +27,9 @@ namespace LocalFarmer2.Server.Services
         public async Task<ChatMessage> SendMessage(ChatMessageDto dto)
         {
             var message = _mapper.Map<ChatMessage>(dto);
+            message.EncryptedMessage = new byte[1];
+            message.MessageIV = new byte[0];
+            message.DateSent = DateTime.Now;
             await _chatMessageRepository.AddAsync(message);
             await _chatMessageRepository.SaveChangesAsync();
 
