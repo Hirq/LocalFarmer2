@@ -136,6 +136,15 @@ namespace LocalFarmer2.Server.Controllers
                 FullName = user.FullName
             };
             return Ok(userDto);
+        }   
+        
+        [HttpGet]
+        [Route("Users")]
+        public async Task<IActionResult> GetUsers()
+        {
+            var user = await _applicationUserRepository.GetAllAsync();
+
+            return Ok(user);
         }
 
         [HttpPut]

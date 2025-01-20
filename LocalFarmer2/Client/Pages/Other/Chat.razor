@@ -1,5 +1,6 @@
 ﻿@page "/chat"
 @inject NavigationManager NavigationManager
+@inject IAccountService AccountService
 @* @rendermode InteractiveWebAssemblyRenderMode  *@
 
 <h3>Chat</h3>
@@ -8,7 +9,7 @@
 {
     <input type="text" @bind="userInput" class="inputColor" />
     <input type="text" @bind="messageInput" class="inputColor" />
-    <button @onclick="Send">Send</button>
+    @* <button @onclick="Send">Send</button> *@
 
     <ul id="messagesList">
         @foreach (var message in messages)
@@ -20,6 +21,11 @@
 else
 {
     <span>Connecting...</span>
+}
+
+@foreach (var user in users)
+{
+    <div>@user.UserName  <button @onclick="() => Send(user.Id)">Send</button></div>
 }
 
 
@@ -48,6 +54,7 @@ Szyfrowanie end-to-end (E2EE)
     private List<string> messages = new List<string>();
     private string userInput;
     private string messageInput;
+    private List<ApplicationUser> users = new List<ApplicationUser>();
 
 
     protected override async Task OnInitializedAsync()
@@ -64,9 +71,14 @@ Szyfrowanie end-to-end (E2EE)
         });
 
         await hubConnection.StartAsync();
+        users = await AccountService.GetUsers();
     }
 
-    Task Send() => hubConnection.SendAsync("SendMessage", dto);
+    Task Send(string idReceiver)
+    {
+        dto.IdUserReceiver = idReceiver;
+        return hubConnection.SendAsync("SendMessage", dto);
+    }
 
     public bool IsConnected => hubConnection.State == HubConnectionState.Connected;
 

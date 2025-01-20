@@ -103,6 +103,13 @@ namespace LocalFarmer2.Client.Services
             return userDto;
         }
 
+        public async Task<List<ApplicationUser>> GetUsers()
+        {
+            var userDto = await _httpClient.GetFromJsonAsync<List<ApplicationUser>>($"api/Account/Users");
+
+            return userDto;
+        }
+
         public async Task EditUser(EditUserDto dto)
         {
             var user = await GetCurrentUser();
