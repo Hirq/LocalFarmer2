@@ -25,7 +25,10 @@ else
 
 @foreach (var user in users)
 {
-    <div>@user.UserName  <button @onclick="() => Send(user.Id)">Send</button></div>
+    <div>@user.UserName  
+        <button @onclick="() => Send(user.Id)">Send</button>
+        <button @onclick="() => Send(user.Id)">History</button>
+    </div>
 }
 
 
