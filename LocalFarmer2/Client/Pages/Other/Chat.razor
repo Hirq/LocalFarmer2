@@ -1,5 +1,6 @@
 ﻿@page "/chat"
 @inject NavigationManager NavigationManager
+@inject UserStateService UserStateService
 @inject IAccountService AccountService
 @* @rendermode InteractiveWebAssemblyRenderMode  *@
 
@@ -75,6 +76,7 @@ Szyfrowanie end-to-end (E2EE)
 
         await hubConnection.StartAsync();
         users = await AccountService.GetUsers();
+        users = users.Where(x => x.Id != UserStateService.CurrentUser?.IdUser).ToList();
     }
 
     Task Send(string idReceiver)
