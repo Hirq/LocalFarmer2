@@ -8,8 +8,14 @@
 
 @if (IsConnected)
 {
-    <input type="text" @bind="userInput" class="inputColor" />
-    <input type="text" @bind="messageInput" class="inputColor" />
+    <span>
+        <MudInputLabel>XXX</MudInputLabel>
+        <input type="text" @bind="userInput" class="inputColor" />
+    </span>
+    <span>
+        <MudInputLabel>Message</MudInputLabel>
+        <input type="text" @bind="messageInput" class="inputColor" />
+    </span>
     @* <button @onclick="Send">Send</button> *@
 
     <ul id="messagesList">
@@ -23,7 +29,7 @@ else
 {
     <span>Connecting...</span>
 }
-
+<span> USERS </span>
 @foreach (var user in users)
 {
     <div>@user.UserName  
@@ -81,7 +87,9 @@ Szyfrowanie end-to-end (E2EE)
 
     Task Send(string idReceiver)
     {
+        dto.IdUserSender = UserStateService.CurrentUser?.IdUser;
         dto.IdUserReceiver = idReceiver;
+        dto.Message = messageInput;
         return hubConnection.SendAsync("SendMessage", dto);
     }
 
