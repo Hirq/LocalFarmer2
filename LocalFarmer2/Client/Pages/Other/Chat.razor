@@ -34,7 +34,8 @@ else
 {
     <div>@user.UserName  
         <button @onclick="() => Send(user.Id)">Send</button>
-        <button @onclick="() => Send(user.Id)">History</button>
+        <button @onclick="() => GoPriv(user.Id)">Priv</button>
+        @* <button @onclick="() => Send(user.Id)">History</button> *@
     </div>
 }
 
@@ -91,6 +92,11 @@ Szyfrowanie end-to-end (E2EE)
         dto.IdUserReceiver = idReceiver;
         dto.Message = messageInput;
         return hubConnection.SendAsync("SendMessage", dto);
+    }
+
+    void GoPriv(string idReceiver)
+    {
+        NavigationManager.NavigateTo($"/chatpriv/{idReceiver}");
     }
 
     public bool IsConnected => hubConnection.State == HubConnectionState.Connected;

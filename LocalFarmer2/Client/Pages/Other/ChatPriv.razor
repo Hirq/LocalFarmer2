@@ -1,0 +1,74 @@
+﻿@page "/chatpriv/{idReceiver}"
+
+@inject NavigationManager NavigationManager
+@inject UserStateService UserStateService
+@inject IAccountService AccountService
+@* @rendermode InteractiveWebAssemblyRenderMode  *@
+
+<h2>PRIV</h2>
+<h4>ID Receiver: @idReceiver</h4>
+<h4>ID Sender: @UserStateService.CurrentUser.IdUser</h4>
+
+
+@code {
+    [Parameter]
+    public string idReceiver { get; set; }
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (idReceiver != null)
+        {
+
+        }
+    }
+
+    // public ChatMessageDto dto = new ChatMessageDto()
+    // {
+    //     Message = "string",
+    //     IdUserReceiver = "53898801-370c-4fbc-a99c-86243f159fe5",
+    //     IdUserSender = "8e339c44-2ccf-4e17-b774-626a7c9c8c1b"
+    // };
+
+    // private HubConnection hubConnection;
+    // private List<string> messages = new List<string>();
+    // private string userInput;
+    // private string messageInput;
+    // private List<ApplicationUser> users = new List<ApplicationUser>();
+
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     hubConnection = new HubConnectionBuilder()
+    //         .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
+    //         .Build();
+
+    //     hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+    //     {
+    //         var encodedMsg = $"{user}: {message}";
+    //         messages.Add(encodedMsg);
+    //         StateHasChanged();
+    //     });
+
+    //     await hubConnection.StartAsync();
+    //     users = await AccountService.GetUsers();
+    //     users = users.Where(x => x.Id != UserStateService.CurrentUser?.IdUser).ToList();
+    // }
+
+    // Task Send(string idReceiver)
+    // {
+    //     dto.IdUserSender = UserStateService.CurrentUser?.IdUser;
+    //     dto.IdUserReceiver = idReceiver;
+    //     dto.Message = messageInput;
+    //     return hubConnection.SendAsync("SendMessage", dto);
+    // }
+
+    // public bool IsConnected => hubConnection.State == HubConnectionState.Connected;
+
+}
+
+<style>
+    .inputColor{
+        background-color: grey;
+    }
+</style>

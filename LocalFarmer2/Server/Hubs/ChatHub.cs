@@ -15,6 +15,8 @@ namespace LocalFarmer2.Server.Hubs
         public async Task SendMessage(ChatMessageDto dto)
         {
             var message = await _chatMessageService.SendMessage(dto);
+            var date = DateTime.Now.ToShortTimeString();
+            var time = DateTime.Now.ToShortTimeString();
 
             List<string> users = new List<string>()
             {
@@ -28,7 +30,7 @@ namespace LocalFarmer2.Server.Hubs
             //    "8e339c44-2ccf-4e17-b774-626a7c9c8c1b"
             //};
             
-            await Clients.Users(users).SendAsync("ReceiveMessage", users, dto.Message);
+            await Clients.Users(users).SendAsync("ReceiveMessage", dto.Message, date, time, dto.IdUserSender);
             //await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
     }
