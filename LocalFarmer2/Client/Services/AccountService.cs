@@ -96,6 +96,13 @@ namespace LocalFarmer2.Client.Services
             return userDto;
         }
 
+        public async Task<UserDto> GetUserById(string idUser)
+        {
+            var userDto = await _httpClient.GetFromJsonAsync<UserDto>($"api/Account/User/ById/{idUser}");
+
+            return userDto;
+        }
+
         public async Task<UserDto> GetCurrentUserByFarmhouseId(int idFarmhouse)
         {
             var userDto = await _httpClient.GetFromJsonAsync<UserDto>($"api/Account/User/ByFarmhouseId/{idFarmhouse}");

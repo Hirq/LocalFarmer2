@@ -1,74 +1,133 @@
-﻿@page "/chatpriv/{idReceiver}"
-
+﻿@page "/chatpriv"
+@page "/chatpriv/{ToUserId}"
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.SignalR.Client
 @inject NavigationManager NavigationManager
+@inject HttpClient Http
+@inject HttpClient _httpClient
 @inject UserStateService UserStateService
 @inject IAccountService AccountService
-@* @rendermode InteractiveWebAssemblyRenderMode  *@
+@inject IJSRuntime JSRuntime
 
-<h2>PRIV</h2>
-<h4>ID Receiver: @idReceiver</h4>
-<h4>ID Sender: @UserStateService.CurrentUser.IdUser</h4>
-
+                    @ToUserId;
+<div style="border:0px;height:90vh;">
+    <div class="panel panel-primary" style="height: 100%;">
+        <div class="panel-heading top-bar">
+            <div class="col-md-8 col-xs-8">
+                <h3 class="panel-title">
+                    @if (ToUser != null)
+                    {
+                        @if (ToUser.UserName != null)
+                        {
+                            <b>@ToUser.UserName</b>
+                        }
+                        else
+                        {
+                            <b>@ToUser.FullName</b>
+                        }
+                    }
+                </h3>
+            </div>
+        </div>
+        <div id="divMessageContainerBase" class="panel-body msg_container_base">
+            @if (Messages != null && Messages.Count() > 0)
+            {
+                @foreach (var message in Messages)
+                {
+                    @if (message.IdUserSender == FromUserId)
+                    {
+                        <div class="row msg_container base_sent">
+                            <div class="col-md-10 col-xs-10">
+                                <div class="messages msg_sent">
+                                    <p>@message.Message</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row msg_container base_receive">
+                            <div class="col-md-10 col-xs-10">
+                                <div class="messages msg_receive">
+                                    <p>@message.Message</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+        <!--CHAT USER BOX-->
+        <div class="panel-footer">
+            <div class="input-group" id="myForm">
+                <input id="txtMessageInput" @bind="MessageText" type="text" class="form-control input-sm chat_input"
+                       placeholder="Write your message here...">
+                <button class="btn btn-primary" @onclick="Send">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
     [Parameter]
-    public string idReceiver { get; set; }
+    public string ToUserId { get; set; }
+    public UserDto ToUser { get; set; } = new UserDto();
+    public string FromUserId { get; set; }
+    public string MessageText { get; set; }
+    public List<ChatMessageDto> Messages { get; set; } = new List<ChatMessageDto>();
 
+    [CascadingParameter]
+    public Task<AuthenticationState> authenticationStateTask { get; set; }
+    private HubConnection hubConnection;
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
-        if (idReceiver != null)
-        {
+        var claimsPrincipal = (await authenticationStateTask).User;
 
-        }
+        if (!claimsPrincipal.Identity.IsAuthenticated)
+            NavigationManager.NavigateTo("/");
+
+        // FromUserId = (await _httpClient.GetFromJsonAsync<UserDto>("user/getcurrentuser")).IdUser.ToString();
+        FromUserId = (await AccountService.GetCurrentUser()).IdUser.ToString();
+
+        // if (Convert.ToInt32(ToUserId) > 0)
+        //     ToUser = await _httpClient.GetFromJsonAsync<UserDto>("user/getprofile/" + ToUserId);
+
+        ToUser = await AccountService.GetUserById(ToUserId);
+
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
+            .Build();
+
+        hubConnection.On<ChatMessageDto>("ReceiveMessage", (message) =>
+        {
+            if (message.IdUserSender == FromUserId ||
+            (message.IdUserReceiver == FromUserId && message.IdUserSender == ToUserId))
+            {
+                Messages.Add(message);
+                StateHasChanged();
+            }
+        });
+
+        await hubConnection.StartAsync();
+
     }
 
-    // public ChatMessageDto dto = new ChatMessageDto()
-    // {
-    //     Message = "string",
-    //     IdUserReceiver = "53898801-370c-4fbc-a99c-86243f159fe5",
-    //     IdUserSender = "8e339c44-2ccf-4e17-b774-626a7c9c8c1b"
-    // };
+    public async Task Send()
+    {
+        ChatMessageDto message = new ChatMessageDto();
+        message.IdUserReceiver = ToUserId;
+        message.IdUserSender = FromUserId;
+        message.Message = MessageText;
 
-    // private HubConnection hubConnection;
-    // private List<string> messages = new List<string>();
-    // private string userInput;
-    // private string messageInput;
-    // private List<ApplicationUser> users = new List<ApplicationUser>();
+        await hubConnection.SendAsync("SendMessage", message);
+        MessageText = "";
+    }
 
-
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     hubConnection = new HubConnectionBuilder()
-    //         .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
-    //         .Build();
-
-    //     hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
-    //     {
-    //         var encodedMsg = $"{user}: {message}";
-    //         messages.Add(encodedMsg);
-    //         StateHasChanged();
-    //     });
-
-    //     await hubConnection.StartAsync();
-    //     users = await AccountService.GetUsers();
-    //     users = users.Where(x => x.Id != UserStateService.CurrentUser?.IdUser).ToList();
-    // }
-
-    // Task Send(string idReceiver)
-    // {
-    //     dto.IdUserSender = UserStateService.CurrentUser?.IdUser;
-    //     dto.IdUserReceiver = idReceiver;
-    //     dto.Message = messageInput;
-    //     return hubConnection.SendAsync("SendMessage", dto);
-    // }
-
-    // public bool IsConnected => hubConnection.State == HubConnectionState.Connected;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/chat.js");
+        await module.InvokeVoidAsync("setScroll");
+    }
 
 }
-
-<style>
-    .inputColor{
-        background-color: grey;
-    }
-</style>
