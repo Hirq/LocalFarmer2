@@ -13,7 +13,7 @@ namespace LocalFarmer2.Server.Hubs
 
         public async Task SendMessage(ChatMessageDto dto)
         {
-            Console.WriteLine($"[ChatHub] Wysyłam wiadomość od: {dto.IdUserSender} do: {dto.IdUserReceiver}");
+            await Groups.AddToGroupAsync(Context.ConnectionId, dto.IdUserSender);
 
             var message = await _chatMessageService.SendMessage(dto);
             //var date = DateTime.Now.ToShortTimeString();
@@ -25,14 +25,9 @@ namespace LocalFarmer2.Server.Hubs
                 dto.IdUserReceiver
             };
 
-            //List<string> users2 = new List<string>()
-            //{
-            //    "53898801-370c-4fbc-a99c-86243f159fe5",
-            //    "8e339c44-2ccf-4e17-b774-626a7c9c8c1b"
-            //};
-
-            await Clients.Users(users).SendAsync("ReceiveMessage", dto);
-            //await Clients.All.SendAsync("ReceiveMessage", user, message);
+            await Clients.Group(dto.IdUserReceiver).SendAsync("ReceiveMessage", dto);
+            await Clients.Group(dto.IdUserSender).SendAsync("ReceiveMessage", dto);
+            //await Clients.All.SendAsync("ReceiveMessage", dto);
         }
     }
 }

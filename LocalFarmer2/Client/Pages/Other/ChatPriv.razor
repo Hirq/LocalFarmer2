@@ -85,17 +85,9 @@
     protected override async Task OnInitializedAsync()
     {
         Console.WriteLine("START");
+        Console.WriteLine(ToUserId);
 
-        var claimsPrincipal = (await authenticationStateTask).User;
-
-        if (!claimsPrincipal.Identity.IsAuthenticated)
-            NavigationManager.NavigateTo("/");
-
-        // FromUserId = (await _httpClient.GetFromJsonAsync<UserDto>("user/getcurrentuser")).IdUser.ToString();
         FromUserId = (await AccountService.GetCurrentUser()).IdUser.ToString();
-
-        // if (Convert.ToInt32(ToUserId) > 0)
-        //     ToUser = await _httpClient.GetFromJsonAsync<UserDto>("user/getprofile/" + ToUserId);
 
         ToUser = await AccountService.GetUserById(ToUserId);
 
@@ -127,7 +119,16 @@
         message.IdUserSender = FromUserId;
         message.Message = MessageText;
 
-        await hubConnection.SendAsync("SendMessage", message);
+        try
+        {
+            await hubConnection.SendAsync("SendMessage", message);
+            Console.WriteLine("Wysłano wiadomość przez SignalR");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Błąd wysyłania wiadomości SignalR: " + ex.Message);
+        }
+
         MessageText = "";
     }
 
@@ -141,5 +142,4 @@
         var module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/chat.js");
         await module.InvokeVoidAsync("setScroll");
     }
-
 }
