@@ -1,5 +1,4 @@
-﻿using LocalFarmer2.Server.Repositories.Interfaces;
-using LocalFarmer2.Server.Services;
+﻿using LocalFarmer2.Server.Services;
 using Microsoft.AspNetCore.SignalR;
 
 namespace LocalFarmer2.Server.Hubs
@@ -14,6 +13,8 @@ namespace LocalFarmer2.Server.Hubs
 
         public async Task SendMessage(ChatMessageDto dto)
         {
+            Console.WriteLine($"[ChatHub] Wysyłam wiadomość od: {dto.IdUserSender} do: {dto.IdUserReceiver}");
+
             var message = await _chatMessageService.SendMessage(dto);
             //var date = DateTime.Now.ToShortTimeString();
             //var time = DateTime.Now.ToShortTimeString();
@@ -29,7 +30,7 @@ namespace LocalFarmer2.Server.Hubs
             //    "53898801-370c-4fbc-a99c-86243f159fe5",
             //    "8e339c44-2ccf-4e17-b774-626a7c9c8c1b"
             //};
-            
+
             await Clients.Users(users).SendAsync("ReceiveMessage", dto);
             //await Clients.All.SendAsync("ReceiveMessage", user, message);
         }

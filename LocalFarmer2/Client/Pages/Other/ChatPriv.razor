@@ -1,15 +1,15 @@
-﻿@page "/chatpriv"
-@page "/chatpriv/{ToUserId}"
+﻿@page "/chatpriv/{ToUserId}"
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.SignalR.Client
 @inject NavigationManager NavigationManager
-@inject HttpClient Http
 @inject HttpClient _httpClient
 @inject UserStateService UserStateService
 @inject IAccountService AccountService
 @inject IJSRuntime JSRuntime
 
-                    @ToUserId;
+@ToUserId;
+<br/>
+<button @onclick="() => CheckHub()">CHECK HUB CONNECT</button>
 <div style="border:0px;height:90vh;">
     <div class="panel panel-primary" style="height: 100%;">
         <div class="panel-heading top-bar">
@@ -80,8 +80,12 @@
     public Task<AuthenticationState> authenticationStateTask { get; set; }
     private HubConnection hubConnection;
 
+    public bool IsConnected => hubConnection.State == HubConnectionState.Connected;
+
     protected override async Task OnInitializedAsync()
     {
+        Console.WriteLine("START");
+
         var claimsPrincipal = (await authenticationStateTask).User;
 
         if (!claimsPrincipal.Identity.IsAuthenticated)
@@ -101,16 +105,19 @@
 
         hubConnection.On<ChatMessageDto>("ReceiveMessage", (message) =>
         {
+            Console.WriteLine("hubConnection 1");
+
             if (message.IdUserSender == FromUserId ||
             (message.IdUserReceiver == FromUserId && message.IdUserSender == ToUserId))
             {
+                Console.WriteLine("hubConnection 2");
                 Messages.Add(message);
                 StateHasChanged();
             }
         });
-
+        Console.WriteLine("OnInitializedAsync 1 - " + hubConnection.State.ToString());
         await hubConnection.StartAsync();
-
+        Console.WriteLine("OnInitializedAsync 2 - " + hubConnection.State.ToString());
     }
 
     public async Task Send()
@@ -122,6 +129,11 @@
 
         await hubConnection.SendAsync("SendMessage", message);
         MessageText = "";
+    }
+
+    public void CheckHub()
+    {
+        Console.WriteLine(hubConnection.State.ToString());
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

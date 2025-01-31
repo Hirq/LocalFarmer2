@@ -6,7 +6,7 @@
 
 <h3>Chat</h3>
 
-@if (IsConnected)
+@* @if (IsConnected)
 {
     <span>
         <MudInputLabel>XXX</MudInputLabel>
@@ -16,7 +16,6 @@
         <MudInputLabel>Message</MudInputLabel>
         <input type="text" @bind="messageInput" class="inputColor" />
     </span>
-    @* <button @onclick="Send">Send</button> *@
 
     <ul id="messagesList">
         @foreach (var message in messages)
@@ -28,12 +27,13 @@
 else
 {
     <span>Connecting...</span>
-}
+} *@
+
 <span> USERS </span>
 @foreach (var user in users)
 {
     <div>@user.UserName  
-        <button @onclick="() => Send(user.Id)">Send</button>
+        @* <button @onclick="() => Send(user.Id)">Send</button> *@
         <button @onclick="() => GoPriv(user.Id)">Priv</button>
         @* <button @onclick="() => Send(user.Id)">History</button> *@
     </div>
@@ -70,36 +70,36 @@ Szyfrowanie end-to-end (E2EE)
 
     protected override async Task OnInitializedAsync()
     {
-        hubConnection = new HubConnectionBuilder()
-            .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
-            .Build();
+        // hubConnection = new HubConnectionBuilder()
+        //     .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
+        //     .Build();
 
-        hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
-        {
-            var encodedMsg = $"{user}: {message}";
-            messages.Add(encodedMsg);
-            StateHasChanged();
-        });
+        // hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
+        // {
+        //     var encodedMsg = $"{user}: {message}";
+        //     messages.Add(encodedMsg);
+        //     StateHasChanged();
+        // });
 
-        await hubConnection.StartAsync();
+        // await hubConnection.StartAsync();
         users = await AccountService.GetUsers();
         users = users.Where(x => x.Id != UserStateService.CurrentUser?.IdUser).ToList();
     }
 
-    Task Send(string idReceiver)
-    {
-        dto.IdUserSender = UserStateService.CurrentUser?.IdUser;
-        dto.IdUserReceiver = idReceiver;
-        dto.Message = messageInput;
-        return hubConnection.SendAsync("SendMessage", dto);
-    }
+    // Task Send(string idReceiver)
+    // {
+    //     dto.IdUserSender = UserStateService.CurrentUser?.IdUser;
+    //     dto.IdUserReceiver = idReceiver;
+    //     dto.Message = messageInput;
+    //     return hubConnection.SendAsync("SendMessage", dto);
+    // }
 
     void GoPriv(string idReceiver)
     {
         NavigationManager.NavigateTo($"/chatpriv/{idReceiver}");
     }
 
-    public bool IsConnected => hubConnection.State == HubConnectionState.Connected;
+    // public bool IsConnected => hubConnection.State == HubConnectionState.Connected;
 
 }
 
