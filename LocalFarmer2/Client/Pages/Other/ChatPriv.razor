@@ -36,21 +36,17 @@
                 {
                     @if (message.IdUserSender == FromUserId)
                     {
-                        <div class="row msg_container base_sent">
-                            <div class="col-md-10 col-xs-10">
-                                <div class="messages msg_sent">
-                                    <p>@message.Message</p>
-                                </div>
+                        <div class="message-container sent">
+                            <div class="message-box sent-message">
+                                <p>@message.Message</p>
                             </div>
                         </div>
                     }
                     else
                     {
-                        <div class="row msg_container base_receive">
-                            <div class="col-md-10 col-xs-10">
-                                <div class="messages msg_receive">
-                                    <p>@message.Message</p>
-                                </div>
+                        <div class="message-container received">
+                            <div class="message-box received-message">
+                                <p>@message.Message</p>
                             </div>
                         </div>
                     }
