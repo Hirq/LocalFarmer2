@@ -25,3 +25,12 @@ export function setScroll() {
         divMessageContainerBase.scrollTop = divMessageContainerBase.scrollHeight;
     }
 }
+
+
+document.getElementById("txtMessageInput")
+    .addEventListener("keyup", function(event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            document.getElementById("txtMessageButton").click();
+        }
+    });
