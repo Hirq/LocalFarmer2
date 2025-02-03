@@ -19,11 +19,11 @@ namespace LocalFarmer2.Server.Hubs
             //var date = DateTime.Now.ToShortTimeString();
             //var time = DateTime.Now.ToShortTimeString();
 
-            var users = new string[]
-            {
-                dto.IdUserSender,
-                dto.IdUserReceiver
-            };
+            // var users = new string[]
+            // {
+            //     dto.IdUserSender,
+            //     dto.IdUserReceiver
+            // };
 
             await Clients.Group(dto.IdUserReceiver).SendAsync("ReceiveMessage", dto);
             await Clients.Group(dto.IdUserSender).SendAsync("ReceiveMessage", dto);
