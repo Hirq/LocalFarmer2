@@ -5,6 +5,7 @@
 @inject HttpClient _httpClient
 @inject UserStateService UserStateService
 @inject IAccountService AccountService
+@inject IChatMessageService ChatMessageService
 @inject IJSRuntime JSRuntime
 
 @ToUserId;
@@ -12,6 +13,7 @@
 <button @onclick="() => CheckHub()">CHECK HUB CONNECT</button>
 <div style="border:0px;height:90vh;">
     <div class="panel panel-primary" style="height: 100%;">
+        COUNT: @CountMessages
         <div class="panel-heading top-bar">
             <div class="col-md-8 col-xs-8">
                 <h3 class="panel-title">
@@ -70,6 +72,8 @@
     public UserDto ToUser { get; set; } = new UserDto();
     public string FromUserId { get; set; }
     public string MessageText { get; set; }
+    public int CountMessages { get; set; }
+    public ChatMessageDto dto { get; set; }
     public List<ChatMessageDto> Messages { get; set; } = new List<ChatMessageDto>();
 
     [CascadingParameter]
@@ -82,9 +86,11 @@
     {
         Console.WriteLine("START");
         Console.WriteLine(ToUserId);
-
+   
         FromUserId = (await AccountService.GetCurrentUser()).IdUser.ToString();
 
+        CountMessages = (await ChatMessageService.GetChatMessages(FromUserId, ToUserId)).Count();
+        
         ToUser = await AccountService.GetUserById(ToUserId);
 
         hubConnection = new HubConnectionBuilder()

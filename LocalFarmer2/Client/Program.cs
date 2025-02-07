@@ -31,6 +31,7 @@ builder.Services.AddScoped<IFavoriteFarmhouseService, FavoriteFarmhouseService>(
 builder.Services.AddScoped<IOpinionService, OpinionService>();
 builder.Services.AddScoped<IAlertService, AlertService>();
 builder.Services.AddScoped<INoteService, NoteService>();
+builder.Services.AddScoped<IChatMessageService, ChatMessageService>();
 builder.Services.AddScoped<UserStateService>();
 builder.Services.AddScoped<UtilsService>();
 builder.Services.AddScoped<SearchService>();
