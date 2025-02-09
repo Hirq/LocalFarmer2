@@ -25,8 +25,8 @@ namespace LocalFarmer2.Server.Controllers
             return Ok(message);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetMessages(string  idUserSender, string idUserReceiver)
+        [HttpGet, Route("GetMessages")]
+        public async Task<IActionResult> GetMessages(string idUserSender, string idUserReceiver)
         {
             var allMessages = await _chatMessageService.GetMessages(idUserSender, idUserReceiver);
 

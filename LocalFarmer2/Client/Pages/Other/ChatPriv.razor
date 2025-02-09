@@ -8,7 +8,7 @@
 @inject IChatMessageService ChatMessageService
 @inject IJSRuntime JSRuntime
 
-@ToUserId;
+@ToUserId
 <br/>
 <button @onclick="() => CheckHub()">CHECK HUB CONNECT</button>
 <div style="border:0px;height:90vh;">
@@ -84,9 +84,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine("START");
-        Console.WriteLine(ToUserId);
-   
         FromUserId = (await AccountService.GetCurrentUser()).IdUser.ToString();
 
         CountMessages = (await ChatMessageService.GetChatMessages(FromUserId, ToUserId)).Count();

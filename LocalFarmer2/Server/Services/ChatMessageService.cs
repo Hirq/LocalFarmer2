@@ -14,11 +14,13 @@ namespace LocalFarmer2.Server.Services
             _mapper = mapper;
         }
 
-        public async Task<List<ChatMessage>> GetMessages(string  IdUserSender, string IdUserReceiver)
+        public async Task<List<ChatMessage>> GetMessages(string  idUserSender, string idUserReceiver)
         {
-            //var iSent = (await _chatMessageRepository.GetAllAsync(x => x.IdUserSender == dto.IdUserSender && x.IdUserReceiver == dto.IdUserReceiver));
-            //var iReceived = (await _chatMessageRepository.GetAllAsync(x => x.IdUserSender == dto.IdUserReceiver && x.IdUserReceiver == dto.IdUserSender));
-            var allMessages = (await _chatMessageRepository.GetAllAsync(x => x.IdUserSender == IdUserSender && x.IdUserReceiver == IdUserReceiver && x.IdUserSender == IdUserReceiver && x.IdUserReceiver == IdUserSender));
+            var iSent = (await _chatMessageRepository.GetAllAsync(x => x.IdUserSender == idUserSender && x.IdUserReceiver == idUserReceiver)).ToList();
+            var iReceived = (await _chatMessageRepository.GetAllAsync(x => x.IdUserSender == idUserReceiver && x.IdUserReceiver == idUserSender)).ToList();
+            var allMessages = new List<ChatMessage>();
+            allMessages.AddRange(iSent);
+            allMessages.AddRange(iReceived);
             await _chatMessageRepository.SaveChangesAsync();
 
             return allMessages.ToList();

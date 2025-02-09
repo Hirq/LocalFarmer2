@@ -11,10 +11,11 @@ public class ChatMessageService : IChatMessageService
         _mapper = mapper;
     }
 
-    public async Task<List<ChatMessage>> GetChatMessages(string IdUserSender, string IdUserReceiver)
+    public async Task<List<ChatMessage>> GetChatMessages(string idUserSender, string idUserReceiver)
     {
-        var queryParams = $"?IdUserSender={IdUserSender}&IdUserReceiver={IdUserReceiver}";
-        var messages = await _http.GetFromJsonAsync<List<ChatMessage>>($"api/ChatMessage/GetMessages{queryParams}");
+        Console.WriteLine("idUserSender: " + idUserSender);
+        Console.WriteLine("idUserReceiver: " + idUserReceiver);
+        var messages = await _http.GetFromJsonAsync<List<ChatMessage>>($"api/ChatMessage/GetMessages?idUserSender={idUserSender}&idUserReceiver={idUserReceiver}");
 
         return messages;
     }
