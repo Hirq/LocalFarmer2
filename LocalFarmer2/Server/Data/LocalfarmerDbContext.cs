@@ -18,5 +18,6 @@ namespace LocalFarmer2.Server.Data
         public DbSet<Alert> Alerts { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
+        public DbSet<ChatUserKey> ChatUserKeys { get; set; }
     }
 }
