@@ -85,8 +85,13 @@
     protected override async Task OnInitializedAsync()
     {
         FromUserId = (await AccountService.GetCurrentUser()).IdUser.ToString();
+        var messageHistory = await ChatMessageService.GetChatMessages(FromUserId, ToUserId);
+        foreach(var message in messageHistory)
+        {
+            Messages.Add(message);
+        }
 
-        CountMessages = (await ChatMessageService.GetChatMessages(FromUserId, ToUserId)).Count();
+        CountMessages = messageHistory.Count();
         
         ToUser = await AccountService.GetUserById(ToUserId);
 

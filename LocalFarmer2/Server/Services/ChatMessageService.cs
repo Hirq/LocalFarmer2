@@ -44,7 +44,7 @@ namespace LocalFarmer2.Server.Services
 
         public async Task<byte[]> GetOrCreateKey(string user1, string user2)
         {
-            var key = await _chatUserKeyRepository.GetFirstOrDefaultAsync(k =>
+            var key = await _chatUserKeyRepository.GetFirstOrDefaultOrNullAsync(k =>
                 (k.User1Id == user1 && k.User2Id == user2) || (k.User1Id == user2 && k.User2Id == user1));
 
             if (key == null)

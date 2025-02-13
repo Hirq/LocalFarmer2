@@ -145,5 +145,26 @@ namespace LocalFarmer2.Server.Repositories
 
             return element;
         }
+
+        public async Task<TEntity> GetFirstOrDefaultOrNullAsync(Expression<Func<TEntity, bool>> whereExpression)
+        {
+            var element = await _context.Set<TEntity>().Where(whereExpression).AsNoTracking().FirstOrDefaultAsync();
+
+            return element;
+        }
+
+        public async Task<TEntity> GetFirstOrDefaultOrNullAsync(Expression<Func<TEntity, bool>> whereExpression, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            var query = _context.Set<TEntity>().Where(whereExpression).AsNoTracking();
+
+            foreach (Expression<Func<TEntity, object>> includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+
+            var element = await query.FirstOrDefaultAsync();
+
+            return element;
+        }
     }
 }

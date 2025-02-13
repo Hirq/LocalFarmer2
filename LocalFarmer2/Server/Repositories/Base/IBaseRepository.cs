@@ -18,6 +18,10 @@ namespace LocalFarmer2.Server.Repositories
 
         Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> whereExpression, params Expression<Func<TEntity, object>>[] includeProperties);
 
+        Task<TEntity> GetFirstOrDefaultOrNullAsync(Expression<Func<TEntity, bool>> whereExpression);
+
+        Task<TEntity> GetFirstOrDefaultOrNullAsync(Expression<Func<TEntity, bool>> whereExpression, params Expression<Func<TEntity, object>>[] includeProperties);
+
         void Add(TEntity entity);
 
         Task AddAsync(TEntity entity);
