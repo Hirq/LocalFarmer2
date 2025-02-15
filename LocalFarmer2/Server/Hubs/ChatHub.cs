@@ -13,18 +13,10 @@ namespace LocalFarmer2.Server.Hubs
 
         public async Task SendMessage(ChatMessageDto dto)
         {
+            dto.DateSent = DateTime.Now;
+            
             await Groups.AddToGroupAsync(Context.ConnectionId, dto.IdUserSender);
-
-            var message = await _chatMessageService.SendMessage(dto);
-            //var date = DateTime.Now.ToShortTimeString();
-            //var time = DateTime.Now.ToShortTimeString();
-
-            // var users = new string[]
-            // {
-            //     dto.IdUserSender,
-            //     dto.IdUserReceiver
-            // };
-
+            await _chatMessageService.SendMessage(dto);
             await Clients.Group(dto.IdUserReceiver).SendAsync("ReceiveMessage", dto);
             await Clients.Group(dto.IdUserSender).SendAsync("ReceiveMessage", dto);
             //await Clients.All.SendAsync("ReceiveMessage", dto);

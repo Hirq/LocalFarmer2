@@ -8,12 +8,8 @@
 @inject IChatMessageService ChatMessageService
 @inject IJSRuntime JSRuntime
 
-@ToUserId
-<br/>
-<button @onclick="() => CheckHub()">CHECK HUB CONNECT</button>
 <div style="border:0px;height:90vh;">
     <div class="panel panel-primary" style="height: 100%;">
-        COUNT: @CountMessages
         <div class="panel-heading top-bar">
             <div class="col-md-8 col-xs-8">
                 <h3 class="panel-title">
@@ -34,13 +30,20 @@
         <div id="divMessageContainerBase" class="panel-body msg_container_base">
             @if (Messages != null && Messages.Count() > 0)
             {
+                <div class="message-container date">
+                    <div class="message-box received-message">
+                        <div>days</div>
+                    </div>
+                </div>
                 @foreach (var message in Messages)
                 {
+
                     @if (message.IdUserSender == FromUserId)
                     {
                         <div class="message-container sent">
                             <div class="message-box sent-message">
                                 <p>@message.Message</p>
+                                <p>@message.DateSent.ToShortTimeString()</p>
                             </div>
                         </div>
                     }
@@ -49,6 +52,7 @@
                         <div class="message-container received">
                             <div class="message-box received-message">
                                 <p>@message.Message</p>
+                                <p>@message.DateSent.ToShortTimeString()</p>
                             </div>
                         </div>
                     }
@@ -72,7 +76,6 @@
     public UserDto ToUser { get; set; } = new UserDto();
     public string FromUserId { get; set; }
     public string MessageText { get; set; }
-    public int CountMessages { get; set; }
     public ChatMessageDto dto { get; set; }
     public List<ChatMessageDto> Messages { get; set; } = new List<ChatMessageDto>();
 
@@ -86,13 +89,18 @@
     {
         FromUserId = (await AccountService.GetCurrentUser()).IdUser.ToString();
         var messageHistory = await ChatMessageService.GetChatMessages(FromUserId, ToUserId);
-        foreach(var message in messageHistory)
+        var days = messageHistory.Select(x => (x.DateSent.Day, x.DateSent.Month)).Distinct().ToList();
+
+        foreach (var day in days)
+        {
+            Console.WriteLine(day);
+        }
+        
+        foreach (var message in messageHistory)
         {
             Messages.Add(message);
         }
 
-        CountMessages = messageHistory.Count();
-        
         ToUser = await AccountService.GetUserById(ToUserId);
 
         hubConnection = new HubConnectionBuilder()
@@ -134,11 +142,6 @@
         }
 
         MessageText = "";
-    }
-
-    public void CheckHub()
-    {
-        Console.WriteLine(hubConnection.State.ToString());
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

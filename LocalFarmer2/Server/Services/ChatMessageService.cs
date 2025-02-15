@@ -25,7 +25,6 @@ namespace LocalFarmer2.Server.Services
             var allMessages = new List<ChatMessage>();
             allMessages.AddRange(iSent);
             allMessages.AddRange(iReceived);
-            //await _chatMessageRepository.SaveChangesAsync();
 
             if(allMessages.Count > 0)
             {
@@ -36,6 +35,7 @@ namespace LocalFarmer2.Server.Services
                     IdUserReceiver = x.IdUserReceiver,
                     IdUserSender = x.IdUserSender,
                     Message = AESHelper.Decrypt(x.EncryptedMessage, x.MessageIV, key),
+                    DateSent = x.DateSent
                 }).ToList();
             }
 
@@ -71,7 +71,6 @@ namespace LocalFarmer2.Server.Services
             var message = _mapper.Map<ChatMessage>(dto);
             message.EncryptedMessage = encryptedMessage;
             message.MessageIV = iv;
-            message.DateSent = DateTime.Now;
 
             await _chatMessageRepository.AddAsync(message);
             await _chatMessageRepository.SaveChangesAsync();

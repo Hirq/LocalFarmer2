@@ -20,6 +20,7 @@ namespace LocalFarmer2.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> SendMessage(ChatMessageDto dto)
         {
+            dto.DateSent = DateTime.Now;
             var message = await _chatMessageService.SendMessage(dto);
 
             return Ok(message);
