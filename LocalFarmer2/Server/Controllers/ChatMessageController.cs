@@ -32,6 +32,27 @@ namespace LocalFarmer2.Server.Controllers
             var allMessages = await _chatMessageService.GetMessages(idUserSender, idUserReceiver);
 
             return Ok(allMessages);
+        }  
+        
+        [HttpGet, Route("GetMessages2")]
+        public async Task<IActionResult> GetMessages2(string idUserSender, string idUserReceiver)
+        {
+            var allMessages = await _chatMessageService.GetMessages(idUserSender, idUserReceiver);
+            var result = new ChatDisplayMessageDto();
+
+            var days = allMessages.Select(x => (x.DateSent.Day)).Distinct().ToList();
+            var months = allMessages.Select(x => (x.DateSent.Month)).Distinct().ToList();
+
+            var monthsDto = months.Select(x => new MonthDto()
+            {
+                Month = x,
+                Name = "LUTY",
+                Days = days
+            }).ToList();
+
+            result.Months = monthsDto;
+
+            return Ok(result);
         }
     }
 }
