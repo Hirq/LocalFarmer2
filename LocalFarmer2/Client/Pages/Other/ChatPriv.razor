@@ -89,6 +89,7 @@
     {
         FromUserId = (await AccountService.GetCurrentUser()).IdUser.ToString();
         var messageHistory = await ChatMessageService.GetChatMessages(FromUserId, ToUserId);
+        var messageHistory2 = await ChatMessageService.GetChatMessages2(FromUserId, ToUserId);
         var days = messageHistory.Select(x => (x.DateSent.Day, x.DateSent.Month)).Distinct().ToList();
 
         foreach (var day in days)

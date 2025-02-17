@@ -19,4 +19,11 @@ public class ChatMessageService : IChatMessageService
 
         return messages;
     }
+
+    public async Task<ChatDisplayMessageDto> GetChatMessages2(string idUserSender, string idUserReceiver)
+    {
+        var messages = await _http.GetFromJsonAsync<ChatDisplayMessageDto>($"api/ChatMessage/GetMessages2?idUserSender={idUserSender}&idUserReceiver={idUserReceiver}");
+
+        return messages;
+    }
 }
