@@ -30,31 +30,38 @@
         <div id="divMessageContainerBase" class="panel-body msg_container_base">
             @if (Messages != null && Messages.Count() > 0)
             {
-                <div class="message-container date">
-                    <div class="message-box received-message">
-                        <div>days</div>
-                    </div>
-                </div>
                 @foreach (var message in Messages)
                 {
-
-                    @if (message.IdUserSender == FromUserId)
+                    @if (message.IsSeparator == true)
                     {
-                        <div class="message-container sent">
-                            <div class="message-box sent-message">
-                                <p>@message.Message</p>
-                                <p>@message.DateSent.ToShortTimeString()</p>
+                        <div class="message-container date">
+                            <div class="message-box received-message">
+                                <div>
+                                    @($"{message.DateSent:dd.MM}")
+                                </div>
                             </div>
                         </div>
                     }
                     else
                     {
-                        <div class="message-container received">
-                            <div class="message-box received-message">
-                                <p>@message.Message</p>
-                                <p>@message.DateSent.ToShortTimeString()</p>
+                        @if (message.IdUserSender == FromUserId)
+                        {
+                            <div class="message-container sent">
+                                <div class="message-box sent-message">
+                                    <p>@message.Message</p>
+                                    <p>@message.DateSent.ToShortTimeString()</p>
+                                </div>
                             </div>
-                        </div>
+                        }
+                        else
+                        {
+                            <div class="message-container received">
+                                <div class="message-box received-message">
+                                    <p>@message.Message</p>
+                                    <p>@message.DateSent.ToShortTimeString()</p>
+                                </div>
+                            </div>
+                        }
                     }
                 }
             }
@@ -89,14 +96,7 @@
     {
         FromUserId = (await AccountService.GetCurrentUser()).IdUser.ToString();
         var messageHistory = await ChatMessageService.GetChatMessages(FromUserId, ToUserId);
-        var messageHistory2 = await ChatMessageService.GetChatMessages2(FromUserId, ToUserId);
-        var days = messageHistory.Select(x => (x.DateSent.Day, x.DateSent.Month)).Distinct().ToList();
 
-        foreach (var day in days)
-        {
-            Console.WriteLine(day);
-        }
-        
         foreach (var message in messageHistory)
         {
             Messages.Add(message);

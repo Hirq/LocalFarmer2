@@ -1,4 +1,5 @@
 ﻿using LocalFarmer2.Server.Repositories.Interfaces;
+using System.Linq;
 using System.Security.Cryptography;
 
 namespace LocalFarmer2.Server.Services
@@ -30,13 +31,27 @@ namespace LocalFarmer2.Server.Services
             {
                 var key = await GetOrCreateKey(idUserSender, idUserReceiver);
 
-                messagesEncrypted = allMessages.ToList().Select(x => new ChatMessageDto
+                messagesEncrypted = allMessages.Select(x => new ChatMessageDto
                 {
                     IdUserReceiver = x.IdUserReceiver,
                     IdUserSender = x.IdUserSender,
                     Message = AESHelper.Decrypt(x.EncryptedMessage, x.MessageIV, key),
                     DateSent = x.DateSent
                 }).ToList();
+
+                var days = allMessages.Select(x => (x.DateSent.Year, x.DateSent.Month, x.DateSent.Day)).Distinct();
+                
+                foreach (var day in days)
+                {
+                    messagesEncrypted.Add(new ChatMessageDto
+                    {
+                        Message = "Separator",
+                        IsSeparator = true,
+                        DateSent = new DateTime(day.Year, day.Month, day.Day)
+                    });
+                };
+
+                messagesEncrypted = messagesEncrypted.OrderBy(x => x.DateSent).ToList();
             }
 
             return messagesEncrypted;
