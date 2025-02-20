@@ -134,6 +134,27 @@
 
         try
         {
+            var isTodaySeparatorUsed = false;
+            var separators = Messages.Where(x => x.IsSeparator);
+            foreach(var separator in separators)
+            {
+                @if(separator.DateSent == DateTime.Today)
+                {
+                    isTodaySeparatorUsed = true;
+                }
+            }
+
+            @if(!isTodaySeparatorUsed)
+            {
+                ChatMessageDto separatorToday = new ChatMessageDto();
+                separatorToday.Message = "Separator";
+                separatorToday.DateSent = DateTime.Today;
+                separatorToday.IsSeparator = true;
+
+                Console.WriteLine("Brak dzisiejszej daty: " + separatorToday.DateSent);
+                Messages.Add(separatorToday);
+            }
+
             await hubConnection.SendAsync("SendMessage", message);
             Console.WriteLine("Wysłano wiadomość przez SignalR");
         }
