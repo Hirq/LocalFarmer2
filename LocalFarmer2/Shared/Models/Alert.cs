@@ -33,6 +33,7 @@ namespace LocalFarmer2.Shared.Models
         // Ktoś polubi moj farmhouse
         // DOda opinie o moim farmhouse
         // Przywitalny
+        // Nowa wiadomość na chat
         // Wyśle zapytanie przez formularz - BRAK -> Brak formularza *@
 
         public bool InfoFromFarmhouse { get; set; }

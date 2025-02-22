@@ -10,6 +10,7 @@
         NewSubscriber,
         NewOpinion,
         Welcome,
+        NewMessageChat
         //NewMessageFromForm - nowa wiadomość z formularza
     }
 
@@ -46,6 +47,8 @@
                     return $"New Opinion: {Value}";
                 case MessageAlertEnum.Welcome:
                     return $"Welcome Localfarmer";
+                case MessageAlertEnum.NewMessageChat:
+                    return $"You have new message in chat from: {Value}";
                 default:
                     return string.Empty;
             }
