@@ -4,6 +4,7 @@
 @inject NavigationManager NavigationManager
 @inject HttpClient _httpClient
 @inject UserStateService UserStateService
+@inject IAlertService AlertService
 @inject IAccountService AccountService
 @inject IChatMessageService ChatMessageService
 @inject IJSRuntime JSRuntime
@@ -82,6 +83,7 @@
     public string ToUserId { get; set; }
     public UserDto ToUser { get; set; } = new UserDto();
     public string FromUserId { get; set; }
+    public UserDto FromUser { get; set; } = new UserDto();
     public string MessageText { get; set; }
     public ChatMessageDto dto { get; set; }
     public List<ChatMessageDto> Messages { get; set; } = new List<ChatMessageDto>();
@@ -103,6 +105,7 @@
         }
 
         ToUser = await AccountService.GetUserById(ToUserId);
+        FromUser = await AccountService.GetUserById(FromUserId);
 
         hubConnection = new HubConnectionBuilder()
             .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
@@ -155,6 +158,11 @@
             }
 
             await hubConnection.SendAsync("SendMessage", message);
+
+            var messageAlert = new MessageAlert(MessageAlertEnum.NewMessageChat, FromUser.UserName);
+            List<string> listUsersIds = new List<string> { message.IdUserReceiver };
+            await AlertService.AddAlerts(listUsersIds, null, false, messageAlert);
+
             Console.WriteLine("Wysłano wiadomość przez SignalR");
         }
         catch (Exception ex)
