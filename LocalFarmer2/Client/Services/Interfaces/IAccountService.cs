@@ -10,7 +10,7 @@ namespace LocalFarmer2.Client.Services
         Task<UserDto> GetCurrentUser();
         Task<UserDto> GetUser(string userName);
         Task<UserDto> GetUserById(string idUser);
-        Task<UserDto> GetCurrentUserByFarmhouseId(int idFarmhouse);
+        Task<UserDto> GetUserByFarmhouseId(int idFarmhouse);
         Task<List<ApplicationUser>> GetUsers();
         Task EditUser(EditUserDto dto);
         Task<bool> IsUserSignUp();

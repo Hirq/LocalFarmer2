@@ -2,6 +2,8 @@
 @inject NavigationManager NavigationManager
 @inject UserStateService UserStateService
 @inject IAccountService AccountService
+@inject IChatMessageService ChatMessageService
+
 @* @rendermode InteractiveWebAssemblyRenderMode  *@
 
 <h3>Chat</h3>
@@ -29,7 +31,7 @@ else
     <span>Connecting...</span>
 } *@
 
-<span> USERS </span>
+<h3> USERS  ALL</h3>
 @foreach (var user in users)
 {
     <div>@user.UserName  
@@ -39,6 +41,22 @@ else
     </div>
 }
 
+<h3> USERS CHAT HISTORY</h3>
+@foreach (var user in usersWithHistory)
+{
+    <div>
+        @user.UserName
+        <button @onclick="() => GoPriv(user.Id)">Priv</button>
+    </div>
+}
+
+<h3> USER ONLY ID</h3>
+@foreach (var user2 in xxx)
+{
+    <div>
+        @user2
+    </div>
+}
 
 @* 
 
@@ -66,7 +84,9 @@ Szyfrowanie end-to-end (E2EE)
     private string userInput;
     private string messageInput;
     private List<ApplicationUser> users = new List<ApplicationUser>();
-
+    private List<ApplicationUser> usersWithHistory = new List<ApplicationUser>();
+    private string idUser;
+    private List<string> xxx = new List<string>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -84,6 +104,18 @@ Szyfrowanie end-to-end (E2EE)
         // await hubConnection.StartAsync();
         users = await AccountService.GetUsers();
         users = users.Where(x => x.Id != UserStateService.CurrentUser?.IdUser).ToList();
+        idUser = UserStateService.CurrentUser?.IdUser;
+        var chats = await ChatMessageService.GetUserChats(idUser);
+
+        var startI = chats.Where(x => x.User1Id != idUser).Select(x => x.User1Id);
+        var startYou = chats.Where(x => x.User2Id != idUser).Select(x => x.User2Id);
+        xxx = startI.Union(startYou).ToList();
+
+        foreach(var p in xxx)
+        {
+            Console.WriteLine(p);
+        }
+
     }
 
     // Task Send(string idReceiver)

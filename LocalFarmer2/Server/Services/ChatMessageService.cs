@@ -92,5 +92,13 @@ namespace LocalFarmer2.Server.Services
 
             return message;
         }
+
+        public async Task<List<ChatUserKey>> GetChatUserKeys(string idUser)
+        {
+            var result = (await _chatUserKeyRepository.GetAllAsync(x => x.User1Id == idUser || x.User2Id == idUser)).ToList();
+
+            return result;
+        }
+
     }
 }

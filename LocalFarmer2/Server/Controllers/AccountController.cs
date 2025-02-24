@@ -140,7 +140,7 @@ namespace LocalFarmer2.Server.Controllers
 
         [HttpGet]
         [Route("User/ByFarmhouseId/{idFarmhouse}")]
-        public async Task<IActionResult> GetCurrentUserByFarmhouseIdAsync(int idFarmhouse)
+        public async Task<IActionResult> GetUserByFarmhouseIdAsync(int idFarmhouse)
         {
             var user = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.IdFarmhouse == idFarmhouse, x => x.Farmhouse);
             var userDto = new UserDto()

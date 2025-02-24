@@ -1,6 +1,7 @@
 ﻿@page "/farmhouse/{id:int}"
 @using Newtonsoft.Json.Linq
 @inject IFarmhouseService FarmhouseService
+@inject IAccountService AccountService
 @inject IOpinionService OpinionService
 @inject IJSRuntime JSRuntime
 @inject UtilsService UtilsService
@@ -85,7 +86,8 @@
                 </MudItem>
             </MudGrid>
         </MudCollapse>
-        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" Disabled=!isHaveOpinion OnClick='() => UtilsService.OpenDialogSendMessage(isContactToAdmin: false, emailTo: farmhouse.Email)'>@loc["Farmhouse_Send_Message"]</MudButton>
+        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick='() => GoToChatMessage()'>@loc["Farmhouse_Send_Message"] Chat</MudButton>
+        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" Disabled=!isHaveOpinion OnClick='() => UtilsService.OpenDialogSendMessage(isContactToAdmin: false, emailTo: farmhouse.Email)'>@loc["Farmhouse_Send_Message"] Email</MudButton>
         <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapseMaps">@(_expandedMap ? @loc["Dashboard_Map"] : @loc["Dashboard_Map"])</MudButton>
         <MudCollapse Expanded="_expandedMap">
             <h2>Latitude: @farmhouse.Latitude </h2>
@@ -100,6 +102,7 @@
     [Parameter]
     public int Id { get; set; }
 
+    public string IdUser { get; set; }
     public List<Opinion> listOpinionSelected = new List<Opinion>();
     public List<Opinion> listOpinionAll = new List<Opinion>();
     Farmhouse farmhouse = new Farmhouse();
@@ -116,6 +119,7 @@
     protected override async Task OnInitializedAsync()
     {
         farmhouse = await FarmhouseService.GetFarmhouse(Id);
+        IdUser = (await AccountService.GetUserByFarmhouseId(Id)).IdUser;
         listOpinionAll = await OpinionService.AllOpinionsForFarmhouse(Id);
         if (listOpinionAll.Count > 0)
         {
@@ -185,6 +189,11 @@
     private void ShowAllProducts()
     {
         NavigationManager.NavigateTo($"productsFarmhouse/{Id}");
+    }    
+    
+    private void GoToChatMessage()
+    {
+        NavigationManager.NavigateTo($"chatpriv/{IdUser}");
     }
 
     async ValueTask IAsyncDisposable.DisposeAsync()

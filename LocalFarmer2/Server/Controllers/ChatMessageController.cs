@@ -32,5 +32,16 @@ namespace LocalFarmer2.Server.Controllers
 
             return Ok(allMessages);
         }
+        
+        [HttpGet, Route("GetUserChats")]
+        public async Task<IActionResult> GetUserChats(string idUser)
+        {
+            var keys = await _chatMessageService.GetChatUserKeys(idUser);
+
+            var dto = _mapper.Map<List<ChatUserKeyDto>>(keys);
+
+            return Ok(dto);
+        }
+
     }
 }
