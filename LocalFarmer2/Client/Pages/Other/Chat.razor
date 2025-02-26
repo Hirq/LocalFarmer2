@@ -4,44 +4,17 @@
 @inject IAccountService AccountService
 @inject IChatMessageService ChatMessageService
 
-@* @rendermode InteractiveWebAssemblyRenderMode  *@
-
 <h3>Chat</h3>
-
-@* @if (IsConnected)
-{
-    <span>
-        <MudInputLabel>XXX</MudInputLabel>
-        <input type="text" @bind="userInput" class="inputColor" />
-    </span>
-    <span>
-        <MudInputLabel>Message</MudInputLabel>
-        <input type="text" @bind="messageInput" class="inputColor" />
-    </span>
-
-    <ul id="messagesList">
-        @foreach (var message in messages)
-        {
-            <li>@message</li>
-        }
-    </ul>
-}
-else
-{
-    <span>Connecting...</span>
-} *@
 
 <h3> USERS  ALL</h3>
 @foreach (var user in users)
 {
     <div>@user.UserName  
-        @* <button @onclick="() => Send(user.Id)">Send</button> *@
         <button @onclick="() => GoPriv(user.Id)">Priv</button>
-        @* <button @onclick="() => Send(user.Id)">History</button> *@
     </div>
 }
 
-<h3> USERS CHAT HISTORY</h3>
+<h3> USERS WITH HISTORY CHAT</h3>
 @foreach (var user in usersWithHistory)
 {
     <div>
@@ -50,93 +23,29 @@ else
     </div>
 }
 
-<h3> USER ONLY ID</h3>
-@foreach (var user2 in xxx)
-{
-    <div>
-        @user2
-    </div>
-}
-
-@* 
-
-Musimy zmienić ten chat dla 1 osoby + jak zapisywać te wiadomości na db?
-Tak wykorzystamy db struktura
-IdUserSender
-IdUserReceiver
-Message
-Date
-
-Dodatkowo użyjemy potem szyfrowania 
-Szyfrowanie end-to-end (E2EE)
-*@
-
 @code {
-    public ChatMessageDto dto = new ChatMessageDto()
-    {
-        Message = "string",
-        IdUserReceiver = "53898801-370c-4fbc-a99c-86243f159fe5",
-        IdUserSender = "8e339c44-2ccf-4e17-b774-626a7c9c8c1b"
-    };
-
-    private HubConnection hubConnection;
-    private List<string> messages = new List<string>();
-    private string userInput;
-    private string messageInput;
-    private List<ApplicationUser> users = new List<ApplicationUser>();
+    private string idCurrnetUser;
     private List<ApplicationUser> usersWithHistory = new List<ApplicationUser>();
-    private string idUser;
-    private List<string> xxx = new List<string>();
+
+    //Maybe to delete
+    private List<ApplicationUser> users = new List<ApplicationUser>();
 
     protected override async Task OnInitializedAsync()
     {
-        // hubConnection = new HubConnectionBuilder()
-        //     .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
-        //     .Build();
+        idCurrnetUser = UserStateService.CurrentUser?.IdUser;
+        var chats = await ChatMessageService.GetUserChats(idCurrnetUser);
 
-        // hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
-        // {
-        //     var encodedMsg = $"{user}: {message}";
-        //     messages.Add(encodedMsg);
-        //     StateHasChanged();
-        // });
+        var startI = chats.Where(x => x.User1Id != idCurrnetUser).Select(x => x.User1Id);
+        var startYou = chats.Where(x => x.User2Id != idCurrnetUser).Select(x => x.User2Id);
+        var usersIdsWithHistory = startI.Union(startYou).ToList();
+        usersWithHistory = await AccountService.GetUsersByIds(usersIdsWithHistory);
 
-        // await hubConnection.StartAsync();
-        users = await AccountService.GetUsers();
-        users = users.Where(x => x.Id != UserStateService.CurrentUser?.IdUser).ToList();
-        idUser = UserStateService.CurrentUser?.IdUser;
-        var chats = await ChatMessageService.GetUserChats(idUser);
-
-        var startI = chats.Where(x => x.User1Id != idUser).Select(x => x.User1Id);
-        var startYou = chats.Where(x => x.User2Id != idUser).Select(x => x.User2Id);
-        xxx = startI.Union(startYou).ToList();
-
-        foreach(var p in xxx)
-        {
-            Console.WriteLine(p);
-        }
-
+        //Maybe to delete
+        users = (await AccountService.GetUsers()).Where(x => x.Id != UserStateService.CurrentUser?.IdUser).ToList();
     }
-
-    // Task Send(string idReceiver)
-    // {
-    //     dto.IdUserSender = UserStateService.CurrentUser?.IdUser;
-    //     dto.IdUserReceiver = idReceiver;
-    //     dto.Message = messageInput;
-    //     return hubConnection.SendAsync("SendMessage", dto);
-    // }
 
     void GoPriv(string idReceiver)
     {
         NavigationManager.NavigateTo($"/chatpriv/{idReceiver}");
     }
-
-    // public bool IsConnected => hubConnection.State == HubConnectionState.Connected;
-
 }
-
-<style>
-    .inputColor{
-        background-color: grey;
-    }
-</style>

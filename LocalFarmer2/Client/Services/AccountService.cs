@@ -112,9 +112,18 @@ namespace LocalFarmer2.Client.Services
 
         public async Task<List<ApplicationUser>> GetUsers()
         {
-            var userDto = await _httpClient.GetFromJsonAsync<List<ApplicationUser>>($"api/Account/Users");
+            var users = await _httpClient.GetFromJsonAsync<List<ApplicationUser>>($"api/Account/Users");
 
-            return userDto;
+            return users;
+        }
+
+
+        public async Task<List<ApplicationUser>> GetUsersByIds(List<string> ids)
+        {
+            string queryString = string.Join("&", ids.Select(id => $"ids={id}"));
+            var users = await _httpClient.GetFromJsonAsync<List<ApplicationUser>>($"api/Account/UsersByIds?{queryString}");
+
+            return users;
         }
 
         public async Task EditUser(EditUserDto dto)
@@ -130,5 +139,6 @@ namespace LocalFarmer2.Client.Services
 
             return user.Identity.IsAuthenticated;
         }
+
     }
 }

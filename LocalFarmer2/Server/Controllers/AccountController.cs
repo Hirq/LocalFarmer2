@@ -161,6 +161,15 @@ namespace LocalFarmer2.Server.Controllers
             var user = await _applicationUserRepository.GetAllAsync();
 
             return Ok(user);
+        }     
+        
+        [HttpGet]
+        [Route("UsersByIds")]
+        public async Task<IActionResult> GetUsers([FromQuery] List<string> ids)
+        {
+            var user = (await _applicationUserRepository.GetAllAsync()).Where(x => ids.Contains(x.Id));
+
+            return Ok(user);
         }
 
         [HttpPut]
