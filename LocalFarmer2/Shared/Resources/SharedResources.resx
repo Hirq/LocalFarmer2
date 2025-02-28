@@ -474,4 +474,7 @@
   <data name="Button_Only_Favorite" xml:space="preserve">
     <value>Only favorite</value>
   </data>
+  <data name="Chat_Write_Your_Message_Here" xml:space="preserve">
+    <value>Write your message here...</value>
+  </data>
 </root>

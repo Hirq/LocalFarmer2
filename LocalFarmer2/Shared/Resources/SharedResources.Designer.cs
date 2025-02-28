@@ -412,6 +412,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Write your message here....
+        /// </summary>
+        internal static string Chat_Write_Your_Message_Here {
+            get {
+                return ResourceManager.GetString("Chat_Write_Your_Message_Here", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contact.
         /// </summary>
         internal static string Dashboard_Contact {
