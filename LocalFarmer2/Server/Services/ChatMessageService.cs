@@ -8,13 +8,15 @@ namespace LocalFarmer2.Server.Services
     {
         private readonly IChatMessageRepository _chatMessageRepository;
         private readonly IChatUserKeyRepository _chatUserKeyRepository;
+        private readonly IApplicationUserRepository _applicationUserRepository;
         private readonly IMapper _mapper;
 
 
-        public ChatMessageService(IChatMessageRepository chatMessageRepository, IChatUserKeyRepository chatUserKeyRepository, IMapper mapper)
+        public ChatMessageService(IChatMessageRepository chatMessageRepository, IChatUserKeyRepository chatUserKeyRepository, IApplicationUserRepository applicationUserRepository, IMapper mapper)
         {
             _chatMessageRepository = chatMessageRepository;
             _chatUserKeyRepository = chatUserKeyRepository;
+            _applicationUserRepository = applicationUserRepository;
             _mapper = mapper;
         }
 
@@ -55,6 +57,44 @@ namespace LocalFarmer2.Server.Services
             }
 
             return messagesEncrypted;
+        }
+
+        public async Task<ChatLastMessageDto> GetLastMessage(string idUserSender, string idUserReceiver)
+        {
+            var lastMessage = (await GetMessages(idUserSender, idUserReceiver)).Last();
+
+            var lastMesageDto = _mapper.Map<ChatLastMessageDto>(lastMessage);
+
+            lastMesageDto.IsLastMessageFromSender = (lastMessage.IdUserSender == idUserSender) ? true : false;
+
+            var userReceiver = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.Id == idUserReceiver);
+
+            lastMesageDto.FullName = userReceiver.FullName;
+            lastMesageDto.UserName = userReceiver.UserName;
+
+            return lastMesageDto;
+        }
+
+        public async Task<List<ChatLastMessageDto>> GetLastMessages(string idUserSender, List<string> idsUserReceiver)
+        {
+            var result = new List<ChatLastMessageDto>();
+            foreach(var idUser in  idsUserReceiver)
+            { 
+                var lastMessage = (await GetMessages(idUserSender, idUser)).Last();
+
+                var lastMesageDto = _mapper.Map<ChatLastMessageDto>(lastMessage);
+
+                lastMesageDto.IsLastMessageFromSender = (lastMessage.IdUserSender == idUserSender) ? true : false;
+
+                var userReceiver = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.Id == idUser);
+
+                lastMesageDto.FullName = userReceiver.FullName;
+                lastMesageDto.UserName = userReceiver.UserName;
+
+                result.Add(lastMesageDto);
+            }
+
+            return result;
         }
 
         public async Task<byte[]> GetOrCreateKey(string user1, string user2)
@@ -99,6 +139,5 @@ namespace LocalFarmer2.Server.Services
 
             return result;
         }
-
     }
 }

@@ -40,6 +40,18 @@
         var usersIdsWithHistory = startI.Union(startYou).ToList();
         usersWithHistory = await AccountService.GetUsersByIds(usersIdsWithHistory);
 
+        // var lastMessageFirstUser = await ChatMessageService.GetLastChatMessage(idCurrnetUser, usersWithHistory.First().Id);
+        var lastMessages = await ChatMessageService.GetLastChatMessages(idCurrnetUser, usersIdsWithHistory);
+
+        foreach (var dto in lastMessages)
+        {
+            Console.WriteLine(dto.UserName);
+            Console.WriteLine(dto.FullName);
+            Console.WriteLine(dto.Message);
+            Console.WriteLine(dto.IsLastMessageFromSender);
+            Console.WriteLine("-----------");
+        }
+
         //Maybe to delete
         users = (await AccountService.GetUsers()).Where(x => x.Id != UserStateService.CurrentUser?.IdUser).ToList();
     }

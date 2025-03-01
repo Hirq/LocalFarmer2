@@ -25,6 +25,7 @@ namespace LocalFarmer2.Shared.Profiles
             CreateMap<Note, NoteViewModel>();
             CreateMap<ChatMessageDto, ChatMessage>();
             CreateMap<ChatUserKey, ChatUserKeyDto>();
+            CreateMap<ChatMessageDto, ChatLastMessageDto>();
         }
     }
 }

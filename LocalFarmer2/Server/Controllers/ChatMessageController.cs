@@ -32,6 +32,22 @@ namespace LocalFarmer2.Server.Controllers
 
             return Ok(allMessages);
         }
+
+        [HttpGet, Route("GetLastMessage")]
+        public async Task<IActionResult> GetLastMessage(string idUserSender, string idUserReceiver)
+        {
+            var lastMessageDto = await _chatMessageService.GetLastMessage(idUserSender, idUserReceiver);
+
+            return Ok(lastMessageDto);
+        }
+
+        [HttpGet, Route("GetLastMessages")]
+        public async Task<IActionResult> GetLastMessages(string idUserSender, [FromQuery] List<string> idsUserReceiver)
+        {
+            var lastMessagesDto = await _chatMessageService.GetLastMessages(idUserSender, idsUserReceiver);
+
+            return Ok(lastMessagesDto);
+        }
         
         [HttpGet, Route("GetUserChats")]
         public async Task<IActionResult> GetUserChats(string idUser)
