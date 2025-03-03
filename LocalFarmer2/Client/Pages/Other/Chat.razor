@@ -15,17 +15,35 @@
 }
 
 <h3> USERS WITH HISTORY CHAT</h3>
-@foreach (var user in usersWithHistory)
+@foreach (var dto in lastMessages)
+{
+    <div class="chat-user-container">
+        <div>
+            @dto.UserName
+        </div>
+        <div class="@(dto.IsLastMessageFromSender ? "bold-text" : "")">
+            @dto.Message
+        </div>
+        <div>
+            @(dto.IsLastMessageFromSender ? "tak" : "nie")
+        </div>
+        <button @onclick="() => GoPriv(dto.IdUserSender == idCurrnetUser ? dto.IdUserReceiver : dto.IdUserSender)">Priv</button>
+    </div>
+}
+<h3> XXXXXXXXXXXXXXXXXX </h3>
+
+@foreach (var dto in usersWithHistory)
 {
     <div>
-        @user.UserName
-        <button @onclick="() => GoPriv(user.Id)">Priv</button>
+        @dto.UserName
+        <button @onclick="() => GoPriv(dto.Id)">Priv</button>
     </div>
 }
 
 @code {
     private string idCurrnetUser;
     private List<ApplicationUser> usersWithHistory = new List<ApplicationUser>();
+    private List<ChatLastMessageDto> lastMessages = new List<ChatLastMessageDto>();
 
     //Maybe to delete
     private List<ApplicationUser> users = new List<ApplicationUser>();
@@ -41,7 +59,7 @@
         usersWithHistory = await AccountService.GetUsersByIds(usersIdsWithHistory);
 
         // var lastMessageFirstUser = await ChatMessageService.GetLastChatMessage(idCurrnetUser, usersWithHistory.First().Id);
-        var lastMessages = await ChatMessageService.GetLastChatMessages(idCurrnetUser, usersIdsWithHistory);
+        lastMessages = await ChatMessageService.GetLastChatMessages(idCurrnetUser, usersIdsWithHistory);
 
         foreach (var dto in lastMessages)
         {
@@ -61,3 +79,14 @@
         NavigationManager.NavigateTo($"/chatpriv/{idReceiver}");
     }
 }
+
+<style>
+    .chat-user-container{
+        display:flex;
+        flex-direction: column;
+    }
+
+    .bold-text {
+        font-weight: bold;
+    }
+</style>
