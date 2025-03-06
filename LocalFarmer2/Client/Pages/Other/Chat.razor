@@ -40,6 +40,22 @@
     </div>
 }
 
+@foreach (var dto in lastMessages)
+{
+    <div class="chat-user-container2">
+        <div>
+            @dto.UserName
+        </div>
+        <div>
+            @(string.IsNullOrEmpty(dto.FullName) ? "-" : dto.FullName);
+        </div>
+        <div class="@(dto.IsLastMessageFromSender ? "bold-text" : "")">
+            @dto.Message
+        </div>
+    </div>
+}
+
+
 @code {
     private string idCurrnetUser;
     private List<ApplicationUser> usersWithHistory = new List<ApplicationUser>();
@@ -88,5 +104,16 @@
 
     .bold-text {
         font-weight: bold;
+    }
+
+    .chat-user-container2{
+        display: flex;
+        flex-direction: column;
+        background-color: darkgreen;
+        padding: 10px;
+    }
+
+    .chat-user-message{
+
     }
 </style>
