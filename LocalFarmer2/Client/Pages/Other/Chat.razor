@@ -9,7 +9,8 @@
 <h3> USERS  ALL</h3>
 @foreach (var user in users)
 {
-    <div>@user.UserName  
+    <div>
+        @user.UserName
         <button @onclick="() => GoPriv(user.Id)">Priv</button>
     </div>
 }
@@ -32,28 +33,28 @@
 }
 <h3> XXXXXXXXXXXXXXXXXX </h3>
 
-@foreach (var dto in usersWithHistory)
-{
-    <div>
-        @dto.UserName
-        <button @onclick="() => GoPriv(dto.Id)">Priv</button>
-    </div>
-}
+<MudGrid>
+    <MudItem xs="2">
+        <MudPaper Class="d-flex mud-width-full py-8 flex-column">
+            @foreach (var dto in lastMessages)
+            {
+                <MudCard Class="m-1 border-1"> 
+                    <MudCardContent>
+                        <MudText Typo="Typo.body2">@dto.UserName</MudText>
+                        <MudText Typo="Typo.body2">@dto.FullName</MudText>
+                    </MudCardContent>
+                        <MudCardActions>
+                            <MudText class="@(dto.IsLastMessageFromSender ? "bold-text" : "")">@dto.Message</MudText>
+                    </MudCardActions>
+                </MudCard>
+            }
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="10">
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">xs=6</MudPaper>
+    </MudItem>
+</MudGrid>
 
-@foreach (var dto in lastMessages)
-{
-    <div class="chat-user-container2">
-        <div>
-            @dto.UserName
-        </div>
-        <div>
-            @(string.IsNullOrEmpty(dto.FullName) ? "-" : dto.FullName);
-        </div>
-        <div class="@(dto.IsLastMessageFromSender ? "bold-text" : "")">
-            @dto.Message
-        </div>
-    </div>
-}
 
 
 @code {
@@ -97,8 +98,8 @@
 }
 
 <style>
-    .chat-user-container{
-        display:flex;
+    .chat-user-container {
+        display: flex;
         flex-direction: column;
     }
 
@@ -106,14 +107,13 @@
         font-weight: bold;
     }
 
-    .chat-user-container2{
+    .chat-user-container2 {
         display: flex;
         flex-direction: column;
         background-color: darkgreen;
         padding: 10px;
     }
 
-    .chat-user-message{
-
+    .chat-user-message {
     }
 </style>
