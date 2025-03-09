@@ -114,6 +114,8 @@
                 <!--CHAT USER BOX-->
                 <div class="panel-footer">
                     <div class="input-group" id="myForm">
+                        @* <MudTextField T="string" id="txtMessageInput" Label="@loc["Farmhouse_Address"]" @bind-Value="farmhouseDto.Address" /> *@
+
                         <input id="txtMessageInput" @bind="MessageText" type="text" class="form-control input-sm chat_input"
                                 placeholder="@loc["Chat_Write_Your_Message_Here"]">
                         <button id="txtMessageButton" class="btn btn-primary" @onclick="Send">@loc["Farmhouse_Send"]</button>
@@ -181,8 +183,7 @@
 
     async Task GoPriv2(string idReceiver)
     {
-        // wyczyścić input od wysylania wiadomosci
-        // MessageText.
+        MessageText = string.Empty;
         Messages.Clear();
         ToUserId = idReceiver;
         var messageHistory = await ChatMessageService.GetChatMessages(FromUserId, ToUserId);
@@ -259,7 +260,7 @@
             Console.WriteLine("Błąd wysyłania wiadomości SignalR: " + ex.Message);
         }
 
-        MessageText = "";
+        MessageText = string.Empty;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -280,7 +281,12 @@
 
     .chat-message-container {
         margin: 20px;
-        height: 90vh;
+        height: 80vh;
         width: 100%;
+    }
+
+    .mud-grid-spacing-xs-3 {
+        width: calc(100% + 0px);
+        margin: 0px;
     }
 </style>
