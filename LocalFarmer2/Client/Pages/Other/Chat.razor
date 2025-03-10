@@ -55,62 +55,65 @@
     <MudItem xs="10">
         <MudPaper Class="d-flex align-center justify-center mud-width-full py-8 ">
             <div class="panel panel-primary chat-message-container">
-                <div class="panel-heading top-bar">
-                    <div class="col-md-8 col-xs-8">
-                        <h3 class="panel-title">
-                            @if (ToUser != null)
-                            {
-                                @if (ToUser.UserName != null)
+                <div>
+                    <div class="panel-heading top-bar">
+                        <div class="col-md-8 col-xs-8">
+                            <h3 class="panel-title">
+                                @if (ToUser != null)
                                 {
-                                    <b>@ToUser.UserName</b>
+                                    @if (ToUser.UserName != null)
+                                    {
+                                        <b>@ToUser.UserName</b>
+                                    }
+                                    else
+                                    {
+                                        <b>@ToUser.FullName</b>
+                                    }
                                 }
-                                else
-                                {
-                                    <b>@ToUser.FullName</b>
-                                }
-                            }
-                        </h3>
+                            </h3>
+                        </div>
                     </div>
-                </div>
-                <div id="divMessageContainerBase" class="panel-body msg_container_base">
-                    @if (Messages != null && Messages.Count() > 0)
-                    {
-                        @foreach (var message in Messages)
+                    <div id="divMessageContainerBase" class="panel-body msg_container_base">
+                        @if (Messages != null && Messages.Count() > 0)
                         {
-                            @if (message.IsSeparator == true)
+                            @foreach (var message in Messages)
                             {
-                                <div class="message-container date">
-                                    <div class="message-box received-message">
-                                        <div>
-                                            @($"{message.DateSent:dd.MM}")
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                            else
-                            {
-                                @if (message.IdUserSender == FromUserId)
+                                @if (message.IsSeparator == true)
                                 {
-                                    <div class="message-container sent">
-                                        <div class="message-box sent-message">
-                                            <p>@message.Message</p>
-                                            <p>@message.DateSent.ToShortTimeString()</p>
+                                    <div class="message-container date">
+                                        <div class="message-box received-message">
+                                            <div>
+                                                @($"{message.DateSent:dd.MM}")
+                                            </div>
                                         </div>
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="message-container received">
-                                        <div class="message-box received-message">
-                                            <p>@message.Message</p>
-                                            <p>@message.DateSent.ToShortTimeString()</p>
+                                    @if (message.IdUserSender == FromUserId)
+                                    {
+                                        <div class="message-container sent">
+                                            <div class="message-box sent-message">
+                                                <p>@message.Message</p>
+                                                <p>@message.DateSent.ToShortTimeString()</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="message-container received">
+                                            <div class="message-box received-message">
+                                                <p>@message.Message</p>
+                                                <p>@message.DateSent.ToShortTimeString()</p>
+                                            </div>
+                                        </div>
+                                    }
                                 }
                             }
                         }
-                    }
+                    </div>
                 </div>
+                
                 <!--CHAT USER BOX-->
                 <div class="panel-footer">
                     <div class="input-group" id="myForm">
@@ -283,6 +286,9 @@
         margin: 20px;
         height: 80vh;
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
     .mud-grid-spacing-xs-3 {
