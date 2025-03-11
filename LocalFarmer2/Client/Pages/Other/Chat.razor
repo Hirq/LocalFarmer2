@@ -55,24 +55,24 @@
     <MudItem xs="10">
         <MudPaper Class="d-flex align-center justify-center mud-width-full py-8 ">
             <div class="panel panel-primary chat-message-container">
-                <div>
-                    <div class="panel-heading top-bar">
-                        <div class="col-md-8 col-xs-8">
-                            <h3 class="panel-title">
-                                @if (ToUser != null)
+                <div class="panel-heading top-bar">
+                    <div class="col-md-8 col-xs-8">
+                        <h3 class="panel-title">
+                            @if (ToUser != null)
+                            {
+                                @if (ToUser.UserName != null)
                                 {
-                                    @if (ToUser.UserName != null)
-                                    {
-                                        <b>@ToUser.UserName</b>
-                                    }
-                                    else
-                                    {
-                                        <b>@ToUser.FullName</b>
-                                    }
+                                    <b>@ToUser.UserName</b>
                                 }
-                            </h3>
-                        </div>
+                                else
+                                {
+                                    <b>@ToUser.FullName</b>
+                                }
+                            }
+                        </h3>
                     </div>
+                </div>
+                <MudPaper Class="chat-messages">
                     <div id="divMessageContainerBase" class="panel-body msg_container_base">
                         @if (Messages != null && Messages.Count() > 0)
                         {
@@ -112,7 +112,8 @@
                             }
                         }
                     </div>
-                </div>
+                </MudPaper>
+
                 
                 <!--CHAT USER BOX-->
                 <div class="panel-footer">
@@ -289,10 +290,16 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        overflow: scroll
     }
 
     .mud-grid-spacing-xs-3 {
         width: calc(100% + 0px);
         margin: 0px;
     }
+
+    .chat-messages {
+        overflow: auto;
+    }
+
 </style>
