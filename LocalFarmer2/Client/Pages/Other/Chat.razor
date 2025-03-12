@@ -53,7 +53,7 @@
         </MudPaper>
     </MudItem>
     <MudItem xs="10">
-        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8 ">
+            <MudPaper Class="@string.Join(" ", "d-flex", "align-center", "justify-center", "mud-width-full", "py-8", !isVisible ? "invisible" : "")">
             <div class="panel panel-primary chat-message-container">
                 <div class="panel-heading top-bar">
                     <div class="col-md-8 col-xs-8">
@@ -147,6 +147,7 @@
     public ChatMessageDto dto { get; set; }
     public List<ChatMessageDto> Messages { get; set; } = new List<ChatMessageDto>();
     public bool IsConnected => hubConnection.State == HubConnectionState.Connected;
+    private bool isVisible = false;
 
     //Maybe to delete
     private List<ApplicationUser> users = new List<ApplicationUser>();
@@ -187,6 +188,7 @@
 
     async Task GoPriv2(string idReceiver)
     {
+        isVisible = true;
         MessageText = string.Empty;
         Messages.Clear();
         ToUserId = idReceiver;
