@@ -35,8 +35,12 @@
 }
 <h3> XXXXXXXXXXXXXXXXXX </h3> *@
 
-<MudGrid>
-    <MudItem xs="2">
+<MudGrid Class="m-0 w-100">
+    <MudItem xs="12" Class="dashboard-paper-name-farmhouse">
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">- CHAT -</MudPaper>
+    </MudItem>
+
+    <MudItem xs="12" sm="2">
         <MudPaper Class="d-flex mud-width-full py-8 flex-column">
             @foreach (var dto in lastMessages)
             {
@@ -45,14 +49,22 @@
                         <MudText Typo="Typo.body2">@dto.UserName</MudText>
                         <MudText Typo="Typo.body2">@dto.FullName</MudText>
                     </MudCardContent>
-                        <MudCardActions>
+                    <MudCardActions>
                             <MudText class="@(dto.IsLastMessageFromSender ? "bold-text" : "")">@dto.Message</MudText>
                     </MudCardActions>
                 </MudCard>
+
+@*                 <MudButton Variant="Variant.Outlined"
+                           Class="d-flex align-center justify-center mud-width-full py-8"
+                           Href="/myproducts">
+                    <span class="d-block">@dto.UserName</span>
+                    <span class="d-block">@dto.FullName</span>
+                    <span style="display: block; margin-top: 16px;" class="@(dto.IsLastMessageFromSender ? "bold-text" : "")">@dto.Message</span>
+                </MudButton> *@
             }
         </MudPaper>
     </MudItem>
-    <MudItem xs="10">
+    <MudItem xs="12" sm="10">
             <MudPaper Class="@string.Join(" ", "d-flex", "align-center", "justify-center", "mud-width-full", "py-8", !isVisible ? "invisible" : "")">
             <div class="panel panel-primary chat-message-container">
                 <div class="panel-heading top-bar">
