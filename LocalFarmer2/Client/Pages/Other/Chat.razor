@@ -84,7 +84,7 @@
                         </h3>
                     </div>
                 </div>
-                <MudPaper Class="chat-messages">
+                <MudPaper Class="chat-messages" id="test222">
                     <div id="divMessageContainerBase" class="panel-body msg_container_base">
                         @if (Messages != null && Messages.Count() > 0)
                         {
@@ -176,7 +176,7 @@
 
         // var lastMessageFirstUser = await ChatMessageService.GetLastChatMessage(idCurrnetUser, usersWithHistory.First().Id);
         lastMessages = await ChatMessageService.GetLastChatMessages(idCurrnetUser, usersIdsWithHistory);
-
+    
         foreach (var dto in lastMessages)
         {
             Console.WriteLine(dto.UserName);
@@ -233,6 +233,8 @@
         Console.WriteLine("OnInitializedAsync 1 - " + hubConnection.State.ToString());
         await hubConnection.StartAsync();
         Console.WriteLine("OnInitializedAsync 2 - " + hubConnection.State.ToString());
+        await JSRuntime.InvokeVoidAsync("scrollToBottom", "test222");
+
     }
 
 
@@ -299,12 +301,13 @@
 
     .chat-message-container {
         margin: 20px;
-        height: 80vh;
+        height: 65vh;
         width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        overflow: scroll
+        overflow: scroll;
+        overflow-y: auto;
     }
 
     .mud-grid-spacing-xs-3 {
@@ -317,3 +320,16 @@
     }
 
 </style>
+
+<script>
+
+
+
+    window.scrollToBottom = (id) => {
+        var container = document.getElementById(id);
+        if (container) {
+            container.scrollTop = container.scrollHeight;
+        }
+    };
+
+</script>
