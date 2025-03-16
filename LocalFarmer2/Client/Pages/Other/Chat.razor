@@ -233,8 +233,8 @@
         Console.WriteLine("OnInitializedAsync 1 - " + hubConnection.State.ToString());
         await hubConnection.StartAsync();
         Console.WriteLine("OnInitializedAsync 2 - " + hubConnection.State.ToString());
-        await JSRuntime.InvokeVoidAsync("scrollToBottom", "test222");
-
+        StateHasChanged();
+        await JSRuntime.InvokeVoidAsync("test");
     }
 
 
@@ -251,13 +251,13 @@
             var separators = Messages.Where(x => x.IsSeparator);
             foreach (var separator in separators)
             {
-                @if (separator.DateSent == DateTime.Today)
+    @if (separator.DateSent == DateTime.Today)
                 {
                     isTodaySeparatorUsed = true;
                 }
             }
 
-            @if (!isTodaySeparatorUsed)
+    @if (!isTodaySeparatorUsed)
             {
                 ChatMessageDto separatorToday = new ChatMessageDto();
                 separatorToday.Message = "Separator";
@@ -322,14 +322,11 @@
 </style>
 
 <script>
-
-
-
-    window.scrollToBottom = (id) => {
-        var container = document.getElementById(id);
+    function test() { 
+        console.log("test22");
+        var container = document.getElementById("test222");
         if (container) {
             container.scrollTop = container.scrollHeight;
         }
-    };
-
+    }
 </script>
