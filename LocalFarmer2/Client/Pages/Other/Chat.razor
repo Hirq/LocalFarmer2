@@ -41,7 +41,7 @@
     </MudItem>
 
     <MudItem xs="12" sm="2">
-        <MudPaper Class="d-flex mud-width-full py-8 flex-column">
+        <MudPaper Class="d-flex mud-width-full flex-column">
             @foreach (var dto in lastMessages)
             {
                 <MudCard Class="m-1 border-1 chat-user" @onclick="() => GoPriv2(dto.IdUserSender == idCurrnetUser ? dto.IdUserReceiver : dto.IdUserSender)">
@@ -65,7 +65,7 @@
         </MudPaper>
     </MudItem>
     <MudItem xs="12" sm="10">
-            <MudPaper Class="@string.Join(" ", "d-flex", "align-center", "justify-center", "mud-width-full", "py-8", !isVisible ? "invisible" : "")">
+            <MudPaper Class="@string.Join(" ", "d-flex", "align-center", "justify-center", "mud-width-full", !isVisible ? "invisible" : "")">
             <div class="panel panel-primary chat-message-container">
                 <div class="panel-heading top-bar">
                     <div class="col-md-8 col-xs-8">
@@ -84,8 +84,8 @@
                         </h3>
                     </div>
                 </div>
-                <MudPaper Class="chat-messages" id="test222">
-                    <div id="divMessageContainerBase" class="panel-body msg_container_base">
+                <MudPaper Class="chat-messages" id="mud-paper-chat-message">
+                    <div class="panel-body msg_container_base">
                         @if (Messages != null && Messages.Count() > 0)
                         {
                             @foreach (var message in Messages)
@@ -128,8 +128,8 @@
 
                 
                 <!--CHAT USER BOX-->
-                <div class="panel-footer">
-                    <div class="input-group" id="myForm">
+                <div class="footer">
+                    <div class="input-group">
                         @* <MudTextField T="string" id="txtMessageInput" Label="@loc["Farmhouse_Address"]" @bind-Value="farmhouseDto.Address" /> *@
 
                         <input id="txtMessageInput" @bind="MessageText" type="text" class="form-control input-sm chat_input"
@@ -160,7 +160,7 @@
     public List<ChatMessageDto> Messages { get; set; } = new List<ChatMessageDto>();
     public bool IsConnected => hubConnection.State == HubConnectionState.Connected;
     private bool isVisible = false;
-
+    public IJSObjectReference module { get; set; }
     //Maybe to delete
     private List<ApplicationUser> users = new List<ApplicationUser>();
 
@@ -234,7 +234,8 @@
         await hubConnection.StartAsync();
         Console.WriteLine("OnInitializedAsync 2 - " + hubConnection.State.ToString());
         StateHasChanged();
-        await JSRuntime.InvokeVoidAsync("test");
+        await module.InvokeVoidAsync("scrollOnBottomMessages");
+
     }
 
 
@@ -251,13 +252,13 @@
             var separators = Messages.Where(x => x.IsSeparator);
             foreach (var separator in separators)
             {
-    @if (separator.DateSent == DateTime.Today)
+                @if (separator.DateSent == DateTime.Today)
                 {
                     isTodaySeparatorUsed = true;
                 }
             }
 
-    @if (!isTodaySeparatorUsed)
+            @if (!isTodaySeparatorUsed)
             {
                 ChatMessageDto separatorToday = new ChatMessageDto();
                 separatorToday.Message = "Separator";
@@ -285,7 +286,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/chat.js");
+        module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/chat.js");
         await module.InvokeVoidAsync("setScroll");
     }
 }
@@ -317,16 +318,12 @@
 
     .chat-messages {
         overflow: auto;
+        margin-bottom: 20px;
+        box-shadow: none;
+    }
+
+    .footer {
+        
     }
 
 </style>
-
-<script>
-    function test() { 
-        console.log("test22");
-        var container = document.getElementById("test222");
-        if (container) {
-            container.scrollTop = container.scrollHeight;
-        }
-    }
-</script>
