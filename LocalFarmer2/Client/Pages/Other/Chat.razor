@@ -44,7 +44,7 @@
         <MudPaper Class="d-flex mud-width-full flex-column">
             @foreach (var dto in lastMessages)
             {
-                <MudCard Class="m-1 border-1 chat-user" @onclick="() => GoPriv2(dto.IdUserSender == idCurrnetUser ? dto.IdUserReceiver : dto.IdUserSender)">
+                <MudCard Class="@string.Join(" ", "m-1", "border-1", "chat-user", "mud-width-full", IsSelected(dto) ? "active-chat" : "")" @onclick="() => GoPriv2(dto.IdUserSender == idCurrnetUser ? dto.IdUserReceiver : dto.IdUserSender)">
                     <MudCardContent>
                         <MudText Typo="Typo.body2">@dto.UserName</MudText>
                         <MudText Typo="Typo.body2">@dto.FullName</MudText>
@@ -160,6 +160,9 @@
     public List<ChatMessageDto> Messages { get; set; } = new List<ChatMessageDto>();
     public bool IsConnected => hubConnection.State == HubConnectionState.Connected;
     private bool isVisible = false;
+    private string selectedUserId { get; set; }
+
+
     public IJSObjectReference module { get; set; }
     //Maybe to delete
     private List<ApplicationUser> users = new List<ApplicationUser>();
@@ -201,6 +204,7 @@
     async Task GoPriv2(string idReceiver)
     {
         isVisible = true;
+        selectedUserId = idReceiver;
         MessageText = string.Empty;
         Messages.Clear();
         ToUserId = idReceiver;
@@ -284,6 +288,11 @@
         MessageText = string.Empty;
     }
 
+    private bool IsSelected(ChatLastMessageDto dto)
+    {
+        return selectedUserId == (dto.IdUserSender == idCurrnetUser ? dto.IdUserReceiver : dto.IdUserSender);
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/chat.js");
@@ -296,8 +305,29 @@
         font-weight: bold;
     }
 
+    .chat-user {
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }      
     .chat-user:hover {
-        background-color: darkgreen;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        background-color: var(--mud-palette-action-default-hover);
+    }
+
+    .chat-user:hover .mud-typography {
+        color: #0a58ca !important;
+    }
+
+    .active-chat {
+        background-color: rgba(33, 150, 243, 0.2) !important;
+        border: 2px solid #2196F3 !important;
+    }
+
+    .active-chat .mud-typography {
+        color: #1976D2 !important;
+        font-weight: bold;
     }
 
     .chat-message-container {
