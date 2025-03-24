@@ -27,6 +27,9 @@ export function scrollOnBottomMessages() {
     if (container) {
         container.scrollTop = container.scrollHeight;
     }
+
+    var inputMessage = document.getElementById("txtMessageInput");
+    inputMessage.focus();
 }
 
 document.getElementById("txtMessageInput")
@@ -36,3 +39,4 @@ document.getElementById("txtMessageInput")
             document.getElementById("txtMessageButton").click();
         }
     });
+
