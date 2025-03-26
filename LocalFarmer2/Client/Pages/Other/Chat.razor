@@ -154,7 +154,6 @@
     public string MessageText { get; set; }
     public ChatMessageDto dto { get; set; }
     public List<ChatMessageDto> Messages { get; set; } = new List<ChatMessageDto>();
-    public bool IsConnected => hubConnection.State == HubConnectionState.Connected;
     private bool isVisible = false;
     private string selectedUserId { get; set; }
 
@@ -175,7 +174,7 @@
 
         // var lastMessageFirstUser = await ChatMessageService.GetLastChatMessage(idCurrnetUser, usersWithHistory.First().Id);
         lastMessages = await ChatMessageService.GetLastChatMessages(idCurrnetUser, usersIdsWithHistory);
-    
+
         foreach (var dto in lastMessages)
         {
             Console.WriteLine(dto.UserName);
@@ -187,6 +186,10 @@
 
         //GoPriv2
         FromUserId = idCurrnetUser;
+
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
+            .Build();
 
         //Maybe to delete
         users = (await AccountService.GetUsers()).Where(x => x.Id != UserStateService.CurrentUser?.IdUser).ToList();
@@ -214,10 +217,7 @@
         ToUser = await AccountService.GetUserById(ToUserId);
         FromUser = await AccountService.GetUserById(FromUserId);
 
-        hubConnection = new HubConnectionBuilder()
-            .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
-            .Build();
-
+        hubConnection.Remove("ReceiveMessage");
         hubConnection.On<ChatMessageDto>("ReceiveMessage", (message) =>
         {
             Console.WriteLine("hubConnection 1");
@@ -230,12 +230,12 @@
                 StateHasChanged();
             }
         });
-        Console.WriteLine("OnInitializedAsync 1 - " + hubConnection.State.ToString());
-        await hubConnection.StartAsync();
-        Console.WriteLine("OnInitializedAsync 2 - " + hubConnection.State.ToString());
+        if (hubConnection.State == HubConnectionState.Disconnected)
+        {
+            await hubConnection.StartAsync();
+        }
         StateHasChanged();
         await module.InvokeVoidAsync("scrollOnBottomMessages");
-        
     }
 
 
