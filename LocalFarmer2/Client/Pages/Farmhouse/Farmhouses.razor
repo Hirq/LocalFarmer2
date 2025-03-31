@@ -24,8 +24,8 @@ else
         <ToolBarContent>
             <MudText Typo="Typo.h6">@loc["X_Farmhouses"]</MudText>
             <MudSpacer />
-                <MudButton Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => FilterFavorite())">@loc["Button_Only_Favorite"]</MudButton>
-            <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            <MudButton Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => FilterFavorite())">@loc["Button_Only_Favorite"]</MudButton>
+            <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
         </ToolBarContent>
 
         <HeaderContent>

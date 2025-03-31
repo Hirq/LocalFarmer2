@@ -29,6 +29,10 @@
     column-gap: 4px;
 }
 
+.input-search {
+    max-width: 33vw;
+}
+
 /* Note Start*/
 
 .flip-card {
