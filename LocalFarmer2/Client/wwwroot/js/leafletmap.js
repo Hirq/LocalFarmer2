@@ -28,8 +28,8 @@ export function load_map(raw, latitude, longitude) {
 
 export function setCoordinates(mapId, latitude, longitude) {
     var currentMarker;
-    var defaultLatitude = 21.505;
-    var defaultLongitude = 19.50;
+    var defaultLatitude = 54.189;
+    var defaultLongitude = 16.18;
 
     latitude = latitude || defaultLatitude;
     longitude = longitude || defaultLongitude;
