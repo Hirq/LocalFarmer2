@@ -164,18 +164,17 @@
     //Maybe to delete
     private List<ApplicationUser> users = new List<ApplicationUser>();
 
-    protected override async Task OnInitializedAsync()
+    private async Task SetLeftMenu(string idCurrentUser)
     {
-        idCurrnetUser = UserStateService.CurrentUser?.IdUser;
-        var chats = await ChatMessageService.GetUserChats(idCurrnetUser);
+        var chats = await ChatMessageService.GetUserChats(idCurrentUser);
 
-        var startI = chats.Where(x => x.User1Id != idCurrnetUser).Select(x => x.User1Id);
-        var startYou = chats.Where(x => x.User2Id != idCurrnetUser).Select(x => x.User2Id);
+        var startI = chats.Where(x => x.User1Id != idCurrentUser).Select(x => x.User1Id);
+        var startYou = chats.Where(x => x.User2Id != idCurrentUser).Select(x => x.User2Id);
         var usersIdsWithHistory = startI.Union(startYou).ToList();
         usersWithHistory = await AccountService.GetUsersByIds(usersIdsWithHistory);
 
         // var lastMessageFirstUser = await ChatMessageService.GetLastChatMessage(idCurrnetUser, usersWithHistory.First().Id);
-        lastMessages = await ChatMessageService.GetLastChatMessages(idCurrnetUser, usersIdsWithHistory);
+        lastMessages = await ChatMessageService.GetLastChatMessages(idCurrentUser, usersIdsWithHistory);
 
         foreach (var dto in lastMessages)
         {
@@ -185,6 +184,12 @@
             Console.WriteLine(dto.IsLastMessageFromSender);
             Console.WriteLine("-----------");
         }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        idCurrnetUser = UserStateService.CurrentUser?.IdUser;
+        await SetLeftMenu(idCurrnetUser);
 
         //GoPriv2
         FromUserId = idCurrnetUser;
@@ -236,6 +241,7 @@
         {
             await hubConnection.StartAsync();
         }
+
         StateHasChanged();
         await module.InvokeVoidAsync("scrollOnBottomMessages");
     }
@@ -275,8 +281,8 @@
             var messageAlert = new MessageAlert(MessageAlertEnum.NewMessageChat, FromUser.UserName);
             List<string> listUsersIds = new List<string> { message.IdUserReceiver };
             await AlertService.AddAlerts(listUsersIds, null, false, messageAlert);
-
             Console.WriteLine("Wysłano wiadomość przez SignalR");
+            await SetLeftMenu(FromUserId);
         }
         catch (Exception ex)
         {
