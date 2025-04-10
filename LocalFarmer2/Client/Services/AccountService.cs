@@ -132,7 +132,7 @@ namespace LocalFarmer2.Client.Services
             await _httpClient.PutAsJsonAsync($"api/Account/User/{user.UserName}", dto);
         }
 
-        public async Task<bool> IsUserSignUp()
+        public async Task<bool> IsUserLogged()
         {
             var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
             var user = authState.User;

@@ -42,7 +42,7 @@
         <MudPaper Class="d-flex mud-width-full flex-column">
             @foreach (var dto in lastMessages)
             {
-                <MudCard Class="@string.Join(" ", "m-1", "border-1", "chat-user", "mud-width-full", IsSelected(dto) ? "active-chat" : "")" @onclick="() => GoPriv2(dto.IdUserSender == idCurrnetUser ? dto.IdUserReceiver : dto.IdUserSender)">
+                <MudCard Class="@string.Join(" ", "m-1", "border-1", "chat-user", IsSelected(dto) ? "active-chat" : "")" @onclick="() => GoPriv2(dto.IdUserSender == idCurrnetUser ? dto.IdUserReceiver : dto.IdUserSender)">
                     <MudCardContent>
                         <MudText Typo="Typo.body2">@dto.UserName</MudText>
                         <MudText Typo="Typo.body2">@dto.FullName</MudText>

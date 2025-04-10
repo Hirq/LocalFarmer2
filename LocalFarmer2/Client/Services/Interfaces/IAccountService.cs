@@ -14,6 +14,6 @@ namespace LocalFarmer2.Client.Services
         Task<List<ApplicationUser>> GetUsers();
         Task<List<ApplicationUser>> GetUsersByIds(List<string> ids);
         Task EditUser(EditUserDto dto);
-        Task<bool> IsUserSignUp();
+        Task<bool> IsUserLogged();
     }
 }

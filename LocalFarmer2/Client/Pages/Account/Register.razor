@@ -2,6 +2,7 @@
 @inject IAccountService AuthService
 @inject IAlertService AlertService
 @inject NavigationManager NavigationManager
+@inject UserStateService UserStateService
 
 <PageTitle>@loc["Account_Register"] | @Globals.AppName</PageTitle>
 
@@ -46,6 +47,14 @@
     private RegisterDto RegisterModel = new RegisterDto();
     private bool ShowErrors;
     private IEnumerable<string>? Errors;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (UserStateService.IsUserLogged)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+    }
 
     private async Task HandleRegistration()
     {

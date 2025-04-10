@@ -94,7 +94,7 @@ else
 
     protected async override Task OnInitializedAsync()
     {
-        isUserSignUp = await AccountService.IsUserSignUp();
+        isUserSignUp = await AccountService.IsUserLogged();
         dialogData = new DialogData()
         {
             Title = $"{loc["X_Delete"]} {loc["X_Farmhouse"]}",

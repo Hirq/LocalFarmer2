@@ -122,7 +122,7 @@
         AlertService.OnAlert += OnAlertChanged;
         if (!isDataInitialized)
         {
-            if (await AccountService.IsUserSignUp())
+            if (await AccountService.IsUserLogged())
             {
                 UserStateService.IsUserLogged = true;
                 UserStateService.CurrentUser = await AccountService.GetCurrentUser();

@@ -37,6 +37,14 @@
     private bool ShowErrors;
     private string Error = "";
 
+    protected override async Task OnInitializedAsync()
+    {
+        if (UserStateService.IsUserLogged)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+    }
+
     private async Task HandleLogin()
     {
         ShowErrors = false;
