@@ -6,34 +6,6 @@
 @inject IAlertService AlertService
 @inject IJSRuntime JSRuntime
 
-@* <h3>Chat</h3>
-
-<h3> USERS  ALL</h3>
-@foreach (var user in users)
-{
-    <div>
-        @user.UserName
-        <button @onclick="() => GoPriv(user.Id)">Priv</button>
-    </div>
-}
-
-<h3> USERS WITH HISTORY CHAT</h3>
-@foreach (var dto in lastMessages)
-{
-    <div class="chat-user-container">
-        <div>
-            @dto.UserName
-        </div>
-        <div class="@(dto.IsLastMessageFromSender ? "bold-text" : "")">
-            @dto.Message
-        </div>
-        <div>
-            @(dto.IsLastMessageFromSender ? "tak" : "nie")
-        </div>
-        <button @onclick="() => GoPriv(dto.IdUserSender == idCurrnetUser ? dto.IdUserReceiver : dto.IdUserSender)">Priv</button>
-    </div>
-}
-<h3> XXXXXXXXXXXXXXXXXX </h3> *@
 <div class="mud-table-toolbar titlePage">
     <MudText Typo="Typo.h6">Chat</MudText>
 </div>
@@ -42,23 +14,15 @@
         <MudPaper Class="d-flex mud-width-full flex-column">
             @foreach (var dto in lastMessages)
             {
-                <MudCard Class="@string.Join(" ", "m-1", "border-1", "chat-user", IsSelected(dto) ? "active-chat" : "")" @onclick="() => GoPriv2(dto.IdUserSender == idCurrnetUser ? dto.IdUserReceiver : dto.IdUserSender)">
+                <MudCard Class="@string.Join(" ", "m-1", "border-1", "chat-user", IsSelected(dto) ? "active-chat" : "")" @onclick="() => GoPriv(dto.IdUserSender == FromUserId ? dto.IdUserReceiver : dto.IdUserSender)">
                     <MudCardContent>
                         <MudText Typo="Typo.body2">@dto.UserName</MudText>
                         <MudText Typo="Typo.body2">@dto.FullName</MudText>
                     </MudCardContent>
                     <MudCardActions>
-                            <MudText class="@(dto.IsLastMessageFromSender ? "bold-text" : "")">@dto.Message</MudText>
+                        <MudText class="@(!dto.IsLastMessageFromSender ? "bold-text" : "")">@dto.Message</MudText>
                     </MudCardActions>
                 </MudCard>
-
-@*                 <MudButton Variant="Variant.Outlined"
-                           Class="d-flex align-center justify-center mud-width-full py-8"
-                           Href="/myproducts">
-                    <span class="d-block">@dto.UserName</span>
-                    <span class="d-block">@dto.FullName</span>
-                    <span style="display: block; margin-top: 16px;" class="@(dto.IsLastMessageFromSender ? "bold-text" : "")">@dto.Message</span>
-                </MudButton> *@
             }
         </MudPaper>
     </MudItem>
@@ -124,7 +88,6 @@
                     </div>
                 </MudPaper>
 
-                
                 <!--CHAT USER BOX-->
                 <div class="footer">
                     <div class="input-group">
@@ -140,14 +103,11 @@
     </MudItem>
 </MudGrid>
 
-
-
 @code {
-    private string idCurrnetUser;
+    public IJSObjectReference module { get; set; }
     private List<ApplicationUser> usersWithHistory = new List<ApplicationUser>();
     private List<ChatLastMessageDto> lastMessages = new List<ChatLastMessageDto>();
 
-    //GoPriv2
     private HubConnection hubConnection;
     public string ToUserId { get; set; }
     public UserDto ToUser { get; set; } = new UserDto();
@@ -159,11 +119,6 @@
     private bool isVisible = false;
     private string selectedUserId { get; set; }
 
-
-    public IJSObjectReference module { get; set; }
-    //Maybe to delete
-    private List<ApplicationUser> users = new List<ApplicationUser>();
-
     private async Task SetLeftMenu(string idCurrentUser)
     {
         var chats = await ChatMessageService.GetUserChats(idCurrentUser);
@@ -173,41 +128,39 @@
         var usersIdsWithHistory = startI.Union(startYou).ToList();
         usersWithHistory = await AccountService.GetUsersByIds(usersIdsWithHistory);
 
-        // var lastMessageFirstUser = await ChatMessageService.GetLastChatMessage(idCurrnetUser, usersWithHistory.First().Id);
         lastMessages = await ChatMessageService.GetLastChatMessages(idCurrentUser, usersIdsWithHistory);
-
-        foreach (var dto in lastMessages)
-        {
-            Console.WriteLine(dto.UserName);
-            Console.WriteLine(dto.FullName);
-            Console.WriteLine(dto.Message);
-            Console.WriteLine(dto.IsLastMessageFromSender);
-            Console.WriteLine("-----------");
-        }
     }
 
     protected override async Task OnInitializedAsync()
     {
-        idCurrnetUser = UserStateService.CurrentUser?.IdUser;
-        await SetLeftMenu(idCurrnetUser);
-
-        //GoPriv2
-        FromUserId = idCurrnetUser;
+        FromUserId = UserStateService.CurrentUser?.IdUser;
+        await SetLeftMenu(FromUserId);
 
         hubConnection = new HubConnectionBuilder()
             .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
             .Build();
+        
 
-        //Maybe to delete
-        users = (await AccountService.GetUsers()).Where(x => x.Id != UserStateService.CurrentUser?.IdUser).ToList();
+        //DELETE
+        var testowyChatLastMessageDto = new ChatLastMessageDto()
+            {
+                FullName = "asdas22",
+                UserName = "ddd",
+                Message = "test"
+            };
+        lastMessages.Add(testowyChatLastMessageDto);
+        lastMessages.Add(testowyChatLastMessageDto);
+        lastMessages.Add(testowyChatLastMessageDto);
+        lastMessages.Add(testowyChatLastMessageDto);
+        lastMessages.Add(testowyChatLastMessageDto);
+        lastMessages.Add(testowyChatLastMessageDto);
+        lastMessages.Add(testowyChatLastMessageDto);
+        lastMessages.Add(testowyChatLastMessageDto);
+        lastMessages.Add(testowyChatLastMessageDto);
+        lastMessages.Add(testowyChatLastMessageDto);
     }
 
-    void GoPriv(string idReceiver)
-    {
-        NavigationManager.NavigateTo($"/chatpriv/{idReceiver}");
-    }
-
-    async Task GoPriv2(string idReceiver)
+    async Task GoPriv(string idReceiver)
     {
         isVisible = true;
         selectedUserId = idReceiver;
@@ -225,7 +178,7 @@
         FromUser = await AccountService.GetUserById(FromUserId);
 
         hubConnection.Remove("ReceiveMessage");
-        hubConnection.On<ChatMessageDto>("ReceiveMessage", (message) =>
+        hubConnection.On<ChatMessageDto>("ReceiveMessage", async (message) =>
         {
             Console.WriteLine("hubConnection 1");
 
@@ -234,6 +187,7 @@
             {
                 Console.WriteLine("hubConnection 2");
                 Messages.Add(message);
+                await SetLeftMenu(FromUserId);
                 StateHasChanged();
             }
         });
@@ -282,7 +236,6 @@
             List<string> listUsersIds = new List<string> { message.IdUserReceiver };
             await AlertService.AddAlerts(listUsersIds, null, false, messageAlert);
             Console.WriteLine("Wysłano wiadomość przez SignalR");
-            await SetLeftMenu(FromUserId);
         }
         catch (Exception ex)
         {
@@ -294,7 +247,7 @@
 
     private bool IsSelected(ChatLastMessageDto dto)
     {
-        return selectedUserId == (dto.IdUserSender == idCurrnetUser ? dto.IdUserReceiver : dto.IdUserSender);
+        return selectedUserId == (dto.IdUserSender == FromUserId ? dto.IdUserReceiver : dto.IdUserSender);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
