@@ -20,7 +20,7 @@
                         <MudText Typo="Typo.body2">@dto.FullName</MudText>
                     </MudCardContent>
                     <MudCardActions>
-                        <MudText class="@(!dto.IsLastMessageFromSender ? "bold-text" : "")">@dto.Message</MudText>
+                        <MudText class="@(!dto.IsLastMessageFromSender ? "bold-text" : "")">@(!dto.IsLastMessageFromSender ? dto.FullName : loc["X_Me"]): @dto.Message</MudText>
                     </MudCardActions>
                 </MudCard>
             }
@@ -118,6 +118,7 @@
     public List<ChatMessageDto> Messages { get; set; } = new List<ChatMessageDto>();
     private bool isVisible = false;
     private string selectedUserId { get; set; }
+    private string lastMessageDisplayed { get; set; }
 
     private async Task SetLeftMenu(string idCurrentUser)
     {

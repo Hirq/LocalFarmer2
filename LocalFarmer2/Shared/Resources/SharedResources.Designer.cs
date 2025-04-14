@@ -1024,6 +1024,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Me.
+        /// </summary>
+        internal static string X_Me {
+            get {
+                return ResourceManager.GetString("X_Me", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         internal static string X_Name {

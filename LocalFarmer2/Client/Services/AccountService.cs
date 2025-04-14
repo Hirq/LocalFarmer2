@@ -68,6 +68,7 @@ namespace LocalFarmer2.Client.Services
             ((CustomAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(loginModel.Email);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", loginResult.Token);
             _userStateService.CurrentUser = await GetCurrentUser();
+            _userStateService.IsUserLogged = true;
 
             return loginResult;
         }
@@ -78,6 +79,7 @@ namespace LocalFarmer2.Client.Services
             ((CustomAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOut();
             _httpClient.DefaultRequestHeaders.Authorization = null;
             _userStateService.CurrentUser = null;
+            _userStateService.IsUserLogged = false;
         }
 
         public async Task<UserDto> GetCurrentUser()

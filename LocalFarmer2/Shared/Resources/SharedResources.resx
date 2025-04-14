@@ -477,4 +477,7 @@
   <data name="Chat_Write_Your_Message_Here" xml:space="preserve">
     <value>Write your message here...</value>
   </data>
+  <data name="X_Me" xml:space="preserve">
+    <value>Me</value>
+  </data>
 </root>

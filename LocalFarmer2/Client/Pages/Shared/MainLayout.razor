@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @inject UserStateService UserStateService
+@inject NavigationManager NavigationManager
 @inject IAlertService AlertService
 @inject IAccountService AccountService
 @inject IJSRuntime JSRuntime
@@ -135,6 +136,17 @@
             }
             isDataInitialized = true;
         }
+
+        NavigationManager.LocationChanged += HandleLocationChanged;
+    }
+
+
+    private void HandleLocationChanged(object sender, LocationChangedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(UserStateService.CurrentUser.FullName) && !e.Location.Contains("myaccount"))
+        {
+            NavigationManager.NavigateTo("/myaccount");
+        }
     }
 
     private async Task MenuStateChanged(bool isOpen)
@@ -190,5 +202,6 @@
     public void Dispose()
     {
         AlertService.OnAlert -= OnAlertChanged;
+        NavigationManager.LocationChanged -= HandleLocationChanged;
     }
 }
