@@ -11,7 +11,8 @@
 </div>
 <MudGrid Class="m-0 w-100">
     <MudItem xs="12" sm="2">
-        <MudPaper Class="d-flex mud-width-full flex-column chat-user-container">
+        <MudPaper Class="d-flex mud-width-full flex-column chat-user-outer-container">
+            <div class="chat-user-inner-scroll">
             @foreach (var dto in lastMessages)
             {
                 <MudCard Class="@string.Join(" ", "m-1", "border-1", "chat-user", IsSelected(dto) ? "active-chat" : "")" @onclick="() => GoPriv(dto.IdUserSender == FromUserId ? dto.IdUserReceiver : dto.IdUserSender)">
@@ -24,6 +25,7 @@
                     </MudCardActions>
                 </MudCard>
             }
+            </div>
         </MudPaper>
     </MudItem>
     <MudItem xs="12" sm="10">
@@ -263,10 +265,16 @@
         font-weight: bold;
     }
 
-    .chat-user-container {
+    .chat-user-outer-container{
         height: 84vh;
-        overflow: scroll;
+        overflow: hidden;
+        border-radius: 4px;
+    }
+
+    .chat-user-inner-scroll {
         overflow-y: auto;
+        height: 100%;
+        scrollbar-width: thin;
     }
 
     .chat-user {
