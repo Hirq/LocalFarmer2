@@ -21,7 +21,7 @@
                         <MudText Typo="Typo.body2">@dto.FullName</MudText>
                     </MudCardContent>
                     <MudCardActions>
-                                <MudText class="@(!dto.IsLastMessageFromSender ? "bold-text" : "")">@(!dto.IsLastMessageFromSender ? dto.FullName : loc["X_Me"]): @(dto.Message.Length > 20 ? dto.Message.Substring(0, 17) + "..." : dto.Message) </MudText>
+                        <MudText class="@(!dto.IsLastMessageFromSender ? "bold-text" : "")">@(!dto.IsLastMessageFromSender ? dto.FullName : loc["X_Me"]): @(dto.Message.Length > 20 ? dto.Message.Substring(0, 17) + "..." : dto.Message) </MudText>
                     </MudCardActions>
                 </MudCard>
             }
