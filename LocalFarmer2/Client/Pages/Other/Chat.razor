@@ -29,7 +29,7 @@
         </MudPaper>
     </MudItem>
     <MudItem xs="12" sm="10">
-            <MudPaper Class="@string.Join(" ", "d-flex", "align-center", "justify-center", "mud-width-full", !isVisible ? "invisible" : "")">
+        <MudPaper Class="@string.Join(" ", "d-flex", "align-center", "justify-center", "mud-width-full", "h-100", !isVisible ? "invisible" : "")">
             <div class="panel panel-primary chat-message-container">
                 <div class="panel-heading top-bar">
                     <div class="col-md-8 col-xs-8">
@@ -266,7 +266,7 @@
     }
 
     .chat-user-outer-container{
-        height: 84vh;
+        height: 85dvh;
         overflow: hidden;
         border-radius: 4px;
     }
