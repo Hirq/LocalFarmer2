@@ -237,6 +237,7 @@
 
             var messageAlert = new MessageAlert(MessageAlertEnum.NewMessageChat, FromUser.UserName);
             List<string> listUsersIds = new List<string> { message.IdUserReceiver };
+            //TODO: Dodać if - sprawdzenie czy juz alert czeka - jeżeli tak to nie powinnien się dodawać nowy alert
             await AlertService.AddAlerts(listUsersIds, null, false, messageAlert);
             Console.WriteLine("Wysłano wiadomość przez SignalR");
         }
