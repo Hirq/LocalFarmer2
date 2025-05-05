@@ -113,5 +113,12 @@
                 await AddAlert(dtoAlert);
             }
         }
+
+        public async Task<bool> IsLastAlertFromChatIsRead(string idUserReceiver)
+        {
+            var alert = await _httpClient.GetFromJsonAsync<List<Alert>>($"api/Alert/AlertForUser?idUser={idUserReceiver}");
+
+            return false;
+        }
     }
 }
