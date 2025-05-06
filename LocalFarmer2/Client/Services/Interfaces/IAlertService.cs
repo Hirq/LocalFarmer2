@@ -13,6 +13,6 @@
         public Task SetAllAlertsAsReadForUser(string idUser);
         public Task AddAlert(AddAlertDto dto);
         public Task AddAlerts(List<string> dtos, int? idFarmhouse, bool infoFromFarmhouse, MessageAlert messageAlert);
-        public bool IsLastAlertFromChatIsRead(string idUserReceiver);
+        public Task <bool> IsOpenLastAlertFromChat(string idUserReceiver);
     }
 }

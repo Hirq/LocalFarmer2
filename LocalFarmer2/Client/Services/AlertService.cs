@@ -114,11 +114,11 @@
             }
         }
 
-        public async Task<bool> IsLastAlertFromChatIsRead(string idUserReceiver)
+        public async Task<bool> IsOpenLastAlertFromChat(string idUserReceiver)
         {
-            var alert = await _httpClient.GetFromJsonAsync<List<Alert>>($"api/Alert/AlertForUser?idUser={idUserReceiver}");
+            var isOpen = await _httpClient.GetFromJsonAsync<bool>($"api/Alert/IsOpenLastAlertFromChat?idUserReceiver={idUserReceiver}");
 
-            return false;
+            return isOpen;
         }
     }
 }

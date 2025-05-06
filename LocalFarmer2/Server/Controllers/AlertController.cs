@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LocalFarmer2.Shared.ENUMs;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LocalFarmer2.Server.Controllers
 {
@@ -52,6 +53,14 @@ namespace LocalFarmer2.Server.Controllers
             await _alertRepository.SaveChangesAsync();
 
             return Ok(alerts);
+        }   
+        
+        [HttpGet, Route("IsOpenLastAlertFromChat")]
+        public async Task<IActionResult> IsOpenLastAlertFromChat(string idUserReceiver)
+        {
+            var alert = (await _alertRepository.GetAllAsync(x => x.IdUser == idUserReceiver && x.AlertEnum == MessageAlertEnum.NewMessageChat)).LastOrDefault();
+
+            return Ok(alert.IsOpen);
         }
     }
 }
