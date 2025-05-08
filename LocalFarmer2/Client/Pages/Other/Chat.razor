@@ -241,7 +241,6 @@
             if (await AlertService.IsOpenLastAlertFromChat(message.IdUserReceiver))
             {
                 await AlertService.AddAlerts(listUsersIds, null, false, messageAlert);
-                Console.WriteLine("Dodano alert - ostatnia wiadomość była odczytana");
             }
 
             Console.WriteLine("Wysłano wiadomość przez SignalR");
