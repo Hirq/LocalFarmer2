@@ -20,8 +20,9 @@
                         <MudText Typo="Typo.body2">@dto.UserName</MudText>
                         <MudText Typo="Typo.body2">@dto.FullName</MudText>
                     </MudCardContent>
-                    <MudCardActions>
-                        <MudText class="@(!dto.IsLastMessageFromSender ? "bold-text" : "")">@(!dto.IsLastMessageFromSender ? dto.FullName : loc["X_Me"]): @(dto.Message.Length > 20 ? dto.Message.Substring(0, 17) + "..." : dto.Message) </MudText>
+                    <MudCardActions Class="card-action-extra">
+                        <MudText Typo="Typo.body2" class="@(!dto.IsLastMessageFromSender ? "bold-text" : "")">@(!dto.IsLastMessageFromSender ? dto.FullName : loc["X_Me"]): @(dto.Message.Length > 20 ? dto.Message.Substring(0, 17) + "..." : dto.Message) </MudText>
+                        <MudText Typo="Typo.body2">@dto.DateSent</MudText>
                     </MudCardActions>
                 </MudCard>
             }
@@ -327,6 +328,11 @@
         overflow: auto;
         margin-bottom: 20px;
         box-shadow: none;
+    }
+
+    .card-action-extra {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .footer {

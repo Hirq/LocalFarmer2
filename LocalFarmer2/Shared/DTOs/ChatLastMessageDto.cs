@@ -8,5 +8,6 @@
         public bool IsLastMessageFromSender { get; set; }
         public string UserName { get; set; }
         public string FullName { get; set; }
+        public DateTime DateSent { get; set; }
     }
 }
