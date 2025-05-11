@@ -22,7 +22,7 @@
                     </MudCardContent>
                     <MudCardActions Class="card-action-extra">
                         <MudText Typo="Typo.body2" class="@(!dto.IsLastMessageFromSender ? "bold-text" : "")">@(!dto.IsLastMessageFromSender ? dto.FullName : loc["X_Me"]): @(dto.Message.Length > 20 ? dto.Message.Substring(0, 17) + "..." : dto.Message) </MudText>
-                        <MudText Typo="Typo.body2">@dto.DateSent</MudText>
+                        <MudText Class="card-action-date">@dto.DateSent</MudText>
                     </MudCardActions>
                 </MudCard>
             }
@@ -333,6 +333,10 @@
     .card-action-extra {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .card-action-date {
+        font-size: 11px;
     }
 
     .footer {

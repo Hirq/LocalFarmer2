@@ -94,6 +94,8 @@ namespace LocalFarmer2.Server.Services
                 result.Add(lastMesageDto);
             }
 
+            result = result.OrderByDescending(x => x.DateSent).ToList();
+
             return result;
         }
 
