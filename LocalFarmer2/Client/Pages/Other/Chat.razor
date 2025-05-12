@@ -11,7 +11,7 @@
 </div>
 <MudGrid Class="m-0 w-100">
     <MudItem xs="12" sm="2">
-        <MudPaper Class="d-flex mud-width-full flex-column chat-user-outer-container">
+        <MudPaper Class="d-flex mud-width-full flex-column chat-user-outer-container" id="chatUserPanel">
             <div class="chat-user-inner-scroll">
             @foreach (var dto in lastMessages)
             {
@@ -30,7 +30,7 @@
         </MudPaper>
     </MudItem>
     <MudItem xs="12" sm="10">
-        <MudPaper Class="@string.Join(" ", "d-flex", "align-center", "justify-center", "mud-width-full", "h-100", !isVisible ? "invisible" : "")">
+        <MudPaper Class="@string.Join(" ", "d-flex", "align-center", "justify-center", "mud-width-full", "h-100", !isVisible ? "invisible" : "")" id="chatMessagesPanel">
             <div class="panel panel-primary chat-message-container">
                 <div class="panel-heading top-bar">
                     <div class="col-md-8 col-xs-8">
@@ -122,6 +122,7 @@
     private bool isVisible = false;
     private string selectedUserId { get; set; }
     private string lastMessageDisplayed { get; set; }
+
 
     private async Task SetLeftMenu(string idCurrentUser)
     {
