@@ -123,18 +123,13 @@
     private string selectedUserId { get; set; }
     private string lastMessageDisplayed { get; set; }
 
-
-    private async Task SetLeftMenu(string idCurrentUser)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var chats = await ChatMessageService.GetUserChats(idCurrentUser);
-
-        var startI = chats.Where(x => x.User1Id != idCurrentUser).Select(x => x.User1Id);
-        var startYou = chats.Where(x => x.User2Id != idCurrentUser).Select(x => x.User2Id);
-        var usersIdsWithHistory = startI.Union(startYou).ToList();
-        usersWithHistory = await AccountService.GetUsersByIds(usersIdsWithHistory);
-
-        lastMessages = await ChatMessageService.GetLastChatMessages(idCurrentUser, usersIdsWithHistory);
+        module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/chat.js");
+        await module.InvokeVoidAsync("setScroll");
+        await module.InvokeVoidAsync("matchChatHeights");
     }
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -163,6 +158,18 @@
         lastMessages.Add(testowyChatLastMessageDto);
         lastMessages.Add(testowyChatLastMessageDto);
         lastMessages.Add(testowyChatLastMessageDto);
+    }
+
+    private async Task SetLeftMenu(string idCurrentUser)
+    {
+        var chats = await ChatMessageService.GetUserChats(idCurrentUser);
+
+        var startI = chats.Where(x => x.User1Id != idCurrentUser).Select(x => x.User1Id);
+        var startYou = chats.Where(x => x.User2Id != idCurrentUser).Select(x => x.User2Id);
+        var usersIdsWithHistory = startI.Union(startYou).ToList();
+        usersWithHistory = await AccountService.GetUsersByIds(usersIdsWithHistory);
+
+        lastMessages = await ChatMessageService.GetLastChatMessages(idCurrentUser, usersIdsWithHistory);
     }
 
     async Task GoPriv(string idReceiver)
@@ -260,11 +267,7 @@
         return selectedUserId == (dto.IdUserSender == FromUserId ? dto.IdUserReceiver : dto.IdUserSender);
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/chat.js");
-        await module.InvokeVoidAsync("setScroll");
-    }
+
 }
 
 <style>

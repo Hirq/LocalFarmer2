@@ -40,3 +40,15 @@ document.getElementById("txtMessageInput")
         }
     });
 
+export function matchChatHeights() {
+    const userPanel = document.getElementById('chatUserPanel');
+    const messagesPanel = document.getElementById('chatMessagesPanel');
+
+    if (userPanel && messagesPanel) {
+        const targetHeight = messagesPanel.offsetHeight;
+        userPanel.style.height = targetHeight + 'px';
+    }
+}
+
+window.addEventListener('load', matchChatHeights);
+window.addEventListener('resize', matchChatHeights);
