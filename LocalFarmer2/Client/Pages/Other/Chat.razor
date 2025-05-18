@@ -9,11 +9,9 @@
 <div class="mud-table-toolbar titlePage">
     <MudText Typo="Typo.h6">Chat</MudText>
 </div>
-@* <MudGrid Class="m-0 w-100"> *@
-<MudGrid Class="m-0 w-100 h-100" Style="height: 100vh;">
-    <MudItem xs="12" sm="2" Class="h-100">
-        @* <MudPaper Class="d-flex mud-width-full flex-column chat-user-outer-container"> *@
-        <MudPaper Class="d-flex flex-column h-100">
+<MudGrid Class="m-0 w-100">
+    <MudItem xs="12" sm="2">
+        <MudPaper Class="d-flex mud-width-full flex-column chat-user-outer-container">
             <div class="chat-user-inner-scroll">
             @foreach (var dto in lastMessages)
             {
@@ -31,9 +29,8 @@
             </div>
         </MudPaper>
     </MudItem>
-    <MudItem xs="12" sm="10" Class="h-100">
-        @* <MudPaper Class="@string.Join(" ", "d-flex", "align-center", "justify-center", "mud-width-full", "h-100", !isVisible ? "invisible" : "")" id="chatMessagesPanel"> *@
-        <MudPaper Class="d-flex flex-column h-100">
+    <MudItem xs="12" sm="10">
+        <MudPaper Class="@string.Join(" ", "d-flex", "align-center", "justify-center", "mud-width-full", "h-100", !isVisible ? "invisible" : "")" id="chatMessagesPanel">
             <div class="panel panel-primary chat-message-container">
                 <div class="panel-heading top-bar">
                     <div class="col-md-8 col-xs-8">
@@ -346,12 +343,6 @@
 
     .footer {
         
-    }
-
-    .scrollable-panel {
-        flex: 1;
-        overflow-y: auto;
-        min-height: 0;
     }
 
 </style>
