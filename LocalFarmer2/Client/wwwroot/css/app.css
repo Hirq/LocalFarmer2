@@ -6,6 +6,7 @@
     --button-warning: rgba(251,192,45,1);
     --gray-primary: #ccc;
     --input: #fff;
+    --border: rgb(195, 195, 201);
 }
 
 body.dark-mode {
@@ -13,7 +14,8 @@ body.dark-mode {
     --surface-color: #555555;
     --button-warning: rgba(48,63,159,1);
     --gray-primary: #1e1e1e;
-    --input: #rgb(55, 55, 64);
+    --input: rgb(55, 55, 64);
+    --border: rgb(183, 183, 199);
 }
 
 /*--------------------------------------------------------------------------------------------*/

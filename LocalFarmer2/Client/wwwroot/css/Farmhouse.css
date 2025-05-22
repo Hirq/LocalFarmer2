@@ -123,3 +123,7 @@
 .mudPaperBottom {
     border-radius: 0 0 4px 4px !important;
 }
+
+.borderTableFarmhouses {
+    border: 2px solid var(--border) !important;
+}

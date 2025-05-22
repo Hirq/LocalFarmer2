@@ -94,7 +94,7 @@ else
             </AuthorizeView>
         </RowTemplate>
 
-        <ChildRowContent>
+@*         <ChildRowContent>
             @if (context.ShowDetails)
             {
                 <MudTr>
@@ -121,6 +121,36 @@ else
                                         <MudTd DataLabel="Address Line 1">@ProductContext.Name</MudTd>
                                         <MudTd DataLabel="Address Line 2">@ProductContext.PrizeOne</MudTd>
                                         <MudTd DataLabel="Postal Code">@ProductContext.Description</MudTd>
+                                    </RowTemplate>
+                                </MudTable>
+                            </MudCardContent>
+                        </MudCard>
+                    </td>
+                </MudTr>
+            }
+        </ChildRowContent>   *@      
+        
+        <ChildRowContent>
+            @if (context.ShowDetails)
+            {
+                <MudTr>
+                    <td colspan="12">
+                        <MudCard Outlined="true" Elevation="0" Class="list-products borderTableFarmhouses">
+                            <MudCardContent Class="pa-0">
+                                <MudTable Items="@context.Products" Context="ProductContext" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0">
+                                    <HeaderContent>
+                                        <MudTh>@loc["X_Name"]</MudTh>
+                                        <MudTh>@loc["X_Description"]</MudTh>
+                                        <MudTh>@loc["Product_Minimal_Amount"]</MudTh>
+                                        <MudTh>@loc["Product_Prize_One"]</MudTh>
+                                        <MudTh>@loc["Product_Total_Quantity"]</MudTh>
+                                    </HeaderContent>
+                                    <RowTemplate>
+                                        <MudTd DataLabel="Address Line 1">@ProductContext.Name</MudTd>
+                                        <MudTd DataLabel="Postal Code">@ProductContext.Description</MudTd>
+                                        <MudTd DataLabel="Address Line 2">@ProductContext.CountMinOne</MudTd>
+                                        <MudTd DataLabel="Address Line 2">@ProductContext.PrizeOne</MudTd>
+                                        <MudTd DataLabel="Address Line 2">@ProductContext.CountAll</MudTd>
                                     </RowTemplate>
                                 </MudTable>
                             </MudCardContent>
