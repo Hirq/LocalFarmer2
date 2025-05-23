@@ -480,4 +480,16 @@
   <data name="X_Me" xml:space="preserve">
     <value>Ja</value>
   </data>
+  <data name="Button_Hide_Products" xml:space="preserve">
+    <value>Ukryj produkty</value>
+  </data>
+  <data name="Button_Show_Products" xml:space="preserve">
+    <value>Pokaż produkty</value>
+  </data>
+  <data name="Button_Go_To_Details" xml:space="preserve">
+    <value>Szczegóły</value>
+  </data>
+  <data name="X_Add" xml:space="preserve">
+    <value>Dodaj</value>
+  </data>
 </root>

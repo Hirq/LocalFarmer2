@@ -376,7 +376,7 @@
     <value>Subscription</value>
   </data>
   <data name="X_Opinion" xml:space="preserve">
-    <value>Opnion</value>
+    <value>Opinion</value>
   </data>
   <data name="X_Active" xml:space="preserve">
     <value>Active</value>
@@ -479,5 +479,17 @@
   </data>
   <data name="X_Me" xml:space="preserve">
     <value>Me</value>
+  </data>
+  <data name="Button_Hide_Products" xml:space="preserve">
+    <value>Hide products</value>
+  </data>
+  <data name="Button_Show_Products" xml:space="preserve">
+    <value>Show products</value>
+  </data>
+  <data name="Button_Go_To_Details" xml:space="preserve">
+    <value>Go to details</value>
+  </data>
+  <data name="X_Add" xml:space="preserve">
+    <value>Add</value>
   </data>
 </root>

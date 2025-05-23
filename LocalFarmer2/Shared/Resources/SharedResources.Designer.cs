@@ -349,11 +349,29 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Go to details.
+        /// </summary>
+        internal static string Button_Go_To_Details {
+            get {
+                return ResourceManager.GetString("Button_Go_To_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hide photo.
         /// </summary>
         internal static string Button_Hide_Photo {
             get {
                 return ResourceManager.GetString("Button_Hide_Photo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide products.
+        /// </summary>
+        internal static string Button_Hide_Products {
+            get {
+                return ResourceManager.GetString("Button_Hide_Products", resourceCulture);
             }
         }
         
@@ -399,6 +417,15 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string Button_Show_Photo {
             get {
                 return ResourceManager.GetString("Button_Show_Photo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show products.
+        /// </summary>
+        internal static string Button_Show_Products {
+            get {
+                return ResourceManager.GetString("Button_Show_Products", resourceCulture);
             }
         }
         
@@ -898,6 +925,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        internal static string X_Add {
+            get {
+                return ResourceManager.GetString("X_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alerts.
         /// </summary>
         internal static string X_Alerts {
@@ -1060,7 +1096,7 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Opnion.
+        ///   Looks up a localized string similar to Opinion.
         /// </summary>
         internal static string X_Opinion {
             get {
