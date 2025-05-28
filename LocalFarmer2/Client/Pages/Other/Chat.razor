@@ -137,25 +137,6 @@
         hubConnection = new HubConnectionBuilder()
             .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
             .Build();
-        
-
-        //DELETE
-        var testowyChatLastMessageDto = new ChatLastMessageDto()
-            {
-                FullName = "asdas22",
-                UserName = "ddd",
-                Message = "test"
-            };
-        lastMessages.Add(testowyChatLastMessageDto);
-        lastMessages.Add(testowyChatLastMessageDto);
-        lastMessages.Add(testowyChatLastMessageDto);
-        lastMessages.Add(testowyChatLastMessageDto);
-        lastMessages.Add(testowyChatLastMessageDto);
-        lastMessages.Add(testowyChatLastMessageDto);
-        lastMessages.Add(testowyChatLastMessageDto);
-        lastMessages.Add(testowyChatLastMessageDto);
-        lastMessages.Add(testowyChatLastMessageDto);
-        lastMessages.Add(testowyChatLastMessageDto);
     }
 
     private async Task SetLeftMenu(string idCurrentUser)
