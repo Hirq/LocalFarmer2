@@ -30,7 +30,7 @@
 }
 
 .input-search {
-    max-width: 33vw;
+    max-width: 33vw !important;
 }
 
 /* Note Start*/
