@@ -81,7 +81,7 @@ else
                                     <MudTextField T="string" @bind-Value="opinion.Comment" Label="Comment" Variant="Variant.Outlined" Lines="3" Placeholder="Set star and add your opinion"/>
                                 </MessageContent>
                                 <YesButton>
-                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.AddBox" OnClick="() => AddOpinion()">Add!</MudButton>
+                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddOpinion()">Add!</MudButton>
                                 </YesButton>
                             </MudMessageBox>
                         </MudTd>

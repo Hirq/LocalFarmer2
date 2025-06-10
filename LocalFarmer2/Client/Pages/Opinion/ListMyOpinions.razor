@@ -41,7 +41,7 @@
                     <MudTextField T="string" @bind-Value="opinionDto.Comment" Label="@loc["Opinion_Comment"]" Variant="Variant.Outlined" Lines="3" Placeholder="@loc["Opinion_Placeholder"]" />
                 </MessageContent>
                 <YesButton>
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.AddBox" OnClick="() => EditOpinion(context.Id)">@loc["X_Edit"]</MudButton>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => EditOpinion(context.Id)">@loc["X_Edit"]</MudButton>
                 </YesButton>
             </MudMessageBox>
         </MudTd>
