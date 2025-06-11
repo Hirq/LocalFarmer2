@@ -288,7 +288,7 @@ else
             AlertService.SetSuccessAlert($"{@loc["Alert_Successfully"]} {@loc["Alert_Add_Opinion"]} {farmhouse.Name}");
             _ = AlertService.ClearAlertAfterDelay();
         }
-        opinion.Comment = "";
+        opinion.Comment = string.Empty;
         opinion.Rating = 3;
         opinion.IdFarmhouse = 0;
     }
