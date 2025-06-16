@@ -2,14 +2,55 @@
 @inject UtilsService UtilsService
 
 <PageTitle>@loc["X_Contact"] | @Globals.AppName</PageTitle>
-
-<MudPaper>
-    <div class="mud-table-toolbar titlePage">
-        <MudText Typo="Typo.h6">@loc["X_Contact"]</MudText>
+@* <div class="container-contact">
+    <MudPaper Class="">
+        <div class="mud-table-toolbar titlePage">
+            <MudText Typo="Typo.h6">@loc["X_Contact"]</MudText>
+        </div>
+        <MudButton OnClick='() => UtilsService.OpenDialogSendMessage()' Variant="Variant.Filled" Color="Color.Primary">@loc["Farmhouse_Send_Message"]</MudButton>
+    </MudPaper>
+    <div style="margin-top: auto;">
+        <MudIconButton Class="github" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" aria-label="github" Href="https://github.com/Hirq" Target="_blank" />
     </div>
-    <MudButton OnClick='() => UtilsService.OpenDialogSendMessage()' Variant="Variant.Filled" Color="Color.Info">@loc["Farmhouse_Send_Message"]</MudButton>
-</MudPaper>
+</div> *@
+
+
+<div class="container-contact">
+    <MudPaper Class="contact-content">
+        <div class="mud-table-toolbar titlePage">
+            <MudText Typo="Typo.h6">@loc["X_Contact"]</MudText>
+        </div>
+
+        <MudButton OnClick='() => UtilsService.OpenDialogSendMessage()' Variant="Variant.Filled" Color="Color.Primary">
+            @loc["Farmhouse_Send_Message"]
+        </MudButton>
+
+        <div class="github-wrapper">
+            <MudIconButton Class="github" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" aria-label="github" Href="https://github.com/Hirq" Target="_blank" />
+        </div>
+    </MudPaper>
+</div>
 
 @code {
 
 }
+
+<style>
+    .container-contact {
+        height: calc(100vh - 64px);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .contact-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .github-wrapper {
+        margin-top: auto;
+        display: flex;
+        justify-content: center;
+    }
+</style>
