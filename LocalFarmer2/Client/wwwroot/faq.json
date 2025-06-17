@@ -1,0 +1,79 @@
+﻿[
+  {
+    "id": "1",
+    "question": {
+      "en": "How do I add my farm to the platform?",
+      "pl": "Jak dodać moje gospodarstwo do platformy?"
+    },
+    "answer": {
+      "en": "Register an account and use the 'Add Farm' button to provide details and location.",
+      "pl": "Zarejestruj konto i użyj przycisku 'Dodaj gospodarstwo', aby podać szczegóły i lokalizację."
+    }
+  },
+  {
+    "id": "2",
+    "question": {
+      "en": "Can I sell multiple products from my farm?",
+      "pl": "Czy mogę sprzedawać wiele produktów z mojego gospodarstwa?"
+    },
+    "answer": {
+      "en": "Yes, you can add as many products as you want and manage them individually.",
+      "pl": "Tak, możesz dodać dowolną liczbę produktów i zarządzać nimi osobno."
+    }
+  },
+  {
+    "id": "3",
+    "question": {
+      "en": "How can users find farms near them?",
+      "pl": "Jak użytkownicy mogą znaleźć gospodarstwa w swojej okolicy?"
+    },
+    "answer": {
+      "en": "Users can search by location on the map or filter farms by distance.",
+      "pl": "Użytkownicy mogą wyszukiwać po lokalizacji na mapie lub filtrować gospodarstwa według odległości."
+    }
+  },
+  {
+    "id": "4",
+    "question": {
+      "en": "Is there a way to save my favorite farms?",
+      "pl": "Czy mogę zapisywać ulubione gospodarstwa?"
+    },
+    "answer": {
+      "en": "Yes, you can bookmark farms to easily access them later.",
+      "pl": "Tak, możesz zapisywać gospodarstwa jako ulubione, aby łatwo do nich wracać."
+    }
+  },
+  {
+    "id": "5",
+    "question": {
+      "en": "Can I edit my farm's location on the map?",
+      "pl": "Czy mogę edytować lokalizację mojego gospodarstwa na mapie?"
+    },
+    "answer": {
+      "en": "Yes, you can update your farm's location anytime from your profile.",
+      "pl": "Tak, możesz aktualizować lokalizację gospodarstwa w każdej chwili w swoim profilu."
+    }
+  },
+  {
+    "id": "6",
+    "question": {
+      "en": "Are there any fees for using the platform?",
+      "pl": "Czy korzystanie z platformy wiąże się z opłatami?"
+    },
+    "answer": {
+      "en": "Currently, the platform is free for all users.",
+      "pl": "Obecnie platforma jest bezpłatna dla wszystkich użytkowników."
+    }
+  },
+  {
+    "id": "7",
+    "question": {
+      "en": "How do I contact a farm owner?",
+      "pl": "Jak skontaktować się z właścicielem gospodarstwa?"
+    },
+    "answer": {
+      "en": "You can use the messaging feature on the farm's page to send a direct message.",
+      "pl": "Możesz użyć funkcji wiadomości na stronie gospodarstwa, aby wysłać bezpośrednią wiadomość."
+    }
+  }
+]
