@@ -68,9 +68,6 @@ else
                     @if (row.IsCommented == false)
                     {
                         <MudTd DataLabel="Molar mass">
-                            @* <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddOpinion(row.Id)">Add opinion</MudButton> *@
-
-
                             <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OnButtonClicked(row.Id)">Add opinion</MudButton>
                             <MudMessageBox @ref="mbox" Title="Add opinion" CancelText="Cancel">
                                 <MessageContent>
@@ -81,7 +78,7 @@ else
                                     <MudTextField T="string" @bind-Value="opinion.Comment" Label="Comment" Variant="Variant.Outlined" Lines="3" Placeholder="Set star and add your opinion"/>
                                 </MessageContent>
                                 <YesButton>
-                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddOpinion()">Add!</MudButton>
+                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddOpinion()">Add</MudButton>
                                 </YesButton>
                             </MudMessageBox>
                         </MudTd>
