@@ -187,9 +187,7 @@ else
             return;
         }
 
-        //TODO: Czy to mapowanie jest potrzebne?
-        FarmhouseDto dto = mapper.Map<FarmhouseDto>(farmhouseDto);
-        await FarmhouseService.EditFarmhouse(dto, (int)currentUser?.IdFarmhouse!);
+        await FarmhouseService.EditFarmhouse(farmhouseDto, (int)currentUser?.IdFarmhouse!);
         UserStateService.CurrentUser.FarmhouseName = farmhouseDto.Name;
 
         //Alerts

@@ -94,10 +94,7 @@ namespace LocalFarmer2.Client.Services
 
         public async Task EditFarmhouse(FarmhouseDto dto, int idFarmhouse)
         {
-            //TODO: 
-            //Zrobić bez mapowania - czy dziala
-            Farmhouse farmhouse = _mapper.Map<Farmhouse>(dto);
-            await _http.PutAsJsonAsync($"api/Farmhouse/Farmhouse/{idFarmhouse}", farmhouse);
+            await _http.PutAsJsonAsync($"api/Farmhouse/Farmhouse/{idFarmhouse}", dto);
         }
 
         public async Task<int> AddFarmhouse(AddFarmhouseDto dto)

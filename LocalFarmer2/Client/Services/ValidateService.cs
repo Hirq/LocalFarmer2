@@ -44,8 +44,6 @@ namespace LocalFarmer2.Client.Services
                         }
                         break;
 
-                    // Dodaj obsługę innych typów pól tutaj, jeśli jest to potrzebne
-
                     default:
                         throw new InvalidOperationException("Nieobsługiwany typ pola.");
                 }
