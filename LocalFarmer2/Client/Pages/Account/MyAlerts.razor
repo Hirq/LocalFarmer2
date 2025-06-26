@@ -6,40 +6,74 @@
 
 <PageTitle>@loc["X_Alerts"] | @Globals.AppName</PageTitle>
 
-<MudTable Items="@ListAlert" SortLabel="Sort By" Hover="true" Filter="@(alert => UtilsService.FilterFunc(alert, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
-    <ToolBarContent>
-        <MudText Typo="Typo.h6">@loc["X_Alerts"]</MudText>
-        <MudSpacer />
-        <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
-    </ToolBarContent>
+<MudPaper Class="pa-4 mb-4">
+    <MudGrid Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+        <MudItem>
+            <MudText Typo="Typo.h6">@loc["X_Alerts"]</MudText>
+        </MudItem>
+        <MudItem>
+            <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search" Immediate="true"></MudTextField>
+        </MudItem>
+    </MudGrid>
+</MudPaper>
 
-    <HeaderContent>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.IdFarmhouse)">Id @loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.Farmhouse.Name)">@loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.AlertEnum)">@loc["X_Type"]</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.Message)">@loc["Alert_Message"]</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Alert, object>(x=>x.DateCreated)">@loc["X_Date"]</MudTableSortLabel></MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel="Nr">@context.Id</MudTd>
-        <MudTd DataLabel="Nr">@context.IdFarmhouse</MudTd>
-        <MudTd DataLabel="Nr">@context.Farmhouse?.Name</MudTd>
-        <MudTd DataLabel="Nr">@context.AlertEnum</MudTd>
-        <MudTd DataLabel="Nr">@context.Message</MudTd>
-        <MudTd DataLabel="Nr">@context.DateCreated</MudTd>
-    </RowTemplate>
-    <PagerContent>
-        <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
-    </PagerContent>
-</MudTable>
+@if (ListAlert == null)
+{
+    <MudProgressCircular Indeterminate="true"></MudProgressCircular>
+}
+else
+{
+    <MudExpansionPanels MultiExpansion="true">
+        @foreach (var group in ListAlert.Where(a => UtilsService.FilterFunc(a, SearchService.SearchString)).GroupBy(a => a.Farmhouse))
+        {
+            <MudExpansionPanel>
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudText><b>@group.Key?.Name</b></MudText>
+                        <MudChip Color="Color.Primary" Size="Size.Small" Class="ml-2">@group.Count()</MudChip>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+                    <MudList Clickable="true">
+                        @foreach (var alert in group.OrderByDescending(a => a.DateCreated))
+                        {
+                            var details = GetAlertDetails(alert.AlertEnum);
+                            <MudListItem Icon="@details.Icon" IconColor="@details.Color">
+                                <div class="d-flex justify-space-between w-100">
+                                    <span>@alert.Message</span>
+                                    <MudText Typo="Typo.caption">@alert.DateCreated.ToString("g")</MudText>
+                                </div>
+                            </MudListItem>
+                        }
+                    </MudList>
+                </ChildContent>
+            </MudExpansionPanel>
+        }
+    </MudExpansionPanels>
+}
 
 @code {
     List<Alert> ListAlert = new List<Alert>();
-    private string searchString = null;
 
     protected override async Task OnInitializedAsync()
     {
         ListAlert = await AlertService.GetAllForUser(UserStateService.CurrentUser.IdUser, UserStateService.CurrentUser.IdFarmhouse);
+        ListAlert = ListAlert.OrderByDescending(a => a.DateCreated).ToList();
+    }
+
+    private (string Icon, Color Color) GetAlertDetails(MessageAlertEnum alertEnum)
+    {
+        return alertEnum switch
+        {
+            MessageAlertEnum.FarmhouseIsOpen => (Icons.Material.Filled.Store, Color.Info),
+            MessageAlertEnum.NewProduct => (Icons.Material.Filled.AddShoppingCart, Color.Success),
+            MessageAlertEnum.EditProduct => (Icons.Material.Filled.Edit, Color.Default),
+            MessageAlertEnum.EditDetails => (Icons.Material.Filled.EditNote, Color.Default),
+            MessageAlertEnum.NewSubscriber => (Icons.Material.Filled.PersonAdd, Color.Primary),
+            MessageAlertEnum.NewOpinion => (Icons.Material.Filled.Star, Color.Warning),
+            MessageAlertEnum.Welcome => (Icons.Material.Filled.WavingHand, Color.Success),
+            MessageAlertEnum.NewMessageChat => (Icons.Material.Filled.Chat, Color.Info),
+            _ => (Icons.Material.Filled.Notifications, Color.Default)
+        };
     }
 }
