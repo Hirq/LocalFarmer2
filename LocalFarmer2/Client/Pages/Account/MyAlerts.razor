@@ -24,12 +24,12 @@
 else
 {
     <MudExpansionPanels MultiExpansion="true">
-        @foreach (var group in ListAlert.Where(a => UtilsService.FilterFunc(a, SearchService.SearchString)).GroupBy(a => a.Farmhouse))
+        @foreach (var group in ListAlert.Where(a => UtilsService.FilterFunc(a, SearchService.SearchString)).GroupBy(a => a.AlertEnum))
         {
             <MudExpansionPanel>
                 <TitleContent>
                     <div class="d-flex">
-                        <MudText><b>@group.Key?.Name</b></MudText>
+                        <MudText><b>@group.Key</b></MudText>
                         <MudChip Color="Color.Primary" Size="Size.Small" Class="ml-2">@group.Count()</MudChip>
                     </div>
                 </TitleContent>
