@@ -10,7 +10,7 @@ namespace LocalFarmer2.Shared.DTOs
         public string Address { get; set; }
         public string Phone { get; set; }
 
-        [RegularExpression(@"^$|^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$", ErrorMessage = "Invalid email address.")]
+        [RegularExpression(@"^$|^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$")]
         public string Email { get; set; }
 
         [Required]
