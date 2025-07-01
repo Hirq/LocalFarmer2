@@ -88,7 +88,7 @@
         dialogData.Content += $" '{item.Name}'";
         UtilsService.OpenDialog(dialogData, () => DeleteNote(item.Id), Color.Error);
     }
-    
+
     private async Task InitializeNotesList()
     {
         var notesList = await NoteService.GetAll();
@@ -160,7 +160,7 @@
         note.IsArchive = !note.IsArchive;
         await NoteService.EditNote(note);
         await InitializeNotesList();
-        SetFilter(2);
+        SetFilter(!item.IsArchive ? 1 : 2);
         StateHasChanged();
     }
 
@@ -168,7 +168,9 @@
     {
         note.Name = item.Name;
         note.Text = item.Text;
-        UtilsService.OpenDialogNoteCards(loc["Note_Edit_Note"], loc["X_Save"], note, async () => await EditNote(item), true, async () => await ArchiveNote(item));
+        string buttonNameArhive = (item.IsArchive) ? loc["X_Active"] : @loc["X_Archive"];
+
+        UtilsService.OpenDialogNoteCards(loc["Note_Edit_Note"], loc["X_Save"], note, async () => await EditNote(item), true, async () => await ArchiveNote(item), buttonNameArhive);
     }
 
     private async Task DeleteNote(int id)
