@@ -493,6 +493,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        internal static string Dashboard_Information {
+            get {
+                return ResourceManager.GetString("Dashboard_Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Local Farmer.
         /// </summary>
         internal static string Dashboard_LocalFarmer {
@@ -952,6 +961,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure delete.
+        /// </summary>
+        internal static string X_Are_You_Sure_Delete {
+            get {
+                return ResourceManager.GetString("X_Are_You_Sure_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure delete this.
         /// </summary>
         internal static string X_Are_You_Sure_Delete_This {
@@ -1047,6 +1065,15 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string X_Farmhouses {
             get {
                 return ResourceManager.GetString("X_Farmhouses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        internal static string X_Information {
+            get {
+                return ResourceManager.GetString("X_Information", resourceCulture);
             }
         }
         

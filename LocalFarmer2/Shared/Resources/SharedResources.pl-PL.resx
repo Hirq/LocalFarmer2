@@ -306,8 +306,8 @@
   <data name="Dashboard_Contact" xml:space="preserve">
     <value>Kontakt</value>
   </data>
-  <data name="X_Contact" xml:space="preserve">
-    <value>Kontakt</value>
+  <data name="X_Information" xml:space="preserve">
+    <value>Informacje</value>
   </data>
   <data name="Farmhouse_Payment_Methods" xml:space="preserve">
     <value>Metody płatoności</value>
@@ -491,5 +491,14 @@
   </data>
   <data name="X_Add" xml:space="preserve">
     <value>Dodaj</value>
+  </data>
+  <data name="X_Are_You_Sure_Delete" xml:space="preserve">
+    <value>Czy na pewno chcesz usunąć</value>
+  </data>
+  <data name="Dashboard_Information" xml:space="preserve">
+    <value>Informacje</value>
+  </data>
+  <data name="X_Contact" xml:space="preserve">
+    <value>Kontakt</value>
   </data>
 </root>

@@ -306,8 +306,8 @@
   <data name="Dashboard_Contact" xml:space="preserve">
     <value>Contact</value>
   </data>
-  <data name="X_Contact" xml:space="preserve">
-    <value>Contact</value>
+  <data name="X_Information" xml:space="preserve">
+    <value>Information</value>
   </data>
   <data name="Farmhouse_Payment_Methods" xml:space="preserve">
     <value>Payment methods</value>
@@ -491,5 +491,14 @@
   </data>
   <data name="X_Add" xml:space="preserve">
     <value>Add</value>
+  </data>
+  <data name="X_Are_You_Sure_Delete" xml:space="preserve">
+    <value>Are you sure delete</value>
+  </data>
+  <data name="Dashboard_Information" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="X_Contact" xml:space="preserve">
+    <value>Contact</value>
   </data>
 </root>

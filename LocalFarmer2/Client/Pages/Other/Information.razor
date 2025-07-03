@@ -1,0 +1,100 @@
+﻿@page "/information"
+@using System.Text.Json
+@using System.Globalization
+@inject HttpClient Http
+@inject UtilsService UtilsService
+
+<PageTitle>@loc["X_Information"] | @Globals.AppName</PageTitle>
+
+<div class="container-information">
+    <MudPaper Class="content-information">
+        <div class="mud-table-toolbar titlePage">
+            <MudText Typo="Typo.h6">@loc["X_Information"]</MudText>
+        </div>
+        <div class="mud-table-toolbar information-wrapper">
+            @foreach (var information in InformationItems)
+            {
+                <MudText Typo="Typo.body1">@information.Information[CurrentLang]</MudText>
+            }
+        </div>
+
+        <div class="mud-table-toolbar titlePage">
+            <MudText Typo="Typo.h6">FAQ</MudText>
+        </div>
+        <MudExpansionPanels Elevation="0">
+            @foreach (var item in FaqItems)
+            {
+                <MudExpansionPanel Text="@item.Question[CurrentLang]">
+                    @item.Answer[CurrentLang]
+                </MudExpansionPanel>
+            }
+        </MudExpansionPanels>
+        <div class="mud-table-toolbar titlePage">
+            <MudText Typo="Typo.h6">@loc["X_Contact"]</MudText>
+            </div>
+            <div class="cotanct-wrapper">
+                <MudButton Class="ml-3" OnClick='() => UtilsService.OpenDialogSendMessage()' Variant="Variant.Filled" Color="Color.Primary">
+                    @loc["Farmhouse_Send_Message"]
+            </MudButton>
+        </div>
+        <div class="github-wrapper">
+            <MudIconButton Class="github" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" aria-label="github" Href="https://github.com/Hirq" Target="_blank" />
+        </div>
+    </MudPaper>
+</div>
+
+@code {
+    private List<FaqItem> FaqItems = new List<FaqItem>();
+    private List<InformationItem> InformationItems = new List<InformationItem>();
+    private string CurrentLang => CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var json = await Http.GetStringAsync("faq.json");
+        var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+        FaqItems = JsonSerializer.Deserialize<List<FaqItem>>(json, options);    
+        
+        var jsonInformation = await Http.GetStringAsync("information.json");
+        var optionsInformation = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+        InformationItems = JsonSerializer.Deserialize<List<InformationItem>>(jsonInformation, optionsInformation);
+    }
+}
+
+<style>
+    .container-information {
+        height: calc(100vh - 64px);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content-information {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .cotanct-wrapper {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .information-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .github-wrapper {
+        margin-top: auto;
+        display: flex;
+        justify-content: center;
+    }
+</style>
