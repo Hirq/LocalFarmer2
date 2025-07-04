@@ -14,7 +14,7 @@
     </div>
 <div id="map" style="height:70vh; width: 100%"></div>
 </MudPaper>
-@code {
+    @code {
     [Parameter]
     public List<Farmhouse> farmhouses { get; set; }
 
@@ -34,23 +34,26 @@
             var client = new HttpClient();
             var raw = await client.GetStringAsync("https://localhost:7239/geojson.json");
             JArray jsonArray = JArray.Parse(raw);
-            foreach(var entry in farmhouses)
+            if (farmhouses.Any() && farmhouses != null)
             {
-                JObject newEntry = new JObject
+                foreach(var entry in farmhouses)
                 {
-                        ["type"] = "Feature",
-                        ["geometry"] = new JObject
-                        {
-                            ["type"] = "Point",
-                            ["coordinates"] = new JArray(entry.Longitude, entry.Latitude)
-                        },
-                        ["properties"] = new JObject
-                        {
-                            ["name"] = entry.Name
-                        }
-                };
+                    JObject newEntry = new JObject
+                    {
+                            ["type"] = "Feature",
+                            ["geometry"] = new JObject
+                            {
+                                ["type"] = "Point",
+                                ["coordinates"] = new JArray(entry.Longitude, entry.Latitude)
+                            },
+                            ["properties"] = new JObject
+                            {
+                                ["name"] = entry.Name
+                            }
+                    };
 
-                jsonArray.Add(newEntry);
+                    jsonArray.Add(newEntry);
+                }
             }
 
             raw = jsonArray.ToString();
