@@ -25,46 +25,83 @@
     protected override async Task OnInitializedAsync()
     {
         farmhouses = (await FarmhouseService.GetFarmhouses()).Where(x => x.IsOpen && ValidateService.IsValidLatitude(x.Latitude) && ValidateService.IsValidLongitude(x.Longitude)).ToList();
+        await InitializeMapAsync();
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    private async Task InitializeMapAsync()
     {
-        if (firstRender)
+        var client = new HttpClient();
+        var raw = await client.GetStringAsync("https://localhost:7239/geojson.json");
+        JArray jsonArray = JArray.Parse(raw);
+        if (farmhouses != null)
         {
-            var client = new HttpClient();
-            var raw = await client.GetStringAsync("https://localhost:7239/geojson.json");
-            JArray jsonArray = JArray.Parse(raw);
-            if (farmhouses.Any() && farmhouses != null)
+            foreach(var entry in farmhouses)
             {
-                foreach(var entry in farmhouses)
+                JObject newEntry = new JObject
                 {
-                    JObject newEntry = new JObject
+                    ["type"] = "Feature",
+                    ["geometry"] = new JObject
                     {
-                            ["type"] = "Feature",
-                            ["geometry"] = new JObject
-                            {
-                                ["type"] = "Point",
-                                ["coordinates"] = new JArray(entry.Longitude, entry.Latitude)
-                            },
-                            ["properties"] = new JObject
-                            {
-                                ["name"] = entry.Name
-                            }
-                    };
+                        ["type"] = "Point",
+                        ["coordinates"] = new JArray(entry.Longitude, entry.Latitude)
+                    },
+                    ["properties"] = new JObject
+                    {
+                        ["name"] = entry.Name
+                    }
+                };
 
-                    jsonArray.Add(newEntry);
-                }
-            }
-
-            raw = jsonArray.ToString();
-
-            module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
-            if (module != null)
-            {
-                result = await module.InvokeAsync<string>("load_map", Convert.ToString(raw), 52, 20);
+                jsonArray.Add(newEntry);
             }
         }
+
+        raw = jsonArray.ToString();
+
+        module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
+        if (module != null)
+        {
+            result = await module.InvokeAsync<string>("load_map", Convert.ToString(raw), 52, 20);
+        }
     }
+    
+    // protected override async Task OnAfterRenderAsync(bool firstRender)
+    // {
+    //     if (firstRender && isFarmhousesLoaded)
+    //     {
+    //         var client = new HttpClient();
+    //         var raw = await client.GetStringAsync("https://localhost:7239/geojson.json");
+    //         JArray jsonArray = JArray.Parse(raw);
+    //         if (farmhouses != null)
+    //         {
+    //             foreach(var entry in farmhouses)
+    //             {
+    //                 JObject newEntry = new JObject
+    //                 {
+    //                         ["type"] = "Feature",
+    //                         ["geometry"] = new JObject
+    //                         {
+    //                             ["type"] = "Point",
+    //                             ["coordinates"] = new JArray(entry.Longitude, entry.Latitude)
+    //                         },
+    //                         ["properties"] = new JObject
+    //                         {
+    //                             ["name"] = entry.Name
+    //                         }
+    //                 };
+    //
+    //                 jsonArray.Add(newEntry);
+    //             }
+    //         }
+    //
+    //         raw = jsonArray.ToString();
+    //
+    //         module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
+    //         if (module != null)
+    //         {
+    //             result = await module.InvokeAsync<string>("load_map", Convert.ToString(raw), 52, 20);
+    //         }
+    //     }
+    // }
 
     async ValueTask IAsyncDisposable.DisposeAsync()
     {
