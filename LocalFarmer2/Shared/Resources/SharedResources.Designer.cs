@@ -484,7 +484,7 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are u need fresh vegetables or preserve? Check you region and buy from farmhouse..
+        ///   Looks up a localized string similar to Are u need fresh vegetables or fruits? Check you region and buy from farmhouses..
         /// </summary>
         internal static string Dashboard_Hello2 {
             get {
