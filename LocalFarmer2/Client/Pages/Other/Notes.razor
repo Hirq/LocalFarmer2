@@ -64,6 +64,7 @@
     public DialogData dialogData = new DialogData();
     private int FilterNotes = 1;
     private string FilterName = string.Empty;
+    private string idUser = string.Empty;
     /*
     0 - All
     1 - Only Active
@@ -72,8 +73,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await InitializeNotesList();
-        note.IdUser = UserStateService.CurrentUser.IdUser;
+        idUser = UserStateService.CurrentUser.IdUser;
+        await InitializeNotesList(idUser);
+        note.IdUser = idUser;
         dialogData = new DialogData()
         {
             Title = $"{loc["X_Delete"]} {loc["X_Note"]}",
@@ -89,9 +91,9 @@
         UtilsService.OpenDialog(dialogData, () => DeleteNote(item.Id), Color.Error);
     }
 
-    private async Task InitializeNotesList()
+    private async Task InitializeNotesList(string idUser)
     {
-        var notesList = await NoteService.GetAll();
+        var notesList = await NoteService.GetNotesForUser(idUser);
         originalNotesList = Mapper.Map<List<NoteViewModel>>(notesList);
         listNotes = originalNotesList;
     }
@@ -132,7 +134,7 @@
     private async Task AddNote()
     {
         await NoteService.AddNote(note);
-        await InitializeNotesList();
+        await InitializeNotesList(idUser);
         SetFilter(1);
         StateHasChanged();
     }
@@ -149,7 +151,7 @@
         note.Id = item.Id;
         note.IsArchive = item.IsArchive;
         await NoteService.EditNote(note);
-        await InitializeNotesList();
+        await InitializeNotesList(idUser);
         SetFilter(FilterNotes - 1);
         StateHasChanged();
     }
@@ -159,7 +161,7 @@
         note.Id = item.Id;
         note.IsArchive = !note.IsArchive;
         await NoteService.EditNote(note);
-        await InitializeNotesList();
+        await InitializeNotesList(idUser);
         SetFilter(!item.IsArchive ? 1 : 2);
         StateHasChanged();
     }
@@ -176,7 +178,7 @@
     private async Task DeleteNote(int id)
     {
         await NoteService.DeleteNote(id);
-        await InitializeNotesList();
+        await InitializeNotesList(idUser);
         StateHasChanged();
     }
 }
