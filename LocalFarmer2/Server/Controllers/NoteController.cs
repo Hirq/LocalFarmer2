@@ -16,14 +16,22 @@ namespace LocalFarmer2.Server.Controllers
         }
 
         [HttpGet, Route("AllNotes")]
-        public async Task<IActionResult> AllOpinions()
+        public async Task<IActionResult> AllNotes()
         {
             var notes = await _noteRepository.GetAllAsync();
 
             return Ok(notes);
         }
-        [HttpPost, Route("AddNote")]
 
+        [HttpGet, Route("GetNotesForUser")]
+        public async Task<IActionResult> GetNotesForUser(string idUser)
+        {
+            var notes = await _noteRepository.GetAllAsync(x => x.IdUser == idUser);
+
+            return Ok(notes);
+        }
+
+        [HttpPost, Route("AddNote")]
         public async Task<IActionResult> AddNote([FromBody] NoteDto model)
         {
             Note note = _mapper.Map<Note>(model);

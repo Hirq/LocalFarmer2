@@ -22,13 +22,25 @@
             return notes;
         }
 
+        public async Task<List<Note>> GetNotesForUser(string idUser)
+        {
+            var notesPerUser = await _httpClient.GetFromJsonAsync<List<Note>>($"api/Note/GetNotesForUser?idUser={idUser}");
+
+            if (notesPerUser == null)
+            {
+                throw new Exception($"NoteService: Notes is null for user: {idUser}");
+            }
+
+            return notesPerUser;
+        }
+
         public async Task<Note> GetNote(int idNote)
         {
             var note = await _httpClient.GetFromJsonAsync<Note>($"api/Note/Note/{idNote}");
 
             if (note == null)
             {
-                throw new Exception($"Not found note id: {idNote}");
+                throw new Exception($"NoteService: Not found note id: {idNote}");
             }
 
             return note;
@@ -51,19 +63,6 @@
             var dto = _mapper.Map<NoteDto>(model);
 
             await _httpClient.PutAsJsonAsync($"api/Note/EditNote/{model.Id}", dto);
-        }
-
-        //TODO:
-        public async Task<List<Note>> GetNoteForUser(string userName)
-        {
-            var notesPerUser = await _httpClient.GetFromJsonAsync<List<Note>>($"api/Note/xxxx?idUser={userName}");
-
-            if (notesPerUser == null)
-            {
-                throw new Exception();
-            }
-
-            return notesPerUser;
         }
     }
 }
