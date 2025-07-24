@@ -114,8 +114,7 @@ else
                 initIsOpen = farmhouseDto.IsOpen;
                 if (farmhouseDto.ImageData != null && !string.IsNullOrEmpty(farmhouseDto.ImageMimeType))
                 {
-                    //TODO: Zapisać nazwę tego zdjęcia do bazy - lub w jakiś inny sposób poinformować o tym, że zdjęcie jest ustawione
-                    FileService.SetName("Image for farmhouse is set");
+                    FileService.SetName($"{loc["Farmhouse_ImageIsSet"]}");
                 }
                 // await farmhouseNameField.FocusAsync();
             }

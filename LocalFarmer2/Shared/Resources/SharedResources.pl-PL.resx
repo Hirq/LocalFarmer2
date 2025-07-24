@@ -501,4 +501,7 @@
   <data name="X_Contact" xml:space="preserve">
     <value>Kontakt</value>
   </data>
+  <data name="Farmhouse_ImageIsSet" xml:space="preserve">
+    <value>Zdjęcie dla gospodarstwa jest ustawione</value>
+  </data>
 </root>
