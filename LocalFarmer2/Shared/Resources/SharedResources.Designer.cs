@@ -601,6 +601,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image farmhouse is set.
+        /// </summary>
+        internal static string Farmhouse_ImageIsSet {
+            get {
+                return ResourceManager.GetString("Farmhouse_ImageIsSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is open.
         /// </summary>
         internal static string Farmhouse_IsOpen {
