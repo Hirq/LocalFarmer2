@@ -44,8 +44,7 @@
 
         if (model.ImageData != null && !string.IsNullOrEmpty(model.ImageMimeType))
         {
-            //TODO: Zapisać nazwę tego zdjęcia do bazy - lub w jakiś inny sposób poinformować o tym, że zdjęcie jest ustawione
-            FileService.SetName("Image for product is set");
+            FileService.SetName($"{loc["Farmhouse_ImageIsSet"]}");
         }
     }
 

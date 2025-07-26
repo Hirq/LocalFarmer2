@@ -197,8 +197,7 @@ else
             await AlertService.AddAlerts(listUsersIds, (int)currentUser.IdFarmhouse, true, messageAlertIsOpen);
         }
 
-        //TODO: 
-        // Powinno być tylko gdy faktycznie coś się zmieniło - sprawdzać model, który był na poczatku i ten koncówy - jak ejst różnica to wysłac, jak nie ma to nie.
+        //TODO: sprawdzać model, który był na poczatku i ten koncówy - jak jest różnica to wysłac, jak nie ma to nie.
         var messageAlertEdit = new MessageAlert(MessageAlertEnum.EditDetails, UserStateService.CurrentUser.FarmhouseName);
         await AlertService.AddAlerts(listUsersIds, (int)currentUser.IdFarmhouse, true, messageAlertEdit);
 
