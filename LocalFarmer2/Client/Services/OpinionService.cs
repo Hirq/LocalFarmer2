@@ -56,7 +56,7 @@
 
             if (listOpinionFarmhouses == null)
             {
-                throw new Exception("TODO");
+                throw new Exception("Not found object for function GetOpinionFarmhousesForUserOnlyIds");
             }
 
             return listOpinionFarmhouses.ToArray();
