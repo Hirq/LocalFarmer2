@@ -94,8 +94,6 @@
                 <!--CHAT USER BOX-->
                 <div class="footer">
                     <div class="input-group">
-                        @* <MudTextField T="string" id="txtMessageInput" Label="@loc["Farmhouse_Address"]" @bind-Value="farmhouseDto.Address" /> *@
-
                         <input id="txtMessageInput" @bind="MessageText" type="text" class="form-control input-sm chat_input"
                                 placeholder="@loc["Chat_Write_Your_Message_Here"]">
                         <button id="txtMessageButton" class="btn btn-primary" @onclick="Send">@loc["Farmhouse_Send"]</button>
@@ -191,7 +189,6 @@
         await module.InvokeVoidAsync("scrollOnBottomMessages");
     }
 
-
     public async Task Send()
     {
         ChatMessageDto message = new ChatMessageDto();
@@ -245,8 +242,6 @@
     {
         return selectedUserId == (dto.IdUserSender == FromUserId ? dto.IdUserReceiver : dto.IdUserSender);
     }
-
-
 }
 
 <style>
@@ -272,6 +267,7 @@
         word-wrap: break-word;
         overflow-wrap: break-word;
     }      
+
     .chat-user:hover {
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         background-color: var(--mud-palette-action-default-hover);
@@ -325,5 +321,4 @@
     .footer {
         
     }
-
 </style>

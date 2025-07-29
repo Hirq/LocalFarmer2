@@ -42,7 +42,8 @@
     <div id="map" style="height: 400px;"></div>
 
 </AuthorizeView>
-    @code {
+
+@code {
     private IJSObjectReference? module;
     private string? result;
     private string? latitude;
@@ -115,5 +116,4 @@
         NavigationManager.NavigateTo("/");
         _ = AlertService.ClearAlertAfterDelay();
     }
-
 }

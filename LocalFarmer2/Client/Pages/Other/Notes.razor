@@ -39,7 +39,6 @@
                             <MudText Typo="Typo.h5" Class="text-center">@item.Name</MudText>
                             <div class="text-center">
                                 <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@(() => EditNotePopup(item))"/>
-                                @* <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteNote(item.Id), Color.Error)'/> *@
                                 <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => DeleteNotePopup(item)'/>
                             </div>
                         </div>
@@ -55,7 +54,6 @@
         }
     }
 </MudGrid>
-
 
 @code {
     public Note note = new Note();
