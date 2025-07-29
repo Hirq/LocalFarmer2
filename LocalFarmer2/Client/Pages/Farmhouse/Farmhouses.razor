@@ -90,42 +90,6 @@ else
                 </Authorized>
             </AuthorizeView>
         </RowTemplate>
-
-@*         <ChildRowContent>
-            @if (context.ShowDetails)
-            {
-                <MudTr>
-                    <td colspan="4">
-                        <MudCard Outlined="true" Elevation="0" Class="list-products">
-                            <MudCardHeader>
-                                <CardHeaderContent>
-                                    <MudText Typo="Typo.body1" Class="text-white">Products for <strong>@context.Name</strong></MudText>
-                                </CardHeaderContent>
-                            </MudCardHeader>
-                            <MudCardContent Class="pa-0">
-                                <MudTable Items="@context.Products" Context="ProductContext" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0">
-                                    <ColGroup>
-                                        <col />
-                                        <col />
-                                        <col style="width:200px;" />
-                                    </ColGroup>
-                                    <HeaderContent>
-                                        <MudTh>Name</MudTh>
-                                        <MudTh>Prize one</MudTh>
-                                        <MudTh>@loc["X_Description"]</MudTh>
-                                    </HeaderContent>
-                                    <RowTemplate>
-                                        <MudTd DataLabel="Address Line 1">@ProductContext.Name</MudTd>
-                                        <MudTd DataLabel="Address Line 2">@ProductContext.PrizeOne</MudTd>
-                                        <MudTd DataLabel="Postal Code">@ProductContext.Description</MudTd>
-                                    </RowTemplate>
-                                </MudTable>
-                            </MudCardContent>
-                        </MudCard>
-                    </td>
-                </MudTr>
-            }
-        </ChildRowContent>   *@      
         
         <ChildRowContent>
             @if (context.ShowDetails)

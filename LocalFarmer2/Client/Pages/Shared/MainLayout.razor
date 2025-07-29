@@ -55,7 +55,6 @@
                         </MudMenu>
                     }
                 </div>
-                @* <MudAvatar Color="Color.Secondary" Size="Size.Medium" Class="avatar">JK</MudAvatar> *@
                 <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.MoreVert" TransformOrigin="Origin.TopRight" Color="Color.Inherit">
                     @if (UserStateService.CurrentUser?.IdFarmhouse != null)
                     {
@@ -116,7 +115,7 @@
         if (result != null && bool.TryParse(result, out var parsedResult))
         {
             isDarkMode = parsedResult;
-            UpdateBodyClass(isDarkMode); // Ustaw odpowiednią klasę na <body>
+            UpdateBodyClass(isDarkMode);
         }
 
         AlertService.OnAlert += OnAlertChanged;
