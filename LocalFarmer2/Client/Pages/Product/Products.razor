@@ -45,6 +45,9 @@
     protected override async Task OnInitializedAsync()
     {
         ListProducts = await ProductService.GetProducts();
+        
+        // TODO: Dodac dla uzytkoniwka zalogowanego wszystko bez jego produktow.
+        // Powinieniem tez zablokowac mozliwosc wysylania wiadomosci do samego siebie
     }
 
     void ShowProduct(int id)

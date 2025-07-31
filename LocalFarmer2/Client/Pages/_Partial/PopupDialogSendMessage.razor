@@ -30,12 +30,10 @@
     private MudTextField<string> emailField;
     private MudTextField<string> subjectField;
     private MudTextField<string> bodyField;
-
     private EmailDto emailDto = new EmailDto()
     {
-        From = "wpisujeswoj@gmail.com"
+        // From = "wpisujeswoj@gmail.com"
     };
-
     void Submit() => MudDialog.Close(DialogResult.Ok(true));
     void Cancel() => MudDialog.Cancel();
 
