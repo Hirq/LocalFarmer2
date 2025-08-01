@@ -4,6 +4,8 @@
 @inject HttpClient httpClient
 @inject UtilsService UtilsService
 @inject SearchService SearchService
+@inject UserStateService UserStateService
+
 
 <PageTitle>@loc["Product_Products_All"] | @Globals.AppName</PageTitle>
 
@@ -44,10 +46,16 @@
 
     protected override async Task OnInitializedAsync()
     {
-        ListProducts = await ProductService.GetProducts();
-        
-        // TODO: Dodac dla uzytkoniwka zalogowanego wszystko bez jego produktow.
-        // Powinieniem tez zablokowac mozliwosc wysylania wiadomosci do samego siebie
+        int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
+
+        if (idFarmhouse != null)
+        {
+            ListProducts = await ProductService.GetProductsWithoutFarmhouse((int)idFarmhouse);
+        }
+        else
+        {
+            ListProducts = await ProductService.GetProducts();
+        }
     }
 
     void ShowProduct(int id)

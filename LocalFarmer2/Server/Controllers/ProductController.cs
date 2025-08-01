@@ -50,6 +50,14 @@ namespace LocalFarmer2.Server.Controllers
             return Ok(products);
         }
 
+        [HttpGet, Route("ListProductsWithoutFarmhouse/{idFarmhouse}")]
+        public async Task<IActionResult> ListProductsWithoutFarmhouse(int idFarmhouse)
+        {
+            var products = await _productRepository.GetAllAsync(x => x.IdFarmhouse != idFarmhouse);
+
+            return Ok(products);
+        }
+
         [HttpPost, Route("AddProduct/{idFarmhouse}")]
         public async Task<IActionResult> AddProduct(ProductDto dto, int idFarmhouse)
         {

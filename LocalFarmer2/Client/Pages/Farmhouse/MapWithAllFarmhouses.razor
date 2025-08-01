@@ -4,6 +4,8 @@
 @inject IFarmhouseService FarmhouseService
 @inject IJSRuntime JSRuntime
 @inject ValidateService ValidateService
+@inject UserStateService UserStateService
+
 @implements IAsyncDisposable
 
 <PageTitle>@loc["Map_With_All_Farmhouses"] | @Globals.AppName</PageTitle>
@@ -25,8 +27,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        farmhouses = (await FarmhouseService.GetFarmhouses()).Where(x => x.IsOpen && ValidateService.IsValidLatitude(x.Latitude) && ValidateService.IsValidLongitude(x.Longitude)).ToList();
-        await InitializeMapAsync();
+        if (!string.IsNullOrEmpty(UserStateService.CurrentUser?.FullName))
+        {
+            farmhouses = (await FarmhouseService.GetFarmhouses()).Where(x => x.IsOpen && ValidateService.IsValidLatitude(x.Latitude) && ValidateService.IsValidLongitude(x.Longitude)).ToList();
+            await InitializeMapAsync();
+        }
     }
 
     private async Task InitializeMapAsync()

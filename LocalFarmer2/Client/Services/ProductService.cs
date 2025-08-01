@@ -42,6 +42,18 @@ namespace LocalFarmer2.Client.Services
             return result;
         }
 
+        public async Task<List<Product>> GetProductsWithoutFarmhouse(int idFarmhouse)
+        {
+            var result = await _http.GetFromJsonAsync<List<Product>>($"api/Product/ListProductsWithoutFarmhouse/{idFarmhouse}");
+
+            if (result == null)
+            {
+                throw new Exception("Not found products");
+            }
+
+            return result;
+        }
+
         public async Task<List<Product>> GetRandomProductsFarmhouse(int idFarmhouse, int withoutProductId, int count)
         {
             Random rng = new Random();
@@ -83,6 +95,5 @@ namespace LocalFarmer2.Client.Services
         {
             await _http.DeleteAsync($"api/Product/DeleteProduct/{idProduct}");
         }
-
     }
 }

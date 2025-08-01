@@ -16,25 +16,25 @@
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
             <MudSpacer />
             <MudSwitch @bind-Checked="@isDarkMode"
-                        ThumbIcon="@(!isDarkMode ? @Icons.Material.Filled.LightMode : Icons.Material.Filled.ModeNight)"
-                        ThumbIconColor="@(!isDarkMode ? Color.Warning : Color.Primary)"
-                        onclick="@(() =>ToggleTheme())" />
+                       ThumbIcon="@(!isDarkMode ? @Icons.Material.Filled.LightMode : Icons.Material.Filled.ModeNight)"
+                       ThumbIconColor="@(!isDarkMode ? Color.Warning : Color.Primary)"
+                       onclick="@(() => ToggleTheme())" />
             <AuthorizeView>
                 <div class="cursor-pointer">
-                    @if(newAlerts > 0)
+                    @if (newAlerts > 0)
                     {
                         <MudBadge id="badge" Content="@newAlerts" Color="Color.Error" Overlap="true" Class="mx-6 my-4">
-                        <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.Notifications" TransformOrigin="Origin.TopRight" Color="Color.Inherit" IsOpenChanged="MenuStateChanged" MaxHeight="400">
-                            <MudText Typo="Typo.h6" Align="Align.Center">@loc["X_Alerts"]</MudText>
-                            <MudTooltip Text="Open history">
-                                <MudMenuItem Avatar="@Icons.Material.Filled.History" Href="/myalerts">@loc["Alert_All_Alerts"]</MudMenuItem>
-                            </MudTooltip>
-                            <MudDivider DividerType="DividerType.Middle" Style="height: 3px" />
-                            @foreach (var alert in alerts)
-                            {
-                                <MudMenuItem>@alert.Message</MudMenuItem>
-                            }
-                        </MudMenu>
+                            <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.Notifications" TransformOrigin="Origin.TopRight" Color="Color.Inherit" IsOpenChanged="MenuStateChanged" MaxHeight="400">
+                                <MudText Typo="Typo.h6" Align="Align.Center">@loc["X_Alerts"]</MudText>
+                                <MudTooltip Text="Open history">
+                                    <MudMenuItem Avatar="@Icons.Material.Filled.History" Href="/myalerts">@loc["Alert_All_Alerts"]</MudMenuItem>
+                                </MudTooltip>
+                                <MudDivider DividerType="DividerType.Middle" Style="height: 3px" />
+                                @foreach (var alert in alerts)
+                                {
+                                    <MudMenuItem>@alert.Message</MudMenuItem>
+                                }
+                            </MudMenu>
                         </MudBadge>
                     }
                     else
@@ -44,7 +44,7 @@
                             <MudTooltip Text="Open history">
                                 <MudMenuItem Avatar="@Icons.Material.Filled.History" Href="/myalerts">@loc["Alert_All_Alerts"]</MudMenuItem>
                             </MudTooltip>
-                            @if(alerts.Count > 0)
+                            @if (alerts.Count > 0)
                             {
                                 <MudDivider DividerType="DividerType.Middle" Style="height: 3px" />
                             }
@@ -141,7 +141,11 @@
 
     private void HandleLocationChanged(object sender, LocationChangedEventArgs e)
     {
-        if (string.IsNullOrEmpty(UserStateService.CurrentUser.FullName) && !e.Location.Contains("myaccount"))
+        if (UserStateService.CurrentUser == null)
+        {
+            return;
+        }
+        else if (string.IsNullOrEmpty(UserStateService.CurrentUser.FullName) && !e.Location.Contains("myaccount"))
         {
             NavigationManager.NavigateTo("/myaccount");
         }

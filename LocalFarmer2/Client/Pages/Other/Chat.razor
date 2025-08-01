@@ -123,18 +123,24 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/chat.js");
-        await module.InvokeVoidAsync("setScroll");
+        if (!string.IsNullOrEmpty(UserStateService.CurrentUser?.FullName))
+        {
+            module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/chat.js");
+            await module.InvokeVoidAsync("setScroll");
+        }
     }
 
     protected override async Task OnInitializedAsync()
     {
-        FromUserId = UserStateService.CurrentUser?.IdUser;
-        await SetLeftMenu(FromUserId);
+        if (!string.IsNullOrEmpty(UserStateService.CurrentUser?.FullName))
+        {
+            FromUserId = UserStateService.CurrentUser?.IdUser;
+            await SetLeftMenu(FromUserId);
 
-        hubConnection = new HubConnectionBuilder()
-            .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
-            .Build();
+            hubConnection = new HubConnectionBuilder()
+                .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
+                .Build();
+        }
     }
 
     private async Task SetLeftMenu(string idCurrentUser)
