@@ -59,7 +59,7 @@ else
                     <Authorized>
                     @if (row.IsFavorite == false)
                     {
-                        <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddFavorite(row.Id)">@loc["X_Add"] @loc["X_Opinion"]</MudButton></MudTd>
+                        <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddFavorite(row.Id)">@loc["X_Add"] @loc["X_Subscription"]</MudButton></MudTd>
                     }
                     else
                     {
