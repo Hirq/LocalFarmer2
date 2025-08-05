@@ -1,4 +1,4 @@
-// A jak wchodze w ogolny to pyta o lokalizacje i pokazuje dookola, jak nie udostêpni to na Warszawe i elo
+// A jak wchodze w ogolny to pyta o lokalizacje i pokazuje dookola, jak nie udostÄ™pni to na Warszawe i elo
 var zoom = 8;
 export function load_map(raw, latitude, longitude) {
     console.log(JSON.parse(String(raw)));
@@ -30,6 +30,7 @@ export function setCoordinates(mapId, latitude, longitude) {
     var currentMarker;
     var defaultLatitude = 54.189;
     var defaultLongitude = 16.18;
+    let culture = window.getCurrentCulture();
 
     latitude = latitude || defaultLatitude;
     longitude = longitude || defaultLongitude;
@@ -39,13 +40,17 @@ export function setCoordinates(mapId, latitude, longitude) {
         var map = L.map(mapId).setView([latitude, longitude], zoom);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
+            attribution: 'Â© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Dodaj marker na podanych wspó³rzêdnych
         if (latitude !== defaultLatitude || longitude !== defaultLongitude) {
             currentMarker = L.marker([latitude, longitude]).addTo(map);
-            currentMarker.bindPopup("Initial marker at " + [latitude, longitude]).openPopup();
+
+            if (culture === 'pl-PL') {
+                currentMarker.bindPopup("PoczÄ…tkowy marker przy " + [latitude, longitude]).openPopup();
+            } else {
+                currentMarker.bindPopup("Initial marker at " + [latitude, longitude]).openPopup();
+            }
         }
 
         map.on('click', onMapClick);
@@ -59,7 +64,12 @@ export function setCoordinates(mapId, latitude, longitude) {
             }
 
             currentMarker = L.marker(e.latlng).addTo(map);
-            currentMarker.bindPopup("You clicked the map at " + e.latlng).openPopup();
+
+            if (culture === 'pl-PL') {
+                currentMarker.bindPopup("NacisnÄ…Å‚eÅ› na mapÄ™ w miejscu " + e.latlng).openPopup();
+            } else {
+                currentMarker.bindPopup("You clicked the map at " + e.latlng).openPopup();
+            }
         }
     }
 };
@@ -90,3 +100,7 @@ export function disableButton(buttonId, bool) {
         buttonElement.disabled = bool;
     }
 }
+
+window.getCurrentCulture = () => {
+    return localStorage.getItem('BlazorCulture') || 'en-US';
+};

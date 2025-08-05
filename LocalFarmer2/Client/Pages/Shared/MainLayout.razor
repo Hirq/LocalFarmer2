@@ -15,7 +15,7 @@
         <MudAppBar>
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
             <MudSpacer />
-            <MudSwitch @bind-Checked="@isDarkMode"
+            <MudSwitch @bind-Value="@isDarkMode"
                        ThumbIcon="@(!isDarkMode ? @Icons.Material.Filled.LightMode : Icons.Material.Filled.ModeNight)"
                        ThumbIconColor="@(!isDarkMode ? Color.Warning : Color.Primary)"
                        onclick="@(() => ToggleTheme())" />
