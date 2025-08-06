@@ -504,4 +504,7 @@
   <data name="Farmhouse_ImageIsSet" xml:space="preserve">
     <value>Zdjęcie dla gospodarstwa jest ustawione</value>
   </data>
+  <data name="Farmhouse_Average_Rating" xml:space="preserve">
+    <value>Średnia ocen</value>
+  </data>
 </root>

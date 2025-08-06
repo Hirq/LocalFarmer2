@@ -67,7 +67,7 @@
         <MudCollapse Expanded="_expandedOpinions">
             <MudGrid>
                 <MudItem xs="12">
-                    <MudText>Średnia ocen: @(average?.ToString().Length >= 4 ? average.ToString().Substring(0,4) : average.ToString())</MudText>
+                    <MudText> @loc["Farmhouse_Average_Rating"] @(average?.ToString().Length >= 4 ? average.ToString().Substring(0, 4) : average.ToString())</MudText>
                 </MudItem>
                 @foreach (var card in listOpinionSelected)
                 {

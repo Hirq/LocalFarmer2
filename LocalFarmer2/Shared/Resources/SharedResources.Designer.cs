@@ -583,6 +583,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Average rating.
+        /// </summary>
+        internal static string Farmhouse_Average_Rating {
+            get {
+                return ResourceManager.GetString("Farmhouse_Average_Rating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contact form.
         /// </summary>
         internal static string Farmhouse_Contact_Form {

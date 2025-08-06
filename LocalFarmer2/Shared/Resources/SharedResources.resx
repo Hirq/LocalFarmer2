@@ -504,4 +504,7 @@
   <data name="Farmhouse_ImageIsSet" xml:space="preserve">
     <value>Image farmhouse is set</value>
   </data>
+  <data name="Farmhouse_Average_Rating" xml:space="preserve">
+    <value>Average rating</value>
+  </data>
 </root>
