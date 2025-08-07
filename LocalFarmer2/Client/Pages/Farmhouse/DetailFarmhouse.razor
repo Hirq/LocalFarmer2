@@ -87,7 +87,7 @@
             </MudGrid>
         </MudCollapse>
         <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick='() => GoToChatMessage()'>@loc["Farmhouse_Send_Message"] Chat</MudButton>
-        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" Disabled=!isHaveOpinion OnClick='() => UtilsService.OpenDialogSendMessage(isContactToAdmin: false, emailTo: farmhouse.Email)'>@loc["Farmhouse_Send_Message"] Email</MudButton>
+        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick='() => UtilsService.OpenDialogSendMessage(isContactToAdmin: false, emailTo: farmhouse.Email)'>@loc["Farmhouse_Send_Message"] Email</MudButton>
         <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapseMaps">@(_expandedMap ? @loc["Dashboard_Map"] : @loc["Dashboard_Map"])</MudButton>
         <MudCollapse Expanded="_expandedMap">
             <h2>Latitude: @farmhouse.Latitude </h2>
