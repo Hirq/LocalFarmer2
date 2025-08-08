@@ -5,9 +5,7 @@ using Swashbuckle.AspNetCore.Annotations;
 //using Microsoft.AspNetCore.JsonPatch;
 //using Swashbuckle.AspNetCore.Annotations;
 
-//TODO: Pozwracać kody opdowiednie
-//POST 201
-//DELETE 204
+//TODO: Pozwracać kody opdowiednie - przygotowane tutaj sprawdzić czy wszystko gra a potem nanieś poprawki na inne Contollery
 
 namespace LocalFarmer2.Server.Controllers
 {
@@ -49,96 +47,94 @@ namespace LocalFarmer2.Server.Controllers
         {
             Farmhouse farmhouse = await _farmhouseRepository.GetFirstOrDefaultAsync(x => x.Id == id, x => x.Products);
 
+            if (farmhouse == null)
+            {
+                return NotFound(new { Message = $"Farmhouse with id {id} not found." });
+            }
+
             return Ok(farmhouse);
         }
 
         [HttpPost, Route("Farmhouse")]
         public async Task<IActionResult> AddFarmhouse(AddFarmhouseDto dto)
         {
+            var user = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.Id == dto.IdUser);
+
+            if (user == null)
+            {
+                return NotFound(new { Message = $"User with id {dto.IdUser} not found." });
+            }
+
+            if (user.IdFarmhouse != null)
+            {
+                return Conflict(new
+                {
+                    Message = "You already have a farmhouse. Delete the old one first."
+                });
+            }
+
             Farmhouse farmhouse = _mapper.Map<Farmhouse>(dto);
 
             _farmhouseRepository.Add(farmhouse);
             await _farmhouseRepository.SaveChangesAsync();
-            var user = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.Id == dto.IdUser);
-
-            if (user.IdFarmhouse != null)
-            {
-                throw new Exception("You have Farmhouse. First delete old farmhouse, next add new.");
-            }
 
             user.IdFarmhouse = farmhouse.Id;
             await _applicationUserRepository.UpdateAsync(user);
             await _applicationUserRepository.SaveChangesAsync();
 
-            return Ok(farmhouse);
+            return CreatedAtAction
+            (
+                nameof(GetFarmhouse), 
+                new { id = farmhouse.Id },
+                farmhouse
+            );
         }
 
-        [HttpPut, Route("Farmhouse/{id?}")]
-        [SwaggerOperationFilter(typeof(ReApplyOptionalRouteParameterOperationFilter))]
-        public async Task<IActionResult> PutFarmhouse(FarmhouseDto dto, int id = 0)
+        [HttpPut, Route("Farmhouse/{id}")]
+        public async Task<IActionResult> PutFarmhouse([FromBody] FarmhouseDto dto, int id)
         {
-            Farmhouse farmhouse = _mapper.Map<Farmhouse>(dto);
-
-            if (id != 0)
+            if (!ModelState.IsValid)
             {
-                farmhouse.Id = id;
+                return BadRequest(ModelState);
             }
 
-            _farmhouseRepository.Update(farmhouse);
+            var existingFarmhouse = await _farmhouseRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            if (existingFarmhouse == null)
+            {
+                return NotFound(new { Message = $"Farmhouse with id {id} not found." });
+            }
+
+            _mapper.Map(dto, existingFarmhouse);
+
+            _farmhouseRepository.Update(existingFarmhouse);
             await _farmhouseRepository.SaveChangesAsync();
 
-            return Ok(farmhouse);
-        }
-
-        [HttpPatch, Route("Farmhouse/{id}")]
-        public async Task<IActionResult> PatchFarmhouse([FromBody] JsonPatchDocument<FarmhouseDto> dto, int id)
-        {
-            Farmhouse farmhouse = await _farmhouseRepository.GetFirstOrDefaultAsync(x => x.Id == id);
-
-            var farmhouseDto = _mapper.Map<FarmhouseDto>(farmhouse);
-
-            dto.ApplyTo(farmhouseDto);
-
-            _mapper.Map(farmhouseDto, farmhouse);
-
-            await _farmhouseRepository.SaveChangesAsync();
-
-            return Ok(farmhouse);
-        }
-
-        [HttpPatch, Route("Farmhouse2/{id}")]
-        public async Task<IActionResult> PatchFarmhouse2([FromBody] FarmhouseDto dto, int id)
-        {
-            Farmhouse farmhouse = await _farmhouseRepository.GetFirstOrDefaultAsync(x => x.Id == id);
-
-            _mapper.Map(dto, farmhouse);
-            await _farmhouseRepository.SaveChangesAsync();
-
-            return Ok(farmhouse);
+            return Ok(existingFarmhouse);
         }
 
         [HttpDelete, Route("Farmhouse/{id}")]
         public async Task<IActionResult> DeleteFarmhouse(int id)
         {
+            var farmhouse = await _farmhouseRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            if (farmhouse == null)
+            {
+                return NotFound(new { Message = $"Farmhouse with id {id} not found." });
+            }
+
             var user = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.IdFarmhouse == id);
-            
-            if (user != null)
+            if (user == null)
             {
-                user.IdFarmhouse = null;
-                await _applicationUserRepository.UpdateAsync(user);
-                await _applicationUserRepository.SaveChangesAsync();
-                Farmhouse farmhouse = await _farmhouseRepository.GetFirstOrDefaultAsync(x => x.Id == id);
-
-                await _farmhouseRepository.DeleteAsync(farmhouse);
-                await _farmhouseRepository.SaveChangesAsync();
-
-                return Content($"Delete object farmhouse {id}");
+                return BadRequest(new { Message = "You can't delete a farmhouse without an owner." });
             }
-            else
-            {
-                throw new Exception($"You cant delete farmhouse without owner.");
-            }
+
+            user.IdFarmhouse = null;
+            await _applicationUserRepository.UpdateAsync(user);
+            await _applicationUserRepository.SaveChangesAsync();
+
+            await _farmhouseRepository.DeleteAsync(farmhouse);
+            await _farmhouseRepository.SaveChangesAsync();
+
+            return NoContent();
         }
-
     }
 }

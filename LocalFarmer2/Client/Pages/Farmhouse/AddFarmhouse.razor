@@ -92,8 +92,6 @@
             new FieldToValidate(paymentMethodsField, farmhouseDto.PaymentMethods)
         };
 
-        //TODO: Moze tego IdUser też do ValidationService przerzucić
-
         context.Validate();
 
         if (ValidateService.ValidateMudTextFields(fieldsToValidate))
@@ -101,10 +99,9 @@
             return;
         }
 
-        farmhouseDto.IdUser = UserStateService.CurrentUser?.IdUser;
-        if (farmhouseDto.IdUser == null)
+        if (string.IsNullOrEmpty(UserStateService.CurrentUser?.IdUser))
         {
-            throw new Exception("null iduser");
+            throw new Exception("Not found user");
         }     
 
         var idFarmhouse = await FarmhouseService.AddFarmhouse(farmhouseDto);

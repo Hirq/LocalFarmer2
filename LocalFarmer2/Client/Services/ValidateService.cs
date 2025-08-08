@@ -45,12 +45,11 @@ namespace LocalFarmer2.Client.Services
                         break;
 
                     default:
-                        throw new InvalidOperationException("Nieobsługiwany typ pola.");
+                        throw new InvalidOperationException("Unsupported field type.");
                 }
 
                 if (validationFailed)
                     break;
-                    //return validationFailed; // Zakończ walidację, jeśli wystąpił błąd
             }
 
             return validationFailed;

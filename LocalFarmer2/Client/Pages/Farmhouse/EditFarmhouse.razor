@@ -173,7 +173,6 @@ else
             new FieldToValidate(paymentMethodsField, farmhouseDto.PaymentMethods)
         };
 
-        //TODO: Moze tego IdUser też do ValidationService przerzucić
         context.Validate();
 
         if (ValidateService.ValidateMudTextFields(fieldsToValidate))
