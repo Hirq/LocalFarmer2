@@ -25,26 +25,8 @@ namespace LocalFarmer2.Client.Services
         public async Task<RegisterResult> Register(RegisterDto registerModel)
         {
             var result = await _httpClient.PostAsJsonAsync("api/Account/Register", registerModel);
-            if (!result.IsSuccessStatusCode)
-            {
-                return new RegisterResult
-                {
-                    Successful = false,
-                    Errors = new List<string>
-                    {
-                        "Error occured"
-                    }
-                };
-            }
-            return new RegisterResult
-            {
-                Successful = true,
-                Errors = new List<string>
-                {
-                     "Account create sucessfully!"
-                },
-                Email = registerModel.Email,
-            };
+            var registerResult = await result.Content.ReadFromJsonAsync<RegisterResult>();
+            return registerResult;
         }
 
         public async Task<LoginResult> Login(LoginDto loginModel)
