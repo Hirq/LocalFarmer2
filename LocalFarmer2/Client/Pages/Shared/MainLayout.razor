@@ -153,8 +153,6 @@
 
     private async Task MenuStateChanged(bool isOpen)
     {
-        Console.WriteLine("1:" + isOpen);
-        Console.WriteLine("2:" + UserStateService.CurrentUser.IdUser);
         if (!isOpen)
         {
             await AlertService.SetAllAlertsAsReadForUser(UserStateService.CurrentUser.IdUser);

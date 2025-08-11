@@ -15,8 +15,6 @@ public class ChatMessageService : IChatMessageService
 
     public async Task<List<ChatMessageDto>> GetChatMessages(string idUserSender, string idUserReceiver)
     {
-        Console.WriteLine("idUserSender: " + idUserSender);
-        Console.WriteLine("idUserReceiver: " + idUserReceiver);
         var messages = await _http.GetFromJsonAsync<List<ChatMessageDto>>($"api/ChatMessage/GetMessages?idUserSender={idUserSender}&idUserReceiver={idUserReceiver}");
 
         return messages;

@@ -175,12 +175,9 @@
         hubConnection.Remove("ReceiveMessage");
         hubConnection.On<ChatMessageDto>("ReceiveMessage", async (message) =>
         {
-            Console.WriteLine("hubConnection 1");
-
             if (message.IdUserSender == FromUserId ||
             (message.IdUserReceiver == FromUserId && message.IdUserSender == ToUserId))
             {
-                Console.WriteLine("hubConnection 2");
                 Messages.Add(message);
                 await SetLeftMenu(FromUserId);
                 StateHasChanged();
@@ -233,12 +230,9 @@
             {
                 await AlertService.AddAlerts(listUsersIds, null, false, messageAlert);
             }
-
-            Console.WriteLine("Wysłano wiadomość przez SignalR");
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Błąd wysyłania wiadomości SignalR: " + ex.Message);
         }
 
         MessageText = string.Empty;

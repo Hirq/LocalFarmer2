@@ -172,23 +172,6 @@ else
         // 1. Not logged                            idUser null + idFarmhouse null
         // 2. have account without farmhouse        idUser not null + idFarmhouse null
         // 3. have account with farmhouse           idUser not null + idFarmhouse not null
-
-        AddComment();
-    }
-
-    void AddComment()
-    {
-        ListFarmhousesVM.ToList().ForEach(x => Console.WriteLine(x.Name + " | " + x.IsFavorite));
-
-        if (CurrentListFavorite?.Length > 0)
-        {
-            Console.WriteLine("Favorites: ");
-
-            foreach (var n in CurrentListFavorite)
-            {
-                Console.WriteLine("Id: " + n);
-            }
-        }
     }
 
     void ShowFarmhouse(int id)

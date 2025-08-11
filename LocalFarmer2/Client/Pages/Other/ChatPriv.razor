@@ -115,19 +115,14 @@
 
         hubConnection.On<ChatMessageDto>("ReceiveMessage", (message) =>
         {
-            Console.WriteLine("hubConnection 1");
-
             if (message.IdUserSender == FromUserId ||
             (message.IdUserReceiver == FromUserId && message.IdUserSender == ToUserId))
             {
-                Console.WriteLine("hubConnection 2");
                 Messages.Add(message);
                 StateHasChanged();
             }
         });
-        Console.WriteLine("OnInitializedAsync 1 - " + hubConnection.State.ToString());
         await hubConnection.StartAsync();
-        Console.WriteLine("OnInitializedAsync 2 - " + hubConnection.State.ToString());
     }
 
     public async Task Send()
@@ -164,12 +159,9 @@
             var messageAlert = new MessageAlert(MessageAlertEnum.NewMessageChat, FromUser.UserName);
             List<string> listUsersIds = new List<string> { message.IdUserReceiver };
             await AlertService.AddAlerts(listUsersIds, null, false, messageAlert);
-
-            Console.WriteLine("Wysłano wiadomość przez SignalR");
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Błąd wysyłania wiadomości SignalR: " + ex.Message);
         }
 
         MessageText = "";
