@@ -6,20 +6,28 @@
 
 <PageTitle>@loc["Account_Login"] | @Globals.AppName</PageTitle>
 
-<h1>@loc["Account_Login"]</h1>
-
-@if (ShowErrors)
-{
-    <div class="alert alert-danger" role="alert">
-        <p>@Error</p>
-    </div>
-}
+<div class="mud-table-toolbar titlePage">
+    <MudText Typo="Typo.h6">@loc["Account_Login"]</MudText>
+</div>
 
 <MudPaper Class="pa-4">
-    <h5 class="card-title">@loc["Account_Start_Text"]</h5>
-    <EditForm Model="loginModel" OnValidSubmit="HandleLogin">
+    <EditForm Model="loginModel"
+              OnValidSubmit="HandleLogin"
+              OnInvalidSubmit="HandleInvalidSubmit">
+
         <DataAnnotationsValidator />
-        <ValidationSummary />
+
+        @if (AllErrors.Any())
+        {
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    @foreach (var error in AllErrors)
+                    {
+                        <li>@error</li>
+                    }
+                </ul>
+            </div>
+        }
 
         <div class="form-group">
             <label for="email">@loc["Account_Email_Address"]</label>
@@ -32,9 +40,10 @@
         <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">@loc["Button_Submit"]</MudButton>
     </EditForm>
 </MudPaper>
+
 @code {
     private LoginDto loginModel = new LoginDto();
-    private bool ShowErrors;
+    private List<string> AllErrors = new();
     private string Error = "";
 
     protected override async Task OnInitializedAsync()
@@ -45,9 +54,15 @@
         }
     }
 
+    private void ClearErrors()
+    {
+        AllErrors.Clear();
+        Error = "";
+    }
+
     private async Task HandleLogin()
     {
-        ShowErrors = false;
+        ClearErrors();
 
         var result = await AuthService.Login(loginModel);
 
@@ -60,7 +75,18 @@
         else
         {
             Error = result.Error!;
-            ShowErrors = true;
+            AllErrors.Add(Error);
         }
+    }
+
+    private void HandleInvalidSubmit(EditContext editContext)
+    {
+        ClearErrors();
+
+        var messages = editContext
+            .GetValidationMessages()
+            .ToList();
+
+        AllErrors.AddRange(messages);
     }
 }

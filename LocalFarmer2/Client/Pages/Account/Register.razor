@@ -6,38 +6,40 @@
 
 <PageTitle>@loc["Account_Register"] | @Globals.AppName</PageTitle>
 
-<h1>@loc["Account_Register"]</h1>
-
-@if (ShowErrors)
-{
-    <div class="alert alert-danger" role="alert">
-        @foreach (var error in Errors!)
-        {
-            <p>@error</p>
-        }
-    </div>
-}
+<div class="mud-table-toolbar titlePage">
+    <MudText Typo="Typo.h6">@loc["Account_Register"]</MudText>
+</div>
 
 <MudPaper Class="pa-4">
-    <h5 class="card-title">@loc["Account_Start_Text"]</h5>
-    <EditForm Model="RegisterModel" OnValidSubmit="HandleRegistration">
+    <EditForm Model="RegisterModel"
+              OnValidSubmit="HandleRegistration"
+              OnInvalidSubmit="HandleInvalidSubmit">
+
         <DataAnnotationsValidator />
-        <ValidationSummary />
+
+        @if (AllErrors.Any())
+        {
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    @foreach (var error in AllErrors)
+                    {
+                        <li>@error</li>
+                    }
+                </ul>
+            </div>
+        }
 
         <div class="form-group">
             <label for="email">@loc["Account_Email_Address"]</label>
             <InputText Id="email" class="form-control form-control-account" @bind-Value="RegisterModel.Email" />
-            @* <ValidationMessage For="@(() => RegisterModel.Email)" /> *@
         </div>
         <div class="form-group">
             <label for="password">@loc["Account_Password"]</label>
             <InputText Id="password" type="password" class="form-control form-control-account" @bind-Value="RegisterModel.Password" />
-            @* <ValidationMessage For="@(() => RegisterModel.Password)" /> *@
         </div>
         <div class="form-group">
             <label for="passwordConfirm">@loc["Account_Password_Confirm"]</label>
             <InputText Id="passwordConfirm" type="password" class="form-control form-control-account" @bind-Value="RegisterModel.ConfirmPassword" />
-            @* <ValidationMessage For="@(() => RegisterModel.ConfirmPassword)" /> *@
         </div>
         <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">@loc["Button_Submit"]</MudButton>
     </EditForm>
@@ -45,8 +47,7 @@
 
 @code {
     private RegisterDto RegisterModel = new RegisterDto();
-    private bool ShowErrors;
-    private IEnumerable<string>? Errors;
+    private List<string> AllErrors = new List<string>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -56,18 +57,22 @@
         }
     }
 
+    private void ClearErrors()
+    {
+        AllErrors.Clear();
+    }
+
     private async Task HandleRegistration()
     {
-        ShowErrors = false;
-
+        ClearErrors();
         var result = await AuthService.Register(RegisterModel);
 
         if (result.Successful)
         {
             var messageAlert = new MessageAlert(MessageAlertEnum.Welcome, "Welcome");
-            var user = await AuthService.GetUser(result.Email);
+            var user = await AuthService.GetUser(result.Email!);
             List<string> listUsersIds = new List<string> { user.IdUser };
-            await AlertService.AddAlerts(listUsersIds, null , false, messageAlert);
+            await AlertService.AddAlerts(listUsersIds, null, false, messageAlert);
             AlertService.SetSuccessAlert($"{@loc["Alert_Successfully"]} {@loc["Alert_Create_Account"]}");
 
             NavigationManager.NavigateTo("/login");
@@ -75,8 +80,21 @@
         }
         else
         {
-            Errors = result.Errors;
-            ShowErrors = true;
+            if (result.Errors != null)
+            {
+                AllErrors.AddRange(result.Errors);
+            }
         }
+    }
+
+    private void HandleInvalidSubmit(EditContext editContext)
+    {
+        ClearErrors();
+
+        var messages = editContext
+            .GetValidationMessages()
+            .ToList();
+
+        AllErrors.AddRange(messages);
     }
 }

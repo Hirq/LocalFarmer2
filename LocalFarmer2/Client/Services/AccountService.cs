@@ -26,7 +26,7 @@ namespace LocalFarmer2.Client.Services
         {
             var result = await _httpClient.PostAsJsonAsync("api/Account/Register", registerModel);
             var registerResult = await result.Content.ReadFromJsonAsync<RegisterResult>();
-            return registerResult;
+            return registerResult!;
         }
 
         public async Task<LoginResult> Login(LoginDto loginModel)

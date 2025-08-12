@@ -62,6 +62,7 @@ namespace LocalFarmer2.Server.Controllers
             return Ok(new RegisterResult
             {
                 Successful = true,
+                Email = model.Email
             });
         }
 
