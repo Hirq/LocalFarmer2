@@ -17,12 +17,12 @@
             <MudItem xs="12">
                 <MudText Class="d-flex justify-center" Typo="Typo.h6">@loc["Farmhouse_Add_Farmhouse"]</MudText>
                 <MudPaper Class="pa-4">
-                    <MudTextField T="string" Label="@loc["X_Name"]" @bind-Value="farmhouseDto.Name" @ref="farmhouseNameField" Required For="@(() => farmhouseDto.Name)" ErrorText="@loc["Validation_Required"]" />
-                    <MudTextField T="string" Label="@loc["X_Description"]" @bind-Value="farmhouseDto.Description" />
-                    <MudTextField T="string" Label="@loc["Farmhouse_Address"]" @bind-Value="farmhouseDto.Address" />
-                    <MudTextField T="string" Label="@loc["Farmhouse_Phone"]" @bind-Value="farmhouseDto.Phone" />
-                    <MudTextField T="string" Label="Email" @bind-Value="farmhouseDto.Email" />
-                    <MudSelect T="string" Label="@loc["Farmhouse_Payment_Methods"]" MultiSelection="true" SelectAll="true" @ref="paymentMethodsField" Required RequiredError="@loc["Validation_Required"]" @bind-Value="@farmhouseDto.PaymentMethods" @bind-SelectedValues="SelectedPayment">
+                    <MudTextField T="String" Label="@loc["X_Name"]" @bind-Value="farmhouseDto.Name" @ref="farmhouseNameField" Required For="@(() => farmhouseDto.Name)" ErrorText="@loc["Validation_Required"]" />
+                    <MudTextField T="String" Label="@loc["X_Description"]" @bind-Value="farmhouseDto.Description" />
+                    <MudTextField T="String" Label="@loc["Farmhouse_Address"]" @bind-Value="farmhouseDto.Address" />
+                    <MudTextField T="String" Label="@loc["Farmhouse_Phone"]" @bind-Value="farmhouseDto.Phone" />
+                    <MudTextField T="String" Label="Email" @bind-Value="farmhouseDto.Email" For="@(() => farmhouseDto.Email)" ErrorText="@loc["ErrorEmailValid"]" />
+                    <MudSelect T="String" Label="@loc["Farmhouse_Payment_Methods"]" MultiSelection="true" SelectAll="true" @ref="paymentMethodsField" Required RequiredError="@loc["Validation_Required"]" @bind-Value="@farmhouseDto.PaymentMethods" @bind-SelectedValues="SelectedPayment">
                         @foreach (var method in PaymentMethodInfo.PaymentMethods)
                         {
                             <MudSelectItem T="string" Value="@method">@method</MudSelectItem>
@@ -47,7 +47,6 @@
     private string? result;
     private string? latitude;
     private string? longitude;
-    public int Id { get; set; }
     private AddFarmhouseDto farmhouseDto = new AddFarmhouseDto();
     private IEnumerable<string> SelectedPayment { get; set; } = PaymentMethodInfo.DefaultPayment;
     private MudTextField<string> farmhouseNameField;
@@ -102,7 +101,8 @@
         {
             throw new Exception("Not found user");
         }     
-
+        
+        farmhouseDto.IdUser = UserStateService.CurrentUser.IdUser;
         var idFarmhouse = await FarmhouseService.AddFarmhouse(farmhouseDto);
         UserStateService.CurrentUser.FarmhouseName = farmhouseDto.Name;
         UserStateService.CurrentUser.IdFarmhouse = idFarmhouse;

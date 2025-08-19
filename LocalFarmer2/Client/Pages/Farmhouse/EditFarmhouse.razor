@@ -39,7 +39,7 @@ else
                                 <MudTextField T="String" Label="@loc["X_Description"]" @bind-Value="farmhouseDto.Description" />
                                 <MudTextField T="String" Label="@loc["Farmhouse_Address"]" @bind-Value="farmhouseDto.Address" />
                                 <MudTextField T="String" Label="@loc["Farmhouse_Phone"]" @bind-Value="farmhouseDto.Phone" />
-                                 <MudTextField T="String" Label="Email" @bind-Value="farmhouseDto.Email" For="@(() => farmhouseDto.Email)" ErrorText="@loc["ErrorEmailValid"]" />
+                                <MudTextField T="String" Label="Email" @bind-Value="farmhouseDto.Email" For="@(() => farmhouseDto.Email)" ErrorText="@loc["ErrorEmailValid"]" />
                                 <MudSelect T="string" Label="@loc["Farmhouse_Payment_Methods"]" MultiSelection="true" SelectAll="true" @ref="paymentMethodsField" Required RequiredError="@loc["Validation_Required"]" @bind-Value="@farmhouseDto.PaymentMethods" @bind-SelectedValues="SelectedPayment">
                                     @foreach (var method in PaymentMethodInfo.PaymentMethods)
                                     {
