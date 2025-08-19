@@ -1,4 +1,5 @@
 ﻿@page "/editFarmhouse"
+@using System.Text.Json
 @inject IMapper mapper
 @inject IAccountService AccountService
 @inject IFarmhouseService FarmhouseService
@@ -77,6 +78,7 @@ else
     [Parameter]
     public FarmhouseDto farmhouseDto { get; set; }
 
+    private FarmhouseDto originalFarmhouseDto { get; set; }
     private IJSObjectReference? module;
     private string? result;
     private string? latitude;
@@ -110,6 +112,7 @@ else
             {
                 var farmhouse = await FarmhouseService.GetFarmhouse((int)currentUser?.IdFarmhouse!);
                 farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
+                originalFarmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
                 SelectedPayment = farmhouseDto.PaymentMethods.Split(',').Select(s => s.Trim());
                 initIsOpen = farmhouseDto.IsOpen;
                 if (farmhouseDto.ImageData != null && !string.IsNullOrEmpty(farmhouseDto.ImageMimeType))
@@ -185,6 +188,15 @@ else
             return;
         }
 
+        var currentJson = JsonSerializer.Serialize(farmhouseDto);
+        var originalJson = JsonSerializer.Serialize(originalFarmhouseDto);
+
+        if (currentJson == originalJson)
+        {
+            NavigationManager.NavigateTo("/");
+            return;
+        }
+
         await FarmhouseService.EditFarmhouse(farmhouseDto, (int)currentUser?.IdFarmhouse!);
         UserStateService.CurrentUser.FarmhouseName = farmhouseDto.Name;
 
@@ -196,7 +208,6 @@ else
             await AlertService.AddAlerts(listUsersIds, (int)currentUser.IdFarmhouse, true, messageAlertIsOpen);
         }
 
-        //TODO: sprawdzać model, który był na poczatku i ten koncówy - jak jest różnica to wysłac, jak nie ma to nie.
         var messageAlertEdit = new MessageAlert(MessageAlertEnum.EditDetails, UserStateService.CurrentUser.FarmhouseName);
         await AlertService.AddAlerts(listUsersIds, (int)currentUser.IdFarmhouse, true, messageAlertEdit);
 

@@ -1,4 +1,5 @@
 ﻿@page "/editproduct/{id:int}"
+@using System.Text.Json
 @inject IProductService ProductService
 @inject IMapper mapper
 @inject IAlertService AlertService
@@ -9,19 +10,19 @@
 
 <PageTitle>@loc["Product_Edit_Product"] | @Globals.AppName</PageTitle>
 
-<EditForm Model="model" OnValidSubmit="OnValidSubmit">
+<EditForm Model="productDto" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
     <MudText Class="d-flex justify-center" Typo="Typo.h6">@loc["Product_Edit_Product"]</MudText>
     <MudGrid>
         <MudItem xs="12">
             <MudCard>
                 <MudCardContent>
-                    <MudTextField Label="@loc["X_Name"]" @bind-Value="model.Name" Required For="@(() => model.Name)" />
-                    <MudTextField Label="@loc["X_Description"]" @bind-Value="model.Description" Required For="@(() => model.Description)" />
-                    <MudTextField Label="@loc["Product_Minimal_Amount"]" @bind-Value="model.CountMinOne" Required For="@(() => model.CountMinOne)" />
-                    <MudTextField Label="@loc["Product_Prize_One"]" @bind-Value="model.PrizeOne" Required For="@(() => model.PrizeOne)" />
-                    <MudTextField Label="@loc["Product_Total_Quantity"]" @bind-Value="model.CountAll" Required For="@(() => model.CountAll)" />
-                    <EditFile Name="@loc["Product_Photo"]" Model="@model" />
+                    <MudTextField Label="@loc["X_Name"]" @bind-Value="productDto.Name" Required For="@(() => productDto.Name)" />
+                    <MudTextField Label="@loc["X_Description"]" @bind-Value="productDto.Description" Required For="@(() => productDto.Description)" />
+                    <MudTextField Label="@loc["Product_Minimal_Amount"]" @bind-Value="productDto.CountMinOne" Required For="@(() => productDto.CountMinOne)" />
+                    <MudTextField Label="@loc["Product_Prize_One"]" @bind-Value="productDto.PrizeOne" Required For="@(() => productDto.PrizeOne)" />
+                    <MudTextField Label="@loc["Product_Total_Quantity"]" @bind-Value="productDto.CountAll" Required For="@(() => productDto.CountAll)" />
+                    <EditFile Name="@loc["Product_Photo"]" Model="@productDto" />
                 </MudCardContent>
             </MudCard>
             <MudCardActions>
@@ -35,14 +36,16 @@
     [Parameter]
     public int Id { get; set; }
 
-    ProductDto model = new ProductDto();
+    private ProductDto productDto = new ProductDto();
+    private ProductDto originalProductDto = new ProductDto();
 
     protected override async Task OnParametersSetAsync()
     {
         var product = await ProductService.GetProduct(Id);
-        model = mapper.Map<ProductDto>(product);
+        productDto = mapper.Map<ProductDto>(product);
+        originalProductDto = mapper.Map<ProductDto>(product);
 
-        if (model.ImageData != null && !string.IsNullOrEmpty(model.ImageMimeType))
+        if (productDto.ImageData != null && !string.IsNullOrEmpty(productDto.ImageMimeType))
         {
             FileService.SetName($"{loc["Farmhouse_ImageIsSet"]}");
         }
@@ -50,15 +53,23 @@
 
     private async void OnValidSubmit(EditContext context)
     {
-        ProductDto product = mapper.Map<ProductDto>(model);
-        await ProductService.EditProduct(product, Id);
+        var currentJson = JsonSerializer.Serialize(productDto);
+        var originalJson = JsonSerializer.Serialize(originalProductDto);
+
+        if (currentJson == originalJson)
+        {
+            NavigationManager.NavigateTo("/myproducts");
+            return;
+        }
+
+        await ProductService.EditProduct(productDto, Id);
 
         //Alerts
         var listUsersIds = await FavoriteFarmhouseService.GetFavoriteFarmhouseUsersIds((int)UserStateService.CurrentUser.IdFarmhouse);
-        var messageAlert = new MessageAlert(MessageAlertEnum.EditProduct, UserStateService.CurrentUser.FarmhouseName, product.Name);
+        var messageAlert = new MessageAlert(MessageAlertEnum.EditProduct, UserStateService.CurrentUser.FarmhouseName, productDto.Name);
         await AlertService.AddAlerts(listUsersIds, (int)UserStateService.CurrentUser.IdFarmhouse, true, messageAlert);
 
-        AlertService.SetSuccessAlert($"{@loc["Alert_Successfully"]} {@loc["Alert_Edit_Product"]} {model.Name}");
+        AlertService.SetSuccessAlert($"{@loc["Alert_Successfully"]} {@loc["Alert_Edit_Product"]} {productDto.Name}");
         NavigationManager.NavigateTo("/myproducts");
         _ = AlertService.ClearAlertAfterDelay();
     }
