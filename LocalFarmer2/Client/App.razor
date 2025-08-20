@@ -35,14 +35,5 @@
     {
         var authState = await authenticationStateTask;
         var user = authState.User;
-
-        if (user.Identity!.IsAuthenticated)
-        {
-            Console.WriteLine($"User {user.Identity.Name} is authenticated.");
-        }
-        else
-        {
-            Console.WriteLine($"User is NOT authenticated.");
-        }
     }
 }
