@@ -7,6 +7,7 @@
 @inject UtilsService UtilsService
 @inject NavigationManager NavigationManager
 @inject ValidateService ValidateService
+@inject UserStateService UserStateService
 @implements IAsyncDisposable
 
 <PageTitle>@loc["X_Farmhouse"] | @Globals.AppName</PageTitle>
@@ -86,8 +87,8 @@
                 </MudItem>
             </MudGrid>
         </MudCollapse>
-        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick='() => GoToChatMessage()'>@loc["Farmhouse_Send_Message"] Chat</MudButton>
-        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick='() => UtilsService.OpenDialogSendMessage(isContactToAdmin: false, emailTo: farmhouse.Email)'>@loc["Farmhouse_Send_Message"] Email</MudButton>
+        <MudButton Style="@buttonStyle" Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick='() => GoToChatMessage()' Disabled=isViewMyFarmhouse>@loc["Farmhouse_Send_Message"] Chat</MudButton>
+        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick='() => UtilsService.OpenDialogSendMessage(isContactToAdmin: false, emailTo: farmhouse.Email)' Disabled=isViewMyFarmhouse>@loc["Farmhouse_Send_Message"] Email</MudButton>
         <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapseMaps">@(_expandedMap ? @loc["Dashboard_Map"] : @loc["Dashboard_Map"])</MudButton>
         <MudCollapse Expanded="_expandedMap">
             <h2>Latitude: @farmhouse.Latitude </h2>
@@ -115,6 +116,8 @@
     private bool _expandedOpinions = false;
     private bool _expandedMap = true;
     private bool isHaveOpinion = false;
+    private bool isViewMyFarmhouse = false;
+    private string? buttonStyle;
 
     protected override async Task OnInitializedAsync()
     {
@@ -127,6 +130,13 @@
             isHaveOpinion = true;
             listOpinionSelected = await OpinionService.GetRandomOpinionsForFarmhouse(Id, 6);
         }
+        if (farmhouse.Id == UserStateService.CurrentUser?.IdFarmhouse)
+        {
+            isViewMyFarmhouse = true;
+        }
+        SetStyle();
+
+        await base.OnInitializedAsync();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -179,6 +189,7 @@
     private void OnExpandCollapseOpinions()
     {
         _expandedOpinions = !_expandedOpinions;
+        SetStyle();
     }
 
     private void OnExpandCollapseMaps()
@@ -190,7 +201,7 @@
     {
         NavigationManager.NavigateTo($"productsFarmhouse/{Id}");
     }    
-    
+
     private void GoToChatMessage()
     {
         NavigationManager.NavigateTo($"chatpriv/{IdUser}");
@@ -201,6 +212,27 @@
         if (module is not null)
         {
             await module.DisposeAsync();
+        }
+    }
+
+    private void SetStyle()
+    {
+        if (!isHaveOpinion)
+        {
+            buttonStyle = "margin-top: -7px;";
+        }
+        else
+        {
+            buttonStyle = string.Empty;
+        }
+
+        if (!_expandedOpinions)
+        {
+            buttonStyle = "margin-top: -7px;";
+        }
+        else
+        {
+            buttonStyle = string.Empty;
         }
     }
 }
