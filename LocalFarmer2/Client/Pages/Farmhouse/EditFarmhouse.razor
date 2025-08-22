@@ -119,18 +119,16 @@ else
                 {
                     FileService.SetName($"{loc["Farmhouse_ImageIsSet"]}");
                 }
-                // await farmhouseNameField.FocusAsync();
             }
             else
             {
-                throw new Exception("You must first set farmhouse, before edit");
+                throw new Exception("Edit Farmhouse - You must first set farmhouse, before edit");
             }
         }
     }
 
     protected async override Task OnParametersSetAsync()
     {
-        // await base.OnParametersSetAsync();
         var client = new HttpClient();
         var raw = await client.GetStringAsync("https://localhost:7239/geojson.json");
         JArray jsonArray = JArray.Parse(raw);
@@ -186,6 +184,11 @@ else
         if (!ValidateService.IsValidLatitude(farmhouseDto.Latitude) || !ValidateService.IsValidLongitude(farmhouseDto.Longitude))
         {
             return;
+        }
+
+        if (string.IsNullOrEmpty(UserStateService.CurrentUser?.IdUser))
+        {
+            throw new Exception("EditFarmhouse: Not found user");
         }
 
         var currentJson = JsonSerializer.Serialize(farmhouseDto);

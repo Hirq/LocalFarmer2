@@ -47,10 +47,6 @@ else
         {
             userDto = await AccountService.GetCurrentUser();
         }
-        else
-        {
-            throw new Exception("You aren't logged");
-        }
     }
 
     private async void OnValidSubmit(EditContext context)

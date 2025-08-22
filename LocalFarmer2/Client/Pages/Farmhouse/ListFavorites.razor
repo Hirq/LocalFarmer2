@@ -5,6 +5,7 @@
 @inject UserStateService UserStateService
 @inject UtilsService UtilsService
 @inject SearchService SearchService
+@inject NavigationManager NavigationManager
 
 <PageTitle>@loc["Dashboard_Favorites_Farmhouses"] | @Globals.AppName</PageTitle>
 
@@ -20,56 +21,17 @@
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FavoriteFarmhouse, object>(x=>x.IdFarmhouse)">Id @loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
         <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FavoriteFarmhouse, object>(x=>x.Farmhouse.Name)">@loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
         <MudTh>@loc["X_Action"]</MudTh>
-        @*        <MudTh>Products</MudTh> *@
+        <MudTh>@loc["Button_Go_To_Details"]</MudTh>
     </HeaderContent>
     <RowTemplate>
-        @* <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.Id))">@((context.ShowDetails == true) ? "Hide" : "Show") Products</MudButton></MudTd> *@
         <MudTd DataLabel="Nr">@context.Id</MudTd>
         <MudTd DataLabel="Nr">@context.IdFarmhouse</MudTd>
         <MudTd DataLabel="Nr">@context.Farmhouse.Name</MudTd>
         <MudTd DataLabel="Edit">
             <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteFavorite(context.Id), Color.Error)' />
         </MudTd>
-@*             <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.Id)">Go to detail</MudButton></MudTd>
-            <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProducts(context.Id)">Show products</MudButton></MudTd> *@
-        </RowTemplate>
-
-@*         <ChildRowContent>
-            @if (context.ShowDetails)
-        {
-            <MudTr>
-                <td colspan="4">
-                    <MudCard Outlined="true" Elevation="0" Class="list-products">
-                        <MudCardHeader>
-                            <CardHeaderContent>
-                                <MudText Typo="Typo.body1" Class="text-white">Products for <strong>@context.Name</strong></MudText>
-                            </CardHeaderContent>
-                        </MudCardHeader>
-                        <MudCardContent Class="pa-0">
-                            <MudTable Items="@context.Products" Context="ProductContext" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0">
-                                <ColGroup>
-                                    <col />
-                                    <col />
-                                    <col style="width:200px;" />
-                                </ColGroup>
-                                <HeaderContent>
-                                    <MudTh>Name</MudTh>
-                                    <MudTh>Prize one</MudTh>
-                                    <MudTh>Description</MudTh>
-                                </HeaderContent>
-                                <RowTemplate>
-                                    <MudTd DataLabel="Address Line 1">@ProductContext.Name</MudTd>
-                                        <MudTd DataLabel="Address Line 2">@ProductContext.PrizeOne</MudTd>
-                                        <MudTd DataLabel="Postal Code">@ProductContext.Description</MudTd>
-                                    </RowTemplate>
-                                </MudTable>
-                            </MudCardContent>
-                        </MudCard>
-                    </td>
-                </MudTr>
-        }
-    </ChildRowContent> *@
-
+        <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.Id)">@loc["Button_Go_To_Details"]</MudButton></MudTd>
+    </RowTemplate>
     <PagerContent>
         <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
     </PagerContent>
@@ -105,6 +67,11 @@
             AlertService.SetDeleteAlert($"{@loc["Alert_Delete_Subscribe"]} {idFarmhouse}");
             _ = AlertService.ClearAlertAfterDelay();
         }
+    }
+
+    void ShowFarmhouse(int id)
+    {
+        NavigationManager.NavigateTo($"farmhouse/{id}");
     }
 
 }

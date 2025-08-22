@@ -233,6 +233,7 @@
         }
         catch (Exception ex)
         {
+                throw new Exception("Chat - Send: " + ex);
         }
 
         MessageText = string.Empty;

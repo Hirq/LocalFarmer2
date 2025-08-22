@@ -20,38 +20,17 @@ namespace LocalFarmer2.Client.Services
 
         public async Task<List<Product>> GetProducts()
         {
-            var result = await _http.GetFromJsonAsync<List<Product>>("api/Product/ListProducts");
-
-            if (result == null)
-            {
-                throw new Exception("Not found products");
-            }
-
-            return result;
+            return await _http.GetFromJsonAsync<List<Product>>("api/Product/ListProducts");
         }
 
         public async Task<List<Product>> GetProductsFarmhouse(int idFarmhouse)
         {
-            var result = await _http.GetFromJsonAsync<List<Product>>($"api/Product/ListProductsFarmhouse/{idFarmhouse}");
-
-            if (result == null)
-            {
-                throw new Exception("Not found products");
-            }
-
-            return result;
+            return await _http.GetFromJsonAsync<List<Product>>($"api/Product/ListProductsFarmhouse/{idFarmhouse}");
         }
 
         public async Task<List<Product>> GetProductsWithoutFarmhouse(int idFarmhouse)
         {
-            var result = await _http.GetFromJsonAsync<List<Product>>($"api/Product/ListProductsWithoutFarmhouse/{idFarmhouse}");
-
-            if (result == null)
-            {
-                throw new Exception("Not found products");
-            }
-
-            return result;
+            return await _http.GetFromJsonAsync<List<Product>>($"api/Product/ListProductsWithoutFarmhouse/{idFarmhouse}");
         }
 
         public async Task<List<Product>> GetRandomProductsFarmhouse(int idFarmhouse, int withoutProductId, int count)
@@ -69,14 +48,7 @@ namespace LocalFarmer2.Client.Services
 
         public async Task<Product> GetProduct(int id)
         {
-            var result = await _http.GetFromJsonAsync<Product>($"api/Product/Product/{id}");
-
-            if (result == null)
-            {
-                throw new Exception("Not found products");
-            }
-
-            return result;
+            return await _http.GetFromJsonAsync<Product>($"api/Product/Product/{id}");
         }
 
         public async Task AddProduct(ProductDto dto, int idFarmhouse)

@@ -16,50 +16,22 @@
 
         public async Task<List<Opinion>> GetAll()
         {
-            var opinions = await _httpClient.GetFromJsonAsync<List<Opinion>>("api/Opinion/AllOpinions");
-
-            if (opinions == null)
-            {
-                throw new Exception("Not found any opinions");
-            }
-
-            return opinions;
+            return await _httpClient.GetFromJsonAsync<List<Opinion>>("api/Opinion/AllOpinions");
         }
 
         public async Task<Opinion> GetOpinion(int idOpinion)
         {
-            var opinion = await _httpClient.GetFromJsonAsync<Opinion>($"api/Opinion/Opinion/{idOpinion}");
-
-            if (opinion == null)
-            {
-                throw new Exception($"Not found opinion id: {idOpinion}");
-            }
-
-            return opinion;
+            return await _httpClient.GetFromJsonAsync<Opinion>($"api/Opinion/Opinion/{idOpinion}");
         }
 
         public async Task<List<Opinion>> GetOpinionFarmhousesForUser(string userName)
         {
-            var listOpinionFarmhouses = await _httpClient.GetFromJsonAsync<List<Opinion>>($"api/Opinion/OpinionFarmhouseForUser?idUser={userName}");
-
-            if (listOpinionFarmhouses == null)
-            {
-                throw new Exception();
-            }
-
-            return listOpinionFarmhouses;
+            return await _httpClient.GetFromJsonAsync<List<Opinion>>($"api/Opinion/OpinionFarmhouseForUser?idUser={userName}");
         }
 
         public async Task<int[]> GetOpinionFarmhousesForUserOnlyIds(string userName)
         {
-            var listOpinionFarmhouses = await _httpClient.GetFromJsonAsync<List<int>>($"api/Opinion/OpinionFarmhouseForUserOnlyIds?idUser={userName}");
-
-            if (listOpinionFarmhouses == null)
-            {
-                throw new Exception("Not found object for function GetOpinionFarmhousesForUserOnlyIds");
-            }
-
-            return listOpinionFarmhouses.ToArray();
+            return (await _httpClient.GetFromJsonAsync<List<int>>($"api/Opinion/OpinionFarmhouseForUserOnlyIds?idUser={userName}")).ToArray();
         }
 
         public async Task AddOpinion(AddOpinionDto dto)
@@ -81,14 +53,7 @@
 
         public async Task<List<Opinion>> AllOpinionsForFarmhouse(int idFarmhouse)
         {
-            var opinions = await _httpClient.GetFromJsonAsync<List<Opinion>>($"api/Opinion/AllOpinionsForFarmhouse/{idFarmhouse}");
-
-            if (opinions == null)
-            {
-                throw new Exception("Not found opinions");
-            }
-
-            return opinions;
+            return await _httpClient.GetFromJsonAsync<List<Opinion>>($"api/Opinion/AllOpinionsForFarmhouse/{idFarmhouse}");
         }
 
         public async Task<List<Opinion>> GetRandomOpinionsForFarmhouse(int idFarmhouse, int count)

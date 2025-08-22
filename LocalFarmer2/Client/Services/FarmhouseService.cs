@@ -18,40 +18,17 @@ namespace LocalFarmer2.Client.Services
 
         public async Task<Farmhouse> GetFarmhouse(int id)
         {
-            var result = await _http.GetFromJsonAsync<Farmhouse>($"api/Farmhouse/Farmhouse/{id}");
-
-            if (result == null)
-            {
-                throw new Exception();
-            }
-
-            return result;
+            return await _http.GetFromJsonAsync<Farmhouse>($"api/Farmhouse/Farmhouse/{id}");
         }
 
         public async Task<List<Farmhouse>> GetFarmhouses()
         {
-            var result = await _http.GetFromJsonAsync<List<Farmhouse>>("api/Farmhouse/ListFarmhouses");
-
-            if (result == null)
-            {
-                throw new Exception();
-            }
-
-            return result;
+            return await _http.GetFromJsonAsync<List<Farmhouse>>("api/Farmhouse/ListFarmhouses");
         }
 
         public async Task<List<Farmhouse>> GetFarmhousesWithProducts()
         {
-            var result = await _http.GetFromJsonAsync<List<Farmhouse>>($"api/Farmhouse/ListFarmhousesWithProducts");
-
-            if (result == null)
-            {
-                throw new Exception();
-            }
-
-            //result = new List<Farmhouse>();
-
-            return result;
+            return await _http.GetFromJsonAsync<List<Farmhouse>>($"api/Farmhouse/ListFarmhousesWithProducts");
         }
 
         [AllowAnonymous]
@@ -61,15 +38,7 @@ namespace LocalFarmer2.Client.Services
 
             farmhouses = await _http.GetFromJsonAsync<List<Farmhouse>>($"api/Farmhouse/ListFarmhousesWithProducts");
 
-            if (farmhouses == null)
-            {
-                throw new Exception();
-            }
-
-            if (idFarmhouse != null)
-            {
-                farmhouses = farmhouses.Where(x => x.Id != idFarmhouse).ToList();
-            }
+            farmhouses = farmhouses.Where(x => x.Id != idFarmhouse).ToList();
 
             var result = _mapper.Map<List<FarmhouseViewModel>>(farmhouses);
 

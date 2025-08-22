@@ -1,9 +1,4 @@
-﻿using LocalFarmer2.Server.Utilities;
-using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
-//using Microsoft.AspNetCore.JsonPatch;
-//using Swashbuckle.AspNetCore.Annotations;
+﻿using Microsoft.AspNetCore.Mvc;
 
 //TODO: Pozwracać kody opdowiednie - przygotowane tutaj sprawdzić czy wszystko gra a potem nanieś poprawki na inne Contollery
 
@@ -84,7 +79,7 @@ namespace LocalFarmer2.Server.Controllers
 
             return CreatedAtAction
             (
-                nameof(GetFarmhouse), 
+                nameof(GetFarmhouse),
                 new { id = farmhouse.Id },
                 farmhouse
             );
