@@ -42,19 +42,20 @@ namespace LocalFarmer2.Server.Controllers
             _alertRepository.Add(alert);
             await _alertRepository.SaveChangesAsync();
 
-            return Ok(alert);
+            return StatusCode(StatusCodes.Status201Created, alert);
         }
 
         [HttpPut, Route("SetAllAlertsAsReadForUser")]
         public async Task<IActionResult> SetAllAlertsAsReadForUser(string idUser)
         {
             var alerts = (await _alertRepository.GetAllAsync(x => x.IdUser == idUser)).ToList();
+
             alerts.ForEach(x => x.IsOpen = true);
             await _alertRepository.SaveChangesAsync();
 
             return Ok(alerts);
-        }   
-        
+        }
+
         [HttpGet, Route("IsOpenLastAlertFromChat")]
         public async Task<IActionResult> IsOpenLastAlertFromChat(string idUserReceiver)
         {
@@ -62,5 +63,6 @@ namespace LocalFarmer2.Server.Controllers
 
             return Ok(alert.IsOpen);
         }
+
     }
 }

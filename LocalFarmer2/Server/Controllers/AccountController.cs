@@ -109,6 +109,12 @@ namespace LocalFarmer2.Server.Controllers
         public async Task<IActionResult> GetUserByUserNameAsync(string userName)
         {
             var user = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.UserName == userName, x => x.Farmhouse);
+
+            if (user == null)
+            {
+                return NotFound(new { Message = $"User with username: {userName} not found." });
+            }
+
             var userDto = new UserDto()
             {
                 UserName = user.UserName,
@@ -117,6 +123,7 @@ namespace LocalFarmer2.Server.Controllers
                 FarmhouseName = user.Farmhouse?.Name,
                 FullName = user.FullName
             };
+
             return Ok(userDto);
         }
 
@@ -125,6 +132,12 @@ namespace LocalFarmer2.Server.Controllers
         public async Task<IActionResult> GetUserByIdAsync(string idUser)
         {
             var user = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.Id == idUser, x => x.Farmhouse);
+
+            if (user == null)
+            {
+                return NotFound(new { Message = $"User with id: {idUser} not found." });
+            }
+
             var userDto = new UserDto()
             {
                 UserName = user.UserName,
@@ -141,6 +154,12 @@ namespace LocalFarmer2.Server.Controllers
         public async Task<IActionResult> GetUserByFarmhouseIdAsync(int idFarmhouse)
         {
             var user = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.IdFarmhouse == idFarmhouse, x => x.Farmhouse);
+
+            if (user == null)
+            {
+                return NotFound(new { Message = $"User with idFarmhouse: {idFarmhouse} not found." });
+            }
+
             var userDto = new UserDto()
             {
                 UserName = user.UserName,
@@ -150,8 +169,8 @@ namespace LocalFarmer2.Server.Controllers
                 FullName = user.FullName
             };
             return Ok(userDto);
-        }   
-        
+        }
+
         [HttpGet]
         [Route("Users")]
         public async Task<IActionResult> GetUsers()
@@ -159,15 +178,15 @@ namespace LocalFarmer2.Server.Controllers
             var user = await _applicationUserRepository.GetAllAsync();
 
             return Ok(user);
-        }     
-        
+        }
+
         [HttpGet]
         [Route("UsersByIds")]
         public async Task<IActionResult> GetUsers([FromQuery] List<string> ids)
         {
-            var user = (await _applicationUserRepository.GetAllAsync()).Where(x => ids.Contains(x.Id));
+            var users = (await _applicationUserRepository.GetAllAsync()).Where(x => ids.Contains(x.Id));
 
-            return Ok(user);
+            return Ok(users);
         }
 
         [HttpPut]
@@ -175,6 +194,12 @@ namespace LocalFarmer2.Server.Controllers
         public async Task<IActionResult> PutUser([FromBody] EditUserDto dto, string userName)
         {
             var user = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.UserName == userName, x => x.Farmhouse);
+
+            if (user == null)
+            {
+                return NotFound(new { Message = $"User with userName: {userName} not found." });
+            }
+
             user.FullName = dto.FullName;
             _applicationUserRepository.Update(user);
             await _applicationUserRepository.SaveChangesAsync();

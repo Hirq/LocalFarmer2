@@ -1,5 +1,4 @@
-﻿using LocalFarmer2.Server.Data.Migrations;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace LocalFarmer2.Server.Controllers
 {
@@ -32,8 +31,8 @@ namespace LocalFarmer2.Server.Controllers
             var favoritesFarmhouses = await _favoriteFarmhouseRepository.GetAllAsync(x => x.IdUser == idUser, x => x.Farmhouse);
 
             return Ok(favoritesFarmhouses);
-        }   
-        
+        }
+
         [HttpGet, Route("FavortieFarmhouseForUserOnlyIds")]
         public async Task<IActionResult> GetFavoritesFarmhousesForUserOnlyIds(string idUser)
         {
@@ -58,7 +57,12 @@ namespace LocalFarmer2.Server.Controllers
             _favoriteFarmhouseRepository.Add(favoriteFarmhouse);
             await _favoriteFarmhouseRepository.SaveChangesAsync();
 
-            return Ok(favoriteFarmhouse);
+            return CreatedAtAction
+            (
+                nameof(GetFavoritesFarmhousesForUser),
+                new { id = favoriteFarmhouse.Id },
+                favoriteFarmhouse
+            );
         }
 
         [HttpDelete, Route("DeleteFavoriteFarmhouse/{id}")]
@@ -66,10 +70,15 @@ namespace LocalFarmer2.Server.Controllers
         {
             FavoriteFarmhouse favoriteFarmhouse = await _favoriteFarmhouseRepository.GetFirstOrDefaultAsync(x => x.Id == id);
 
+            if (favoriteFarmhouse == null)
+            {
+                return NotFound(new { Message = $"Favorite farmhouses with id {id} not found." });
+            }
+
             await _favoriteFarmhouseRepository.DeleteAsync(favoriteFarmhouse);
             await _favoriteFarmhouseRepository.SaveChangesAsync();
 
-            return Content($"Delete object favorite {id} where IdFarmhouse is {favoriteFarmhouse.IdFarmhouse}");
+            return NoContent();
         }
     }
 }

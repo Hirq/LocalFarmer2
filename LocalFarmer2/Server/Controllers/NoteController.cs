@@ -39,13 +39,19 @@ namespace LocalFarmer2.Server.Controllers
             await _noteRepository.AddAsync(note);
             await _noteRepository.SaveChangesAsync();
 
-            return Ok(model);
+            return StatusCode(StatusCodes.Status201Created, note);
         }
 
         [HttpPut, Route("EditNote/{id}")]
         public async Task<IActionResult> EditNote([FromBody] NoteDto model, int id)
         {
             Note note = await _noteRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+
+            if (note == null)
+            {
+                return NotFound(new { Message = $"Note with id {id} not found." });
+            }
+
             note.Name = model.Name;
             note.Text = model.Text;
             note.IsArchive = model.IsArchive;
@@ -60,10 +66,16 @@ namespace LocalFarmer2.Server.Controllers
         public async Task<IActionResult> DeleteNote(int id)
         {
             Note note = await _noteRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+
+            if (note == null)
+            {
+                return NotFound(new { Message = $"Note with id {id} not found." });
+            }
+
             await _noteRepository.DeleteAsync(note);
             await _noteRepository.SaveChangesAsync();
 
-            return Ok(note);
+            return NoContent();
         }
     }
 }

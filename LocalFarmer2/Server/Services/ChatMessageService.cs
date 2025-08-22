@@ -1,4 +1,5 @@
 ﻿using LocalFarmer2.Server.Repositories.Interfaces;
+using LocalFarmer2.Shared.Utilities;
 using System.Linq;
 using System.Security.Cryptography;
 
@@ -61,13 +62,23 @@ namespace LocalFarmer2.Server.Services
 
         public async Task<ChatLastMessageDto> GetLastMessage(string idUserSender, string idUserReceiver)
         {
-            var lastMessage = (await GetMessages(idUserSender, idUserReceiver)).Last();
+            var lastMessage = (await GetMessages(idUserSender, idUserReceiver)).LastOrDefault();
+
+            if (lastMessage == null)
+            {
+                return null;
+            }
 
             var lastMesageDto = _mapper.Map<ChatLastMessageDto>(lastMessage);
 
             lastMesageDto.IsLastMessageFromSender = (lastMessage.IdUserSender == idUserSender) ? true : false;
 
             var userReceiver = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.Id == idUserReceiver);
+
+            if (userReceiver == null)
+            {
+                throw new UserNotFoundException(idUserReceiver);
+            }
 
             lastMesageDto.FullName = userReceiver.FullName;
             lastMesageDto.UserName = userReceiver.UserName;
@@ -80,13 +91,21 @@ namespace LocalFarmer2.Server.Services
             var result = new List<ChatLastMessageDto>();
             foreach(var idUser in  idsUserReceiver)
             { 
-                var lastMessage = (await GetMessages(idUserSender, idUser)).Last();
+                var lastMessage = (await GetMessages(idUserSender, idUser)).LastOrDefault();
+
+                if (lastMessage == null)
+                    continue;
 
                 var lastMesageDto = _mapper.Map<ChatLastMessageDto>(lastMessage);
 
                 lastMesageDto.IsLastMessageFromSender = (lastMessage.IdUserSender == idUserSender) ? true : false;
 
                 var userReceiver = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.Id == idUser);
+
+                if (userReceiver == null)
+                {
+                    throw new UserNotFoundException(idUser);
+                }
 
                 lastMesageDto.FullName = userReceiver.FullName;
                 lastMesageDto.UserName = userReceiver.UserName;

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace LocalFarmer2.Server.Controllers
 {
@@ -35,7 +34,7 @@ namespace LocalFarmer2.Server.Controllers
 
             if (product == null)
             {
-                return NotFound();
+                return NotFound(new { Message = $"Product with id {id} not found." });
             }
 
             return Ok(product);
@@ -68,13 +67,24 @@ namespace LocalFarmer2.Server.Controllers
             _productRepository.Add(product);
             await _productRepository.SaveChangesAsync();
 
-            return Ok(product);
+            return CreatedAtAction
+            (
+                nameof(GetProduct),
+                new { id = product.Id },
+                product
+            );
         }
 
         [HttpPut, Route("EditProduct/{idProduct}")]
         public async Task<IActionResult> EditProduct(ProductDto dto, int idProduct)
         {
             var product = await _productRepository.GetFirstOrDefaultAsync(x => x.Id == idProduct);
+
+            if (product == null)
+            {
+                return NotFound(new { Message = $"Product with id {idProduct} not found." });
+            }
+
             Product newProduct = _mapper.Map<Product>(dto);
 
             if (idProduct != 0)
@@ -94,10 +104,15 @@ namespace LocalFarmer2.Server.Controllers
         {
             var product = await _productRepository.GetFirstOrDefaultAsync(x => x.Id == idProduct);
 
+            if (product == null)
+            {
+                return NotFound(new { Message = $"Product with id {idProduct} not found." });
+            }
+
             _productRepository.Delete(product);
             await _productRepository.SaveChangesAsync();
 
-            return Ok();
+            return NoContent();
         }
     }
 }

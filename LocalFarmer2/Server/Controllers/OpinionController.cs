@@ -32,13 +32,23 @@ namespace LocalFarmer2.Server.Controllers
             await _opinionRepository.AddAsync(opinion);
             await _opinionRepository.SaveChangesAsync();
 
-            return Ok(opinion);
+            return CreatedAtAction
+            (
+                nameof(Opinion),
+                new { id = opinion.Id },
+                opinion
+            );
         }
 
         [HttpGet, Route("Opinion/{id}")]
         public async Task<IActionResult> Opinion(int id)
         {
             Opinion opinion = await _opinionRepository.GetFirstOrDefaultAsync(x => x.Id == id, x => x.Farmhouse, x => x.ApplicationUser);
+
+            if (opinion == null)
+            {
+                return NotFound(new { Message = $"Opinion with id {id} not found." });
+            }
 
             return Ok(opinion);
         }
@@ -71,6 +81,12 @@ namespace LocalFarmer2.Server.Controllers
         public async Task<IActionResult> EditOpinion([FromBody] EditOpinionDto model, int id)
         {
             Opinion opinion = await _opinionRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+
+            if (opinion == null)
+            {
+                return NotFound(new { Message = $"Opinion with id {id} not found." });
+            }
+
             opinion.Comment = model.Comment;
             opinion.Rating = model.Rating;
 
@@ -84,10 +100,16 @@ namespace LocalFarmer2.Server.Controllers
         public async Task<IActionResult> DeleteOpinion(int id)
         {
             Opinion opinion = await _opinionRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+
+            if (opinion == null)
+            {
+                return NotFound(new { Message = $"Opinion with id {id} not found." });
+            }
+
             await _opinionRepository.DeleteAsync(opinion);
             await _opinionRepository.SaveChangesAsync();
 
-            return Ok();
+            return NoContent();
         }
 
         [HttpGet, Route("AllOpinionsForFarmhouse/{idFarmhouse}")]

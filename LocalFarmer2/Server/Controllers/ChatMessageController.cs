@@ -1,4 +1,6 @@
 ﻿using LocalFarmer2.Server.Services;
+using LocalFarmer2.Shared.Models;
+using LocalFarmer2.Shared.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LocalFarmer2.Server.Controllers
@@ -36,9 +38,15 @@ namespace LocalFarmer2.Server.Controllers
         [HttpGet, Route("GetLastMessage")]
         public async Task<IActionResult> GetLastMessage(string idUserSender, string idUserReceiver)
         {
-            var lastMessageDto = await _chatMessageService.GetLastMessage(idUserSender, idUserReceiver);
-
-            return Ok(lastMessageDto);
+            try
+            {
+                var lastMessageDto = await _chatMessageService.GetLastMessage(idUserSender, idUserReceiver);
+                return Ok(lastMessageDto);
+            }
+            catch (UserNotFoundException ex)
+            {
+                return NotFound(new { Message = ex.Message });
+            }
         }
 
         [HttpGet, Route("GetLastMessages")]
@@ -53,7 +61,6 @@ namespace LocalFarmer2.Server.Controllers
         public async Task<IActionResult> GetUserChats(string idUser)
         {
             var keys = await _chatMessageService.GetChatUserKeys(idUser);
-
             var dto = _mapper.Map<List<ChatUserKeyDto>>(keys);
 
             return Ok(dto);
