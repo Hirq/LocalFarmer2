@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-//TODO: Pozwracać kody opdowiednie - przygotowane tutaj sprawdzić czy wszystko gra a potem nanieś poprawki na inne Contollery
-
 namespace LocalFarmer2.Server.Controllers
 {
     [ApiController]
