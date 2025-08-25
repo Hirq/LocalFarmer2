@@ -6,16 +6,12 @@
 
 <PageTitle>@loc["X_Alerts"] | @Globals.AppName</PageTitle>
 
-<MudPaper Class="pa-4 mb-4">
-    <MudGrid Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
-        <MudItem>
-            <MudText Typo="Typo.h6">@loc["X_Alerts"]</MudText>
-        </MudItem>
-        <MudItem>
-            <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search" Immediate="true"></MudTextField>
-        </MudItem>
-    </MudGrid>
-</MudPaper>
+<div class="mud-toolbar mud-toolbar-gutters mud-table-toolbar">
+    @* <div class="pa-4 mb-4 d-flex"> *@
+    <MudText Typo="Typo.h6">@loc["X_Alerts"]</MudText>
+    <MudSpacer />
+    <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
+</div>
 
 @if (ListAlert == null)
 {
