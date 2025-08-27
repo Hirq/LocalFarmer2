@@ -5,8 +5,8 @@
 
 <MudDialog>
     <DialogContent>
-        <MudTextField Disabled Label="isContactToAdmin" @bind-Value="isContactToAdmin"></MudTextField>
-        <MudTextField Disabled Label="EmailTo" @bind-Value="emailTo"></MudTextField>
+        @* <MudTextField Disabled Label="isContactToAdmin" @bind-Value="isContactToAdmin"></MudTextField> *@
+        @* <MudTextField Disabled Label="Email to" @bind-Value="emailTo"></MudTextField> *@
         <MudTextField T="string" @ref="emailField" Label="Email" Required=@(!isContactToAdmin) RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="emailDto.From"></MudTextField>
         <MudTextField T="string" @ref="subjectField" Label="@loc["Farmhouse_Subject"]" Required RequiredError="@loc["Validation_Required"]" Variant="Variant.Text" @bind-Value="emailDto.Subject"></MudTextField>
         <MudTextField T="string" @ref="bodyField" Label="@loc["Farmhouse_Message"]" Required RequiredError="@loc["Validation_Required"]" Variant="Variant.Outlined" Lines="3" @bind-Value="emailDto.Body" Class="mt-4"/>
