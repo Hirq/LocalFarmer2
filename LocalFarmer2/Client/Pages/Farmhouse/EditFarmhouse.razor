@@ -15,9 +15,13 @@
 <PageTitle>@loc["Farmhouse_Edit_Farmhouse"] | @Globals.AppName</PageTitle>
 
 
-@if (farmhouseDto == null)
+@if (isLoading)
 {
-    <p><em>Loading...</em></p>
+    <MudProgressCircular Class="m-4" Color="Color.Primary" />
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
 }
 else
 {
@@ -78,6 +82,8 @@ else
     [Parameter]
     public FarmhouseDto farmhouseDto { get; set; }
 
+    private bool isLoading = false;
+    private string? errorMessage;
     private FarmhouseDto originalFarmhouseDto { get; set; }
     private IJSObjectReference? module;
     private string? result;
@@ -96,34 +102,50 @@ else
 
     protected async override Task OnInitializedAsync()
     {
-        isUserSignUp = await AccountService.IsUserLogged();
-        dialogData = new DialogData()
+        try
         {
-            Title = $"{loc["X_Delete"]} {loc["X_Farmhouse"]}",
-            ButtonName = loc["X_Delete"],
-            Content = $"{loc["X_Are_You_Sure_Delete_This"]} {loc["X_Farmhouse"]}",
-        };
+            isLoading = true;
+            errorMessage = null;
+            dialogData = new DialogData()
+            {
+                Title = $"{loc["X_Delete"]} {loc["X_Farmhouse"]}",
+                ButtonName = loc["X_Delete"],
+                Content = $"{loc["X_Are_You_Sure_Delete_This"]} {loc["X_Farmhouse"]}",
+            };
+            isUserSignUp = await AccountService.IsUserLogged();
 
-        if (isUserSignUp)
-        {
+            if (!isUserSignUp)
+            {
+                errorMessage = "XXX";
+                return;
+            }
+
             currentUser = await AccountService.GetCurrentUser();
             UserStateService.CurrentUser = currentUser;
-            if (UserStateService.CurrentUser?.IdFarmhouse != null)
+
+            if (UserStateService.CurrentUser?.IdFarmhouse == null)
             {
-                var farmhouse = await FarmhouseService.GetFarmhouse((int)currentUser?.IdFarmhouse!);
-                farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
-                originalFarmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
-                SelectedPayment = farmhouseDto.PaymentMethods.Split(',').Select(s => s.Trim());
-                initIsOpen = farmhouseDto.IsOpen;
-                if (farmhouseDto.ImageData != null && !string.IsNullOrEmpty(farmhouseDto.ImageMimeType))
-                {
-                    FileService.SetName($"{loc["Farmhouse_ImageIsSet"]}");
-                }
+                errorMessage = "XXX";
+                return;
             }
-            else
+
+            var farmhouse = await FarmhouseService.GetFarmhouse((int)currentUser?.IdFarmhouse!);
+            farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
+            originalFarmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
+            SelectedPayment = farmhouseDto.PaymentMethods.Split(',').Select(s => s.Trim());
+            initIsOpen = farmhouseDto.IsOpen;
+            if (farmhouseDto.ImageData != null && !string.IsNullOrEmpty(farmhouseDto.ImageMimeType))
             {
-                throw new Exception("Edit Farmhouse - You must first set farmhouse, before edit");
+                FileService.SetName($"{loc["Farmhouse_ImageIsSet"]}");
             }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
         }
     }
 

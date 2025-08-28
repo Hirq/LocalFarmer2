@@ -10,7 +10,7 @@
 
 <PageTitle>@loc["Product_My_Products"] | @Globals.AppName</PageTitle>
 
-<MudTable Items="@ListProducts" SortLabel="Sort By" Hover="true" Filter="@(product => UtilsService.FilterFunc(product, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
+<MudTable Items="@ListProducts" Loading="@isLoading" SortLabel="Sort By" Hover="true" Filter="@(product => UtilsService.FilterFunc(product, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
     <ToolBarContent>
         <MudText Typo="Typo.h6">@loc["Product_My_Products"]</MudText>
         <MudSpacer />
@@ -36,28 +36,48 @@
                 <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@(() => EditProduct(context.Id))" />
                 <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteProduct(context.Id), Color.Error)' />
             </MudTd>
-        </RowTemplate>
-        <PagerContent>
-            <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
-        </PagerContent>
-    </MudTable>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
+    </PagerContent>
+</MudTable>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
+}
 
 @code {
     IEnumerable<Product> ListProducts = new List<Product>();
+    bool isLoading = false;
+    string? errorMessage;
     public DialogData dialogData = new DialogData();
     int idFarmhouse;
     private string searchString = null;
 
     protected override async Task OnInitializedAsync()
     {
-        idFarmhouse = (int)UserStateService.CurrentUser?.IdFarmhouse;
-        ListProducts = await ProductService.GetProductsFarmhouse(idFarmhouse);
-        dialogData = new DialogData()
+        try
         {
-            Title = $"{loc["X_Delete"]} {loc["X_Product"]}",
-            ButtonName = loc["X_Delete"],
-            Content = $"{loc["X_Are_You_Sure_Delete_This"]} " + $"{loc["X_Product"]}".ToLower(),
-        };
+            isLoading = true;
+            errorMessage = null;
+            idFarmhouse = (int)UserStateService.CurrentUser?.IdFarmhouse;
+            ListProducts = await ProductService.GetProductsFarmhouse(idFarmhouse);
+            dialogData = new DialogData()
+            {
+                Title = $"{loc["X_Delete"]} {loc["X_Product"]}",
+                ButtonName = loc["X_Delete"],
+                Content = $"{loc["X_Are_You_Sure_Delete_This"]} " + $"{loc["X_Product"]}".ToLower(),
+            };
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
+        }
     }
 
     void EditProduct(int id)

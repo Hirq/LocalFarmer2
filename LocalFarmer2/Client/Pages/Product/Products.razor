@@ -9,7 +9,7 @@
 
 <PageTitle>@loc["Product_Products_All"] | @Globals.AppName</PageTitle>
 
-<MudTable Items="@ListProducts" SortLabel="Sort By" Hover="true" Filter="@(product => UtilsService.FilterFunc(product, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
+<MudTable Items="@ListProducts" Loading="@isLoading" SortLabel="Sort By" Hover="true" Filter="@(product => UtilsService.FilterFunc(product, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
     <ToolBarContent>
         <MudText Typo="Typo.h6">@loc["X_Products"]</MudText>
         <MudSpacer />
@@ -40,21 +40,41 @@
     </PagerContent>
 </MudTable>
 
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
+}
+
 @code {
     IEnumerable<Product> ListProducts = new List<Product>();
+    bool isLoading = false;
+    string? errorMessage;
     private string searchString = null;
 
     protected override async Task OnInitializedAsync()
     {
-        int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
+        try
+        {
+            isLoading = true;
+            errorMessage = null;
+            int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
 
-        if (idFarmhouse != null)
-        {
-            ListProducts = await ProductService.GetProductsWithoutFarmhouse((int)idFarmhouse);
+            if (idFarmhouse != null)
+            {
+                ListProducts = await ProductService.GetProductsWithoutFarmhouse((int)idFarmhouse);
+            }
+            else
+            {
+                ListProducts = await ProductService.GetProducts();
+            }
         }
-        else
+        catch (Exception ex)
         {
-            ListProducts = await ProductService.GetProducts();
+            errorMessage = ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
         }
     }
 

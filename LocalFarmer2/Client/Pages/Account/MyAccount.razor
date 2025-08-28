@@ -7,9 +7,13 @@
 
 <PageTitle>@loc["Account_My_Account"] | @Globals.AppName</PageTitle>
 
-@if (userDto == null)
+@if (isLoading)
 {
-    <p><em>Loading...</em></p>
+    <MudProgressCircular Class="m-4" Color="Color.Primary" />
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
 }
 else
 {
@@ -39,13 +43,35 @@ else
     [Parameter]
     public UserDto userDto { get; set; }
 
+    private bool isLoading = false;
+    private string? errorMessage;
+
     protected async override Task OnInitializedAsync()
     {
-        bool isUserSignUp = await AccountService.IsUserLogged();
-
-        if (isUserSignUp)
+        try
         {
-            userDto = await AccountService.GetCurrentUser();
+            isLoading = true;
+            errorMessage = null;
+            bool isUserSignUp = await AccountService.IsUserLogged();
+
+            if (isUserSignUp)
+            {
+                userDto = await AccountService.GetCurrentUser();
+            }
+            else
+            {
+                // errorMessage = loc["Farmhouse_Missing_For_Edit"];
+                errorMessage = "XXX";
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
         }
     }
 

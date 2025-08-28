@@ -14,123 +14,123 @@
 
 <PageTitle>@loc["X_Farmhouses"] | @Globals.AppName</PageTitle>
 
-@if (ListFarmhousesVM == null)
-{
-    <p><em>@loc["X_Loading"]</em></p>
-}
-else
-{
-    <MudTable Items="@ListFarmhousesVM" SortLabel="Sort By" Hover="true" Filter="@(farmhouse => UtilsService.FilterFunc(farmhouse, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
-        <ToolBarContent>
-            <MudText Typo="Typo.h6">@loc["X_Farmhouses"]</MudText>
-            <MudSpacer />
-            <MudButton Class="mr-2" Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => FilterFavorite())">@loc["Button_Only_Favorite"]</MudButton>
-            <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
-        </ToolBarContent>
+<MudTable Items="@ListFarmhousesVM" Loading="@isLoading" SortLabel="Sort By" Hover="true" Filter="@(farmhouse => UtilsService.FilterFunc(farmhouse, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">@loc["X_Farmhouses"]</MudText>
+        <MudSpacer />
+        <MudButton Class="mr-2" Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => FilterFavorite())">@loc["Button_Only_Favorite"]</MudButton>
+        <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
+    </ToolBarContent>
 
-        <HeaderContent>
-            <MudTh></MudTh>
-            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FarmhouseViewModel, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Name)">@loc["X_Name"]</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Description)">@loc["X_Description"]</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Address)">@loc["Farmhouse_Address"]</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Phone)">@loc["Farmhouse_Phone"]</MudTableSortLabel></MudTh>
-            <MudTh>@loc["Farmhouse_IsOpen"]</MudTh>
-                <MudTh>@loc["X_Details"]</MudTh>
-            <MudTh>@loc["X_Products"]</MudTh>
+    <HeaderContent>
+        <MudTh></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FarmhouseViewModel, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Name)">@loc["X_Name"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Description)">@loc["X_Description"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Address)">@loc["Farmhouse_Address"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Phone)">@loc["Farmhouse_Phone"]</MudTableSortLabel></MudTh>
+        <MudTh>@loc["Farmhouse_IsOpen"]</MudTh>
+            <MudTh>@loc["X_Details"]</MudTh>
+        <MudTh>@loc["X_Products"]</MudTh>
+        <AuthorizeView>
+            <Authorized>
+                <MudTh>@loc["Farmhouse_Subscribe"]</MudTh>
+                <MudTh>@loc["Opinion_Add_Opinion"]</MudTh>
+            </Authorized>
+        </AuthorizeView>
+    </HeaderContent>
+    <RowTemplate Context="row">
+        <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => ShowBtnPress(row.Id))">@((row.ShowDetails == true) ? loc["Button_Hide_Products"] : loc["Button_Show_Products"])</MudButton></MudTd>
+        <MudTd DataLabel="Nr">@row.Id</MudTd>
+            <MudTd DataLabel="Sign">@row.Name</MudTd>
+            <MudTd DataLabel="Name">@row.Description</MudTd>
+            <MudTd DataLabel="Position">@row.Address</MudTd>
+            <MudTd DataLabel="Molar mass">@row.Phone</MudTd>
+            <MudTd DataLabel="Molar mass">@row.IsOpen</MudTd>
+            <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(row.Id)">@loc["Button_Go_To_Details"]</MudButton></MudTd>
+            <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProducts(row.Id)">@loc["Button_Show_Products"]</MudButton></MudTd>
             <AuthorizeView>
                 <Authorized>
-                    <MudTh>@loc["Farmhouse_Subscribe"]</MudTh>
-                    <MudTh>@loc["Opinion_Add_Opinion"]</MudTh>
-                </Authorized>
-            </AuthorizeView>
-        </HeaderContent>
-        <RowTemplate Context="row">
-            <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => ShowBtnPress(row.Id))">@((row.ShowDetails == true) ? loc["Button_Hide_Products"] : loc["Button_Show_Products"])</MudButton></MudTd>
-            <MudTd DataLabel="Nr">@row.Id</MudTd>
-                <MudTd DataLabel="Sign">@row.Name</MudTd>
-                <MudTd DataLabel="Name">@row.Description</MudTd>
-                <MudTd DataLabel="Position">@row.Address</MudTd>
-                <MudTd DataLabel="Molar mass">@row.Phone</MudTd>
-                <MudTd DataLabel="Molar mass">@row.IsOpen</MudTd>
-                <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(row.Id)">@loc["Button_Go_To_Details"]</MudButton></MudTd>
-                <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProducts(row.Id)">@loc["Button_Show_Products"]</MudButton></MudTd>
-                <AuthorizeView>
-                    <Authorized>
-                    @if (row.IsFavorite == false)
-                    {
-                        <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddFavorite(row.Id)">@loc["X_Add"] @loc["X_Subscription"]</MudButton></MudTd>
-                    }
-                    else
-                    {
-                        <MudTd DataLabel="Molar mass"></MudTd>
-                    }
-                    @if (row.IsCommented == false)
-                    {
-                        <MudTd DataLabel="Molar mass">
-                            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OnButtonClicked(row.Id)">Add opinion</MudButton>
-                            <MudMessageBox @ref="mbox" Title="Add opinion" CancelText="Cancel">
-                                <MessageContent>
-                                    <div class="d-flex flex-column align-center">
-                                        <MudRating @bind-SelectedValue="opinion.Rating"/>
-                                        <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">Rate our farmhouse!</MudText>
-                                    </div>
-                                    <MudTextField T="string" @bind-Value="opinion.Comment" Label="Comment" Variant="Variant.Outlined" Lines="3" Placeholder="Set star and add your opinion"/>
-                                </MessageContent>
-                                <YesButton>
-                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddOpinion()">Add</MudButton>
-                                </YesButton>
-                            </MudMessageBox>
-                        </MudTd>
-                    }
-                    else
-                    {
-                        <MudTd DataLabel="Molar mass"></MudTd>
-                    }
-                </Authorized>
-            </AuthorizeView>
-        </RowTemplate>
+                @if (row.IsFavorite == false)
+                {
+                    <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddFavorite(row.Id)">@loc["X_Add"] @loc["X_Subscription"]</MudButton></MudTd>
+                }
+                else
+                {
+                    <MudTd DataLabel="Molar mass"></MudTd>
+                }
+                @if (row.IsCommented == false)
+                {
+                    <MudTd DataLabel="Molar mass">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OnButtonClicked(row.Id)">Add opinion</MudButton>
+                        <MudMessageBox @ref="mbox" Title="Add opinion" CancelText="Cancel">
+                            <MessageContent>
+                                <div class="d-flex flex-column align-center">
+                                    <MudRating @bind-SelectedValue="opinion.Rating"/>
+                                    <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">Rate our farmhouse!</MudText>
+                                </div>
+                                <MudTextField T="string" @bind-Value="opinion.Comment" Label="Comment" Variant="Variant.Outlined" Lines="3" Placeholder="Set star and add your opinion"/>
+                            </MessageContent>
+                            <YesButton>
+                                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddOpinion()">Add</MudButton>
+                            </YesButton>
+                        </MudMessageBox>
+                    </MudTd>
+                }
+                else
+                {
+                    <MudTd DataLabel="Molar mass"></MudTd>
+                }
+            </Authorized>
+        </AuthorizeView>
+    </RowTemplate>
         
-        <ChildRowContent>
-            @if (context.ShowDetails)
-            {
-                <MudTr>
-                    <td colspan="12">
-                        <MudCard Outlined="true" Elevation="0" Class="list-products borderTableFarmhouses">
-                            <MudCardContent Class="pa-0">
-                                <MudTable Items="@context.Products" Context="ProductContext" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0">
-                                    <HeaderContent>
-                                        <MudTh>@loc["X_Name"]</MudTh>
-                                        <MudTh>@loc["X_Description"]</MudTh>
-                                        <MudTh>@loc["Product_Minimal_Amount"]</MudTh>
-                                        <MudTh>@loc["Product_Prize_One"]</MudTh>
-                                        <MudTh>@loc["Product_Total_Quantity"]</MudTh>
-                                    </HeaderContent>
-                                    <RowTemplate>
-                                        <MudTd DataLabel="Address Line 1">@ProductContext.Name</MudTd>
-                                        <MudTd DataLabel="Postal Code">@ProductContext.Description</MudTd>
-                                        <MudTd DataLabel="Address Line 2">@ProductContext.CountMinOne</MudTd>
-                                        <MudTd DataLabel="Address Line 2">@ProductContext.PrizeOne</MudTd>
-                                        <MudTd DataLabel="Address Line 2">@ProductContext.CountAll</MudTd>
-                                    </RowTemplate>
-                                </MudTable>
-                            </MudCardContent>
-                        </MudCard>
-                    </td>
-                </MudTr>
-            }
-        </ChildRowContent>
+    <ChildRowContent>
+        @if (context.ShowDetails)
+        {
+            <MudTr>
+                <td colspan="12">
+                    <MudCard Outlined="true" Elevation="0" Class="list-products borderTableFarmhouses">
+                        <MudCardContent Class="pa-0">
+                            <MudTable Items="@context.Products" Context="ProductContext" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0">
+                                <HeaderContent>
+                                    <MudTh>@loc["X_Name"]</MudTh>
+                                    <MudTh>@loc["X_Description"]</MudTh>
+                                    <MudTh>@loc["Product_Minimal_Amount"]</MudTh>
+                                    <MudTh>@loc["Product_Prize_One"]</MudTh>
+                                    <MudTh>@loc["Product_Total_Quantity"]</MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd DataLabel="Address Line 1">@ProductContext.Name</MudTd>
+                                    <MudTd DataLabel="Postal Code">@ProductContext.Description</MudTd>
+                                    <MudTd DataLabel="Address Line 2">@ProductContext.CountMinOne</MudTd>
+                                    <MudTd DataLabel="Address Line 2">@ProductContext.PrizeOne</MudTd>
+                                    <MudTd DataLabel="Address Line 2">@ProductContext.CountAll</MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        </MudCardContent>
+                    </MudCard>
+                </td>
+            </MudTr>
+        }
+    </ChildRowContent>
 
-        <PagerContent>
-            <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
-        </PagerContent>
-    </MudTable>
+    <PagerContent>
+        <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
+    </PagerContent>
+</MudTable>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
 }
 
 @code {
     [Parameter]
     public List<FarmhouseViewModel> ListFarmhousesVM { get; set; }
 
+    bool isLoading = false;
+    string? errorMessage;
     public List<FarmhouseViewModel> originalFarmhousesList { get; set; }
     private bool isFavoriteFilterActive = false;
     private int[] CurrentListFavorite;
@@ -157,21 +157,35 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
-        idUser = UserStateService.CurrentUser?.IdUser;
-
-        if (!string.IsNullOrEmpty(idUser))
+        try
         {
-            CurrentListFavorite = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUserOnlyIds(idUser);
-            CurrentListOpinion = await OpinionService.GetOpinionFarmhousesForUserOnlyIds(idUser);
-        }
+            isLoading = true;
+            errorMessage = null;
+            int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
+            idUser = UserStateService.CurrentUser?.IdUser;
 
-        ListFarmhousesVM = await FarmhouseService.GetFarmhousesWithProductsAndButton(CurrentListFavorite, CurrentListOpinion, idFarmhouse);
-        originalFarmhousesList = ListFarmhousesVM;
-        // 3 types of users
-        // 1. Not logged                            idUser null + idFarmhouse null
-        // 2. have account without farmhouse        idUser not null + idFarmhouse null
-        // 3. have account with farmhouse           idUser not null + idFarmhouse not null
+            if (!string.IsNullOrEmpty(idUser))
+            {
+                CurrentListFavorite = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUserOnlyIds(idUser);
+                CurrentListOpinion = await OpinionService.GetOpinionFarmhousesForUserOnlyIds(idUser);
+            }
+
+            ListFarmhousesVM = await FarmhouseService.GetFarmhousesWithProductsAndButton(CurrentListFavorite, CurrentListOpinion, idFarmhouse);
+            originalFarmhousesList = ListFarmhousesVM;
+
+            // 3 types of users
+            // 1. Not logged                            idUser null + idFarmhouse null
+            // 2. have account without farmhouse        idUser not null + idFarmhouse null
+            // 3. have account with farmhouse           idUser not null + idFarmhouse not null
+        }
+        catch(Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
+        }
     }
 
     void ShowFarmhouse(int id)
