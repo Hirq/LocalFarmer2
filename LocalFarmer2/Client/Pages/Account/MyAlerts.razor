@@ -24,7 +24,7 @@ else
             <MudExpansionPanel>
                 <TitleContent>
                     <div class="d-flex">
-                        <MudText><b>@group.Key</b></MudText>
+                        <MudText><b>@GetAlertName(@group.Key)</b></MudText>
                         <MudChip Color="Color.Primary" Size="Size.Small" Class="ml-2">@group.Count()</MudChip>
                     </div>
                 </TitleContent>
@@ -66,9 +66,25 @@ else
             MessageAlertEnum.EditDetails => (Icons.Material.Filled.EditNote, Color.Default),
             MessageAlertEnum.NewSubscriber => (Icons.Material.Filled.PersonAdd, Color.Primary),
             MessageAlertEnum.NewOpinion => (Icons.Material.Filled.Star, Color.Warning),
-            MessageAlertEnum.Welcome => (Icons.Material.Filled.WavingHand, Color.Success),
             MessageAlertEnum.NewMessageChat => (Icons.Material.Filled.Chat, Color.Info),
             _ => (Icons.Material.Filled.Notifications, Color.Default)
         };
+    }
+
+    private string GetAlertName(MessageAlertEnum alertEnum)
+    {
+        var name = alertEnum switch
+        {
+            MessageAlertEnum.FarmhouseIsOpen => $"{loc["Alert_IsOpen_Farmhouse"]}",
+            MessageAlertEnum.NewProduct => $"{loc["Alert_Add_Product"]}",
+            MessageAlertEnum.EditProduct => $"{loc["Alert_Edit_Product"]}",
+            MessageAlertEnum.EditDetails => $"{loc["Alert_Edit_Farmhouse"]}",
+            MessageAlertEnum.NewSubscriber => $"{loc["Alert_Add_Subscribe"]}",
+            MessageAlertEnum.NewOpinion => $"{loc["Alert_Add_Opinion"]}",
+            MessageAlertEnum.NewMessageChat => $"{loc["Alert_Message"]}",
+            _ => $"{loc["Alert_Others"]}"
+        };
+
+        return name.CapitalizeFirst();
     }
 }

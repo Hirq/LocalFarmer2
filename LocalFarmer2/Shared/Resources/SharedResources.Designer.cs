@@ -286,6 +286,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edited farmhouse is open.
+        /// </summary>
+        internal static string Alert_IsOpen_Farmhouse {
+            get {
+                return ResourceManager.GetString("Alert_IsOpen_Farmhouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to login.
         /// </summary>
         internal static string Alert_Login {
@@ -300,6 +309,15 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string Alert_Message {
             get {
                 return ResourceManager.GetString("Alert_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Others.
+        /// </summary>
+        internal static string Alert_Others {
+            get {
+                return ResourceManager.GetString("Alert_Others", resourceCulture);
             }
         }
         

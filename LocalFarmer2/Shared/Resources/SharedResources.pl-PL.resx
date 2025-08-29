@@ -507,4 +507,10 @@
   <data name="Farmhouse_Average_Rating" xml:space="preserve">
     <value>Średnia ocen</value>
   </data>
+  <data name="Alert_IsOpen_Farmhouse" xml:space="preserve">
+    <value>Zmiana czy gospodarstwo otwarte</value>
+  </data>
+  <data name="Alert_Others" xml:space="preserve">
+    <value>Inne</value>
+  </data>
 </root>

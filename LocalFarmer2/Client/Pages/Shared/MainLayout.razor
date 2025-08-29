@@ -20,6 +20,7 @@
                        ThumbIconColor="@(!isDarkMode ? Color.Warning : Color.Primary)"
                        onclick="@(() => ToggleTheme())" />
             <AuthorizeView>
+@*                 TODO: Alerty
                 <div class="cursor-pointer">
                     @if (newAlerts > 0)
                     {
@@ -54,17 +55,18 @@
                             }
                         </MudMenu>
                     }
-                </div>
+                </div> *@
                 <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.MoreVert" TransformOrigin="Origin.TopRight" Color="Color.Inherit">
                     @if (UserStateService.CurrentUser?.IdFarmhouse != null)
                     {
-                        <MudMenuItem Href="/editfarmhouse">@loc["Farmhouse_Edit_Farmhouse"]</MudMenuItem>
-                        <MudMenuItem Href="/myaccount">@loc["Account_My_Account"]</MudMenuItem>
+                        <MudMenuItem Icon="@Icons.Material.Filled.Edit" Href="/editfarmhouse">@loc["Farmhouse_Edit_Farmhouse"]</MudMenuItem>
+                        <MudMenuItem Icon="@Icons.Material.Filled.AccountBox" Href="/myaccount">@loc["Account_My_Account"]</MudMenuItem>
+                        <MudMenuItem Icon="@Icons.Material.Filled.Notifications" Href="/myalerts">@loc["X_Alerts"]</MudMenuItem>
                     }
                     else
                     {
-                        <MudMenuItem Href="/addfarmhouse">@loc["Farmhouse_Add_Farmhouse"]</MudMenuItem>
-                        <MudMenuItem Href="/myaccount">@loc["Account_My_Account"]</MudMenuItem>
+                        <MudMenuItem Icon="@Icons.Material.Filled.Edit" Href="/addfarmhouse">@loc["Farmhouse_Add_Farmhouse"]</MudMenuItem>
+                        <MudMenuItem Icon="@Icons.Material.Filled.AccountBox" Href="/myaccount">@loc["Account_My_Account"]</MudMenuItem>
                     }
                 </MudMenu>
             </AuthorizeView>

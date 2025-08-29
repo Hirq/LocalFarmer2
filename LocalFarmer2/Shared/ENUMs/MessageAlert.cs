@@ -9,7 +9,6 @@
         //
         NewSubscriber,
         NewOpinion,
-        Welcome,
         NewMessageChat
         //NewMessageFromForm - nowa wiadomość z formularza
     }
@@ -34,21 +33,19 @@
             switch (AlertEnum)
             {
                 case MessageAlertEnum.FarmhouseIsOpen:
-                    return $"Farmhouse {Value} is actually {((bool)IsOpen ? "open" : "close")}";
+                    return $"{Value} - {((bool)IsOpen ? "open" : "close")}";
                 case MessageAlertEnum.NewProduct:
-                    return $"Farmhouse {Value} add new product {Value2}";
+                    return $"{Value} - {Value2}";
                 case MessageAlertEnum.EditProduct:
-                    return $"Farmhouse {Value} edit product {Value2}";
+                    return $"{Value} - {Value2}";
                 case MessageAlertEnum.EditDetails:
-                    return $"Farmhouse {Value} change information";
+                    return $"{Value}";
                 case MessageAlertEnum.NewSubscriber:
-                    return $"New Subscriber: {Value}";
+                    return $"{Value}";
                 case MessageAlertEnum.NewOpinion:
-                    return $"New Opinion: {Value}";
-                case MessageAlertEnum.Welcome:
-                    return $"Welcome Localfarmer";
+                    return $"{Value}";
                 case MessageAlertEnum.NewMessageChat:
-                    return $"You have new message in chat from: {Value}";
+                    return $"{Value}";
                 default:
                     return string.Empty;
             }
