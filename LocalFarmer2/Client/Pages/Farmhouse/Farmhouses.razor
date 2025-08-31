@@ -1,4 +1,5 @@
 ﻿@page "/farmhouses"
+@inherits BasePage
 @inject IFarmhouseService FarmhouseService
 @inject IProductService ProductService
 @inject IFavoriteFarmhouseService FavoriteFarmhouseService
@@ -155,37 +156,24 @@
         StateHasChanged();
     }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task LoadDataAsync()
     {
-        try
-        {
-            isLoading = true;
-            errorMessage = null;
-            int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
-            idUser = UserStateService.CurrentUser?.IdUser;
+        int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
+        idUser = UserStateService.CurrentUser?.IdUser;
 
-            if (!string.IsNullOrEmpty(idUser))
-            {
-                CurrentListFavorite = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUserOnlyIds(idUser);
-                CurrentListOpinion = await OpinionService.GetOpinionFarmhousesForUserOnlyIds(idUser);
-            }
-
-            ListFarmhousesVM = await FarmhouseService.GetFarmhousesWithProductsAndButton(CurrentListFavorite, CurrentListOpinion, idFarmhouse);
-            originalFarmhousesList = ListFarmhousesVM;
-
-            // 3 types of users
-            // 1. Not logged                            idUser null + idFarmhouse null
-            // 2. have account without farmhouse        idUser not null + idFarmhouse null
-            // 3. have account with farmhouse           idUser not null + idFarmhouse not null
-        }
-        catch(Exception ex)
+        if (!string.IsNullOrEmpty(idUser))
         {
-            errorMessage = ex.Message;
+            CurrentListFavorite = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUserOnlyIds(idUser);
+            CurrentListOpinion = await OpinionService.GetOpinionFarmhousesForUserOnlyIds(idUser);
         }
-        finally
-        {
-            isLoading = false;
-        }
+
+        ListFarmhousesVM = await FarmhouseService.GetFarmhousesWithProductsAndButton(CurrentListFavorite, CurrentListOpinion, idFarmhouse);
+        originalFarmhousesList = ListFarmhousesVM;
+
+        // 3 types of users
+        // 1. Not logged                            idUser null + idFarmhouse null
+        // 2. have account without farmhouse        idUser not null + idFarmhouse null
+        // 3. have account with farmhouse           idUser not null + idFarmhouse not null
     }
 
     void ShowFarmhouse(int id)

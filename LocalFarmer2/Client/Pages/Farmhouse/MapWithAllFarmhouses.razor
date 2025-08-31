@@ -1,4 +1,5 @@
 ﻿@page "/mapfarmhouses"
+@inherits BasePage
 @using Newtonsoft.Json.Linq
 @using System.Globalization
 @inject IFarmhouseService FarmhouseService
@@ -25,7 +26,7 @@
     private IJSObjectReference? module;
     private string? result;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task LoadDataAsync()
     {
         if (!string.IsNullOrEmpty(UserStateService.CurrentUser?.FullName))
         {

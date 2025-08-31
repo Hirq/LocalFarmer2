@@ -1,5 +1,5 @@
 ﻿@page "/addFarmhouse"
-@inherits LocalFarmer2.Client.Pages.BasePage
+@inherits BasePage
 @inject IMapper mapper
 @inject IFarmhouseService FarmhouseService
 @inject IJSRuntime JSRuntime
@@ -55,9 +55,10 @@
     private MudTextField<string> longitudeField;
     private MudSelect<string> paymentMethodsField;
 
-    protected async override Task OnInitializedAsync()
+    protected override Task LoadDataAsync()
     {
         FileService.ClearVariables();
+        return Task.CompletedTask;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

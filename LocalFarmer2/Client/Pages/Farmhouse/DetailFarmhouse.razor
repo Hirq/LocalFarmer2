@@ -1,4 +1,5 @@
 ﻿@page "/farmhouse/{id:int}"
+@inherits BasePage
 @using Newtonsoft.Json.Linq
 @inject IFarmhouseService FarmhouseService
 @inject IAccountService AccountService
@@ -119,7 +120,7 @@
     private bool isViewMyFarmhouse = false;
     private string? buttonStyle;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task LoadDataAsync()
     {
         farmhouse = await FarmhouseService.GetFarmhouse(Id);
         IdUser = (await AccountService.GetUserByFarmhouseId(Id)).IdUser;
@@ -135,8 +136,6 @@
             isViewMyFarmhouse = true;
         }
         SetStyle();
-
-        await base.OnInitializedAsync();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
