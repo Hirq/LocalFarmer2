@@ -583,6 +583,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User isn&apos;t logged.
+        /// </summary>
+        internal static string ErrorUserIsNotLogged {
+            get {
+                return ResourceManager.GetString("ErrorUserIsNotLogged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add farmhouse.
         /// </summary>
         internal static string Farmhouse_Add_Farmhouse {
