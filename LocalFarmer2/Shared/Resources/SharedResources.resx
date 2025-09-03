@@ -516,4 +516,7 @@
   <data name="ErrorUserIsNotLogged" xml:space="preserve">
     <value>User isn't logged</value>
   </data>
+  <data name="ErrorUserDoesnotHaveFarmhouse" xml:space="preserve">
+    <value>User doesn't have a farmhouse</value>
+  </data>
 </root>

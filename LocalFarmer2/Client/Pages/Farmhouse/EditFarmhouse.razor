@@ -122,7 +122,7 @@ else
 
         if (UserStateService.CurrentUser?.IdFarmhouse == null)
         {
-            errorMessage = "XXX";
+            errorMessage = $"{loc["ErrorUserDoesnotHaveFarmhouse"]}";
             return;
         }
 
