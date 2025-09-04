@@ -234,7 +234,7 @@ else
         if (currentUser?.IdFarmhouse != null)
         {
             await FarmhouseService.DeleteFarmhouse((int)currentUser.IdFarmhouse);
-            UserStateService.CurrentUser.FarmhouseName = null;
+            UserStateService.CurrentUser.FarmhouseName = string.Empty;
             UserStateService.CurrentUser.IdFarmhouse = null;
             AlertService.SetDeleteAlert($"{@loc["Alert_Delete_Farmhouse"]} {farmhouseDto.Name}");
             NavigationManager.NavigateTo("/");
