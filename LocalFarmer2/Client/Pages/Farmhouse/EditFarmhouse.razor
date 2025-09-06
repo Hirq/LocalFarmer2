@@ -101,8 +101,10 @@ else
     public DialogData dialogData = new DialogData();
     public bool initIsOpen;
 
-    protected override async Task LoadDataAsync()
+    protected async override Task LoadDataAsync()
     {
+        isLoading = true;
+
         dialogData = new DialogData()
         {
             Title = $"{loc["X_Delete"]} {loc["X_Farmhouse"]}",
@@ -135,6 +137,8 @@ else
         {
             FileService.SetName($"{loc["Farmhouse_ImageIsSet"]}");
         }
+        isLoading = false;
+
     }
 
     protected async override Task OnParametersSetAsync()
