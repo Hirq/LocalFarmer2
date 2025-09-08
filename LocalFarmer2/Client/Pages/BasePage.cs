@@ -16,6 +16,7 @@ namespace LocalFarmer2.Client.Pages
                 errorMessage = null;
 
                 await LoadDataAsync();
+                Console.WriteLine("LoadDataAsync try end");
             }
             catch (Exception ex)
             {
@@ -24,6 +25,7 @@ namespace LocalFarmer2.Client.Pages
             finally
             {
                 isLoading = false;
+                Console.WriteLine("LoadDataAsync finally end");
             }
         }
 
