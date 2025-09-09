@@ -83,8 +83,6 @@ else
     [Parameter]
     public FarmhouseDto farmhouseDto { get; set; }
 
-    private bool isLoading = false;
-    private string? errorMessage;
     private FarmhouseDto originalFarmhouseDto { get; set; }
     private IJSObjectReference? module;
     private string? result;
@@ -103,7 +101,7 @@ else
 
     protected async override Task LoadDataAsync()
     {
-        isLoading = true;
+        // isLoading = true;
 
         dialogData = new DialogData()
         {
@@ -137,7 +135,7 @@ else
         {
             FileService.SetName($"{loc["Farmhouse_ImageIsSet"]}");
         }
-        isLoading = false;
+        // isLoading = false;
 
     }
 
