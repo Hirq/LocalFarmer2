@@ -1,4 +1,5 @@
 ﻿@page "/productsFarmhouse/{id:int}"
+@inherits BasePage
 @inject IProductService ProductService
 @inject IFarmhouseService FarmhouseService
 @inject NavigationManager NavigationManager
@@ -51,23 +52,10 @@
     List<Product> ListProducts = new List<Product>();
     private string searchString = null;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task LoadDataAsync()
     {
-        try
-        {
-            isLoading = true;
-            errorMessage = null;
-            farmhouse = await FarmhouseService.GetFarmhouse(Id);
-            ListProducts = farmhouse.Products.ToList();
-        }
-        catch (Exception ex)
-        {
-            errorMessage = ex.Message;
-        }
-        finally
-        {
-            isLoading = false;
-        }
+        farmhouse = await FarmhouseService.GetFarmhouse(Id);
+        ListProducts = farmhouse.Products.ToList();
     }
 
     void ShowProduct(int id)

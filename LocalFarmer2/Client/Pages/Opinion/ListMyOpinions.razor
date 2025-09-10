@@ -1,4 +1,5 @@
 ﻿@page "/myopinionsfarmhouses"
+@inherits BasePage
 @inject IOpinionService OpinionService
 @inject IMapper Mapper
 @inject IAlertService AlertService
@@ -58,7 +59,6 @@
 
 @code {
     List<Opinion> ListMyOpinionsFarmhouse = new List<Opinion>();
-    bool isLoading = false;
     string? errorMessage;
     private string searchString = null;
     private string userId = null;
@@ -66,30 +66,17 @@
     EditOpinionDto opinionDto { get; set; }
     public DialogData dialogData = new DialogData();
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task LoadDataAsync()
     {
-        try
-        {
-            isLoading = true;
-            errorMessage = null;
-            userId = UserStateService.CurrentUser.IdUser;
-            ListMyOpinionsFarmhouse = await OpinionService.GetOpinionFarmhousesForUser(userId);
+        userId = UserStateService.CurrentUser.IdUser;
+        ListMyOpinionsFarmhouse = await OpinionService.GetOpinionFarmhousesForUser(userId);
 
-            dialogData = new DialogData()
-            {
-                Title = $"{loc["X_Delete"]} {loc["X_Opinion"]}",
-                ButtonName = loc["X_Delete"],
-                Content = $"{loc["X_Are_You_Sure_Delete_This"]} {loc["X_Opinion"]}",
-            };
-        }
-        catch (Exception ex)
+        dialogData = new DialogData()
         {
-            errorMessage = ex.Message;
-        }
-        finally
-        {
-            isLoading = false;
-        }
+            Title = $"{loc["X_Delete"]} {loc["X_Opinion"]}",
+            ButtonName = loc["X_Delete"],
+            Content = $"{loc["X_Are_You_Sure_Delete_This"]} {loc["X_Opinion"]}",
+        };
     }
 
     private async void DeleteOpinion(int idOpinion)

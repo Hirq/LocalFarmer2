@@ -1,4 +1,5 @@
 ﻿@page "/myaccount"
+@inherits BasePage
 @inject IMapper mapper;
 @inject IAccountService AccountService
 @inject IAlertService AlertService
@@ -43,35 +44,19 @@ else
     [Parameter]
     public UserDto userDto { get; set; }
 
-    private bool isLoading = false;
-    private string? errorMessage;
-
-    protected async override Task OnInitializedAsync()
+    protected async override Task LoadDataAsync()
     {
-        try
-        {
-            isLoading = true;
-            errorMessage = null;
-            bool isUserSignUp = await AccountService.IsUserLogged();
+        bool isUserSignUp = await AccountService.IsUserLogged();
 
-            if (isUserSignUp)
-            {
-                userDto = await AccountService.GetCurrentUser();
-            }
-            else
-            {
-                // errorMessage = loc["Farmhouse_Missing_For_Edit"];
-                errorMessage = "XXX";
-                return;
-            }
-        }
-        catch (Exception ex)
+        if (isUserSignUp)
         {
-            errorMessage = ex.Message;
+            userDto = await AccountService.GetCurrentUser();
         }
-        finally
+        else
         {
-            isLoading = false;
+            // errorMessage = loc["Farmhouse_Missing_For_Edit"];
+            errorMessage = "XXX";
+            return;
         }
     }
 

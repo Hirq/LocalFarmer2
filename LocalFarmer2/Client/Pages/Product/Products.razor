@@ -1,4 +1,5 @@
 ﻿@page "/products"
+@inherits BasePage
 @inject IProductService ProductService
 @inject NavigationManager NavigationManager
 @inject HttpClient httpClient
@@ -51,30 +52,17 @@
     string? errorMessage;
     private string searchString = null;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task LoadDataAsync()
     {
-        try
-        {
-            isLoading = true;
-            errorMessage = null;
-            int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
+        int? idFarmhouse = UserStateService.CurrentUser?.IdFarmhouse;
 
-            if (idFarmhouse != null)
-            {
-                ListProducts = await ProductService.GetProductsWithoutFarmhouse((int)idFarmhouse);
-            }
-            else
-            {
-                ListProducts = await ProductService.GetProducts();
-            }
-        }
-        catch (Exception ex)
+        if (idFarmhouse != null)
         {
-            errorMessage = ex.Message;
+            ListProducts = await ProductService.GetProductsWithoutFarmhouse((int)idFarmhouse);
         }
-        finally
+        else
         {
-            isLoading = false;
+            ListProducts = await ProductService.GetProducts();
         }
     }
 
