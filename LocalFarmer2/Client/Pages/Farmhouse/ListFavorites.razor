@@ -10,50 +10,58 @@
 
 <PageTitle>@loc["Dashboard_Favorites_Farmhouses"] | @Globals.AppName</PageTitle>
 
-<MudTable Items="@ListFavoritesFarmhouse" Loading="@isLoading" SortLabel="Sort By" Hover="true" Filter="@(farmhouse => UtilsService.FilterFunc(farmhouse, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
-    <ToolBarContent>
-        <MudText Typo="Typo.h6">@loc["Dashboard_Favorites_Farmhouses"]</MudText>
-        <MudSpacer />
-        <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
-    </ToolBarContent> 
-
-    <HeaderContent>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FavoriteFarmhouse, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FavoriteFarmhouse, object>(x=>x.IdFarmhouse)">Id @loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FavoriteFarmhouse, object>(x=>x.Farmhouse.Name)">@loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
-        <MudTh>@loc["X_Action"]</MudTh>
-        <MudTh>@loc["Button_Go_To_Details"]</MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel="Nr">@context.Id</MudTd>
-        <MudTd DataLabel="Nr">@context.IdFarmhouse</MudTd>
-        <MudTd DataLabel="Nr">@context.Farmhouse.Name</MudTd>
-        <MudTd DataLabel="Edit">
-            <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteFavorite(context.Id), Color.Error)' />
-        </MudTd>
-        <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.Id)">@loc["Button_Go_To_Details"]</MudButton></MudTd>
-    </RowTemplate>
-    <PagerContent>
-        <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
-    </PagerContent>
-</MudTable>
-
-@if (!string.IsNullOrEmpty(errorMessage))
+@if (isLoading)
+{
+    <MudProgressCircular Class="m-4" Color="Color.Primary" />
+}
+else if (!string.IsNullOrEmpty(errorMessage))
 {
     <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
+}
+else
+    {
+    <MudTable Items="@ListFavoritesFarmhouse" Loading="@isLoading" SortLabel="Sort By" Hover="true" Filter="@(farmhouse => UtilsService.FilterFunc(farmhouse, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">@loc["Dashboard_Favorites_Farmhouses"]</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
+        </ToolBarContent> 
+
+        <HeaderContent>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FavoriteFarmhouse, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FavoriteFarmhouse, object>(x=>x.IdFarmhouse)">Id @loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FavoriteFarmhouse, object>(x=>x.Farmhouse.Name)">@loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
+            <MudTh>@loc["X_Action"]</MudTh>
+            <MudTh>@loc["Button_Go_To_Details"]</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Nr">@context.Id</MudTd>
+            <MudTd DataLabel="Nr">@context.IdFarmhouse</MudTd>
+            <MudTd DataLabel="Nr">@context.Farmhouse.Name</MudTd>
+            <MudTd DataLabel="Edit">
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteFavorite(context.Id), Color.Error)' />
+            </MudTd>
+            <MudTd DataLabel="Molar mass"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.Id)">@loc["Button_Go_To_Details"]</MudButton></MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
+        </PagerContent>
+    </MudTable>
 }
 
 @code {
     List <FavoriteFarmhouse> ListFavoritesFarmhouse = new List<FavoriteFarmhouse>();
-    string? errorMessage;
     private string searchString = null;
-    private string userId = null;
     public DialogData dialogData = new DialogData();
 
     protected override async Task LoadDataAsync()
     {
-        userId = UserStateService.CurrentUser.IdUser;
-        ListFavoritesFarmhouse = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUser(userId);
+        if (!await EnsureLoggedInAsync())
+        {
+            return;
+        }
+
+        ListFavoritesFarmhouse = await FavoriteFarmhouseService.GetFavoriteFarmhousesForUser(UserStateService.CurrentUser.IdUser);
 
         dialogData = new DialogData()
         {

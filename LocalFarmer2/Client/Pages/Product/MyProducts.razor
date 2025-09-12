@@ -11,53 +11,62 @@
 
 <PageTitle>@loc["Product_My_Products"] | @Globals.AppName</PageTitle>
 
-<MudTable Items="@ListProducts" Loading="@isLoading" SortLabel="Sort By" Hover="true" Filter="@(product => UtilsService.FilterFunc(product, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
-    <ToolBarContent>
-        <MudText Typo="Typo.h6">@loc["Product_My_Products"]</MudText>
-        <MudSpacer />
-        <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
-    </ToolBarContent>
-    <HeaderContent>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Product, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.Name)">@loc["X_Name"]</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.Description)">@loc["X_Description"]</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountMinOne)">@loc["Product_Minimal_Amount"]</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.PrizeOne)">@loc["Product_Prize_One"]</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountAll)">@loc["Product_Total_Quantity"]</MudTableSortLabel></MudTh>
-        <MudTh>@loc["X_Action"]</MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel="Id">@context.Id</MudTd>
-            <MudTd DataLabel="Name">@context.Name</MudTd>
-            <MudTd DataLabel="@loc["X_Description"]">@context.Description</MudTd>
-            <MudTd DataLabel="Count min one">@context.CountMinOne</MudTd>
-            <MudTd DataLabel="Prize one">@context.PrizeOne</MudTd>
-            <MudTd DataLabel="Count all">@context.CountAll</MudTd>
-            <MudTd DataLabel="Edit">
-                <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@(() => EditProduct(context.Id))" />
-                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteProduct(context.Id), Color.Error)' />
-            </MudTd>
-    </RowTemplate>
-    <PagerContent>
-        <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
-    </PagerContent>
-</MudTable>
-
-@if (!string.IsNullOrEmpty(errorMessage))
+@if (isLoading)
+{
+    <MudProgressCircular Class="m-4" Color="Color.Primary" />
+}
+else if (!string.IsNullOrEmpty(errorMessage))
 {
     <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
+}
+else
+{
+    <MudTable Items="@ListProducts" Loading="@isLoading" SortLabel="Sort By" Hover="true" Filter="@(product => UtilsService.FilterFunc(product, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">@loc["Product_My_Products"]</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Product, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.Name)">@loc["X_Name"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.Description)">@loc["X_Description"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountMinOne)">@loc["Product_Minimal_Amount"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.PrizeOne)">@loc["Product_Prize_One"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountAll)">@loc["Product_Total_Quantity"]</MudTableSortLabel></MudTh>
+            <MudTh>@loc["X_Action"]</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Id">@context.Id</MudTd>
+                <MudTd DataLabel="Name">@context.Name</MudTd>
+                <MudTd DataLabel="@loc["X_Description"]">@context.Description</MudTd>
+                <MudTd DataLabel="Count min one">@context.CountMinOne</MudTd>
+                <MudTd DataLabel="Prize one">@context.PrizeOne</MudTd>
+                <MudTd DataLabel="Count all">@context.CountAll</MudTd>
+                <MudTd DataLabel="Edit">
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@(() => EditProduct(context.Id))" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteProduct(context.Id), Color.Error)' />
+                </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
+        </PagerContent>
+    </MudTable>
 }
 
 @code {
     IEnumerable<Product> ListProducts = new List<Product>();
-    bool isLoading = false;
-    string? errorMessage;
     public DialogData dialogData = new DialogData();
     int idFarmhouse;
     private string searchString = null;
 
     protected override async Task LoadDataAsync()
     {
+        if (!await EnsureLoggedInAsync())
+        {
+            return;
+        }
+
         idFarmhouse = (int)UserStateService.CurrentUser?.IdFarmhouse;
         ListProducts = await ProductService.GetProductsFarmhouse(idFarmhouse);
         dialogData = new DialogData()

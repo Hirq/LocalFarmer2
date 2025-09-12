@@ -8,46 +8,50 @@
 
 <PageTitle>Products Farmhouse: @farmhouse.Name | @Globals.AppName</PageTitle>
 
-<MudTable Items="@ListProducts" Loading="@isLoading" SortLabel="Sort By" Hover="true" Filter="@(product => UtilsService.FilterFunc(product, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
-    <ToolBarContent>
-        <MudText Typo="Typo.h6">@loc["X_Products"] @loc["X_Farmhouse"]: @farmhouse.Name</MudText>
-        <MudSpacer />
-        <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
-    </ToolBarContent>
-    <HeaderContent>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Product, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.Name)">@loc["X_Name"]</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.Description)">@loc["X_Description"]</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountMinOne)">@loc["Product_Minimal_Amount"]</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.PrizeOne)">@loc["Product_Prize_One"]</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountAll)">@loc["Product_Total_Quantity"]</MudTableSortLabel></MudTh>
-        <MudTh>@loc["X_Details"]</MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel="Id">@context.Id</MudTd>
-        <MudTd DataLabel="Name">@context.Name</MudTd>
-        <MudTd DataLabel="@loc["X_Description"]">@context.Description</MudTd>
-        <MudTd DataLabel="Count min one">@context.CountMinOne</MudTd>
-        <MudTd DataLabel="Prize one">@context.PrizeOne</MudTd>
-        <MudTd DataLabel="Count all">@context.CountAll</MudTd>
-        <MudTd DataLabel="Details"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProduct(context.Id)">Go to detail</MudButton></MudTd>
-    </RowTemplate>
-    <PagerContent>
-        <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
-    </PagerContent>
-</MudTable>
-
-@if (!string.IsNullOrEmpty(errorMessage))
+@if (isLoading)
+{
+    <MudProgressCircular Class="m-4" Color="Color.Primary" />
+}
+else if (!string.IsNullOrEmpty(errorMessage))
 {
     <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
+}
+else
+{
+    <MudTable Items="@ListProducts" Loading="@isLoading" SortLabel="Sort By" Hover="true" Filter="@(product => UtilsService.FilterFunc(product, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">@loc["X_Products"] @loc["X_Farmhouse"]: @farmhouse.Name</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Product, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.Name)">@loc["X_Name"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.Description)">@loc["X_Description"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountMinOne)">@loc["Product_Minimal_Amount"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.PrizeOne)">@loc["Product_Prize_One"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountAll)">@loc["Product_Total_Quantity"]</MudTableSortLabel></MudTh>
+            <MudTh>@loc["X_Details"]</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Id">@context.Id</MudTd>
+            <MudTd DataLabel="Name">@context.Name</MudTd>
+            <MudTd DataLabel="@loc["X_Description"]">@context.Description</MudTd>
+            <MudTd DataLabel="Count min one">@context.CountMinOne</MudTd>
+            <MudTd DataLabel="Prize one">@context.PrizeOne</MudTd>
+            <MudTd DataLabel="Count all">@context.CountAll</MudTd>
+            <MudTd DataLabel="Details"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProduct(context.Id)">Go to detail</MudButton></MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
+        </PagerContent>
+    </MudTable>
 }
 
 @code {
     [Parameter]
     public int Id { get; set; }
 
-    bool isLoading = false;
-    string? errorMessage;
     Farmhouse farmhouse = new Farmhouse();
     List<Product> ListProducts = new List<Product>();
     private string searchString = null;

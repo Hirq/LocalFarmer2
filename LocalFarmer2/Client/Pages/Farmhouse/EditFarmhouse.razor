@@ -36,7 +36,7 @@ else
             <DataAnnotationsValidator />
             <MudGrid>
                 <MudItem xs="12">
-                    @if (@currentUser?.IdFarmhouse != null)
+                    @if (@UserStateService.CurrentUser?.IdFarmhouse != null)
                     {
                         <MudPaper Class="pa-4 d-flex justify-space-between mudPaperBottom">
                             <div>
@@ -88,7 +88,6 @@ else
     private string? result;
     private string? latitude;
     private string? longitude;
-    private UserDto? currentUser;
     private bool isUserSignUp;
     private IEnumerable<string> SelectedPayment { get; set; } = PaymentMethodInfo.DefaultPayment;
     private MudTextField<string> farmhouseNameField;
@@ -101,30 +100,24 @@ else
 
     protected async override Task LoadDataAsync()
     {
+        if (!await EnsureLoggedInAsync())
+        {
+            return;
+        }
+
+        if (!await EnsureHasFarmhouseAsync())
+        {
+            return;
+        }
+
         dialogData = new DialogData()
         {
             Title = $"{loc["X_Delete"]} {loc["X_Farmhouse"]}",
             ButtonName = loc["X_Delete"],
             Content = $"{loc["X_Are_You_Sure_Delete_This"]} {loc["X_Farmhouse"]}",
         };
-        isUserSignUp = await AccountService.IsUserLogged();
 
-        if (!isUserSignUp)
-        {
-            errorMessage = $"{loc["ErrorUserIsNotLogged"]}";
-            return;
-        }
-
-        currentUser = await AccountService.GetCurrentUser();
-        UserStateService.CurrentUser = currentUser;
-
-        if (UserStateService.CurrentUser?.IdFarmhouse == null)
-        {
-            errorMessage = $"{loc["ErrorUserDoesnotHaveFarmhouse"]}";
-            return;
-        }
-
-        var farmhouse = await FarmhouseService.GetFarmhouse((int)currentUser?.IdFarmhouse!);
+        var farmhouse = await FarmhouseService.GetFarmhouse((int)UserStateService.CurrentUser.IdFarmhouse!);
         farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
         originalFarmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
         SelectedPayment = farmhouseDto.PaymentMethods.Split(',').Select(s => s.Trim());
@@ -137,6 +130,11 @@ else
 
     protected async override Task OnParametersSetAsync()
     {
+        if (HasError)
+        {
+            return;
+        }
+
         var client = new HttpClient();
         var raw = await client.GetStringAsync("https://localhost:7239/geojson.json");
         JArray jsonArray = JArray.Parse(raw);
@@ -208,19 +206,19 @@ else
             return;
         }
 
-        await FarmhouseService.EditFarmhouse(farmhouseDto, (int)currentUser?.IdFarmhouse!);
+        await FarmhouseService.EditFarmhouse(farmhouseDto, (int)UserStateService.CurrentUser?.IdFarmhouse!);
         UserStateService.CurrentUser.FarmhouseName = farmhouseDto.Name;
 
         //Alerts
-        var listUsersIds = await FavoriteFarmhouseService.GetFavoriteFarmhouseUsersIds((int)currentUser.IdFarmhouse);
+        var listUsersIds = await FavoriteFarmhouseService.GetFavoriteFarmhouseUsersIds((int)UserStateService.CurrentUser.IdFarmhouse);
         if (farmhouseDto.IsOpen != initIsOpen)
         {
             var messageAlertIsOpen = new MessageAlert(MessageAlertEnum.FarmhouseIsOpen, farmhouseDto.Name, null, farmhouseDto.IsOpen);
-            await AlertService.AddAlerts(listUsersIds, (int)currentUser.IdFarmhouse, true, messageAlertIsOpen);
+            await AlertService.AddAlerts(listUsersIds, (int)UserStateService.CurrentUser.IdFarmhouse, true, messageAlertIsOpen);
         }
 
         var messageAlertEdit = new MessageAlert(MessageAlertEnum.EditDetails, UserStateService.CurrentUser.FarmhouseName);
-        await AlertService.AddAlerts(listUsersIds, (int)currentUser.IdFarmhouse, true, messageAlertEdit);
+        await AlertService.AddAlerts(listUsersIds, (int)UserStateService.CurrentUser.IdFarmhouse, true, messageAlertEdit);
 
         AlertService.SetSuccessAlert($"{@loc["Alert_Successfully"]} {@loc["Alert_Edit_Farmhouse"]} {farmhouseDto.Name}");
         NavigationManager.NavigateTo("/");
@@ -229,9 +227,9 @@ else
 
     private async void DeleteFarmhouse()
     {
-        if (currentUser?.IdFarmhouse != null)
+        if (UserStateService.CurrentUser?.IdFarmhouse != null)
         {
-            await FarmhouseService.DeleteFarmhouse((int)currentUser.IdFarmhouse);
+            await FarmhouseService.DeleteFarmhouse((int)UserStateService.CurrentUser.IdFarmhouse);
             UserStateService.CurrentUser.FarmhouseName = string.Empty;
             UserStateService.CurrentUser.IdFarmhouse = null;
             AlertService.SetDeleteAlert($"{@loc["Alert_Delete_Farmhouse"]} {farmhouseDto.Name}");

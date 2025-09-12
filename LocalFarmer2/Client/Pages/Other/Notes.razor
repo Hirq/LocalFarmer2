@@ -1,4 +1,5 @@
 ﻿@page "/notes"
+@inherits BasePage
 @inject UtilsService UtilsService
 @inject UserStateService UserStateService
 @inject INoteService NoteService
@@ -7,53 +8,64 @@
 
 <PageTitle>@loc["X_Notes"] | @Globals.AppName</PageTitle>
 
-<MudPaper>
-    <div class="mud-table-toolbar titlePage">
-        <MudText Typo="Typo.h6">@loc["X_Notes"]</MudText>
-    </div>
-    <div class="pa-4 d-flex justify-space-between">
-        <div>
-            <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@(() => AddNotePopup())">@loc["Note_Add_Note"]</MudButton>
-         </div>
-         <div>
-            <MudButton Color="Color.Warning" Variant="Variant.Filled" Class="noteButtonFilter" OnClick="@(() => ChangeFilter())">@FilterName</MudButton>
-            <div class="position-indicators">
-                <div class="indicator @(FilterNotes == 2 ? "active" : "")" onclick="@(() => SetFilter(1))"></div>
-                <div class="indicator @(FilterNotes == 0 ? "active" : "")" onclick="@(() => SetFilter(2))"></div>
-                <div class="indicator @(FilterNotes == 1 ? "active" : "")" onclick="@(() => SetFilter(0))"></div>
-            </div>
-         </div>
-    </div>
- </MudPaper>
+@if (isLoading)
+{
+    <MudProgressCircular Class="m-4" Color="Color.Primary" />
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
+}
+else
+{
+    <MudPaper>
+        <div class="mud-table-toolbar titlePage">
+            <MudText Typo="Typo.h6">@loc["X_Notes"]</MudText>
+        </div>
+        <div class="pa-4 d-flex justify-space-between">
+            <div>
+                <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="@(() => AddNotePopup())">@loc["Note_Add_Note"]</MudButton>
+             </div>
+             <div>
+                <MudButton Color="Color.Warning" Variant="Variant.Filled" Class="noteButtonFilter" OnClick="@(() => ChangeFilter())">@FilterName</MudButton>
+                <div class="position-indicators">
+                    <div class="indicator @(FilterNotes == 2 ? "active" : "")" onclick="@(() => SetFilter(1))"></div>
+                    <div class="indicator @(FilterNotes == 0 ? "active" : "")" onclick="@(() => SetFilter(2))"></div>
+                    <div class="indicator @(FilterNotes == 1 ? "active" : "")" onclick="@(() => SetFilter(0))"></div>
+                </div>
+             </div>
+        </div>
+     </MudPaper>
 
-<MudGrid id="noteMudGrid">
-    @if (listNotes?.Count > 0)
-    {
-        @foreach (var item in listNotes)
+    <MudGrid id="noteMudGrid">
+        @if (listNotes?.Count > 0)
         {
-        <MudItem xs="4">
-            <div class="flip-card @((item.IsFlipped ? "flipped" : ""))" @onclick="() => FlipCard(item)">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front d-flex align-center justify-center mud-width-full py-8">
-                        <div class="d-flex flex-column noteText">
-                            <MudText Typo="Typo.h5" Class="text-center">@item.Name</MudText>
-                            <div class="text-center">
-                                <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@(() => EditNotePopup(item))"/>
-                                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => DeleteNotePopup(item)'/>
+            @foreach (var item in listNotes)
+            {
+            <MudItem xs="4">
+                <div class="flip-card @((item.IsFlipped ? "flipped" : ""))" @onclick="() => FlipCard(item)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front d-flex align-center justify-center mud-width-full py-8">
+                            <div class="d-flex flex-column noteText">
+                                <MudText Typo="Typo.h5" Class="text-center">@item.Name</MudText>
+                                <div class="text-center">
+                                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@(() => EditNotePopup(item))"/>
+                                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => DeleteNotePopup(item)'/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flip-card-back d-flex align-center justify-center mud-width-full py-8">
+                            <div class="d-flex flex-column noteText">
+                                <MudText Typo="Typo.body1">@item.Text</MudText>
                             </div>
                         </div>
                     </div>
-                    <div class="flip-card-back d-flex align-center justify-center mud-width-full py-8">
-                        <div class="d-flex flex-column noteText">
-                            <MudText Typo="Typo.body1">@item.Text</MudText>
-                        </div>
-                    </div>
                 </div>
-            </div>
-        </MudItem>
+            </MudItem>
+            }
         }
-    }
-</MudGrid>
+    </MudGrid>
+}
 
 @code {
     public Note note = new Note();
@@ -62,18 +74,21 @@
     public DialogData dialogData = new DialogData();
     private int FilterNotes = 1;
     private string FilterName = string.Empty;
-    private string idUser = string.Empty;
     /*
     0 - All
     1 - Only Active
     2 - Only Archive
     */
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task LoadDataAsync()
     {
-        idUser = UserStateService.CurrentUser.IdUser;
-        await InitializeNotesList(idUser);
-        note.IdUser = idUser;
+        if (!await EnsureLoggedInAsync())
+        {
+            return;
+        }
+
+        await InitializeNotesList(UserStateService.CurrentUser.IdUser);
+        note.IdUser = UserStateService.CurrentUser.IdUser;
         dialogData = new DialogData()
         {
             Title = $"{loc["X_Delete"]} {loc["X_Note"]}",
@@ -132,7 +147,7 @@
     private async Task AddNote()
     {
         await NoteService.AddNote(note);
-        await InitializeNotesList(idUser);
+        await InitializeNotesList(UserStateService.CurrentUser.IdUser);
         SetFilter(1);
         StateHasChanged();
     }
@@ -149,7 +164,7 @@
         note.Id = item.Id;
         note.IsArchive = item.IsArchive;
         await NoteService.EditNote(note);
-        await InitializeNotesList(idUser);
+        await InitializeNotesList(UserStateService.CurrentUser.IdUser);
         SetFilter(FilterNotes - 1);
         StateHasChanged();
     }
@@ -159,7 +174,7 @@
         note.Id = item.Id;
         note.IsArchive = !note.IsArchive;
         await NoteService.EditNote(note);
-        await InitializeNotesList(idUser);
+        await InitializeNotesList(UserStateService.CurrentUser.IdUser);
         SetFilter(!item.IsArchive ? 1 : 2);
         StateHasChanged();
     }
@@ -176,7 +191,7 @@
     private async Task DeleteNote(int id)
     {
         await NoteService.DeleteNote(id);
-        await InitializeNotesList(idUser);
+        await InitializeNotesList(UserStateService.CurrentUser.IdUser);
         StateHasChanged();
     }
 }

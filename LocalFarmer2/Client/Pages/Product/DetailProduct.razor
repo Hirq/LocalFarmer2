@@ -1,94 +1,106 @@
 ﻿@page "/product/{id:int}"
+@inherits BasePage
 @inject IProductService ProductService
 @inject NavigationManager NavigationManager
 
 <PageTitle>@loc["X_Product"] | @Globals.AppName</PageTitle>
 
-<MudPaper Class="pa-4">
-    <MudStack Spacing="2">
-        <div class="d-flex justify-space-between">
-            <div>
-                <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapsePrimary">@(_expandedPrimary ? @loc["Button_Basic_Info"] : @loc["Button_Basic_Info"])</MudButton>
-            </div>   
-            <div>
-                <MudButton Class="product-details-button" Variant="Variant.Filled" Color="Color.Primary" OnClick="ShowFarmhouse">@loc["X_Farmhouse"]</MudButton>
+@if (isLoading)
+{
+    <MudProgressCircular Class="m-4" Color="Color.Primary" />
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
+}
+else
+{
+    <MudPaper Class="pa-4">
+        <MudStack Spacing="2">
+            <div class="d-flex justify-space-between">
+                <div>
+                    <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapsePrimary">@(_expandedPrimary ? @loc["Button_Basic_Info"] : @loc["Button_Basic_Info"])</MudButton>
+                </div>   
+                <div>
+                    <MudButton Class="product-details-button" Variant="Variant.Filled" Color="Color.Primary" OnClick="ShowFarmhouse">@loc["X_Farmhouse"]</MudButton>
+                </div>
             </div>
-        </div>
 
-        <MudCollapse Expanded="_expandedPrimary">
-            <MudGrid>
-                <MudItem xs="1">
-                    <div class="fw-bolder"> @loc["X_Name"] </div>
-                </MudItem>
-                <MudItem xs="11">
-                    @product.Name
-                </MudItem>
-                <MudItem xs="1">
-                    <div class="fw-bolder"> @loc["X_Description"] </div>
-                </MudItem>
-                <MudItem xs="11">
-                    @product.Description
-                </MudItem>
-            </MudGrid>
-        </MudCollapse>
-        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapsePrice" EndIcon="@(_expandedPrice ? Icons.Material.Filled.ArrowDropUp : Icons.Material.Filled.ArrowDropDown)">
-            @(_expandedPrice 
-            ?  @loc["Button_Prize_Info"] 
-            : @loc["Button_Prize_Info"])
-        </MudButton>
-        <MudCollapse Expanded="_expandedPrice">
-            <MudGrid>
-                <MudItem xs="1">
-                    <div class="fw-bolder"> @loc["Product_Minimal_Amount"] </div>
-                </MudItem>
-                <MudItem xs="11">
-                    @product.CountMinOne
-                </MudItem>
-                <MudItem xs="1">
-                    <div class="fw-bolder"> @loc["Product_Prize_One"] </div>
-                </MudItem>
-                <MudItem xs="11">
-                    @product.PrizeOne
-                </MudItem>
-                <MudItem xs="1">
-                    <div class="fw-bolder"> @loc["Product_Total_Quantity"] </div>
-                </MudItem>
-                <MudItem xs="11">
-                    @product.CountAll
-                </MudItem>
-            </MudGrid>
-        </MudCollapse>
-        @if (product.ImageData != null && !string.IsNullOrEmpty(product.ImageMimeType))
-        {
-            <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapsePhoto">@(_expandedPhoto ? @loc["Button_Hide_Photo"] : @loc["Button_Show_Photo"])</MudButton>
-            <MudCollapse Expanded="_expandedPhoto">
-                <img src="@($"data:{product.ImageMimeType};base64,{Convert.ToBase64String(product.ImageData)}")" alt="Product Image" />
-            </MudCollapse>
-        }
-        <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" Disabled=!isOtherProducts OnClick="OnExpandCollapseOtherProducts">@(_expandedOtherProducts ? @loc["Button_Other_Products"] : @loc["Button_Other_Products"])</MudButton>
-        <MudCollapse Expanded="_expandedOtherProducts">
-            <MudGrid>
-                @foreach(var card in productsCards)
-                {
-                    <MudItem xs="3">
-                        <MudCard Outlined="true">
-                            <MudCardContent>
-                                <MudText>@card.Name</MudText>
-                                    <MudText Typo="Typo.body2">@(card.Description.Length > 100 ? card.Description.Substring(0, 95) + "..." : card.Description)</MudText>
-                            </MudCardContent>
-                            <MudCardActions>
-                                <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="() => ShowProductsFromCard(card.Id)">@loc["X_Details"]</MudButton>
-                            </MudCardActions>
-                        </MudCard>
+            <MudCollapse Expanded="_expandedPrimary">
+                <MudGrid>
+                    <MudItem xs="1">
+                        <div class="fw-bolder"> @loc["X_Name"] </div>
                     </MudItem>
-                }
-                <MudItem xs="12">
-                    <MudButton Class="product-details-button" Variant="Variant.Filled" Color="Color.Primary" OnClick="ShowAllProducts">@loc["Button_All_Products"]</MudButton>
-                </MudItem>
-            </MudGrid>
-        </MudCollapse>
-    </MudStack>
-</MudPaper>
+                    <MudItem xs="11">
+                        @product.Name
+                    </MudItem>
+                    <MudItem xs="1">
+                        <div class="fw-bolder"> @loc["X_Description"] </div>
+                    </MudItem>
+                    <MudItem xs="11">
+                        @product.Description
+                    </MudItem>
+                </MudGrid>
+            </MudCollapse>
+            <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapsePrice" EndIcon="@(_expandedPrice ? Icons.Material.Filled.ArrowDropUp : Icons.Material.Filled.ArrowDropDown)">
+                @(_expandedPrice 
+                ?  @loc["Button_Prize_Info"] 
+                : @loc["Button_Prize_Info"])
+            </MudButton>
+            <MudCollapse Expanded="_expandedPrice">
+                <MudGrid>
+                    <MudItem xs="1">
+                        <div class="fw-bolder"> @loc["Product_Minimal_Amount"] </div>
+                    </MudItem>
+                    <MudItem xs="11">
+                        @product.CountMinOne
+                    </MudItem>
+                    <MudItem xs="1">
+                        <div class="fw-bolder"> @loc["Product_Prize_One"] </div>
+                    </MudItem>
+                    <MudItem xs="11">
+                        @product.PrizeOne
+                    </MudItem>
+                    <MudItem xs="1">
+                        <div class="fw-bolder"> @loc["Product_Total_Quantity"] </div>
+                    </MudItem>
+                    <MudItem xs="11">
+                        @product.CountAll
+                    </MudItem>
+                </MudGrid>
+            </MudCollapse>
+            @if (product.ImageData != null && !string.IsNullOrEmpty(product.ImageMimeType))
+            {
+                <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapsePhoto">@(_expandedPhoto ? @loc["Button_Hide_Photo"] : @loc["Button_Show_Photo"])</MudButton>
+                <MudCollapse Expanded="_expandedPhoto">
+                    <img src="@($"data:{product.ImageMimeType};base64,{Convert.ToBase64String(product.ImageData)}")" alt="Product Image" />
+                </MudCollapse>
+            }
+            <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" Disabled=!isOtherProducts OnClick="OnExpandCollapseOtherProducts">@(_expandedOtherProducts ? @loc["Button_Other_Products"] : @loc["Button_Other_Products"])</MudButton>
+            <MudCollapse Expanded="_expandedOtherProducts">
+                <MudGrid>
+                    @foreach(var card in productsCards)
+                    {
+                        <MudItem xs="3">
+                            <MudCard Outlined="true">
+                                <MudCardContent>
+                                    <MudText>@card.Name</MudText>
+                                        <MudText Typo="Typo.body2">@(card.Description.Length > 100 ? card.Description.Substring(0, 95) + "..." : card.Description)</MudText>
+                                </MudCardContent>
+                                <MudCardActions>
+                                    <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="() => ShowProductsFromCard(card.Id)">@loc["X_Details"]</MudButton>
+                                </MudCardActions>
+                            </MudCard>
+                        </MudItem>
+                    }
+                    <MudItem xs="12">
+                        <MudButton Class="product-details-button" Variant="Variant.Filled" Color="Color.Primary" OnClick="ShowAllProducts">@loc["Button_All_Products"]</MudButton>
+                    </MudItem>
+                </MudGrid>
+            </MudCollapse>
+        </MudStack>
+    </MudPaper>
+}
 
 @code {
     [Parameter]
@@ -102,8 +114,17 @@
     private bool _expandedOtherProducts = false;
     private bool isOtherProducts = false;
 
+    protected override async Task LoadDataAsync()
+    {
+    }
+
     protected override async Task OnParametersSetAsync()
     {
+        if (HasError)
+        {
+            return;
+        }
+
         if (Id != 0)
         {
             product = await ProductService.GetProduct(Id);

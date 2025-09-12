@@ -46,18 +46,12 @@ else
 
     protected async override Task LoadDataAsync()
     {
-        bool isUserSignUp = await AccountService.IsUserLogged();
-
-        if (isUserSignUp)
+        if (!await EnsureLoggedInAsync())
         {
-            userDto = await AccountService.GetCurrentUser();
-        }
-        else
-        {
-            // errorMessage = loc["Farmhouse_Missing_For_Edit"];
-            errorMessage = "XXX";
             return;
         }
+
+        userDto = UserStateService.CurrentUser;
     }
 
     private async void OnValidSubmit(EditContext context)

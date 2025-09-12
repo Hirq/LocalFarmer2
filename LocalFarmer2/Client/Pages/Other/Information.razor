@@ -1,4 +1,5 @@
 ﻿@page "/information"
+@inherits BasePage
 @using System.Text.Json
 @using System.Globalization
 @inject HttpClient Http
@@ -6,49 +7,60 @@
 
 <PageTitle>@loc["X_Information"] | @Globals.AppName</PageTitle>
 
-<div class="container-information">
-    <MudPaper Class="content-information">
-        <div class="mud-table-toolbar titlePage">
-            <MudText Typo="Typo.h6">@loc["X_Information"]</MudText>
-        </div>
-        <div class="mud-table-toolbar information-wrapper">
-            @foreach (var information in InformationItems)
-            {
-                <MudText Typo="Typo.body1">@information.Information[CurrentLang]</MudText>
-            }
-        </div>
-
-        <div class="mud-table-toolbar titlePage">
-            <MudText Typo="Typo.h6">FAQ</MudText>
-        </div>
-        <MudExpansionPanels Elevation="0">
-            @foreach (var item in FaqItems)
-            {
-                <MudExpansionPanel Text="@item.Question[CurrentLang]">
-                    @item.Answer[CurrentLang]
-                </MudExpansionPanel>
-            }
-        </MudExpansionPanels>
-        <div class="mud-table-toolbar titlePage">
-            <MudText Typo="Typo.h6">@loc["X_Contact"]</MudText>
+@if (isLoading)
+{
+    <MudProgressCircular Class="m-4" Color="Color.Primary" />
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
+}
+else
+{
+    <div class="container-information">
+        <MudPaper Class="content-information">
+            <div class="mud-table-toolbar titlePage">
+                <MudText Typo="Typo.h6">@loc["X_Information"]</MudText>
             </div>
-            <div class="cotanct-wrapper">
-                <MudButton Class="ml-3" OnClick='() => UtilsService.OpenDialogSendMessage()' Variant="Variant.Filled" Color="Color.Primary">
-                    @loc["Farmhouse_Send_Message"]
-            </MudButton>
-        </div>
-        <div class="github-wrapper">
-            <MudIconButton Class="github" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" aria-label="github" Href="https://github.com/Hirq" Target="_blank" />
-        </div>
-    </MudPaper>
-</div>
+            <div class="mud-table-toolbar information-wrapper">
+                @foreach (var information in InformationItems)
+                {
+                    <MudText Typo="Typo.body1">@information.Information[CurrentLang]</MudText>
+                }
+            </div>
+
+            <div class="mud-table-toolbar titlePage">
+                <MudText Typo="Typo.h6">FAQ</MudText>
+            </div>
+            <MudExpansionPanels Elevation="0">
+                @foreach (var item in FaqItems)
+                {
+                    <MudExpansionPanel Text="@item.Question[CurrentLang]">
+                        @item.Answer[CurrentLang]
+                    </MudExpansionPanel>
+                }
+            </MudExpansionPanels>
+            <div class="mud-table-toolbar titlePage">
+                <MudText Typo="Typo.h6">@loc["X_Contact"]</MudText>
+                </div>
+                <div class="cotanct-wrapper">
+                    <MudButton Class="ml-3" OnClick='() => UtilsService.OpenDialogSendMessage()' Variant="Variant.Filled" Color="Color.Primary">
+                        @loc["Farmhouse_Send_Message"]
+                </MudButton>
+            </div>
+            <div class="github-wrapper">
+                <MudIconButton Class="github" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" aria-label="github" Href="https://github.com/Hirq" Target="_blank" />
+            </div>
+        </MudPaper>
+    </div>
+}
 
 @code {
     private List<FaqItem> FaqItems = new List<FaqItem>();
     private List<InformationItem> InformationItems = new List<InformationItem>();
     private string CurrentLang => CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task LoadDataAsync()
     {
         var json = await Http.GetStringAsync("faq.json");
         var options = new JsonSerializerOptions

@@ -9,67 +9,76 @@
 
 <PageTitle>@loc["Dashboard_My_Opinions"] | @Globals.AppName</PageTitle>
 
-<MudTable Items="@ListMyOpinionsFarmhouse" Loading="@isLoading" SortLabel="Sort By" Hover="true" Filter="@(opinion => UtilsService.FilterFunc(opinion, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
-    <ToolBarContent>
-        <MudText Typo="Typo.h6">@loc["Dashboard_My_Opinions"]</MudText>
-        <MudSpacer />
-        <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
-    </ToolBarContent> 
-
-    <HeaderContent>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.IdFarmhouse)">Id @loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Farmhouse.Name)">@loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Comment)">@loc["Opinion_Comment"]</MudTableSortLabel></MudTh>
-        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Rating)">@loc["Opinion_Rating"]</MudTableSortLabel></MudTh>
-        <MudTh>@loc["X_Action"]</MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel="Nr">@context.Id</MudTd>
-        <MudTd DataLabel="Nr">@context.IdFarmhouse</MudTd>
-        <MudTd DataLabel="Nr">@context.Farmhouse.Name</MudTd>
-        <MudTd DataLabel="Nr">@context.Comment</MudTd>
-        <MudTd DataLabel="Nr">@context.Rating</MudTd>
-        <MudTd DataLabel="Edit">
-            <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="() => OpenMessageBoxEditOpinion(context.Id)" />
-            <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteOpinion(context.Id), Color.Error)' />
-            <MudMessageBox @ref="mbox" Title="Edit opinion" CancelText="Cancel">
-                <MessageContent>
-                    <div class="d-flex flex-column align-center">
-                        <MudRating @bind-SelectedValue="opinionDto.Rating" />
-                        <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">@loc["Opinion_Your_Opinion"]</MudText>
-                    </div>
-                    <MudTextField T="string" @bind-Value="opinionDto.Comment" Label="@loc["Opinion_Comment"]" Variant="Variant.Outlined" Lines="3" Placeholder="@loc["Opinion_Placeholder"]" />
-                </MessageContent>
-                <YesButton>
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => EditOpinion(context.Id)">@loc["X_Edit"]</MudButton>
-                </YesButton>
-            </MudMessageBox>
-        </MudTd>
-        </RowTemplate>
-    <PagerContent>
-        <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
-    </PagerContent>
-</MudTable>
-
-@if (!string.IsNullOrEmpty(errorMessage))
+@if (isLoading)
+{
+    <MudProgressCircular Class="m-4" Color="Color.Primary" />
+}
+else if (!string.IsNullOrEmpty(errorMessage))
 {
     <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
+}
+else
+{
+    <MudTable Items="@ListMyOpinionsFarmhouse" Loading="@isLoading" SortLabel="Sort By" Hover="true" Filter="@(opinion => UtilsService.FilterFunc(opinion, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">@loc["Dashboard_My_Opinions"]</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
+        </ToolBarContent> 
+
+        <HeaderContent>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.IdFarmhouse)">Id @loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Farmhouse.Name)">@loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Comment)">@loc["Opinion_Comment"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Rating)">@loc["Opinion_Rating"]</MudTableSortLabel></MudTh>
+            <MudTh>@loc["X_Action"]</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Nr">@context.Id</MudTd>
+            <MudTd DataLabel="Nr">@context.IdFarmhouse</MudTd>
+            <MudTd DataLabel="Nr">@context.Farmhouse.Name</MudTd>
+            <MudTd DataLabel="Nr">@context.Comment</MudTd>
+            <MudTd DataLabel="Nr">@context.Rating</MudTd>
+            <MudTd DataLabel="Edit">
+                <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="() => OpenMessageBoxEditOpinion(context.Id)" />
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteOpinion(context.Id), Color.Error)' />
+                <MudMessageBox @ref="mbox" Title="Edit opinion" CancelText="Cancel">
+                    <MessageContent>
+                        <div class="d-flex flex-column align-center">
+                            <MudRating @bind-SelectedValue="opinionDto.Rating" />
+                            <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">@loc["Opinion_Your_Opinion"]</MudText>
+                        </div>
+                        <MudTextField T="string" @bind-Value="opinionDto.Comment" Label="@loc["Opinion_Comment"]" Variant="Variant.Outlined" Lines="3" Placeholder="@loc["Opinion_Placeholder"]" />
+                    </MessageContent>
+                    <YesButton>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => EditOpinion(context.Id)">@loc["X_Edit"]</MudButton>
+                    </YesButton>
+                </MudMessageBox>
+            </MudTd>
+            </RowTemplate>
+        <PagerContent>
+            <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
+        </PagerContent>
+    </MudTable>
 }
 
 @code {
     List<Opinion> ListMyOpinionsFarmhouse = new List<Opinion>();
-    string? errorMessage;
+
     private string searchString = null;
-    private string userId = null;
     MudMessageBox mbox { get; set; }
     EditOpinionDto opinionDto { get; set; }
     public DialogData dialogData = new DialogData();
 
     protected override async Task LoadDataAsync()
     {
-        userId = UserStateService.CurrentUser.IdUser;
-        ListMyOpinionsFarmhouse = await OpinionService.GetOpinionFarmhousesForUser(userId);
+        if (!await EnsureLoggedInAsync())
+        {
+            return;
+        }
+
+        ListMyOpinionsFarmhouse = await OpinionService.GetOpinionFarmhousesForUser(UserStateService.CurrentUser.IdUser);
 
         dialogData = new DialogData()
         {

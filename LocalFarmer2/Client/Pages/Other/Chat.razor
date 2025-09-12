@@ -1,4 +1,5 @@
 ﻿@page "/chat"
+@inherits BasePage
 @inject NavigationManager NavigationManager
 @inject UserStateService UserStateService
 @inject IAccountService AccountService
@@ -6,103 +7,114 @@
 @inject IAlertService AlertService
 @inject IJSRuntime JSRuntime
 
-<div class="mud-table-toolbar titlePage">
-    <MudText Typo="Typo.h6">Chat</MudText>
-</div>
-<MudGrid Class="m-0 w-100">
-    <MudItem xs="12" sm="2">
-        <MudPaper Class="d-flex mud-width-full flex-column chat-user-outer-container">
-            <div class="chat-user-inner-scroll">
-            @foreach (var dto in lastMessages)
-            {
-                <MudCard Class="@string.Join(" ", "m-1", "border-1", "chat-user", IsSelected(dto) ? "active-chat" : "")" @onclick="() => GoPriv(dto.IdUserSender == FromUserId ? dto.IdUserReceiver : dto.IdUserSender)">
-                    <MudCardContent>
-                        <MudText Typo="Typo.body2">@dto.UserName</MudText>
-                        <MudText Typo="Typo.body2">@dto.FullName</MudText>
-                    </MudCardContent>
-                    <MudCardActions Class="card-action-extra">
-                        <MudText Typo="Typo.body2" class="@(!dto.IsLastMessageFromSender ? "bold-text" : "")">@(!dto.IsLastMessageFromSender ? dto.FullName : loc["X_Me"]): @(dto.Message.Length > 20 ? dto.Message.Substring(0, 17) + "..." : dto.Message) </MudText>
-                        <MudText Class="card-action-date">@dto.DateSent</MudText>
-                    </MudCardActions>
-                </MudCard>
-            }
-            </div>
-        </MudPaper>
-    </MudItem>
-    <MudItem xs="12" sm="10">
-        <MudPaper Class="@string.Join(" ", "d-flex", "align-center", "justify-center", "mud-width-full", "h-100", !isVisible ? "invisible" : "")" id="chatMessagesPanel">
-            <div class="panel panel-primary chat-message-container">
-                <div class="panel-heading top-bar">
-                    <div class="col-md-8 col-xs-8">
-                        <h3 class="panel-title">
-                            @if (ToUser != null)
-                            {
-                                @if (ToUser.UserName != null)
-                                {
-                                    <b>@ToUser.UserName</b>
-                                }
-                                else
-                                {
-                                    <b>@ToUser.FullName</b>
-                                }
-                            }
-                        </h3>
-                    </div>
+@if (isLoading)
+{
+    <MudProgressCircular Class="m-4" Color="Color.Primary" />
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
+}
+else
+{
+    <div class="mud-table-toolbar titlePage">
+        <MudText Typo="Typo.h6">Chat</MudText>
+    </div>
+    <MudGrid Class="m-0 w-100">
+        <MudItem xs="12" sm="2">
+            <MudPaper Class="d-flex mud-width-full flex-column chat-user-outer-container">
+                <div class="chat-user-inner-scroll">
+                @foreach (var dto in lastMessages)
+                {
+                    <MudCard Class="@string.Join(" ", "m-1", "border-1", "chat-user", IsSelected(dto) ? "active-chat" : "")" @onclick="() => GoPriv(dto.IdUserSender == FromUserId ? dto.IdUserReceiver : dto.IdUserSender)">
+                        <MudCardContent>
+                            <MudText Typo="Typo.body2">@dto.UserName</MudText>
+                            <MudText Typo="Typo.body2">@dto.FullName</MudText>
+                        </MudCardContent>
+                        <MudCardActions Class="card-action-extra">
+                            <MudText Typo="Typo.body2" class="@(!dto.IsLastMessageFromSender ? "bold-text" : "")">@(!dto.IsLastMessageFromSender ? dto.FullName : loc["X_Me"]): @(dto.Message.Length > 20 ? dto.Message.Substring(0, 17) + "..." : dto.Message) </MudText>
+                            <MudText Class="card-action-date">@dto.DateSent</MudText>
+                        </MudCardActions>
+                    </MudCard>
+                }
                 </div>
-                <MudPaper Class="chat-messages" id="mud-paper-chat-message">
-                    <div class="panel-body msg_container_base">
-                        @if (Messages != null && Messages.Count() > 0)
-                        {
-                            @foreach (var message in Messages)
-                            {
-                                @if (message.IsSeparator == true)
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="10">
+            <MudPaper Class="@string.Join(" ", "d-flex", "align-center", "justify-center", "mud-width-full", "h-100", !isVisible ? "invisible" : "")" id="chatMessagesPanel">
+                <div class="panel panel-primary chat-message-container">
+                    <div class="panel-heading top-bar">
+                        <div class="col-md-8 col-xs-8">
+                            <h3 class="panel-title">
+                                @if (ToUser != null)
                                 {
-                                    <div class="message-container date">
-                                        <div class="message-box received-message">
-                                            <div>
-                                                @($"{message.DateSent:dd.MM}")
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    @if (message.IdUserSender == FromUserId)
+                                    @if (ToUser.UserName != null)
                                     {
-                                        <div class="message-container sent">
-                                            <div class="message-box sent-message">
-                                                <p>@message.Message</p>
-                                                <p>@message.DateSent.ToShortTimeString()</p>
+                                        <b>@ToUser.UserName</b>
+                                    }
+                                    else
+                                    {
+                                        <b>@ToUser.FullName</b>
+                                    }
+                                }
+                            </h3>
+                        </div>
+                    </div>
+                    <MudPaper Class="chat-messages" id="mud-paper-chat-message">
+                        <div class="panel-body msg_container_base">
+                            @if (Messages != null && Messages.Count() > 0)
+                            {
+                                @foreach (var message in Messages)
+                                {
+                                    @if (message.IsSeparator == true)
+                                    {
+                                        <div class="message-container date">
+                                            <div class="message-box received-message">
+                                                <div>
+                                                    @($"{message.DateSent:dd.MM}")
+                                                </div>
                                             </div>
                                         </div>
                                     }
                                     else
                                     {
-                                        <div class="message-container received">
-                                            <div class="message-box received-message">
-                                                <p>@message.Message</p>
-                                                <p>@message.DateSent.ToShortTimeString()</p>
+                                        @if (message.IdUserSender == FromUserId)
+                                        {
+                                            <div class="message-container sent">
+                                                <div class="message-box sent-message">
+                                                    <p>@message.Message</p>
+                                                    <p>@message.DateSent.ToShortTimeString()</p>
+                                                </div>
                                             </div>
-                                        </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="message-container received">
+                                                <div class="message-box received-message">
+                                                    <p>@message.Message</p>
+                                                    <p>@message.DateSent.ToShortTimeString()</p>
+                                                </div>
+                                            </div>
+                                        }
                                     }
                                 }
                             }
-                        }
-                    </div>
-                </MudPaper>
+                        </div>
+                    </MudPaper>
 
-                <!--CHAT USER BOX-->
-                <div class="footer">
-                    <div class="input-group">
-                        <input id="txtMessageInput" @bind="MessageText" type="text" class="form-control input-sm chat_input"
-                                placeholder="@loc["Chat_Write_Your_Message_Here"]">
-                        <button id="txtMessageButton" class="btn btn-primary" @onclick="Send">@loc["Farmhouse_Send"]</button>
+                    <!--CHAT USER BOX-->
+                    <div class="footer">
+                        <div class="input-group">
+                            <input id="txtMessageInput" @bind="MessageText" type="text" class="form-control input-sm chat_input"
+                                    placeholder="@loc["Chat_Write_Your_Message_Here"]">
+                            <button id="txtMessageButton" class="btn btn-primary" @onclick="Send">@loc["Farmhouse_Send"]</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </MudPaper>
-    </MudItem>
-</MudGrid>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+}
 
 @code {
     public IJSObjectReference module { get; set; }
@@ -121,17 +133,13 @@
     private string selectedUserId { get; set; }
     private string lastMessageDisplayed { get; set; }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task LoadDataAsync()
     {
-        if (!string.IsNullOrEmpty(UserStateService.CurrentUser?.FullName))
+        if (!await EnsureLoggedInAsync())
         {
-            module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/chat.js");
-            await module.InvokeVoidAsync("setScroll");
+            return;
         }
-    }
 
-    protected override async Task OnInitializedAsync()
-    {
         if (!string.IsNullOrEmpty(UserStateService.CurrentUser?.FullName))
         {
             FromUserId = UserStateService.CurrentUser?.IdUser;
@@ -142,6 +150,16 @@
                 .Build();
         }
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!string.IsNullOrEmpty(UserStateService.CurrentUser?.FullName))
+        {
+            module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/chat.js");
+            await module.InvokeVoidAsync("setScroll");
+        }
+    }
+
 
     private async Task SetLeftMenu(string idCurrentUser)
     {

@@ -1,4 +1,5 @@
 ﻿@page "/addproduct"
+@inherits BasePage
 @inject IProductService ProductService
 @inject IAlertService AlertService
 @inject IFavoriteFarmhouseService FavoriteFarmhouseService
@@ -9,37 +10,53 @@
 
 <PageTitle>@loc["Product_Add_Product"] | @Globals.AppName</PageTitle>
 
-<MudPaper Class="mudPaperTop">
-    <div class="mud-table-toolbar titlePage">
-        <MudText Class="d-flex justify-center" Typo="Typo.h6">@loc["Product_Add_Product"]</MudText>
-    </div>
-</MudPaper>
-<EditForm Model="product" OnValidSubmit="OnValidSubmit">
-    <DataAnnotationsValidator />
-    <MudGrid>
-        <MudItem xs="12">
-            <MudCard Class="mudPaperBottom">
-                <MudCardContent>
-                    <MudTextField Label="@loc["X_Name"]" @bind-Value="product.Name" Required For="@(() => product.Description)" ErrorText="@loc["Validation_Required"]" />
-                    <MudTextField Label="@loc["X_Description"]" @bind-Value="product.Description" Required For="@(() => product.Description)" ErrorText="@loc["Validation_Required"]" />
-                    <MudTextField Label="@loc["Product_Minimal_Amount"]" @bind-Value="product.CountMinOne" Required For="@(() => product.CountMinOne)" ErrorText="@loc["Validation_Required"]" />
-                    <MudTextField Label="@loc["Product_Prize_One"]" @bind-Value="product.PrizeOne" Required For="@(() => product.PrizeOne)" ErrorText="@loc["Validation_Required"]" />
-                    <MudTextField Label="@loc["Product_Total_Quantity"]" @bind-Value="product.CountAll" Required For="@(() => product.CountAll)" ErrorText="@loc["Validation_Required"]" />
-                    <EditFile Name="@loc["Product_Photo"]" Model="@product" IsOpenPhoto=false />
-                </MudCardContent>
-                <MudCardActions>
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">@loc["Product_Add_Product"]</MudButton>
-                </MudCardActions>
-            </MudCard>
-        </MudItem>
-    </MudGrid>
-</EditForm>
+@if (isLoading)
+{
+    <MudProgressCircular Class="m-4" Color="Color.Primary" />
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
+}
+else
+{
+    <MudPaper Class="mudPaperTop">
+        <div class="mud-table-toolbar titlePage">
+            <MudText Class="d-flex justify-center" Typo="Typo.h6">@loc["Product_Add_Product"]</MudText>
+        </div>
+    </MudPaper>
+    <EditForm Model="product" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator />
+        <MudGrid>
+            <MudItem xs="12">
+                <MudCard Class="mudPaperBottom">
+                    <MudCardContent>
+                        <MudTextField Label="@loc["X_Name"]" @bind-Value="product.Name" Required For="@(() => product.Description)" ErrorText="@loc["Validation_Required"]" />
+                        <MudTextField Label="@loc["X_Description"]" @bind-Value="product.Description" Required For="@(() => product.Description)" ErrorText="@loc["Validation_Required"]" />
+                        <MudTextField Label="@loc["Product_Minimal_Amount"]" @bind-Value="product.CountMinOne" Required For="@(() => product.CountMinOne)" ErrorText="@loc["Validation_Required"]" />
+                        <MudTextField Label="@loc["Product_Prize_One"]" @bind-Value="product.PrizeOne" Required For="@(() => product.PrizeOne)" ErrorText="@loc["Validation_Required"]" />
+                        <MudTextField Label="@loc["Product_Total_Quantity"]" @bind-Value="product.CountAll" Required For="@(() => product.CountAll)" ErrorText="@loc["Validation_Required"]" />
+                        <EditFile Name="@loc["Product_Photo"]" Model="@product" IsOpenPhoto=false />
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">@loc["Product_Add_Product"]</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+    </EditForm>
+}
 
 @code {
     ProductDto product = new ProductDto();
 
-    protected async override Task OnInitializedAsync()
+    protected override async Task LoadDataAsync()
     {
+        if (!await EnsureLoggedInAsync())
+        {
+            return;
+        }
+
         FileService.ClearVariables();
     }
 

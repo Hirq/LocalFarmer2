@@ -1,4 +1,5 @@
 ﻿@page "/chatpriv/{ToUserId}"
+@inherits BasePage
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.SignalR.Client
 @inject NavigationManager NavigationManager
@@ -11,74 +12,85 @@
 
 @* TODO: Zostawiamy - trzeba sprawdzić czy dobrze wyglada itd  *@
 
-<div style="border:0px;height:90vh;">
-    <div class="panel panel-primary" style="height: 100%;">
-        <div class="panel-heading top-bar">
-            <div class="col-md-8 col-xs-8">
-                <h3 class="panel-title">
-                    @if (ToUser != null)
-                    {
-                        @if (ToUser.UserName != null)
+@if (isLoading)
+{
+    <MudProgressCircular Class="m-4" Color="Color.Primary" />
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
+}
+else
+{
+    <div style="border:0px;height:90vh;">
+        <div class="panel panel-primary" style="height: 100%;">
+            <div class="panel-heading top-bar">
+                <div class="col-md-8 col-xs-8">
+                    <h3 class="panel-title">
+                        @if (ToUser != null)
                         {
-                            <b>@ToUser.UserName</b>
+                            @if (ToUser.UserName != null)
+                            {
+                                <b>@ToUser.UserName</b>
+                            }
+                            else
+                            {
+                                <b>@ToUser.FullName</b>
+                            }
                         }
-                        else
-                        {
-                            <b>@ToUser.FullName</b>
-                        }
-                    }
-                </h3>
+                    </h3>
+                </div>
             </div>
-        </div>
-        <div id="chat-message-container" class="panel-body msg_container_base">
-            @if (Messages != null && Messages.Count() > 0)
-            {
-                @foreach (var message in Messages)
+            <div id="chat-message-container" class="panel-body msg_container_base">
+                @if (Messages != null && Messages.Count() > 0)
                 {
-                    @if (message.IsSeparator == true)
+                    @foreach (var message in Messages)
                     {
-                        <div class="message-container date">
-                            <div class="message-box received-message">
-                                <div>
-                                    @($"{message.DateSent:dd.MM}")
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        @if (message.IdUserSender == FromUserId)
+                        @if (message.IsSeparator == true)
                         {
-                            <div class="message-container sent">
-                                <div class="message-box sent-message">
-                                    <p>@message.Message</p>
-                                    <p>@message.DateSent.ToShortTimeString()</p>
+                            <div class="message-container date">
+                                <div class="message-box received-message">
+                                    <div>
+                                        @($"{message.DateSent:dd.MM}")
+                                    </div>
                                 </div>
                             </div>
                         }
                         else
                         {
-                            <div class="message-container received">
-                                <div class="message-box received-message">
-                                    <p>@message.Message</p>
-                                    <p>@message.DateSent.ToShortTimeString()</p>
+                            @if (message.IdUserSender == FromUserId)
+                            {
+                                <div class="message-container sent">
+                                    <div class="message-box sent-message">
+                                        <p>@message.Message</p>
+                                        <p>@message.DateSent.ToShortTimeString()</p>
+                                    </div>
                                 </div>
-                            </div>
+                            }
+                            else
+                            {
+                                <div class="message-container received">
+                                    <div class="message-box received-message">
+                                        <p>@message.Message</p>
+                                        <p>@message.DateSent.ToShortTimeString()</p>
+                                    </div>
+                                </div>
+                            }
                         }
                     }
                 }
-            }
-        </div>
-        <!--CHAT USER BOX-->
-        <div class="panel-footer">
-            <div class="input-group" id="myForm">
-                <input id="txtMessageInput" @bind="MessageText" type="text" class="form-control input-sm chat_input"
-                       placeholder="@loc["Chat_Write_Your_Message_Here"]">
-                <button id="txtMessageButton" class="btn btn-primary" @onclick="Send">@loc["Farmhouse_Send"]</button>
+            </div>
+            <!--CHAT USER BOX-->
+            <div class="panel-footer">
+                <div class="input-group" id="myForm">
+                    <input id="txtMessageInput" @bind="MessageText" type="text" class="form-control input-sm chat_input"
+                           placeholder="@loc["Chat_Write_Your_Message_Here"]">
+                    <button id="txtMessageButton" class="btn btn-primary" @onclick="Send">@loc["Farmhouse_Send"]</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
 
 @code {
     [Parameter]
@@ -96,8 +108,13 @@
 
     public bool IsConnected => hubConnection.State == HubConnectionState.Connected;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task LoadDataAsync()
     {
+        if (!await EnsureLoggedInAsync())
+        {
+            return;
+        }
+
         FromUserId = (await AccountService.GetCurrentUser()).IdUser.ToString();
         var messageHistory = await ChatMessageService.GetChatMessages(FromUserId, ToUserId);
 
