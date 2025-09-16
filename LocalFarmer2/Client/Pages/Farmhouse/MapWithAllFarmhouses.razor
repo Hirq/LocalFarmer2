@@ -6,6 +6,7 @@
 @inject IJSRuntime JSRuntime
 @inject ValidateService ValidateService
 @inject UserStateService UserStateService
+@inject AppSettings AppSettings
 
 @implements IAsyncDisposable
 
@@ -36,12 +37,22 @@ else
     public int Id { get; set; }
     private IJSObjectReference? module;
     private string? result;
+    private bool _mapInitialized;
 
     protected override async Task LoadDataAsync()
     {
         if (!string.IsNullOrEmpty(UserStateService.CurrentUser?.FullName))
         {
-            farmhouses = (await FarmhouseService.GetFarmhouses()).Where(x => x.IsOpen && ValidateService.IsValidLatitude(x.Latitude) && ValidateService.IsValidLongitude(x.Longitude)).ToList();
+            farmhouses = (await FarmhouseService.GetFarmhouses()).Where(x => x.IsOpen && ValidateService.IsValidLatitude(x.Latitude) && ValidateService.IsValidLongitude(x.Longitude))
+            .ToList();
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!_mapInitialized && !isLoading && string.IsNullOrEmpty(errorMessage) && farmhouses != null)
+        {
+            _mapInitialized = true;
             await InitializeMapAsync();
         }
     }
@@ -49,7 +60,7 @@ else
     private async Task InitializeMapAsync()
     {
         var client = new HttpClient();
-        var raw = await client.GetStringAsync("https://localhost:7239/geojson.json");
+        var raw = await client.GetStringAsync(AppSettings.GeoJsonUrl);
         JArray jsonArray = JArray.Parse(raw);
         if (farmhouses != null)
         {

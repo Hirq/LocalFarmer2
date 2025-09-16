@@ -9,6 +9,7 @@
 @inject NavigationManager NavigationManager
 @inject ValidateService ValidateService
 @inject UserStateService UserStateService
+@inject AppSettings AppSettings
 @implements IAsyncDisposable
 
 <PageTitle>@loc["X_Farmhouse"] | @Globals.AppName</PageTitle>
@@ -149,35 +150,37 @@ else
         SetStyle();
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected async override Task OnParametersSetAsync()
     {
-        if (firstRender)
+        if (HasError)
         {
-            var client = new HttpClient();
-            var raw = await client.GetStringAsync("https://localhost:7239/geojson.json");
-            JArray jsonArray = JArray.Parse(raw);
-            JObject newEntry = new JObject
-                {
-                    ["type"] = "Feature",
-                    ["geometry"] = new JObject
-                    {
-                        ["type"] = "Point",
-                        ["coordinates"] = new JArray(farmhouse.Longitude, farmhouse.Latitude)
-                    },
-                    ["properties"] = new JObject
-                    {
-                        ["name"] = farmhouse.Name
-                    }
-                };
+            return;
+        }
 
-            jsonArray.Add(newEntry);
-            raw = jsonArray.ToString();
-
-            module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
-            if (module != null)
+        var client = new HttpClient();
+        var raw = await client.GetStringAsync(AppSettings.GeoJsonUrl);
+        JArray jsonArray = JArray.Parse(raw);
+        JObject newEntry = new JObject
+        {
+            ["type"] = "Feature",
+            ["geometry"] = new JObject
             {
-                result = await module.InvokeAsync<string>("load_map", Convert.ToString(raw), farmhouse.Latitude, farmhouse.Longitude);
+                ["type"] = "Point",
+                ["coordinates"] = new JArray(farmhouse.Longitude, farmhouse.Latitude)
+            },
+            ["properties"] = new JObject
+            {
+                ["name"] = farmhouse.Name
             }
+        };
+
+        jsonArray.Add(newEntry);
+        raw = jsonArray.ToString();
+
+        module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
+        if (module != null)
+        {
+            result = await module.InvokeAsync<string>("load_map", Convert.ToString(raw), farmhouse.Latitude, farmhouse.Longitude);
         }
     }
 

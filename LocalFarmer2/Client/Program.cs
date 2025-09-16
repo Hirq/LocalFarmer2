@@ -38,6 +38,7 @@ builder.Services.AddScoped<SearchService>();
 builder.Services.AddSingleton<ValidateService>();
 builder.Services.AddSingleton<FileService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddSingleton(sp => builder.Configuration.GetSection("AppSettings").Get<AppSettings>());
 
 builder.Services.AddLocalization();
 
