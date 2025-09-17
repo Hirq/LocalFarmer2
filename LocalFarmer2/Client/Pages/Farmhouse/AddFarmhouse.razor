@@ -65,22 +65,32 @@ else
     private MudTextField<string> longitudeField;
     private MudSelect<string> paymentMethodsField;
 
-    protected override Task LoadDataAsync()
+    protected async override Task LoadDataAsync()
     {
+        if (!await EnsureLoggedInAsync())
+        {
+            return;
+        }
+
+        if (!await EnsureHasnotFarmhouseAsync())
+        {
+            return;
+        }
+
         FileService.ClearVariables();
-        return Task.CompletedTask;
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected async override Task OnParametersSetAsync()
     {
-        if (firstRender)
+        if(HasError)
         {
-            await farmhouseNameField.FocusAsync();
-            module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
-            if (module != null)
-            {
-                result = await module.InvokeAsync<string>("setCoordinates", "map");
-            }
+            return;
+        }
+
+        module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/leafletmap.js");
+        if (module != null)
+        {
+            result = await module.InvokeAsync<string>("setCoordinates", "map");
         }
     }
 

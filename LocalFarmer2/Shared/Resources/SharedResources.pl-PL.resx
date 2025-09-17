@@ -519,4 +519,7 @@
   <data name="ErrorUserDoesnotHaveFarmhouse" xml:space="preserve">
     <value>Użytkownik nie posiada gospodarstwa</value>
   </data>
+  <data name="ErrorUserDoesHaveFarmhouse" xml:space="preserve">
+    <value>Użytkownik posiada gospodarstwo</value>
+  </data>
 </root>

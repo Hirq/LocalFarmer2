@@ -583,6 +583,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User does have a farmhouse.
+        /// </summary>
+        internal static string ErrorUserDoesHaveFarmhouse {
+            get {
+                return ResourceManager.GetString("ErrorUserDoesHaveFarmhouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User doesn&apos;t have a farmhouse.
         /// </summary>
         internal static string ErrorUserDoesnotHaveFarmhouse {

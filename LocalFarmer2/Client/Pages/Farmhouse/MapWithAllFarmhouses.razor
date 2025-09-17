@@ -37,22 +37,17 @@ else
     public int Id { get; set; }
     private IJSObjectReference? module;
     private string? result;
-    private bool _mapInitialized;
 
     protected override async Task LoadDataAsync()
     {
-        if (!string.IsNullOrEmpty(UserStateService.CurrentUser?.FullName))
-        {
-            farmhouses = (await FarmhouseService.GetFarmhouses()).Where(x => x.IsOpen && ValidateService.IsValidLatitude(x.Latitude) && ValidateService.IsValidLongitude(x.Longitude))
-            .ToList();
-        }
+        farmhouses = (await FarmhouseService.GetFarmhouses()).Where(x => x.IsOpen && ValidateService.IsValidLatitude(x.Latitude) && ValidateService.IsValidLongitude(x.Longitude))
+        .ToList();
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected async override Task OnParametersSetAsync()
     {
-        if (!_mapInitialized && !isLoading && string.IsNullOrEmpty(errorMessage) && farmhouses != null)
+        if (farmhouses != null)
         {
-            _mapInitialized = true;
             await InitializeMapAsync();
         }
     }

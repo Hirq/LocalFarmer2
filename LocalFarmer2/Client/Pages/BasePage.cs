@@ -10,6 +10,7 @@ namespace LocalFarmer2.Client.Pages
         [Inject] protected IStringLocalizer<SharedResources> Loc { get; set; }
         protected virtual string NotLoggedInMessage => Loc?["ErrorUserIsNotLogged"] ?? "User is not logged in.";
         protected virtual string MissingFarmhouseMessage => Loc?["ErrorUserDoesnotHaveFarmhouse"] ?? "User does not have farmhouse.";
+        protected virtual string OwnerFarmhouseMessage => Loc?["ErrorUserDoesHaveFarmhouse"] ?? "User does have farmhouse.";
 
         protected bool isLoading = false;
         protected string? errorMessage;
@@ -61,6 +62,16 @@ namespace LocalFarmer2.Client.Pages
             if (user == null || user.IdFarmhouse == null)
             {
                 errorMessage = MissingFarmhouseMessage;
+                return false;
+            }
+            return true;
+        }
+        protected async Task<bool> EnsureHasnotFarmhouseAsync()
+        {
+            var user = UserStateService.CurrentUser ?? await AccountService.GetCurrentUser();
+            if (user == null || user.IdFarmhouse != null)
+            {
+                errorMessage = OwnerFarmhouseMessage;
                 return false;
             }
             return true;
