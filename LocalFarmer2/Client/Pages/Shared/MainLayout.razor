@@ -60,14 +60,13 @@
                     @if (UserStateService.CurrentUser?.IdFarmhouse != null)
                     {
                         <MudMenuItem Icon="@Icons.Material.Filled.Edit" Href="/editfarmhouse">@loc["Farmhouse_Edit_Farmhouse"]</MudMenuItem>
-                        <MudMenuItem Icon="@Icons.Material.Filled.AccountBox" Href="/myaccount">@loc["Account_My_Account"]</MudMenuItem>
-                        <MudMenuItem Icon="@Icons.Material.Filled.Notifications" Href="/myalerts">@loc["X_Alerts"]</MudMenuItem>
                     }
                     else
                     {
                         <MudMenuItem Icon="@Icons.Material.Filled.Edit" Href="/addfarmhouse">@loc["Farmhouse_Add_Farmhouse"]</MudMenuItem>
-                        <MudMenuItem Icon="@Icons.Material.Filled.AccountBox" Href="/myaccount">@loc["Account_My_Account"]</MudMenuItem>
                     }
+                    <MudMenuItem Icon="@Icons.Material.Filled.AccountBox" Href="/myaccount">@loc["Account_My_Account"]</MudMenuItem>
+                    <MudMenuItem Icon="@Icons.Material.Filled.Notifications" Href="/myalerts">@loc["X_Alerts"]</MudMenuItem>
                 </MudMenu>
             </AuthorizeView>
         </MudAppBar>

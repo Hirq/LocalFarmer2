@@ -67,6 +67,11 @@ else
             return;
         }
 
+        if (!await EnsureHasFarmhouseAsync())
+        {
+            return;
+        }
+
         idFarmhouse = (int)UserStateService.CurrentUser?.IdFarmhouse;
         ListProducts = await ProductService.GetProductsFarmhouse(idFarmhouse);
         dialogData = new DialogData()

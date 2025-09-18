@@ -44,7 +44,7 @@ else
     [Parameter]
     public UserDto userDto { get; set; }
 
-    protected async override Task LoadDataAsync()
+    protected override async Task LoadDataAsync()
     {
         if (!await EnsureLoggedInAsync())
         {

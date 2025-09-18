@@ -57,6 +57,11 @@ else
         {
             return;
         }
+
+        if (!await EnsureHasFarmhouseAsync())
+        {
+            return;
+        }
     }
 
     protected override async Task OnParametersSetAsync()

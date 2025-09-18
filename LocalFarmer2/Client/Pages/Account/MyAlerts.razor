@@ -1,4 +1,5 @@
 ﻿@page "/myalerts"
+@inherits BasePage
 @inject IAlertService AlertService
 @inject UserStateService UserStateService
 @inject SearchService SearchService
@@ -6,52 +7,62 @@
 
 <PageTitle>@loc["X_Alerts"] | @Globals.AppName</PageTitle>
 
-<div class="mud-toolbar mud-toolbar-gutters mud-table-toolbar">
-    <MudText Typo="Typo.h6">@loc["X_Alerts"]</MudText>
-    <MudSpacer />
-    <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
-</div>
 
-@if (ListAlert == null)
+@if (isLoading)
 {
-    <MudProgressCircular Indeterminate="true"></MudProgressCircular>
+    <MudProgressCircular Class="m-4" Color="Color.Primary" />
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
 }
 else
 {
-    <MudExpansionPanels MultiExpansion="true">
-        @foreach (var group in ListAlert.Where(a => UtilsService.FilterFunc(a, SearchService.SearchString)).GroupBy(a => a.AlertEnum))
-        {
-            <MudExpansionPanel>
-                <TitleContent>
-                    <div class="d-flex">
-                        <MudText><b>@GetAlertName(@group.Key)</b></MudText>
-                        <MudChip Color="Color.Primary" Size="Size.Small" Class="ml-2">@group.Count()</MudChip>
-                    </div>
-                </TitleContent>
-                <ChildContent>
-                    <MudList Clickable="true">
-                        @foreach (var alert in group.OrderByDescending(a => a.DateCreated))
-                        {
-                            var details = GetAlertDetails(alert.AlertEnum);
-                            <MudListItem Icon="@details.Icon" IconColor="@details.Color">
-                                <div class="d-flex justify-space-between w-100">
-                                    <span>@alert.Message</span>
-                                    <MudText Typo="Typo.caption">@alert.DateCreated.ToString("g")</MudText>
-                                </div>
-                            </MudListItem>
-                        }
-                    </MudList>
-                </ChildContent>
-            </MudExpansionPanel>
-        }
-    </MudExpansionPanels>
+    <div class="mud-table mud-xs-table mud-table-hover mud-elevation-1">
+        <div class="mud-toolbar mud-toolbar-gutters mud-table-toolbar">
+            <MudText Typo="Typo.h6">@loc["X_Alerts"]</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
+        </div>
+        <MudExpansionPanels MultiExpansion="true">
+            @foreach (var group in ListAlert.Where(a => UtilsService.FilterFunc(a, SearchService.SearchString)).GroupBy(a => a.AlertEnum))
+            {
+                <MudExpansionPanel>
+                    <TitleContent>
+                        <div class="d-flex">
+                            <MudText><b>@GetAlertName(@group.Key)</b></MudText>
+                            <MudChip Color="Color.Primary" Size="Size.Small" Class="ml-2">@group.Count()</MudChip>
+                        </div>
+                    </TitleContent>
+                    <ChildContent>
+                        <MudList Clickable="true">
+                            @foreach (var alert in group.OrderByDescending(a => a.DateCreated))
+                            {
+                                var details = GetAlertDetails(alert.AlertEnum);
+                                <MudListItem Icon="@details.Icon" IconColor="@details.Color">
+                                    <div class="d-flex justify-space-between w-100">
+                                        <span>@alert.Message</span>
+                                        <MudText Typo="Typo.caption">@alert.DateCreated.ToString("g")</MudText>
+                                    </div>
+                                </MudListItem>
+                            }
+                        </MudList>
+                    </ChildContent>
+                </MudExpansionPanel>
+            }
+        </MudExpansionPanels>
+    </div>
 }
-
 @code {
     List<Alert> ListAlert = new List<Alert>();
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task LoadDataAsync()
     {
+        if (!await EnsureLoggedInAsync())
+        {
+            return;
+        }
+
         ListAlert = await AlertService.GetAllForUser(UserStateService.CurrentUser.IdUser, UserStateService.CurrentUser.IdFarmhouse);
         ListAlert = ListAlert.OrderByDescending(a => a.DateCreated).ToList();
     }

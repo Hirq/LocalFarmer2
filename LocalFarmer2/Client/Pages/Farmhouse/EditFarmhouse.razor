@@ -99,7 +99,7 @@ else
     public DialogData dialogData = new DialogData();
     public bool initIsOpen;
 
-    protected async override Task LoadDataAsync()
+    protected override async Task LoadDataAsync()
     {
         if (!await EnsureLoggedInAsync())
         {
@@ -129,7 +129,7 @@ else
         }
     }
 
-    protected async override Task OnParametersSetAsync()
+    protected override async Task OnParametersSetAsync()
     {
         if (HasError)
         {

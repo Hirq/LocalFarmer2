@@ -65,7 +65,7 @@ else
     private MudTextField<string> longitudeField;
     private MudSelect<string> paymentMethodsField;
 
-    protected async override Task LoadDataAsync()
+    protected override async Task LoadDataAsync()
     {
         if (!await EnsureLoggedInAsync())
         {
@@ -80,7 +80,7 @@ else
         FileService.ClearVariables();
     }
 
-    protected async override Task OnParametersSetAsync()
+    protected override async Task OnParametersSetAsync()
     {
         if(HasError)
         {

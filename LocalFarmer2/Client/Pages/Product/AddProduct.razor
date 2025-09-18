@@ -57,6 +57,11 @@ else
             return;
         }
 
+        if (!await EnsureHasFarmhouseAsync())
+        {
+            return;
+        }
+
         FileService.ClearVariables();
     }
 
