@@ -118,11 +118,6 @@ else
         {
             return;
         }
-
-        if (string.IsNullOrEmpty(UserStateService.CurrentUser?.IdUser))
-        {
-            throw new Exception("AddFarmhouse: Not found user");
-        }     
         
         farmhouseDto.IdUser = UserStateService.CurrentUser.IdUser;
         var idFarmhouse = await FarmhouseService.AddFarmhouse(farmhouseDto);

@@ -193,11 +193,6 @@ else
             return;
         }
 
-        if (string.IsNullOrEmpty(UserStateService.CurrentUser?.IdUser))
-        {
-            throw new Exception("EditFarmhouse: Not found user");
-        }
-
         var currentJson = JsonSerializer.Serialize(farmhouseDto);
         var originalJson = JsonSerializer.Serialize(originalFarmhouseDto);
 
