@@ -185,8 +185,13 @@ else
         MessageText = "";
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnParametersSetAsync()
     {
+        if(HasError)
+        {
+            return;
+        }
+        
         var module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/chat.js");
         await module.InvokeVoidAsync("setScroll");
     }

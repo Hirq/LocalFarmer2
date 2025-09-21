@@ -140,24 +140,23 @@ else
             return;
         }
 
-        if (!string.IsNullOrEmpty(UserStateService.CurrentUser?.FullName))
-        {
-            FromUserId = UserStateService.CurrentUser?.IdUser;
-            await SetLeftMenu(FromUserId);
+        FromUserId = UserStateService.CurrentUser?.IdUser;
+        await SetLeftMenu(FromUserId);
 
-            hubConnection = new HubConnectionBuilder()
-                .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
-                .Build();
-        }
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
+            .Build();
     }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    
+    protected override async Task OnParametersSetAsync()
     {
-        if (!string.IsNullOrEmpty(UserStateService.CurrentUser?.FullName))
+        if(HasError)
         {
-            module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/chat.js");
-            await module.InvokeVoidAsync("setScroll");
+            return;
         }
+        
+        module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/chat.js");
+        await module.InvokeVoidAsync("setScroll");
     }
 
 
