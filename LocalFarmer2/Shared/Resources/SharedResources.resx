@@ -448,7 +448,7 @@
     <value>added subscribe</value>
   </data>
   <data name="Alert_Add_Opinion" xml:space="preserve">
-    <value>added opnion about</value>
+    <value>added opinion</value>
   </data>
   <data name="Alert_Edit_Opinion" xml:space="preserve">
     <value>edited opinion about</value>

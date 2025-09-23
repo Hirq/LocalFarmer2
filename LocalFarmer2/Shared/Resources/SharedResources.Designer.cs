@@ -178,7 +178,7 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to added opnion about.
+        ///   Looks up a localized string similar to added opinion.
         /// </summary>
         internal static string Alert_Add_Opinion {
             get {
