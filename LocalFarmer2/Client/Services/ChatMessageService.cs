@@ -41,4 +41,15 @@ public class ChatMessageService : IChatMessageService
 
         return chats;
     }
+
+    public async Task<int> GetUnreadCountForUser(string idUser)
+    {
+        var count = await _http.GetFromJsonAsync<int>($"api/ChatMessage/GetUnreadCountForUser?idUser={idUser}");
+        return count;
+    }
+
+    public async Task MarkConversationAsRead(string idUserReader, string idUserOther)
+    {
+        await _http.PostAsync($"api/ChatMessage/MarkConversationAsRead?idUserReader={idUserReader}&idUserOther={idUserOther}", null);
+    }
 }

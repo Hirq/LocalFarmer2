@@ -1,4 +1,5 @@
-﻿<AuthorizeView>
+﻿@implements IDisposable
+<AuthorizeView>
     <Authorized>
         <MudNavMenu>
             <MudText Typo="Typo.h6" Class="px-4">@loc["Dashboard_LocalFarmer"]</MudText>
@@ -13,7 +14,12 @@
             <MudNavLink Href="/products" Icon="@Icons.Material.Filled.ShoppingBasket" Match="NavLinkMatch.Prefix">@loc["X_Products"]</MudNavLink>
             <MudNavLink Href="/mapfarmhouses" Icon="@Icons.Material.Filled.Map" Match="NavLinkMatch.Prefix">@loc["Dashboard_Map"]</MudNavLink>
             <MudNavLink Href="/information" Icon="@Icons.Material.Filled.ContactSupport" Match="NavLinkMatch.Prefix">@loc["Dashboard_Information"]</MudNavLink>
-            <MudNavLink Href="/chat" Icon="@Icons.Material.Filled.Chat" Match="NavLinkMatch.Prefix">Chat</MudNavLink>
+            <MudNavLink Href="/chat" Match="NavLinkMatch.Prefix" Class="my-chat-link">
+                <MudBadge Color="Color.Error" Overlap="true" Visible="@(_unreadCount > 0)" Content="@_unreadCount">
+                    <MudIcon Icon="@Icons.Material.Filled.Chat" />
+                </MudBadge>
+                <span class="link-chat">Chat</span>
+            </MudNavLink>
         </MudNavMenu>
         <MudNavMenu Style="margin-top: auto">
             <MudNavLink Href="/Logout" Icon="@Icons.Material.Filled.CarRepair" Match="NavLinkMatch.Prefix" Class="">@loc["Account_Logout"]</MudNavLink>
@@ -41,3 +47,58 @@
         </MudNavMenu>
     </NotAuthorized>
 </AuthorizeView>
+
+@code {
+    [Inject] private UserStateService UserStateService { get; set; }
+    [Inject] private IChatMessageService ChatMessageService { get; set; }
+
+    private int _unreadCount = 0;
+    private System.Timers.Timer _timer;
+    private Action _userChangedHandler;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _userChangedHandler = async () => await RefreshUnread();
+        UserStateService.OnUserChanged += _userChangedHandler;
+        await RefreshUnread();
+
+        _timer = new System.Timers.Timer(15000);
+        _timer.Elapsed += async (_, __) => await InvokeAsync(async () => await RefreshUnread());
+        _timer.AutoReset = true;
+        _timer.Enabled = true;
+    }
+
+    private async Task RefreshUnread()
+    {
+        var id = UserStateService.CurrentUser?.IdUser;
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            _unreadCount = 0;
+            await InvokeAsync(StateHasChanged);
+            return;
+        }
+
+        try
+        {
+            _unreadCount = await ChatMessageService.GetUnreadCountForUser(id);
+            await InvokeAsync(StateHasChanged);
+        }
+        catch
+        {
+            // ignore
+        }
+    }
+
+    public void Dispose()
+    {
+        if (_timer != null)
+        {
+            _timer.Stop();
+            _timer.Dispose();
+        }
+        if (_userChangedHandler != null)
+        {
+            UserStateService.OnUserChanged -= _userChangedHandler;
+        }
+    }
+}

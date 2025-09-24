@@ -147,6 +147,7 @@ namespace LocalFarmer2.Server.Services
             var message = _mapper.Map<ChatMessage>(dto);
             message.EncryptedMessage = encryptedMessage;
             message.MessageIV = iv;
+            message.IsRead = false;
 
             await _chatMessageRepository.AddAsync(message);
             await _chatMessageRepository.SaveChangesAsync();
@@ -159,6 +160,29 @@ namespace LocalFarmer2.Server.Services
             var result = (await _chatUserKeyRepository.GetAllAsync(x => x.User1Id == idUser || x.User2Id == idUser)).ToList();
 
             return result;
+        }
+
+        public async Task<int> GetUnreadCountForUser(string idUser)
+        {
+            var unread = await _chatMessageRepository.GetAllAsync(x => x.IdUserReceiver == idUser && !x.IsRead);
+            return unread.Count();
+        }
+
+        public async Task MarkConversationAsRead(string idUserReader, string idUserOther)
+        {
+            var toMark = (await _chatMessageRepository.GetAllAsync(x => x.IdUserReceiver == idUserReader && x.IdUserSender == idUserOther && !x.IsRead)).ToList();
+            if (toMark.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var msg in toMark)
+            {
+                msg.IsRead = true;
+                msg.DateRead = DateTime.Now;
+            }
+
+            await _chatMessageRepository.SaveChangesAsync();
         }
     }
 }

@@ -10,5 +10,7 @@ namespace LocalFarmer2.Server.Services
         Task<ChatMessage> SendMessage(ChatMessageDto dto);
         Task<byte[]> GetOrCreateKey(string user1, string user2);
         Task<List<ChatUserKey>> GetChatUserKeys(string idUser);
+        Task<int> GetUnreadCountForUser(string idUser);
+        Task MarkConversationAsRead(string idUserReader, string idUserOther);
     }
 }

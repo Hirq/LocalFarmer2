@@ -36,3 +36,11 @@
 .date {
     justify-content: center;
 }
+
+.my-chat-link .mud-nav-link-text {
+    margin-left: 0 !important;
+}
+
+.my-chat-link .link-chat {
+    margin-left: 8px !important;
+}

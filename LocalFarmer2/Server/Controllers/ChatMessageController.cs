@@ -66,5 +66,20 @@ namespace LocalFarmer2.Server.Controllers
             return Ok(dto);
         }
 
+        [HttpGet, Route("GetUnreadCountForUser")]
+        public async Task<IActionResult> GetUnreadCountForUser(string idUser)
+        {
+            var count = await _chatMessageService.GetUnreadCountForUser(idUser);
+            return Ok(count);
+        }
+
+
+        [HttpPost, Route("MarkConversationAsRead")]
+        public async Task<IActionResult> MarkConversationAsRead(string idUserReader, string idUserOther)
+        {
+            await _chatMessageService.MarkConversationAsRead(idUserReader, idUserOther);
+            return NoContent();
+        }
+
     }
 }
