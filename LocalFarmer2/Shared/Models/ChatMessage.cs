@@ -27,6 +27,7 @@ namespace LocalFarmer2.Shared.Models
         public DateTime DateSent { get; set; } = DateTime.Now;
 
         public bool IsRead { get; set; } = false;
+
         public DateTime? DateRead { get; set; }
 
         public ApplicationUser Sender { get; set; }

@@ -9,5 +9,6 @@
         public string UserName { get; set; }
         public string FullName { get; set; }
         public DateTime DateSent { get; set; }
+        public bool IsRead { get; set; }
     }
 }

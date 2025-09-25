@@ -39,7 +39,8 @@ namespace LocalFarmer2.Server.Services
                     IdUserReceiver = x.IdUserReceiver,
                     IdUserSender = x.IdUserSender,
                     Message = AESHelper.Decrypt(x.EncryptedMessage, x.MessageIV, key),
-                    DateSent = x.DateSent
+                    DateSent = x.DateSent,
+                    IsRead = x.IsRead,
                 }).ToList();
 
                 var days = allMessages.Select(x => (x.DateSent.Year, x.DateSent.Month, x.DateSent.Day)).Distinct();

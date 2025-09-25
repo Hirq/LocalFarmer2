@@ -126,6 +126,9 @@ else
         ToUser = await AccountService.GetUserById(ToUserId);
         FromUser = await AccountService.GetUserById(FromUserId);
 
+        // Mark existing unread messages from this user as read when opening the conversation
+        await ChatMessageService.MarkConversationAsRead(FromUserId, ToUserId);
+
         hubConnection = new HubConnectionBuilder()
             .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
             .Build();
@@ -172,10 +175,6 @@ else
             }
 
             await hubConnection.SendAsync("SendMessage", message);
-
-            var messageAlert = new MessageAlert(MessageAlertEnum.NewMessageChat, FromUser.UserName);
-            List<string> listUsersIds = new List<string> { message.IdUserReceiver };
-            await AlertService.AddAlerts(listUsersIds, null, false, messageAlert);
         }
         catch (Exception ex)
         {

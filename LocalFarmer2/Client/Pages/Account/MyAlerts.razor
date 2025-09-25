@@ -77,7 +77,6 @@ else
             MessageAlertEnum.EditDetails => (Icons.Material.Filled.EditNote, Color.Default),
             MessageAlertEnum.NewSubscriber => (Icons.Material.Filled.PersonAdd, Color.Primary),
             MessageAlertEnum.NewOpinion => (Icons.Material.Filled.Star, Color.Warning),
-            MessageAlertEnum.NewMessageChat => (Icons.Material.Filled.Chat, Color.Info),
             _ => (Icons.Material.Filled.Notifications, Color.Default)
         };
     }
@@ -92,7 +91,6 @@ else
             MessageAlertEnum.EditDetails => $"{loc["Alert_Edit_Farmhouse"]}",
             MessageAlertEnum.NewSubscriber => $"{loc["Alert_Add_Subscribe"]}",
             MessageAlertEnum.NewOpinion => $"{loc["Alert_Add_Opinion"]}",
-            MessageAlertEnum.NewMessageChat => $"{loc["Alert_Message"]}",
             _ => $"{loc["Alert_Others"]}"
         };
 

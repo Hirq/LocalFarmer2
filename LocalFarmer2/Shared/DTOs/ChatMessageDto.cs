@@ -7,5 +7,6 @@
         public string Message { get; set; }
         public DateTime DateSent { get; set; }
         public bool IsSeparator { get; set; } = false;
+        public bool IsRead { get; set; } = false;
     }
 }

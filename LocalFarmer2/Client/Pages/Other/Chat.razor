@@ -32,7 +32,7 @@ else
                             <MudText Typo="Typo.body2">@dto.FullName</MudText>
                         </MudCardContent>
                         <MudCardActions Class="card-action-extra">
-                            <MudText Typo="Typo.body2" class="@(!dto.IsLastMessageFromSender ? "bold-text" : "")">@(!dto.IsLastMessageFromSender ? dto.FullName : loc["X_Me"]): @(dto.Message.Length > 20 ? dto.Message.Substring(0, 17) + "..." : dto.Message) </MudText>
+                            <MudText Typo="Typo.body2" class="@((!dto.IsRead && dto.IdUserSender != FromUserId) ? "bold-text" : "")">@(!dto.IsLastMessageFromSender ? dto.FullName : loc["X_Me"]): @(dto.Message.Length > 20 ? dto.Message.Substring(0, 17) + "..." : dto.Message) </MudText>
                             <MudText Class="card-action-date">@dto.DateSent</MudText>
                         </MudCardActions>
                     </MudCard>

@@ -9,7 +9,6 @@
         //
         NewSubscriber,
         NewOpinion,
-        NewMessageChat
         //NewMessageFromForm - nowa wiadomość z formularza
     }
 
@@ -43,8 +42,6 @@
                 case MessageAlertEnum.NewSubscriber:
                     return $"{Value}";
                 case MessageAlertEnum.NewOpinion:
-                    return $"{Value}";
-                case MessageAlertEnum.NewMessageChat:
                     return $"{Value}";
                 default:
                     return string.Empty;

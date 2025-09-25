@@ -55,14 +55,5 @@ namespace LocalFarmer2.Server.Controllers
 
             return Ok(alerts);
         }
-
-        [HttpGet, Route("IsOpenLastAlertFromChat")]
-        public async Task<IActionResult> IsOpenLastAlertFromChat(string idUserReceiver)
-        {
-            var alert = (await _alertRepository.GetAllAsync(x => x.IdUser == idUserReceiver && x.AlertEnum == MessageAlertEnum.NewMessageChat)).LastOrDefault();
-
-            return Ok(alert.IsOpen);
-        }
-
     }
 }
