@@ -522,4 +522,7 @@
   <data name="ErrorUserDoesHaveFarmhouse" xml:space="preserve">
     <value>Użytkownik posiada gospodarstwo</value>
   </data>
+  <data name="Filter_New" xml:space="preserve">
+    <value>Nowe</value>
+  </data>
 </root>

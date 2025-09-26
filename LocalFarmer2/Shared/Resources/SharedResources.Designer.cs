@@ -781,6 +781,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        internal static string Filter_New {
+            get {
+                return ResourceManager.GetString("Filter_New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Active.
         /// </summary>
         internal static string Filter_Only_Active {

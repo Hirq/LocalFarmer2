@@ -22,6 +22,7 @@ else
         <div class="mud-toolbar mud-toolbar-gutters mud-table-toolbar">
             <MudText Typo="Typo.h6">@loc["X_Alerts"]</MudText>
             <MudSpacer />
+            <MudButton Class="mr-2" Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => FilterNew())">@FilterName</MudButton>
             <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
         </div>
         <MudExpansionPanels MultiExpansion="true">
@@ -55,6 +56,10 @@ else
 }
 @code {
     List<Alert> ListAlert = new List<Alert>();
+    List<Alert> originalListAlert = new List<Alert>();
+
+    bool isNewFilterActive = false;
+    private string FilterName = string.Empty;
 
     protected override async Task LoadDataAsync()
     {
@@ -65,6 +70,8 @@ else
 
         ListAlert = await AlertService.GetAllForUser(UserStateService.CurrentUser.IdUser, UserStateService.CurrentUser.IdFarmhouse);
         ListAlert = ListAlert.OrderByDescending(a => a.DateCreated).ToList();
+        originalListAlert = ListAlert;
+        FilterNew();
     }
 
     private (string Icon, Color Color) GetAlertDetails(MessageAlertEnum alertEnum)
@@ -95,5 +102,21 @@ else
         };
 
         return name.CapitalizeFirst();
+    }
+
+    private void FilterNew()
+    {
+        isNewFilterActive = !isNewFilterActive;
+
+        if (isNewFilterActive)
+        {
+            ListAlert = originalListAlert.Where(x => x.IsOpen).ToList();
+            FilterName = loc["Filter_All"];
+        }
+        else
+        {
+            ListAlert = originalListAlert;
+            FilterName = loc["Filter_New"];
+        }
     }
 }
