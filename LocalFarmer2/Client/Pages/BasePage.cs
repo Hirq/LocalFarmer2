@@ -8,7 +8,7 @@ namespace LocalFarmer2.Client.Pages
         [Inject] protected IAccountService AccountService { get; set; }
         [Inject] protected UserStateService UserStateService { get; set; }
         [Inject] protected IStringLocalizer<SharedResources> Loc { get; set; }
-        protected virtual string NotLoggedInMessage => Loc?["ErrorUserIsNotLogged"] ?? "User is not logged in.";
+        protected virtual string NotLoggedMessage => Loc?["ErrorUserIsNotLogged"] ?? "User is not logged in.";
         protected virtual string MissingFarmhouseMessage => Loc?["ErrorUserDoesnotHaveFarmhouse"] ?? "User does not have farmhouse.";
         protected virtual string OwnerFarmhouseMessage => Loc?["ErrorUserDoesHaveFarmhouse"] ?? "User does have farmhouse.";
 
@@ -41,14 +41,14 @@ namespace LocalFarmer2.Client.Pages
             var isLogged = await AccountService.IsUserLogged();
             if (!isLogged)
             {
-                errorMessage = NotLoggedInMessage;
+                errorMessage = NotLoggedMessage;
                 return false;
             }
 
             var user = await AccountService.GetCurrentUser();
             if (user == null)
             {
-                errorMessage = NotLoggedInMessage;
+                errorMessage = NotLoggedMessage;
                 return false;
             }
 

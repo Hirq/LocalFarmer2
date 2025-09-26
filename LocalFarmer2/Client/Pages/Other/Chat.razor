@@ -154,7 +154,11 @@ else
         {
             return;
         }
-        
+
+        if (string.IsNullOrEmpty(UserStateService.CurrentUser.FullName))
+        {
+            return;
+        }
         module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/chat.js");
         await module.InvokeVoidAsync("setScroll");
     }

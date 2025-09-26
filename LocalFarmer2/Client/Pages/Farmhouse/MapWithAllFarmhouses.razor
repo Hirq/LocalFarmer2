@@ -40,6 +40,11 @@ else
 
     protected override async Task LoadDataAsync()
     {
+        if (string.IsNullOrEmpty(UserStateService.CurrentUser.FullName))
+        {
+            return;
+        }
+
         farmhouses = (await FarmhouseService.GetFarmhouses()).Where(x => x.IsOpen && ValidateService.IsValidLatitude(x.Latitude) && ValidateService.IsValidLongitude(x.Longitude))
         .ToList();
     }
