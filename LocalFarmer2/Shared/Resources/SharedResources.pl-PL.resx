@@ -448,28 +448,28 @@
     <value>dodano subskrypcje</value>
   </data>
   <data name="Alert_Add_Opinion" xml:space="preserve">
-    <value>dodano opinie o</value>
+    <value>dodano opinie o gopodarstwie</value>
   </data>
   <data name="Alert_Edit_Opinion" xml:space="preserve">
-    <value>edytowano opinie o</value>
+    <value>zaktualizowano opinie o gospodarstwie</value>
   </data>
   <data name="Alert_Add_Product" xml:space="preserve">
     <value>dodano produkt</value>
   </data>
   <data name="Alert_Edit_Product" xml:space="preserve">
-    <value>edytowano produkt</value>
+    <value>zaktualizowano produkt</value>
   </data>
   <data name="Alert_Delete_Farmhouse" xml:space="preserve">
-    <value>Usunięto gospodarstwo</value>
+    <value>usunięto gospodarstwo</value>
   </data>
   <data name="Alert_Delete_Subscribe" xml:space="preserve">
-    <value>Usunięto subskrypcje gospodarstwa</value>
+    <value>usunięto subskrypcje gospodarstwa</value>
   </data>
   <data name="Alert_Delete_Opinion" xml:space="preserve">
-    <value>Usunięto opinie o gospodarstwie</value>
+    <value>usunięto opinie o gospodarstwie</value>
   </data>
   <data name="Alert_Delete_Product" xml:space="preserve">
-    <value>Usunięto produkt</value>
+    <value>usunięto produkt</value>
   </data>
   <data name="Button_Only_Favorite" xml:space="preserve">
     <value>Ulubione</value>
@@ -508,7 +508,7 @@
     <value>Średnia ocen</value>
   </data>
   <data name="Alert_IsOpen_Farmhouse" xml:space="preserve">
-    <value>Zmiana czy gospodarstwo otwarte</value>
+    <value>zmiana otwarcia / zamknięcia gospodarstwa</value>
   </data>
   <data name="Alert_Others" xml:space="preserve">
     <value>Inne</value>

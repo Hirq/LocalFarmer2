@@ -178,7 +178,7 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to added opinion.
+        ///   Looks up a localized string similar to added opinion about farmhouse.
         /// </summary>
         internal static string Alert_Add_Opinion {
             get {
@@ -223,7 +223,7 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deleted farmhouse.
+        ///   Looks up a localized string similar to deleted farmhouse.
         /// </summary>
         internal static string Alert_Delete_Farmhouse {
             get {
@@ -232,7 +232,7 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deleted opinion about farmhouse.
+        ///   Looks up a localized string similar to deleted opinion about farmhouse.
         /// </summary>
         internal static string Alert_Delete_Opinion {
             get {
@@ -241,7 +241,7 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deleted product.
+        ///   Looks up a localized string similar to product deleted.
         /// </summary>
         internal static string Alert_Delete_Product {
             get {
@@ -250,7 +250,7 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deleted subscribe farmhouse.
+        ///   Looks up a localized string similar to deleted subscribe farmhouse.
         /// </summary>
         internal static string Alert_Delete_Subscribe {
             get {
@@ -259,7 +259,7 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to edited farmhouse.
+        ///   Looks up a localized string similar to farmhouse updated.
         /// </summary>
         internal static string Alert_Edit_Farmhouse {
             get {
@@ -268,7 +268,7 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to edited opinion about.
+        ///   Looks up a localized string similar to opinion updated about farmhouse.
         /// </summary>
         internal static string Alert_Edit_Opinion {
             get {
@@ -277,7 +277,7 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to edited product.
+        ///   Looks up a localized string similar to product updated.
         /// </summary>
         internal static string Alert_Edit_Product {
             get {
@@ -286,7 +286,7 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edited farmhouse is open.
+        ///   Looks up a localized string similar to change in farmhouse opening/closing.
         /// </summary>
         internal static string Alert_IsOpen_Farmhouse {
             get {

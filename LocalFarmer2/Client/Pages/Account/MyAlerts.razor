@@ -22,6 +22,7 @@ else
         <div class="mud-toolbar mud-toolbar-gutters mud-table-toolbar">
             <MudText Typo="Typo.h6">@loc["X_Alerts"]</MudText>
             <MudSpacer />
+            <MudButton Class="mr-2" Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => FilterNew())">@loc["Filter_All"] ustaw jako przeczytane</MudButton>
             <MudButton Class="mr-2" Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => FilterNew())">@FilterName</MudButton>
             <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
         </div>

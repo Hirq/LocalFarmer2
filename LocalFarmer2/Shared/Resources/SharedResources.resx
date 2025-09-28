@@ -442,34 +442,34 @@
     <value>added farmhouse</value>
   </data>
   <data name="Alert_Edit_Farmhouse" xml:space="preserve">
-    <value>edited farmhouse</value>
+    <value>farmhouse updated</value>
   </data>
   <data name="Alert_Add_Subscribe" xml:space="preserve">
     <value>added subscribe</value>
   </data>
   <data name="Alert_Add_Opinion" xml:space="preserve">
-    <value>added opinion</value>
+    <value>added opinion about farmhouse</value>
   </data>
   <data name="Alert_Edit_Opinion" xml:space="preserve">
-    <value>edited opinion about</value>
+    <value>opinion updated about farmhouse</value>
   </data>
   <data name="Alert_Add_Product" xml:space="preserve">
     <value>added product</value>
   </data>
   <data name="Alert_Edit_Product" xml:space="preserve">
-    <value>edited product</value>
+    <value>product updated</value>
   </data>
   <data name="Alert_Delete_Farmhouse" xml:space="preserve">
-    <value>Deleted farmhouse</value>
+    <value>deleted farmhouse</value>
   </data>
   <data name="Alert_Delete_Subscribe" xml:space="preserve">
-    <value>Deleted subscribe farmhouse</value>
+    <value>deleted subscribe farmhouse</value>
   </data>
   <data name="Alert_Delete_Opinion" xml:space="preserve">
-    <value>Deleted opinion about farmhouse</value>
+    <value>deleted opinion about farmhouse</value>
   </data>
   <data name="Alert_Delete_Product" xml:space="preserve">
-    <value>Deleted product</value>
+    <value>product deleted</value>
   </data>
   <data name="Button_Only_Favorite" xml:space="preserve">
     <value>Only favorite</value>
@@ -508,7 +508,7 @@
     <value>Average rating</value>
   </data>
   <data name="Alert_IsOpen_Farmhouse" xml:space="preserve">
-    <value>Edited farmhouse is open</value>
+    <value>change in farmhouse opening/closing</value>
   </data>
   <data name="Alert_Others" xml:space="preserve">
     <value>Others</value>
