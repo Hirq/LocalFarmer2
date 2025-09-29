@@ -525,4 +525,7 @@
   <data name="Filter_New" xml:space="preserve">
     <value>Nowe</value>
   </data>
+  <data name="Alert_As_Read" xml:space="preserve">
+    <value>Ustaw jako przeczytane</value>
+  </data>
 </root>

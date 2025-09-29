@@ -214,6 +214,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set as read.
+        /// </summary>
+        internal static string Alert_As_Read {
+            get {
+                return ResourceManager.GetString("Alert_As_Read", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to created account.
         /// </summary>
         internal static string Alert_Create_Account {
