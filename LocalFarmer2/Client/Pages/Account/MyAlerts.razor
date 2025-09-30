@@ -22,6 +22,9 @@ else
         <div class="mud-toolbar mud-toolbar-gutters mud-table-toolbar">
             <MudText Typo="Typo.h6">@loc["X_Alerts"]</MudText>
             <MudSpacer />
+            <MudCheckBox T="bool?" TriState="true" Class="mr-2"
+                         Checked="@GetAllCheckboxState()"
+                         CheckedChanged="ToggleAll" />
             @if (FilterName == loc["Filter_All"])
             {
                 <MudButton Class="mr-2" Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => SetAsRead())">@loc["Alert_As_Read"]</MudButton>
@@ -35,6 +38,9 @@ else
                 <MudExpansionPanel>
                     <TitleContent>
                         <div class="d-flex">
+                            <MudCheckBox T="bool?" TriState="true" Class="mr-2"
+                                         Checked="@GetGroupCheckboxState(group.Key)"
+                                         CheckedChanged="@((bool? value) => ToggleGroup(group.Key, value))" />
                             <MudText><b>@GetAlertName(@group.Key)</b></MudText>
                             <MudChip Color="Color.Primary" Size="Size.Small" Class="ml-2">@group.Count()</MudChip>
                         </div>
@@ -46,7 +52,10 @@ else
                                 var details = GetAlertDetails(alert.AlertEnum);
                                 <MudListItem Icon="@details.Icon" IconColor="@details.Color">
                                     <div class="d-flex justify-space-between w-100">
-                                        <span>@alert.Message</span>
+                                        <div class="d-flex align-center">
+                                            <MudCheckBox Class="mr-2" Checked="@IsSelected(alert.Id)" CheckedChanged="@((bool value) => ToggleAlert(alert.Id, value))" />
+                                            <span>@alert.Message</span>
+                                        </div>
                                         <MudText Typo="Typo.caption">@alert.DateCreated.ToString("g")</MudText>
                                     </div>
                                 </MudListItem>
@@ -61,6 +70,7 @@ else
 @code {
     List<Alert> ListAlert = new List<Alert>();
     List<Alert> originalListAlert = new List<Alert>();
+    HashSet<int> selectedAlertIds = new HashSet<int>();
 
     bool isNewFilterActive = false;
     private string FilterName = string.Empty;
@@ -127,5 +137,83 @@ else
     private void SetAsRead()
     {
         
+    }
+
+    private IEnumerable<Alert> GetVisibleAlerts()
+    {
+        return ListAlert.Where(a => UtilsService.FilterFunc(a, SearchService.SearchString));
+    }
+
+    private bool IsSelected(int alertId)
+    {
+        return selectedAlertIds.Contains(alertId);
+    }
+
+    private void ToggleAlert(int alertId, bool isChecked)
+    {
+        if (isChecked)
+            selectedAlertIds.Add(alertId);
+        else
+            selectedAlertIds.Remove(alertId);
+    }
+
+    private bool? GetGroupCheckboxState(MessageAlertEnum groupKey)
+    {
+        var alerts = GetVisibleAlerts().Where(a => a.AlertEnum == groupKey).Select(a => a.Id).ToList();
+        if (alerts.Count == 0) return false;
+
+        var selectedCount = alerts.Count(id => selectedAlertIds.Contains(id));
+        if (selectedCount == 0) return false;
+        if (selectedCount == alerts.Count) return true;
+        return null;
+    }
+
+    private void ToggleGroup(MessageAlertEnum groupKey, bool? value)
+    {
+        var alerts = GetVisibleAlerts().Where(a => a.AlertEnum == groupKey).Select(a => a.Id).ToList();
+        if (value == true || value == null)
+        {
+            foreach (var id in alerts)
+                selectedAlertIds.Add(id);
+        }
+        else
+        {
+            foreach (var id in alerts)
+                selectedAlertIds.Remove(id);
+        }
+    }
+
+    private bool? GetAllCheckboxState()
+    {
+        var alerts = GetVisibleAlerts().Select(a => a.Id).ToList();
+        if (alerts.Count == 0) return false;
+
+        var selectedCount = alerts.Count(id => selectedAlertIds.Contains(id));
+        if (selectedCount == 0) return false;
+        if (selectedCount == alerts.Count) return true;
+        return null;
+    }
+
+    private void ToggleAll(bool? value)
+    {
+        var alerts = GetVisibleAlerts().Select(a => a.Id).ToList();
+        if (value == true || value == null)
+        {
+            foreach (var id in alerts)
+                selectedAlertIds.Add(id);
+        }
+        else
+        {
+            foreach (var id in alerts)
+                selectedAlertIds.Remove(id);
+        }
+    }
+
+    private List<Alert> GetSelectedAlerts()
+    {
+        var map = ListAlert.ToDictionary(a => a.Id, a => a);
+        return selectedAlertIds.Select(id => map.ContainsKey(id) ? map[id] : null)
+                               .Where(a => a != null)
+                               .ToList()!;
     }
 }
