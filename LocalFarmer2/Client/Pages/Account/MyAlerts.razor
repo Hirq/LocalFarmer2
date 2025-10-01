@@ -134,11 +134,6 @@ else
         }
     }
 
-    private void SetAsRead()
-    {
-        
-    }
-
     private IEnumerable<Alert> GetVisibleAlerts()
     {
         return ListAlert.Where(a => UtilsService.FilterFunc(a, SearchService.SearchString));
@@ -211,9 +206,20 @@ else
 
     private List<Alert> GetSelectedAlerts()
     {
-        var map = ListAlert.ToDictionary(a => a.Id, a => a);
-        return selectedAlertIds.Select(id => map.ContainsKey(id) ? map[id] : null)
-                               .Where(a => a != null)
-                               .ToList()!;
+        return ListAlert.Where(x => selectedAlertIds.Contains(x.Id)).ToList();
+    }
+
+    private void SetAsRead()
+    {
+        var list = GetSelectedAlerts();
+
+        //TODO: Dodać do serwisu handler do obługi alertów - delete / ustawienie na odczytane
+        //Przesyłamy liste id
+
+        foreach(var alert in list)
+        {
+            alert.IsOpen = true;
+        }
+
     }
 }
