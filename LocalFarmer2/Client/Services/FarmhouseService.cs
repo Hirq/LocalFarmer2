@@ -32,7 +32,7 @@ namespace LocalFarmer2.Client.Services
         }
 
         [AllowAnonymous]
-        public async Task<List<FarmhouseViewModel>> GetFarmhousesWithProductsAndButton(int[] idsFavorites, int[] idsOpinons, int? idFarmhouse)
+        public async Task<List<FarmhouseViewModel>> GetFarmhousesWithProductsAndButton(int[] idsFavorites, int[] idsOpinions, int? idFarmhouse)
         {
             List<Farmhouse> farmhouses;
 
@@ -50,9 +50,9 @@ namespace LocalFarmer2.Client.Services
                 };
             }
 
-            if (idsOpinons != null)
+            if (idsOpinions != null)
             {
-                foreach (var vm in result.Where(x => idsOpinons.Contains(x.Id)))
+                foreach (var vm in result.Where(x => idsOpinions.Contains(x.Id)))
                 {
                     vm.IsCommented = true;
                 };

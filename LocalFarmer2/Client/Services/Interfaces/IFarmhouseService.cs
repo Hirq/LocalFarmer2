@@ -6,7 +6,7 @@ namespace LocalFarmer2.Client.Services
     {
         Task<List<Farmhouse>> GetFarmhouses();
         Task<List<Farmhouse>> GetFarmhousesWithProducts();
-        Task<List<FarmhouseViewModel>> GetFarmhousesWithProductsAndButton(int[] idsFavorites, int[] idsOpinons, int? idFarmhouse);
+        Task<List<FarmhouseViewModel>> GetFarmhousesWithProductsAndButton(int[] idsFavorites, int[] idsOpinions, int? idFarmhouse);
         Task<Farmhouse> GetFarmhouse(int id);
         Task EditFarmhouse(FarmhouseDto dto, int idFarmhouse);
         Task<int> AddFarmhouse(AddFarmhouseDto dto);

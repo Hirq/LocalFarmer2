@@ -21,14 +21,15 @@ else
     <div class="mud-table mud-xs-table mud-table-hover mud-elevation-1">
         <div class="mud-toolbar mud-toolbar-gutters mud-table-toolbar">
             <MudText Typo="Typo.h6">@loc["X_Alerts"]</MudText>
-            <MudSpacer />
             <MudCheckBox T="bool?" TriState="true" Class="mr-2"
                          Checked="@GetAllCheckboxState()"
                          CheckedChanged="ToggleAll" />
+            <MudButton Class="mr-2" Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => DeleteAlerts())">@loc["X_Delete"]</MudButton>
             @if (FilterName == loc["Filter_All"])
             {
-                <MudButton Class="mr-2" Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => SetAsRead())">@loc["Alert_As_Read"]</MudButton>
+                <MudButton Class="mr-2" Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => SetAlertsAsRead())">@loc["Alert_As_Read"]</MudButton>
             }
+            <MudSpacer />
             <MudButton Class="mr-2" Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => FilterNew())">@FilterName</MudButton>
             <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
         </div>
@@ -82,10 +83,15 @@ else
             return;
         }
 
+        await PrepareAlertLists();
+        FilterNew();
+    }
+
+    private async Task PrepareAlertLists()
+    {
         ListAlert = await AlertService.GetAllForUser(UserStateService.CurrentUser.IdUser, UserStateService.CurrentUser.IdFarmhouse);
         ListAlert = ListAlert.OrderByDescending(a => a.DateCreated).ToList();
         originalListAlert = ListAlert;
-        FilterNew();
     }
 
     private (string Icon, Color Color) GetAlertDetails(MessageAlertEnum alertEnum)
@@ -124,7 +130,7 @@ else
 
         if (isNewFilterActive)
         {
-            ListAlert = originalListAlert.Where(x => x.IsOpen).ToList();
+            ListAlert = originalListAlert.Where(x => !x.IsOpen).ToList();
             FilterName = loc["Filter_All"];
         }
         else
@@ -204,22 +210,19 @@ else
         }
     }
 
-    private List<Alert> GetSelectedAlerts()
+    private async Task SetAlertsAsRead()
     {
-        return ListAlert.Where(x => selectedAlertIds.Contains(x.Id)).ToList();
+        var ids = selectedAlertIds.ToArray();
+        await AlertService.SetAlertsAsRead(ids);
+        selectedAlertIds.Clear();
+        await PrepareAlertLists();
     }
 
-    private void SetAsRead()
+    private async Task DeleteAlerts()
     {
-        var list = GetSelectedAlerts();
-
-        //TODO: Dodać do serwisu handler do obługi alertów - delete / ustawienie na odczytane
-        //Przesyłamy liste id
-
-        foreach(var alert in list)
-        {
-            alert.IsOpen = true;
-        }
-
+        var ids = selectedAlertIds.ToArray();
+        await AlertService.DeleteAlerts(ids);
+        selectedAlertIds.Clear();
+        await PrepareAlertLists();
     }
 }

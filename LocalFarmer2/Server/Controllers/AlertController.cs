@@ -45,15 +45,29 @@ namespace LocalFarmer2.Server.Controllers
             return StatusCode(StatusCodes.Status201Created, alert);
         }
 
-        [HttpPut, Route("SetAllAlertsAsReadForUser")]
-        public async Task<IActionResult> SetAllAlertsAsReadForUser(string idUser)
+        [HttpPut, Route("SetAlertsAsRead")]
+        public async Task<IActionResult> SetAlertsAsRead([FromQuery] int[] ids)
         {
-            var alerts = (await _alertRepository.GetAllAsync(x => x.IdUser == idUser)).ToList();
+            var alerts = (await _alertRepository.GetAllAsync(x => ids.Contains(x.Id))).ToList();
 
             alerts.ForEach(x => x.IsOpen = true);
             await _alertRepository.SaveChangesAsync();
 
             return Ok(alerts);
+        }
+
+        [HttpDelete, Route("DeleteAlerts")]
+        public async Task<IActionResult> DeleteAlerts([FromQuery] int[] ids)
+        {
+            var alerts = (await _alertRepository.GetAllAsync(x => ids.Contains(x.Id))).ToList();
+
+            foreach(var alert in alerts)
+            {
+                await _alertRepository.DeleteAsync(alert);
+            }
+            await _alertRepository.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

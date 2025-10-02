@@ -152,15 +152,6 @@
         }
     }
 
-    private async Task MenuStateChanged(bool isOpen)
-    {
-        if (!isOpen)
-        {
-            await AlertService.SetAllAlertsAsReadForUser(UserStateService.CurrentUser.IdUser);
-            newAlerts = 0;
-        }
-    }
-
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
