@@ -528,4 +528,10 @@
   <data name="Alert_As_Read" xml:space="preserve">
     <value>Set as read</value>
   </data>
+  <data name="Chat_Without_Chats" xml:space="preserve">
+    <value>No chats have been started yet. To start a conversation, go to the</value>
+  </data>
+  <data name="Chat_Without_Chats2" xml:space="preserve">
+    <value> tab. Then open the details of the selected farmhouse and press the 'Send message chat' button.</value>
+  </data>
 </root>

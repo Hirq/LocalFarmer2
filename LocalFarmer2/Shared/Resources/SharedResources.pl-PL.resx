@@ -528,4 +528,10 @@
   <data name="Alert_As_Read" xml:space="preserve">
     <value>Ustaw jako przeczytane</value>
   </data>
+  <data name="Chat_Without_Chats" xml:space="preserve">
+    <value>Brak rozpoczętych czatów. Aby rozmawiać przejdź na zakładkę</value>
+  </data>
+  <data name="Chat_Without_Chats2" xml:space="preserve">
+    <value>. Następnie wejdź w szczegóły wybranego gospodarstwa i naciśnij przycisk 'wyślij wiadomość chat'.</value>
+  </data>
 </root>

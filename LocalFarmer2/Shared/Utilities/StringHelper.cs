@@ -12,5 +12,14 @@ namespace LocalFarmer2.Shared.Utilities
             var first = char.ToUpper(value[0], CultureInfo.CurrentCulture);
             return value.Length == 1 ? first.ToString() : first + value[1..];
         }
+
+        public static string LowerFirst(this string? value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return string.Empty;
+
+            var first = char.ToLower(value[0], CultureInfo.CurrentCulture);
+            return value.Length == 1 ? first.ToString() : first + value[1..];
+        }
     }
 }

@@ -466,6 +466,24 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No chats have been started yet. To start a conversation, go to the.
+        /// </summary>
+        internal static string Chat_Without_Chats {
+            get {
+                return ResourceManager.GetString("Chat_Without_Chats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  tab. Then open the details of the selected farmhouse and press the &apos;Send message chat&apos; button..
+        /// </summary>
+        internal static string Chat_Without_Chats2 {
+            get {
+                return ResourceManager.GetString("Chat_Without_Chats2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Write your message here....
         /// </summary>
         internal static string Chat_Write_Your_Message_Here {
