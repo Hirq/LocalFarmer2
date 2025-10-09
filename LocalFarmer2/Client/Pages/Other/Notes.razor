@@ -29,9 +29,9 @@ else
              <div>
                 <MudButton Color="Color.Warning" Variant="Variant.Filled" Class="noteButtonFilter" OnClick="@(() => ChangeFilter())">@FilterName</MudButton>
                 <div class="position-indicators">
-                    <div class="indicator @(FilterNotes == 2 ? "active" : "")" onclick="@(() => SetFilter(1))"></div>
-                    <div class="indicator @(FilterNotes == 0 ? "active" : "")" onclick="@(() => SetFilter(2))"></div>
-                    <div class="indicator @(FilterNotes == 1 ? "active" : "")" onclick="@(() => SetFilter(0))"></div>
+                    <div class="indicator3 @(FilterNotes == 2 ? "active" : "")" onclick="@(() => SetFilter(1))"></div>
+                    <div class="indicator3 @(FilterNotes == 0 ? "active" : "")" onclick="@(() => SetFilter(2))"></div>
+                    <div class="indicator3 @(FilterNotes == 1 ? "active" : "")" onclick="@(() => SetFilter(0))"></div>
                 </div>
              </div>
         </div>

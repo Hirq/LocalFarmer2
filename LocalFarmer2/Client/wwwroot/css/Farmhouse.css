@@ -83,14 +83,25 @@
     max-width: 230px;
 }
 
-.indicator {
+.indicator3 {
     width: 30%;
     height: 10px;
     background-color: var(--gray-primary);
     border-radius: 3px;
 }
 
-    .indicator.active {
+    .indicator3.active {
+        background-color: var(--button-warning);
+    }
+
+.indicator2 {
+    width: 49%;
+    height: 10px;
+    background-color: var(--gray-primary);
+    border-radius: 3px;
+}
+
+    .indicator2.active {
         background-color: var(--button-warning);
     }
 
