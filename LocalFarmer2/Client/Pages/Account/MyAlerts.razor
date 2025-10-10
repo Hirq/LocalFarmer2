@@ -30,7 +30,14 @@ else
                 <MudButton Class="mr-2" Color="Color.Success" Variant="Variant.Filled" OnClick="@(() => SetAlertsAsRead())">@loc["Alert_As_Read"]</MudButton>
             }
             <MudSpacer />
-            <MudButton Class="mr-2" Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => FilterNew())">@FilterName</MudButton>
+            <div class="mr-3">
+                <MudButton Color="Color.Warning" Variant="Variant.Filled" Class="noteButtonFilter" OnClick="@(() => ChangeFilter())">@FilterName</MudButton>
+                <div class="position-indicators">
+                    <div class="indicator2 @(FilterNotes == 0 ? "active" : "")" onclick="@(() => SetFilter(0))"></div>
+                    <div class="indicator2 @(FilterNotes == 1 ? "active" : "")" onclick="@(() => SetFilter(1))"></div>
+                </div>
+            </div>
+            @* <MudButton Class="mr-2" Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => FilterNew())">@FilterName</MudButton> *@
             <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
         </div>
         <MudExpansionPanels MultiExpansion="true">
@@ -74,7 +81,12 @@ else
     HashSet<int> selectedAlertIds = new HashSet<int>();
 
     bool isNewFilterActive = false;
+    private int FilterNotes = 0;
     private string FilterName = string.Empty;
+    /*
+    0 - All
+    1 - Only Favorite
+    */
 
     protected override async Task LoadDataAsync()
     {
@@ -84,7 +96,7 @@ else
         }
 
         await PrepareAlertLists();
-        FilterNew();
+        FilterName = loc["Filter_All"];
     }
 
     private async Task PrepareAlertLists()
@@ -124,20 +136,27 @@ else
         return name.CapitalizeFirst();
     }
 
-    private void FilterNew()
+    private void ChangeFilter()
     {
+        FilterNotes = (FilterNotes + 1) % 2;
         isNewFilterActive = !isNewFilterActive;
 
         if (isNewFilterActive)
         {
             ListAlert = originalListAlert.Where(x => !x.IsOpen).ToList();
-            FilterName = loc["Filter_All"];
+            FilterName = loc["Filter_New"];
         }
         else
         {
             ListAlert = originalListAlert;
-            FilterName = loc["Filter_New"];
+            FilterName = loc["Filter_All"];
         }
+    }
+
+    private void SetFilter(int filtr)
+    {
+        FilterNotes = filtr;
+        ChangeFilter();
     }
 
     private IEnumerable<Alert> GetVisibleAlerts()
