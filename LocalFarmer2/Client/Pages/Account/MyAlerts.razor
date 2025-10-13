@@ -21,14 +21,7 @@ else
     <div class="mud-table mud-xs-table mud-table-hover mud-elevation-1">
         <div class="mud-toolbar mud-toolbar-gutters mud-table-toolbar">
             <MudText Typo="Typo.h6">@loc["X_Alerts"]</MudText>
-            <MudCheckBox T="bool?" TriState="true" Class="mr-2"
-                         Checked="@GetAllCheckboxState()"
-                         CheckedChanged="ToggleAll" />
-            <MudButton Class="mr-2" Color="Color.Secondary" Variant="Variant.Filled" OnClick="@(() => DeleteAlerts())">@loc["X_Delete"]</MudButton>
-            @if (FilterName == loc["Filter_All"])
-            {
-                <MudButton Class="mr-2" Color="Color.Success" Variant="Variant.Filled" OnClick="@(() => SetAlertsAsRead())">@loc["Alert_As_Read"]</MudButton>
-            }
+
             <MudSpacer />
             <div class="mr-3">
                 <MudButton Color="Color.Warning" Variant="Variant.Filled" Class="noteButtonFilter" OnClick="@(() => ChangeFilter())">@FilterName</MudButton>
@@ -39,6 +32,16 @@ else
             </div>
             @* <MudButton Class="mr-2" Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => FilterNew())">@FilterName</MudButton> *@
             <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
+        </div>
+        <div class="mud-toolbar mud-toolbar-gutters mud-table-toolbar pl-6">
+            <MudCheckBox T="bool?" TriState="true" Class="mr-2"
+                         Checked="@GetAllCheckboxState()"
+                         CheckedChanged="ToggleAll" />
+            <MudButton Class="mr-2" Color="Color.Secondary" Variant="Variant.Filled" OnClick="@(() => DeleteAlerts())">@loc["X_Delete"]</MudButton>
+            @if (FilterName == loc["Filter_All"])
+            {
+                <MudButton Class="mr-2" Color="Color.Success" Variant="Variant.Filled" OnClick="@(() => SetAlertsAsRead())">@loc["Alert_As_Read"]</MudButton>
+            }
         </div>
         <MudExpansionPanels MultiExpansion="true">
             @foreach (var group in ListAlert.Where(a => UtilsService.FilterFunc(a, SearchService.SearchString)).GroupBy(a => a.AlertEnum))
