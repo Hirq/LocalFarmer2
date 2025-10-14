@@ -35,8 +35,8 @@ else
             <MudExpansionPanels Elevation="0">
                 @foreach (var item in FaqItems)
                 {
-                    <MudExpansionPanel Text="@item.Question[CurrentLang]">
-                        @item.Answer[CurrentLang]
+                    <MudExpansionPanel Text="@item.Question[CurrentLang]" Class="fw-bold">
+                        <span class="fw-normal">@item.Answer[CurrentLang]</span>
                     </MudExpansionPanel>
                 }
             </MudExpansionPanels>
