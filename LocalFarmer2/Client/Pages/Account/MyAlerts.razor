@@ -30,7 +30,6 @@ else
                     <div class="indicator2 @(FilterNotes == 1 ? "active" : "")" onclick="@(() => SetFilter(1))"></div>
                 </div>
             </div>
-            @* <MudButton Class="mr-2" Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => FilterNew())">@FilterName</MudButton> *@
             <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
         </div>
         <div class="mud-toolbar mud-toolbar-gutters mud-table-toolbar pl-6">
@@ -52,7 +51,7 @@ else
                             <MudCheckBox T="bool?" TriState="true" Class="mr-2"
                                          Checked="@GetGroupCheckboxState(group.Key)"
                                          CheckedChanged="@((bool? value) => ToggleGroup(group.Key, value))" />
-                            <MudText><b>@GetAlertName(@group.Key)</b></MudText>
+                            <MudText Class="d-flex align-items-center"><b>@GetAlertName(@group.Key)</b></MudText>
                             <MudChip Color="Color.Primary" Size="Size.Small" Class="ml-2">@group.Count()</MudChip>
                         </div>
                     </TitleContent>

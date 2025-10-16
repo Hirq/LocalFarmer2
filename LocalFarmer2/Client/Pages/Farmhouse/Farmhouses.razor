@@ -36,7 +36,6 @@ else
                     <div class="indicator2 @(FilterNotes == 1 ? "active" : "")" onclick="@(() => SetFilter(1))"></div>
                 </div>
             </div>
-            @* <MudButton Class="mr-2" Color="Color.Warning" Variant="Variant.Filled" OnClick="@(() => FilterFavorite())">@loc["Button_Only_Favorite"]</MudButton> *@
             <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
         </ToolBarContent>
 
