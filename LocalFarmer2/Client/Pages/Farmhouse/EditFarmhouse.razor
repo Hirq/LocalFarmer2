@@ -206,7 +206,11 @@ else
         UserStateService.CurrentUser.FarmhouseName = farmhouseDto.Name;
 
         //Alerts
-        var listUsersIds = await FavoriteFarmhouseService.GetFavoriteFarmhouseUsersIds((int)UserStateService.CurrentUser.IdFarmhouse);
+
+        AlertUserIds listUsersIds = new AlertUserIds
+        {
+            IdUserTarget = await FavoriteFarmhouseService.GetFavoriteFarmhouseUsersIds((int)UserStateService.CurrentUser.IdFarmhouse)
+        };
         if (farmhouseDto.IsOpen != initIsOpen)
         {
             var messageAlertIsOpen = new MessageAlert(MessageAlertEnum.FarmhouseIsOpen, farmhouseDto.Name, null, farmhouseDto.IsOpen);

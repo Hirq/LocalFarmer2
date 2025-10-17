@@ -6,7 +6,8 @@ namespace LocalFarmer2.Shared.DTOs
     {
         public string Message { get; set; }
         public int? IdFarmhouse { get; set; }
-        public string IdUser { get; set; }
+        public string IdUserTarget { get; set; }
+        public string IdUserSource { get; set; }
         public bool InfoFromFarmhouse { get; set; }
         public MessageAlertEnum AlertEnum { get; set; }
     }

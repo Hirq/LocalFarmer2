@@ -23,11 +23,11 @@ namespace LocalFarmer2.Server.Controllers
 
             if (idFarmhouse != null)
             {
-                alerts = await _alertRepository.GetAllAsync(x => x.IdUser == idUser || x.IdFarmhouse == idFarmhouse, x => x.Farmhouse);
+                alerts = await _alertRepository.GetAllAsync(x => x.IdUserTarget == idUser || x.IdFarmhouse == idFarmhouse, x => x.Farmhouse);
             }
             else
             {
-                alerts = await _alertRepository.GetAllAsync(x => x.IdUser == idUser, x => x.Farmhouse);
+                alerts = await _alertRepository.GetAllAsync(x => x.IdUserTarget == idUser, x => x.Farmhouse);
             }
 
             return Ok(alerts);

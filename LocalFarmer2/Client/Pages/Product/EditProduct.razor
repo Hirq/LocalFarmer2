@@ -95,7 +95,10 @@ else
         await ProductService.EditProduct(productDto, Id);
 
         //Alerts
-        var listUsersIds = await FavoriteFarmhouseService.GetFavoriteFarmhouseUsersIds((int)UserStateService.CurrentUser.IdFarmhouse);
+        AlertUserIds listUsersIds = new AlertUserIds
+        {
+            IdUserTarget = await FavoriteFarmhouseService.GetFavoriteFarmhouseUsersIds((int)UserStateService.CurrentUser.IdFarmhouse)
+        };
         var messageAlert = new MessageAlert(MessageAlertEnum.EditProduct, UserStateService.CurrentUser.FarmhouseName, productDto.Name);
         await AlertService.AddAlerts(listUsersIds, (int)UserStateService.CurrentUser.IdFarmhouse, true, messageAlert);
 

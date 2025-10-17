@@ -75,41 +75,58 @@ namespace LocalFarmer2.Client.Services
         }
 
 
-        public async Task<List<Alert>> GetAllForUser(string idUser, int? idFarmhouse)
+        public async Task<List<Alert>> GetAllForUser(string idUserTarget, int? idFarmhouse)
         {
             List<Alert> alerts;
 
             if (idFarmhouse != null)
             {
-                alerts = await _httpClient.GetFromJsonAsync<List<Alert>>($"api/Alert/AlertForUser?idUser={idUser}&idFarmhouse={idFarmhouse}");
+                alerts = await _httpClient.GetFromJsonAsync<List<Alert>>($"api/Alert/AlertForUser?idUser={idUserTarget}&idFarmhouse={idFarmhouse}");
             }
             else
             {
-                alerts = await _httpClient.GetFromJsonAsync<List<Alert>>($"api/Alert/AlertForUser?idUser={idUser}");
+                alerts = await _httpClient.GetFromJsonAsync<List<Alert>>($"api/Alert/AlertForUser?idUser={idUserTarget}");
             }
 
             return alerts;
         }
 
-        public async Task AddAlert(AddAlertDto dto)
+        public async Task AddAlerts(AlertUserIds dtos, int? idFarmhouse, bool infoFromFarmhouse, MessageAlert messageAlert)
         {
-            await _httpClient.PostAsJsonAsync($"api/Alert/Alert", dto);
-        }
-
-        public async Task AddAlerts(List<string> dtos, int? idFarmhouse, bool infoFromFarmhouse, MessageAlert messageAlert)
-        {
-            foreach (var userId in dtos)
+            if (dtos.IdUserSource.Count == 0)
+            {
+                foreach (var x in dtos.IdUserTarget)
+                {
+                    AddAlertDto dtoAlert = new AddAlertDto()
+                    {
+                        IdFarmhouse = idFarmhouse,
+                        Message = messageAlert.GetMessage(),
+                        IdUserTarget = x,
+                        IdUserSource = string.Empty,
+                        InfoFromFarmhouse = infoFromFarmhouse,
+                        AlertEnum = messageAlert.AlertEnum
+                    };
+                    await AddAlert(dtoAlert);
+                }
+            }
+            else if (dtos.IdUserSource.Count == 1 && dtos.IdUserTarget.Count == 1)
             {
                 AddAlertDto dtoAlert = new AddAlertDto()
                 {
                     IdFarmhouse = idFarmhouse,
                     Message = messageAlert.GetMessage(),
-                    IdUser = userId,
+                    IdUserTarget = dtos.IdUserTarget[0],
+                    IdUserSource = dtos.IdUserSource[0],
                     InfoFromFarmhouse = infoFromFarmhouse,
                     AlertEnum = messageAlert.AlertEnum
                 };
                 await AddAlert(dtoAlert);
             }
+        }
+
+        public async Task AddAlert(AddAlertDto dto)
+        {
+            await _httpClient.PostAsJsonAsync($"api/Alert/Alert", dto);
         }
 
         public async Task SetAlertsAsRead(int[] ids)

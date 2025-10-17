@@ -70,7 +70,10 @@ else
         await ProductService.AddProduct(product, (int)UserStateService.CurrentUser.IdFarmhouse);
 
         //Alerts
-        var listUsersIds = await FavoriteFarmhouseService.GetFavoriteFarmhouseUsersIds((int)UserStateService.CurrentUser.IdFarmhouse);
+        AlertUserIds listUsersIds = new AlertUserIds
+        {
+            IdUserTarget = await FavoriteFarmhouseService.GetFavoriteFarmhouseUsersIds((int)UserStateService.CurrentUser.IdFarmhouse)
+        };
         var messageAlert = new MessageAlert(MessageAlertEnum.NewProduct, UserStateService.CurrentUser.FarmhouseName, product.Name);
         await AlertService.AddAlerts(listUsersIds, (int)UserStateService.CurrentUser.IdFarmhouse, true, messageAlert);
 

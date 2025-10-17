@@ -13,8 +13,13 @@ namespace LocalFarmer2.Shared.Models
         [Required]
         public string Message { get; set; }
 
-        [ForeignKey(nameof(User))]
-        public string IdUser { get; set; }
+        //Receiver
+        [ForeignKey(nameof(UserTarget))]
+        public string IdUserTarget { get; set; }
+
+        //Sender
+        [ForeignKey(nameof(UserSource))]
+        public string IdUserSource { get; set; }
 
         [ForeignKey(nameof(Farmhouse))]
         public int? IdFarmhouse { get; set; }
@@ -42,7 +47,9 @@ namespace LocalFarmer2.Shared.Models
         // a wiadomość co została wpisana w polu Message lub pusto tam 
         public MessageAlertEnum AlertEnum { get; set; }
 
-        public ApplicationUser User { get; set; }
+        public ApplicationUser UserTarget { get; set; }
+
+        public ApplicationUser UserSource { get; set; }
 
         public Farmhouse Farmhouse { get; set; }
     }

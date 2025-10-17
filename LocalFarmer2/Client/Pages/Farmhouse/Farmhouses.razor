@@ -204,7 +204,14 @@ else
 
             //Alerts
             var UserIdAlert = await AccountService.GetUserByFarmhouseId(idFarmhouse);
-            var listUsersIds = new List<string>() { UserIdAlert.IdUser };
+
+            AlertUserIds listUsersIds = new AlertUserIds
+            {
+                IdUserTarget = { UserIdAlert.IdUser },
+                IdUserSource = { UserStateService.CurrentUser.IdUser }
+            };
+
+            // var listUsersIds = new List<string>() { UserIdAlert.IdUser };
             var messageAlert = new MessageAlert(MessageAlertEnum.NewSubscriber, UserStateService.CurrentUser.FullName);
             await AlertService.AddAlerts(listUsersIds, null, false, messageAlert);
 
@@ -242,7 +249,11 @@ else
 
             //Alerts
             var UserIdAlert = await AccountService.GetUserByFarmhouseId(opinion.IdFarmhouse);
-            var listUsersIds = new List<string>() { UserIdAlert.IdUser };
+            AlertUserIds listUsersIds = new AlertUserIds
+            {
+                IdUserTarget = { UserIdAlert.IdUser },
+                IdUserSource = { UserStateService.CurrentUser.IdUser }
+            };
             var messageAlert = new MessageAlert(MessageAlertEnum.NewOpinion, dto.Comment);
             await AlertService.AddAlerts(listUsersIds, null, false, messageAlert);
 
