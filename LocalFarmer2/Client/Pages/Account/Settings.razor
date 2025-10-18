@@ -1,0 +1,42 @@
+﻿@page "/settings"
+@inherits BasePage
+
+<PageTitle>@loc["Account_My_Account"] | @Globals.AppName</PageTitle>
+
+@if (isLoading)
+{
+    <MudProgressCircular Class="m-4" Color="Color.Primary" />
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
+}
+else
+{
+    <AuthorizeView>
+        <MudGrid Class="m-0 w-100">
+            <MudItem xs="12" Class="dashboard-paper-name-farmhouse">
+                <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">- Settings -</MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" Class="dashboard-button">
+                <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/myaccount">@loc["Account_My_Account"]</MudButton>
+            </MudItem>
+            <MudItem xs="12" sm="6" Class="dashboard-button">
+                <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/favoritefarmhouses">@loc["Dashboard_Favorites_Farmhouses"]</MudButton>
+            </MudItem>
+            <MudItem xs="12" sm="6" Class="dashboard-button">
+                <MudButton Variant="Variant.Outlined" Class="d-flex align-center justify-center mud-width-full py-8" Href="/myopinionsfarmhouses">@loc["Dashboard_My_Opinions"]</MudButton>
+            </MudItem>
+        </MudGrid>
+    </AuthorizeView>
+}
+
+@code {
+    protected override async Task LoadDataAsync()
+    {
+        if (!await EnsureLoggedInAsync())
+        {
+            return;
+        }
+    }
+}
