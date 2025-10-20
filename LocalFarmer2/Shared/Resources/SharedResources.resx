@@ -534,4 +534,10 @@
   <data name="Chat_Without_Chats2" xml:space="preserve">
     <value> tab. Then open the details of the selected farmhouse and press the 'Send message chat' button.</value>
   </data>
+  <data name="X_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="X_Contact_With_Administrator" xml:space="preserve">
+    <value>Contact form to administrator</value>
+  </data>
 </root>

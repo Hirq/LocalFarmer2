@@ -1105,6 +1105,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contact form to administrator.
+        /// </summary>
+        internal static string X_Contact_With_Administrator {
+            get {
+                return ResourceManager.GetString("X_Contact_With_Administrator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         internal static string X_Date {
@@ -1272,6 +1281,15 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string X_Search {
             get {
                 return ResourceManager.GetString("X_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        internal static string X_Settings {
+            get {
+                return ResourceManager.GetString("X_Settings", resourceCulture);
             }
         }
         

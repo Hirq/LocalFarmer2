@@ -73,7 +73,14 @@ namespace LocalFarmer2.Client.Services
                 { "isContactToAdmin", isContactToAdmin },
                 { "emailTo", emailTo }
             };
-            _dialogService.Show<PopupDialogSendMessage>(_loc["Farmhouse_Contact_Form"], parameters, options);
+            if (emailTo  != null)
+            {
+                _dialogService.Show<PopupDialogSendMessage>(_loc["Farmhouse_Contact_Form"], parameters, options);
+            }
+            else
+            {
+                _dialogService.Show<PopupDialogSendMessage>(_loc["X_Contact_With_Administrator"], parameters, options);
+            }
         }
 
         public async Task SendMessage(EmailDto emailDto)

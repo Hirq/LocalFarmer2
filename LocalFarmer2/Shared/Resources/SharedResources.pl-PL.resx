@@ -534,4 +534,10 @@
   <data name="Chat_Without_Chats2" xml:space="preserve">
     <value>. Następnie wejdź w szczegóły wybranego gospodarstwa i naciśnij przycisk 'wyślij wiadomość chat'.</value>
   </data>
+  <data name="X_Settings" xml:space="preserve">
+    <value>Ustawienia</value>
+  </data>
+  <data name="X_Contact_With_Administrator" xml:space="preserve">
+    <value>Formularz kontaktowy z administratorem</value>
+  </data>
 </root>
