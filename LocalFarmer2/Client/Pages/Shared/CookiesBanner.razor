@@ -1,0 +1,34 @@
+﻿@inject IJSRuntime JS
+
+@if (showBanner)
+{
+    <div class="cookies-banner">
+        <button class="close-btn" @onclick="HideBanner">✕</button>
+        <p>
+            Ta aplikacja korzysta z plików cookies oraz localStorage w celu zapewnienia poprawnego działania.
+            Szczegóły znajdziesz w <a href="/polityka-prywatnosci" target="_blank">polityce prywatności</a>.
+        </p>
+        <button class="accept-btn" @onclick="AcceptCookies">Akceptuję</button>
+    </div>
+}
+
+@code {
+    private bool showBanner = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var accepted = await JS.InvokeAsync<string>("localStorage.getItem", "cookiesAccepted");
+        showBanner = string.IsNullOrEmpty(accepted);
+    }
+
+    private async Task AcceptCookies()
+    {
+        await JS.InvokeVoidAsync("localStorage.setItem", "cookiesAccepted", "true");
+        showBanner = false;
+    }
+
+    private void HideBanner()
+    {
+        showBanner = false;
+    }
+}
