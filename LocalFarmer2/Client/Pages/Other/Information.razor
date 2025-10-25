@@ -44,9 +44,15 @@ else
                 <MudText Typo="Typo.h6">@loc["X_Contact"]</MudText>
                 </div>
                 <div class="cotanct-wrapper">
-                    <MudButton Class="ml-3" OnClick='() => UtilsService.OpenDialogSendMessage()' Variant="Variant.Filled" Color="Color.Primary">
+                <MudButton Class="ml-3" OnClick='() => UtilsService.OpenDialogSendMessage()' Variant="Variant.Filled" Color="Color.Primary">
                         @loc["Farmhouse_Send_Message"]
                 </MudButton>
+            </div>
+            <div class="mud-table-toolbar titlePage">
+                <MudText Typo="Typo.h6">Ważne informacje</MudText>
+                </div>
+                <div class="cotanct-wrapper">
+                <MudLink Href="/privacy policy.pdf" Target="_blank" Typo="Typo.body2">@loc["Farmhouse_Send_Message"]Polityka prywatności</MudLink>
             </div>
             <div class="github-wrapper">
                 <MudIconButton Class="github" Icon="@Icons.Custom.Brands.GitHub" Color="Color.Primary" aria-label="github" Href="https://github.com/Hirq" Target="_blank" />
