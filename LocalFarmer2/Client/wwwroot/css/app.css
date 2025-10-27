@@ -235,3 +235,9 @@ body.dark-mode .close-btn {
     body.dark-mode .close-btn:hover {
         color: #fff;
     }
+.cookies-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+}

@@ -540,4 +540,19 @@
   <data name="X_Contact_With_Administrator" xml:space="preserve">
     <value>Contact form to administrator</value>
   </data>
+  <data name="X_Privacy_Policy" xml:space="preserve">
+    <value>Privacy policy</value>
+  </data>
+  <data name="X_Important_Information" xml:space="preserve">
+    <value>Important information</value>
+  </data>
+  <data name="X_Cookies" xml:space="preserve">
+    <value>The application may use cookies or other local browser storage mechanisms to ensure proper functionality.</value>
+  </data>
+  <data name="X_Cookies_2" xml:space="preserve">
+    <value>For more details, see our</value>
+  </data>
+  <data name="X_Accept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
 </root>

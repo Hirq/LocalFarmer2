@@ -4,11 +4,12 @@
 {
     <div class="cookies-banner">
         <button class="close-btn" @onclick="HideBanner">✕</button>
-        <p>
-            Ta aplikacja korzysta z plików cookies oraz localStorage w celu zapewnienia poprawnego działania.
-            Szczegóły znajdziesz w <a href="/privacy policy.pdf" target="_blank">polityce prywatności</a>.
-        </p>
-        <button class="accept-btn" @onclick="AcceptCookies">Akceptuję</button>
+        <div class="cookies-text">
+            @loc["X_Cookies"]
+            <br />
+            <div>@loc["X_Cookies_2"] <a href="/privacy policy.pdf" target="_blank">@loc["X_Privacy_Policy"]</a>.</div>
+        </div>
+        <button class="accept-btn" @onclick="AcceptCookies">@loc["X_Accept"]</button>
     </div>
 }
 

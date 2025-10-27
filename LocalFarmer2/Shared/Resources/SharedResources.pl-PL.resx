@@ -540,4 +540,19 @@
   <data name="X_Contact_With_Administrator" xml:space="preserve">
     <value>Formularz kontaktowy z administratorem</value>
   </data>
+  <data name="X_Privacy_Policy" xml:space="preserve">
+    <value>Polityka prywatności</value>
+  </data>
+  <data name="X_Important_Information" xml:space="preserve">
+    <value>Ważne informacje</value>
+  </data>
+  <data name="X_Cookies" xml:space="preserve">
+    <value>Aplikacja może wykorzystywać pliki cookies lub inne lokalne mechanizmy przeglądarki w celu zapewnienia prawidłowego działania.</value>
+  </data>
+  <data name="X_Cookies_2" xml:space="preserve">
+    <value>Szczegóły znajdziesz w</value>
+  </data>
+  <data name="X_Accept" xml:space="preserve">
+    <value>Akceptuję</value>
+  </data>
 </root>

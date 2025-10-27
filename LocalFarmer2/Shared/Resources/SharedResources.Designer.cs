@@ -1015,6 +1015,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accept.
+        /// </summary>
+        internal static string X_Accept {
+            get {
+                return ResourceManager.GetString("X_Accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Action.
         /// </summary>
         internal static string X_Action {
@@ -1114,6 +1123,24 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The application may use cookies or other local browser storage mechanisms to ensure proper functionality..
+        /// </summary>
+        internal static string X_Cookies {
+            get {
+                return ResourceManager.GetString("X_Cookies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For more details, see our.
+        /// </summary>
+        internal static string X_Cookies_2 {
+            get {
+                return ResourceManager.GetString("X_Cookies_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         internal static string X_Date {
@@ -1173,6 +1200,15 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string X_Farmhouses {
             get {
                 return ResourceManager.GetString("X_Farmhouses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Important information.
+        /// </summary>
+        internal static string X_Important_Information {
+            get {
+                return ResourceManager.GetString("X_Important_Information", resourceCulture);
             }
         }
         
@@ -1245,6 +1281,15 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string X_Opinions {
             get {
                 return ResourceManager.GetString("X_Opinions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Privacy policy.
+        /// </summary>
+        internal static string X_Privacy_Policy {
+            get {
+                return ResourceManager.GetString("X_Privacy_Policy", resourceCulture);
             }
         }
         
