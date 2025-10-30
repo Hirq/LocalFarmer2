@@ -103,9 +103,11 @@ else
             <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick='() => UtilsService.OpenDialogSendMessage(isContactToAdmin: false, emailTo: farmhouse.Email)' Disabled=isViewMyFarmhouse>@loc["Farmhouse_Send_Message"] Email</MudButton>
             <MudButton Class="product-details-button" Variant="Variant.Outlined" Color="Color.Primary" OnClick="OnExpandCollapseMaps">@(_expandedMap ? @loc["Dashboard_Map"] : @loc["Dashboard_Map"])</MudButton>
             <MudCollapse Expanded="_expandedMap">
+                @*                 
                 <h2>Latitude: @farmhouse.Latitude </h2>
                 <h2>Longitude: @farmhouse.Longitude</h2>
-                <h2>Tip: Network => disable cache set true</h2>
+                <h2>Tip: Network => disable cache set true</h2> 
+                *@
                 <div id="map" style="height:70vh; width: 100%"></div>
             </MudCollapse>
         </MudStack>

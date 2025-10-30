@@ -212,7 +212,7 @@ else
             await AlertService.AddAlerts(listUsersIds, null, false, messageAlert);
 
             StateHasChanged();
-            AlertService.SetSuccessAlert($"{@loc["Alert_Successfully"]} {@loc["Alert_Add_Subscribe"]} {idFarmhouse}");
+            AlertService.SetSuccessAlert($"{@loc["Alert_Successfully"]} {@loc["Alert_Add_Subscribe"]} {addedFarmhouse.Name}");
             _ = AlertService.ClearAlertAfterDelay();
         }
     }
