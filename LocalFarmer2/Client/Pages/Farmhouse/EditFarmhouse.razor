@@ -113,9 +113,9 @@ else
 
         dialogData = new DialogData()
         {
-            Title = $"{loc["X_Delete"]} {loc["X_Farmhouse"]}",
+            Title = $"{loc["X_Delete"]} {@StringHelper.LowerFirst(loc["X_Farmhouse"])}",
             ButtonName = loc["X_Delete"],
-            Content = $"{loc["X_Are_You_Sure_Delete_This"]} {loc["X_Farmhouse"]}",
+            Content = $"{loc["X_Are_You_Sure_Delete_This"]} {@StringHelper.LowerFirst(loc["X_Farmhouse"])}",
         };
 
         var farmhouse = await FarmhouseService.GetFarmhouse((int)UserStateService.CurrentUser.IdFarmhouse!);

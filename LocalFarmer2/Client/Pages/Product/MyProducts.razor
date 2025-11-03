@@ -74,7 +74,7 @@ else
         ListProducts = await ProductService.GetProductsFarmhouse(idFarmhouse);
         dialogData = new DialogData()
         {
-            Title = $"{loc["X_Delete"]} {loc["X_Product"]}",
+            Title = $"{loc["X_Delete"]} {@StringHelper.LowerFirst(loc["X_Product"])}",
             ButtonName = loc["X_Delete"],
             Content = $"{loc["X_Are_You_Sure_Delete_This"]} " + $"{loc["X_Product"]}".ToLower(),
         };

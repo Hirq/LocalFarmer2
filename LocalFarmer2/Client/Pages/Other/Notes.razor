@@ -91,7 +91,7 @@ else
         note.IdUser = UserStateService.CurrentUser.IdUser;
         dialogData = new DialogData()
         {
-            Title = $"{loc["X_Delete"]} {loc["X_Note"]}",
+            Title = $"{loc["X_Delete"]} {@StringHelper.LowerFirst(loc["X_Note"])}",
             ButtonName = loc["X_Delete"],
             Content = $"{loc["X_Are_You_Sure_Delete"]}",
         };
