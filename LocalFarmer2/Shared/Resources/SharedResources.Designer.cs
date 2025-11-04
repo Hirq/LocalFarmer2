@@ -898,6 +898,24 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete opinion.
+        /// </summary>
+        internal static string Opinion_Delete_Opinion {
+            get {
+                return ResourceManager.GetString("Opinion_Delete_Opinion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit opinion.
+        /// </summary>
+        internal static string Opinion_Edit_Opinion {
+            get {
+                return ResourceManager.GetString("Opinion_Edit_Opinion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set star and add your opinion.
         /// </summary>
         internal static string Opinion_Placeholder {
@@ -921,6 +939,51 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string Opinion_Your_Opinion {
             get {
                 return ResourceManager.GetString("Opinion_Your_Opinion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bank transfer.
+        /// </summary>
+        internal static string PaymentMethod_BankTransfer {
+            get {
+                return ResourceManager.GetString("PaymentMethod_BankTransfer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card.
+        /// </summary>
+        internal static string PaymentMethod_Card {
+            get {
+                return ResourceManager.GetString("PaymentMethod_Card", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash.
+        /// </summary>
+        internal static string PaymentMethod_Cash {
+            get {
+                return ResourceManager.GetString("PaymentMethod_Cash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other in describe.
+        /// </summary>
+        internal static string PaymentMethod_OtherInDescribe {
+            get {
+                return ResourceManager.GetString("PaymentMethod_OtherInDescribe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer on phone.
+        /// </summary>
+        internal static string PaymentMethod_TransferOnPhone {
+            get {
+                return ResourceManager.GetString("PaymentMethod_TransferOnPhone", resourceCulture);
             }
         }
         
@@ -1276,6 +1339,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Opinion.
+        /// </summary>
+        internal static string X_Opinion2 {
+            get {
+                return ResourceManager.GetString("X_Opinion2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Opinions.
         /// </summary>
         internal static string X_Opinions {
@@ -1326,6 +1398,15 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string X_Search {
             get {
                 return ResourceManager.GetString("X_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select all.
+        /// </summary>
+        internal static string X_Select_All {
+            get {
+                return ResourceManager.GetString("X_Select_All", resourceCulture);
             }
         }
         
