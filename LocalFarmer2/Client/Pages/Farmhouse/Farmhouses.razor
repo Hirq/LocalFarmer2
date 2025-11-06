@@ -55,13 +55,13 @@ else
             </AuthorizeView>
         </HeaderContent>
         <RowTemplate Context="row">
-                <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => ShowBtnPress(row.Id))">@((row.ShowDetails == true) ? loc["Button_Hide_Products"] : loc["Button_Show_Products"])</MudButton></MudTd>
+                <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" Disabled="@(!row.Products.Any())" OnClick="@(() => ShowBtnPress(row.Id))">@((row.ShowDetails == true) ? loc["Button_Hide_Products"] : loc["Button_Show_Products"])</MudButton></MudTd>
                 <MudTd DataLabel="Name">@row.Name</MudTd>
                 <MudTd DataLabel="Description">@row.Description</MudTd>
                 <MudTd DataLabel="Address">@row.Address</MudTd>
                 <MudTd DataLabel="Phone">@row.Phone</MudTd>
                 <MudTd DataLabel="Detail"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(row.Id)">@loc["Button_Go_To_Details"]</MudButton></MudTd>
-                <MudTd DataLabel="Products"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProducts(row.Id)">@loc["Button_Show_Products"]</MudButton></MudTd>
+            <MudTd DataLabel="Products"><MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!row.Products.Any())" OnClick="() => ShowProducts(row.Id)">@loc["Button_Show_Products"] - @row.Products.Count()</MudButton></MudTd>
                 <AuthorizeView>
                     <Authorized>
                     @if (row.IsFavorite == false)
