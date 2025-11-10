@@ -21,9 +21,12 @@ else if (!string.IsNullOrEmpty(errorMessage))
 }
 else
 {
-    <MudTable Items="@ListProducts" Loading="@isLoading" SortLabel="Sort By" Hover="true" Filter="@(product => UtilsService.FilterFunc(product, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
+    <MudTable Items="@ListProducts" Loading="@isLoading" Class="my-products-table" SortLabel="Sort By" Hover="true" Filter="@(product => UtilsService.FilterFunc(product, SearchService.SearchString))" CommitEditTooltip="Commit Edit">
         <ToolBarContent>
-            <MudText Typo="Typo.h6">@loc["Product_My_Products"]</MudText>
+            <div class="d-flex flex-column mt-5">
+                <MudText Typo="Typo.h6">@loc["Product_My_Products"]</MudText>
+                <MudButton Color="Color.Primary" Class="mt-1" Variant="Variant.Filled" OnClick="@(() => AddProduct())">@loc["Product_Add_Product"]</MudButton>
+            </div>
             <MudSpacer />
             <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
         </ToolBarContent>
@@ -83,6 +86,11 @@ else
     void EditProduct(int id)
     {
         NavigationManager.NavigateTo($"editproduct/{id}");
+    }
+
+    void AddProduct()
+    {
+        NavigationManager.NavigateTo($"addproduct");
     }
 
     async void DeleteProduct(int id)

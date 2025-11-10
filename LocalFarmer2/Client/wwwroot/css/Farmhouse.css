@@ -138,3 +138,7 @@
 .borderTableFarmhouses {
     border: 2px solid var(--border) !important;
 }
+
+.my-products-table .mud-table-toolbar {
+    margin-bottom: 12px;
+}
