@@ -100,8 +100,13 @@ else
 
     private void DeleteNotePopup(NoteViewModel item)
     {
-        dialogData.Content += $" '{item.Name}'";
-        UtilsService.OpenDialog(dialogData, () => DeleteNote(item.Id), Color.Error);
+        var dialogDataDelete = new DialogData()
+        {
+            Title = dialogData.Title,
+            ButtonName = dialogData.ButtonName,
+            Content = $"{dialogData.Content} '{item.Name}'"
+        };
+        UtilsService.OpenDialog(dialogDataDelete, () => DeleteNote(item.Id), Color.Error);
     }
 
     private async Task InitializeNotesList(string idUser)
