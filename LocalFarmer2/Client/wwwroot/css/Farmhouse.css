@@ -70,9 +70,17 @@
     background-color: var(--surface-color);
 }
 
+.flip-card-front:hover {
+    background-color: var(--surface-color-hover);
+}
+
 .flip-card-back {
     transform: rotateY(180deg);
     background-color: var(--background-color);
+}
+
+.flip-card-back:hover {
+    background-color: var(--background-color-hover);
 }
 
 .position-indicators {

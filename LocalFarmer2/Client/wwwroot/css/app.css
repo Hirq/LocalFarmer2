@@ -3,6 +3,8 @@
 :root {
     --background-color: #f0f0f0;
     --surface-color: #ffffff;
+    --background-color-hover: #e6e6e6;
+    --surface-color-hover: #f2f2f2;
     --button-warning: rgba(251,192,45,1);
     --gray-primary: #ccc;
     --input: #fff;
@@ -12,6 +14,8 @@
 body.dark-mode {
     --background-color: #333333;
     --surface-color: #3d3d3d;
+    --background-color-hover: #404040;
+    --surface-color-hover: #4a4a4a;
     --button-warning: rgba(48,63,159,1);
     --gray-primary: #1e1e1e;
     --input: rgb(55, 55, 64);
