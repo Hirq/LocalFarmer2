@@ -46,7 +46,7 @@ else
                 <MudTd DataLabel="Count all">@context.CountAll</MudTd>
                 <MudTd DataLabel="Edit">
                     <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@(() => EditProduct(context.Id))" />
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteProduct(context.Id), Color.Error)' />
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => DeleteProductPopup(context)' />
                 </MudTd>
         </RowTemplate>
         <PagerContent>
@@ -101,5 +101,16 @@ else
         StateHasChanged();
         AlertService.SetDeleteAlert($"{@loc["Alert_Delete_Product"]} {product.Name}");
         _ = AlertService.ClearAlertAfterDelay();
+    }
+
+    private void DeleteProductPopup(Product item)
+    {
+        var dialogDataDelete = new DialogData()
+        {
+            Title = dialogData.Title,
+            ButtonName = dialogData.ButtonName,
+            Content = $"{dialogData.Content} '{item.Name}'"
+        };
+        UtilsService.OpenDialog(dialogDataDelete, () => DeleteProduct(item.Id), Color.Error);
     }
 }
