@@ -35,7 +35,7 @@ else
         <RowTemplate>
             <MudTd DataLabel="Name">@context.Farmhouse.Name</MudTd>
             <MudTd DataLabel="Edit">
-                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteFavorite(context.Id), Color.Error)' />
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => DeleteFavoritePopup(context)' />
             </MudTd>
             <MudTd DataLabel="Farmhouse"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.Id)">@loc["Button_Go_To_Details"]</MudButton></MudTd>
         </RowTemplate>
@@ -61,9 +61,9 @@ else
 
         dialogData = new DialogData()
         {
-            Title = $"{loc["X_Delete"]} {loc["X_Subscription"]}",
+            Title = $"{loc["X_Delete"]} {@StringHelper.LowerFirst(loc["X_Subscription2"])}",
             ButtonName = loc["X_Delete"],
-            Content = $"{loc["X_Are_You_Sure_Delete_This"]} {loc["X_Subscription"]}?",
+            Content = $"{loc["X_Are_You_Sure_Delete_This"]} {@StringHelper.LowerFirst(loc["X_Subscription2"])}?",
         };
     }
 
@@ -78,6 +78,17 @@ else
             AlertService.SetDeleteAlert($"{@loc["Alert_Delete_Subscribe"]} {idFarmhouse}");
             _ = AlertService.ClearAlertAfterDelay();
         }
+    }
+
+    private void DeleteFavoritePopup(FavoriteFarmhouse item)
+    {
+        var dialogDataDelete = new DialogData()
+        {
+            Title = dialogData.Title,
+            ButtonName = dialogData.ButtonName,
+            Content = $"{dialogData.Content} {@StringHelper.LowerFirst(loc["X_Subscription2"])} '{item.Farmhouse.Name}'"
+        };
+        UtilsService.OpenDialog(dialogDataDelete, () => DeleteFavorite(item.Id), Color.Error);
     }
 
     void ShowFarmhouse(int id)

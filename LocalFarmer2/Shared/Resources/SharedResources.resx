@@ -582,4 +582,7 @@
   <data name="X_Select_All" xml:space="preserve">
     <value>Select all</value>
   </data>
+  <data name="X_Subscription2" xml:space="preserve">
+    <value>Subscription</value>
+  </data>
 </root>

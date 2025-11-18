@@ -1429,6 +1429,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Subscription.
+        /// </summary>
+        internal static string X_Subscription2 {
+            get {
+                return ResourceManager.GetString("X_Subscription2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Text.
         /// </summary>
         internal static string X_Text {
