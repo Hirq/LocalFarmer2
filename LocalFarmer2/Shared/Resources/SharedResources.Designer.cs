@@ -1132,7 +1132,7 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure delete.
+        ///   Looks up a localized string similar to Are you sure you want to delete.
         /// </summary>
         internal static string X_Are_You_Sure_Delete {
             get {
@@ -1141,7 +1141,7 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure delete this.
+        ///   Looks up a localized string similar to Are you sure you want to delete this.
         /// </summary>
         internal static string X_Are_You_Sure_Delete_This {
             get {
@@ -1321,11 +1321,29 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Note.
+        /// </summary>
+        internal static string X_Note2 {
+            get {
+                return ResourceManager.GetString("X_Note2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notes.
         /// </summary>
         internal static string X_Notes {
             get {
                 return ResourceManager.GetString("X_Notes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Of.
+        /// </summary>
+        internal static string X_Of {
+            get {
+                return ResourceManager.GetString("X_Of", resourceCulture);
             }
         }
         

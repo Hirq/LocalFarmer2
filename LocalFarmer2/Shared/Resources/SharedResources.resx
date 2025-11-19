@@ -367,7 +367,7 @@
     <value>Product</value>
   </data>
   <data name="X_Are_You_Sure_Delete_This" xml:space="preserve">
-    <value>Are you sure delete this</value>
+    <value>Are you sure you want to delete this</value>
   </data>
   <data name="X_Are_You_Sure_Edit_This" xml:space="preserve">
     <value>Are you sure edit this</value>
@@ -493,7 +493,7 @@
     <value>Add</value>
   </data>
   <data name="X_Are_You_Sure_Delete" xml:space="preserve">
-    <value>Are you sure delete</value>
+    <value>Are you sure you want to delete</value>
   </data>
   <data name="Dashboard_Information" xml:space="preserve">
     <value>Information</value>
@@ -584,5 +584,11 @@
   </data>
   <data name="X_Subscription2" xml:space="preserve">
     <value>Subscription</value>
+  </data>
+  <data name="X_Of" xml:space="preserve">
+    <value>Of</value>
+  </data>
+  <data name="X_Note2" xml:space="preserve">
+    <value>Note</value>
   </data>
 </root>

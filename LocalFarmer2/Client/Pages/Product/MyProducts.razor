@@ -109,7 +109,7 @@ else
         {
             Title = dialogData.Title,
             ButtonName = dialogData.ButtonName,
-            Content = $"{dialogData.Content} '{item.Name}'"
+            Content = $"{dialogData.Content} '{item.Name}'?"
         };
         UtilsService.OpenDialog(dialogDataDelete, () => DeleteProduct(item.Id), Color.Error);
     }

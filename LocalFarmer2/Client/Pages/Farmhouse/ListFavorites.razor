@@ -63,7 +63,7 @@ else
         {
             Title = $"{loc["X_Delete"]} {@StringHelper.LowerFirst(loc["X_Subscription2"])}",
             ButtonName = loc["X_Delete"],
-            Content = $"{loc["X_Are_You_Sure_Delete_This"]} {@StringHelper.LowerFirst(loc["X_Subscription2"])}?",
+            Content = $"{loc["X_Are_You_Sure_Delete"]} {@StringHelper.LowerFirst(loc["X_Subscription2"])}",
         };
     }
 
@@ -86,7 +86,7 @@ else
         {
             Title = dialogData.Title,
             ButtonName = dialogData.ButtonName,
-            Content = $"{dialogData.Content} {@StringHelper.LowerFirst(loc["X_Subscription2"])} '{item.Farmhouse.Name}'"
+            Content = $"{dialogData.Content} '{item.Farmhouse.Name}'?"
         };
         UtilsService.OpenDialog(dialogDataDelete, () => DeleteFavorite(item.Id), Color.Error);
     }

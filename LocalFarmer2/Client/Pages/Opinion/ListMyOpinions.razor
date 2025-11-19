@@ -38,7 +38,7 @@ else
             <MudTd DataLabel="Rating">@context.Rating</MudTd>
             <MudTd DataLabel="Edit">
                 <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="() => OpenMessageBoxEditOpinion(context.Id)" />
-                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteOpinion(context.Id), Color.Error)' />
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => DeleteOpinionPopup(context)' />
                 <MudMessageBox @ref="mbox" Title=@loc["Opinion_Edit_Opinion"] CancelText=@loc["X_Cancel"]>
                     <MessageContent>
                         <div class="d-flex flex-column align-center">
@@ -80,7 +80,7 @@ else
         {
             Title = $"{loc["Opinion_Delete_Opinion"]}",
             ButtonName = loc["X_Delete"],
-            Content = $"{loc["X_Are_You_Sure_Delete_This"]} {loc["X_Opinion2"]}",
+            Content = $"{loc["X_Are_You_Sure_Delete_This"]} {@StringHelper.LowerFirst(loc["X_Opinion2"])} {@StringHelper.LowerFirst(loc["X_Of"])}",
         };
     }
 
@@ -95,6 +95,17 @@ else
             AlertService.SetDeleteAlert($"{@loc["Alert_Delete_Opinion"]} {opinion.Farmhouse.Name}");
             _ = AlertService.ClearAlertAfterDelay();
         }
+    }
+
+    private void DeleteOpinionPopup(Opinion item)
+    {
+        var dialogDataDelete = new DialogData()
+        {
+            Title = dialogData.Title,
+            ButtonName = dialogData.ButtonName,
+            Content = $"{dialogData.Content} '{item.Farmhouse.Name}'?"
+        };
+        UtilsService.OpenDialog(dialogDataDelete, () => DeleteOpinion(item.Id), Color.Error);
     }
 
     private async void OpenMessageBoxEditOpinion(int idOpinion)

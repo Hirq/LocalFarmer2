@@ -91,9 +91,9 @@ else
         note.IdUser = UserStateService.CurrentUser.IdUser;
         dialogData = new DialogData()
         {
-            Title = $"{loc["X_Delete"]} {@StringHelper.LowerFirst(loc["X_Note"])}",
+            Title = $"{loc["X_Delete"]} {@StringHelper.LowerFirst(loc["X_Note2"])}",
             ButtonName = loc["X_Delete"],
-            Content = $"{loc["X_Are_You_Sure_Delete"]}",
+            Content = $"{loc["X_Are_You_Sure_Delete"]} {@StringHelper.LowerFirst(loc["X_Note2"])}",
         };
         ChangeFilter();
     }
@@ -104,7 +104,7 @@ else
         {
             Title = dialogData.Title,
             ButtonName = dialogData.ButtonName,
-            Content = $"{dialogData.Content} '{item.Name}'"
+            Content = $"{dialogData.Content} '{item.Name}'?"
         };
         UtilsService.OpenDialog(dialogDataDelete, () => DeleteNote(item.Id), Color.Error);
     }

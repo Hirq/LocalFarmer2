@@ -585,4 +585,10 @@
   <data name="X_Subscription2" xml:space="preserve">
     <value>Subskrypcję</value>
   </data>
+  <data name="X_Of" xml:space="preserve">
+    <value>O</value>
+  </data>
+  <data name="X_Note2" xml:space="preserve">
+    <value>Notatkę</value>
+  </data>
 </root>
