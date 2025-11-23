@@ -34,7 +34,7 @@ else
                         <MudTextField Label="@loc["X_Description"]" @bind-Value="product.Description" Required RequiredError="@loc["Validation_Required"]" />
                         <MudTextField Label="@loc["Product_Minimal_Amount"]" @bind-Value="product.CountMinOne" Required RequiredError="@loc["Validation_Required"]" />
                         <MudTextField Label="@loc["Product_Prize_One"]" @bind-Value="product.PrizeOne" Required RequiredError="@loc["Validation_Required"]" />
-                        <MudTextField Label="@loc["Product_Total_Quantity"]" @bind-Value="product.CountAll" Required RequiredError="@loc["Validation_Required"]" />
+                        <MudTextField Class="mb-3" Label="@loc["Product_Total_Quantity"]" @bind-Value="product.CountAll" Required RequiredError="@loc["Validation_Required"]" />
                         <EditFile Name="@loc["Product_Photo"]" Model="@product" IsOpenPhoto=false />
                     </MudCardContent>
                     <MudCardActions>
