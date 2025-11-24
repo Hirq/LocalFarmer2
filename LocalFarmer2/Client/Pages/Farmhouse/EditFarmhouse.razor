@@ -56,7 +56,7 @@ else
                             <EditFile Name="@loc["Farmhouse_Photo"]" Model="@farmhouseDto"/>
                         </div>
                         <div>
-                                <MudButton OnClick="() => ShowFarmhouse((int)UserStateService.CurrentUser.IdFarmhouse)" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Go to details</MudButton>
+                            <MudButton OnClick="() => ShowFarmhouse((int)UserStateService.CurrentUser.IdFarmhouse)" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">@loc["Button_Go_To_Details"]</MudButton>
                         </div>
                     </MudPaper>
                     <MudPaper Class="pa-4 mt-4 d-flex justify-space-between">
