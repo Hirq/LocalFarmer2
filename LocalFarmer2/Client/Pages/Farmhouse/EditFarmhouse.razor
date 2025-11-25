@@ -44,12 +44,23 @@ else
                             <MudTextField T="String" Label="@loc["Farmhouse_Address"]" @bind-Value="farmhouseDto.Address" />
                             <MudTextField T="String" Label="@loc["Farmhouse_Phone"]" @bind-Value="farmhouseDto.Phone" />
                             <MudTextField T="String" Label="Email" @bind-Value="farmhouseDto.Email" For="@(() => farmhouseDto.Email)" ErrorText="@loc["ErrorEmailValid"]" />
-                            <MudSelect T="string" Label="@loc["Farmhouse_Payment_Methods"]" MultiSelection="true" SelectAll="true" @ref="paymentMethodsField" Required RequiredError="@loc["Validation_Required"]" @bind-Value="@farmhouseDto.PaymentMethods" @bind-SelectedValues="SelectedPayment">
+                            <MudSelect T="string"
+                                       Label="@loc["Farmhouse_Payment_Methods"]"
+                                       MultiSelection="true"
+                                       SelectAll="true"
+                                       @ref="paymentMethodsField"
+                                       SelectedValues="@selectedPayments"
+                                       SelectedValuesChanged="OnSelectedPaymentsChanged"
+                                       ToStringFunc="GetPaymentMethodLabelByKey">
                                 @foreach (var method in PaymentMethodInfo.PaymentMethods)
                                 {
-                                    <MudSelectItem T="string" Value="@method">@method</MudSelectItem>
+                                    <MudSelectItem T="string" Value="@method.PropertyName">@GetPaymentMethodLabel(method)</MudSelectItem>
                                 }
                             </MudSelect>
+                            @if (!string.IsNullOrEmpty(paymentMethodsError))
+                            {
+                                <MudText Color="Color.Error" Typo="Typo.caption">@paymentMethodsError</MudText>
+                            }
                             <MudTextField T="String" Id="latitude_input" Disabled Label="@loc["Farmhouse_Latitude"]" @bind-Value="farmhouseDto.Latitude" @ref="latitudeField" Required Placeholder="Max 90" RequiredError="@loc["Validation_Required"]" />
                             <MudTextField T="String" Id="longitude_input" Disabled Label="@loc["Farmhouse_Longitude"]" @bind-Value="farmhouseDto.Longitude" @ref="longitudeField" Required Placeholder="Max 180" RequiredError="@loc["Validation_Required"]" />
                             <MudCheckBox T="Boolean" Checked="farmhouseDto.IsOpen" CheckedChanged="HandleCheckedChanged" Color="Color.Primary" Label="@loc["X_Active"]" />
@@ -87,7 +98,8 @@ else
     private string? latitude;
     private string? longitude;
     private bool isUserSignUp;
-    private IEnumerable<string> SelectedPayment { get; set; } = PaymentMethodInfo.DefaultPayment;
+    private string paymentMethodsError = string.Empty;
+    private HashSet<string> selectedPayments = new();
     private MudTextField<string> farmhouseNameField;
     private MudTextField<string> latitudeField;
     private MudTextField<string> longitudeField;
@@ -118,7 +130,7 @@ else
         var farmhouse = await FarmhouseService.GetFarmhouse((int)UserStateService.CurrentUser.IdFarmhouse!);
         farmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
         originalFarmhouseDto = mapper.Map<FarmhouseDto>(farmhouse);
-        SelectedPayment = farmhouseDto.PaymentMethods.Split(',').Select(s => s.Trim());
+        SyncSelectedPaymentsFromModel();
         initIsOpen = farmhouseDto.IsOpen;
         if (farmhouseDto.ImageData != null && !string.IsNullOrEmpty(farmhouseDto.ImageMimeType))
         {
@@ -175,7 +187,7 @@ else
         {
             new FieldToValidate(latitudeField, farmhouseDto.Latitude),
             new FieldToValidate(longitudeField, farmhouseDto.Longitude),
-            new FieldToValidate(paymentMethodsField, farmhouseDto.PaymentMethods)
+            new FieldToValidate(paymentMethodsField, selectedPayments.Any() ? string.Join(",", selectedPayments) : string.Empty)
         };
 
         context.Validate();
@@ -184,6 +196,15 @@ else
         {
             return;
         }
+
+        if (!PaymentMethodInfo.HasAnySelection(farmhouseDto))
+        {
+            paymentMethodsError = loc["Validation_Required"];
+            StateHasChanged();
+            return;
+        }
+
+        paymentMethodsError = string.Empty;
 
         if (!ValidateService.IsValidLatitude(farmhouseDto.Latitude) || !ValidateService.IsValidLongitude(farmhouseDto.Longitude))
         {
@@ -272,5 +293,33 @@ else
     private void ShowFarmhouse(int id)
     {
         NavigationManager.NavigateTo($"farmhouse/{id}");
+    }
+
+    private string GetPaymentMethodLabel(PaymentMethodDefinition method)
+    {
+        var localized = loc[method.LocalizationKey];
+        return localized.ResourceNotFound ? method.FallbackLabel : localized.Value;
+    }
+
+    private string GetPaymentMethodLabelByKey(string propertyName)
+    {
+        var method = PaymentMethodInfo.PaymentMethods.FirstOrDefault(m => m.PropertyName == propertyName);
+        return method == null ? propertyName : GetPaymentMethodLabel(method);
+    }
+
+    private Task OnSelectedPaymentsChanged(IEnumerable<string>? values)
+    {
+        selectedPayments = values != null
+            ? new HashSet<string>(values)
+            : new HashSet<string>();
+
+        PaymentMethodInfo.ApplySelection(farmhouseDto, selectedPayments);
+        paymentMethodsError = string.Empty;
+        return Task.CompletedTask;
+    }
+
+    private void SyncSelectedPaymentsFromModel()
+    {
+        selectedPayments = PaymentMethodInfo.GetSelectedKeys(farmhouseDto).ToHashSet();
     }
 }

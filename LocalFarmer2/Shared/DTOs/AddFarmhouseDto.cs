@@ -17,7 +17,11 @@ namespace LocalFarmer2.Shared.DTOs
         public string Longitude { get; set; } = string.Empty;
         public string IdUser { get; set; } = string.Empty;
         public bool IsOpen { get; set; } = true;
-        public string PaymentMethods { get; set; } = string.Empty;
+        public bool IsPaymentCash { get; set; }
+        public bool IsPaymentCard { get; set; }
+        public bool IsPaymentBankTransfer { get; set; }
+        public bool IsPaymentTransferOnPhone { get; set; }
+        public bool IsPaymentOther { get; set; }
         public byte[]? ImageData { get; set; } = null;
         public string ImageMimeType { get; set; } = string.Empty;
     }

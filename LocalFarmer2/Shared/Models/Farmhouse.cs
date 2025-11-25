@@ -27,7 +27,11 @@ namespace LocalFarmer2.Shared.Models
         public string Longitude { get; set; }
 
         public bool IsOpen { get; set; }
-        public string PaymentMethods { get; set; }
+        public bool IsPaymentCash { get; set; }
+        public bool IsPaymentCard { get; set; }
+        public bool IsPaymentBankTransfer { get; set; }
+        public bool IsPaymentTransferOnPhone { get; set; }
+        public bool IsPaymentOther { get; set; }
         public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; } = string.Empty;
 
