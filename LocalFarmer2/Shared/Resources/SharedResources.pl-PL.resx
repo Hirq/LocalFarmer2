@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Hey" xml:space="preserve">
-    <value>Czesc</value>
+    <value>Witaj</value>
   </data>
   <data name="Account_Error_Login" xml:space="preserve">
     <value>Email lub hasło jest nie poprawne</value>
@@ -590,5 +590,8 @@
   </data>
   <data name="X_Note2" xml:space="preserve">
     <value>Notatkę</value>
+  </data>
+  <data name="X_Change_Language" xml:space="preserve">
+    <value>Zmień język</value>
   </data>
 </root>

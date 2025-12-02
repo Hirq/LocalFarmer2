@@ -7,7 +7,7 @@
 
 <AuthorizeView>
     <Authorized>
-        <button @onclick="ChangeCulture">Change Culture</button>
+        <button @onclick="ChangeCulture">@loc["X_Change_Language"]</button>
         <div>@loc["Hey"]</div>
         <br />
         
@@ -18,7 +18,9 @@
         <div>Farmhouse: @UserStateService.CurrentUser?.FarmhouseName</div>
     </Authorized>
     <NotAuthorized>
-        <button @onclick="ChangeCulture">Change Culture</button>
+        <button @onclick="ChangeCulture">@loc["X_Change_Language"]</button>
+        <button @onclick="ChangeCulture">@loc["X_Change_Language"]</button>
+
     </NotAuthorized>
 </AuthorizeView>
 
