@@ -48,7 +48,7 @@ namespace LocalFarmer2.Client.Services
 
             await _localStorageService.SetItemAsync("authToken", loginResult!.Token);
             ((CustomAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsAuthenticated(loginModel.Email);
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", loginResult.Token);
+            //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", loginResult.Token);
             _userStateService.CurrentUser = await GetCurrentUser();
             _userStateService.IsUserLogged = true;
 
@@ -59,7 +59,7 @@ namespace LocalFarmer2.Client.Services
         {
             await _localStorageService.RemoveItemAsync("authToken");
             ((CustomAuthenticationStateProvider)_authenticationStateProvider).MarkUserAsLoggedOut();
-            _httpClient.DefaultRequestHeaders.Authorization = null;
+            //_httpClient.DefaultRequestHeaders.Authorization = null;
             _userStateService.CurrentUser = null;
             _userStateService.IsUserLogged = false;
         }
