@@ -86,7 +86,7 @@ namespace LocalFarmer2.Server.Controllers
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSecurityKey"]!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expiry = DateTime.UtcNow.AddDays(Convert.ToInt32(_configuration["JwtExpiryDays"]));
+            var expiry = DateTime.UtcNow.AddDays(Convert.ToInt32(_configuration["JwtExpiryInDays"]));
 
             var token = new JwtSecurityToken(
                 _configuration["JwtIssuer"],
