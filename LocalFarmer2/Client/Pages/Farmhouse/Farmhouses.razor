@@ -60,8 +60,12 @@ else
                 <MudTd DataLabel="Description">@row.Description</MudTd>
                 <MudTd DataLabel="Address">@row.Address</MudTd>
                 <MudTd DataLabel="Phone">@row.Phone</MudTd>
-                <MudTd DataLabel="Detail"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(row.Id)">@loc["Button_Go_To_Details"]</MudButton></MudTd>
-            <MudTd DataLabel="Products"><MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!row.Products.Any())" OnClick="() => ShowProducts(row.Id)">@loc["Button_Show_Products"] - @row.Products.Count()</MudButton></MudTd>
+                <MudTd DataLabel="Detail">
+                    <MudTooltip Text="@loc["Button_Go_To_Details"]">
+                        <MudIconButton Icon="@Icons.Material.Filled.Info" Color="Color.Primary" OnClick="() => ShowFarmhouse(row.Id)"/>
+                    </MudTooltip>
+                </MudTd>
+                <MudTd DataLabel="Products"><MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!row.Products.Any())" OnClick="() => ShowProducts(row.Id)">@loc["Button_Show_Products"] - @row.Products.Count()</MudButton></MudTd>
                 <AuthorizeView>
                     <Authorized>
                     @if (row.IsFavorite == false)
