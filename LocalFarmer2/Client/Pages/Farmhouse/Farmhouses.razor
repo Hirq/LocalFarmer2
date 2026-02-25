@@ -57,17 +57,26 @@ else
                     <MudTooltip Text="@loc["Button_Go_To_Details"]">
                         <MudIconButton Icon="@Icons.Material.Filled.Info" Color="Color.Primary" OnClick="() => ShowFarmhouse(row.Id)"/>
                     </MudTooltip>
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!row.Products.Any())" OnClick="() => ShowProducts(row.Id)">@loc["Button_Show_Products"] - @row.Products.Count()</MudButton>
+                    <MudTooltip Text="@loc["Button_Show_Products"]">
+                        <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart" Disabled="@(!row.Products.Any())" Color="Color.Primary" OnClick="() => ShowProducts(row.Id)" />
+                    </MudTooltip>
+                    @* <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!row.Products.Any())" OnClick="() => ShowProducts(row.Id)">@loc["Button_Show_Products"] - @row.Products.Count()</MudButton> *@
                     <AuthorizeView>
                         <Authorized>
                             @if (row.IsFavorite == false)
                             {
-                                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddFavorite(row.Id)">@loc["X_Add"] @loc["X_Subscription"]</MudButton>
+                                <MudTooltip Text="@loc["X_Subscription"]">
+                                    <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Primary" OnClick="() => AddFavorite(row.Id)"/>
+                                </MudTooltip>
+                                @* <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddFavorite(row.Id)">@loc["X_Add"] @loc["X_Subscription"]</MudButton> *@
                             }
 
                             @if (row.IsCommented == false)
                             {
-                                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OnButtonClicked(row.Id)">Add opinion</MudButton>
+                                <MudTooltip Text="@loc["Opinion_Add_Opinion"]">
+                                    <MudIconButton Icon="@Icons.Material.Filled.PostAdd" Color="Color.Primary" OnClick="() => OnButtonClicked(row.Id)" />
+                                </MudTooltip>
+                                @* <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => OnButtonClicked(row.Id)">Add opinion</MudButton> *@
                                 <MudMessageBox @ref="mbox" Title="Add opinion" CancelText="Cancel">
                                     <MessageContent>
                                         <div class="d-flex flex-column align-center">
