@@ -53,7 +53,7 @@ else
                 <MudTd DataLabel="Description">@row.Description</MudTd>
                 <MudTd DataLabel="Address">@row.Address</MudTd>
                 <MudTd DataLabel="Phone">@row.Phone</MudTd>
-                <MudTd DataLabel="Detail">
+                <MudTd DataLabel="Detail" Class="d-flex">
                     <MudTooltip Text="@loc["Button_Go_To_Details"]">
                         <MudIconButton Icon="@Icons.Material.Filled.Info" Color="Color.Primary" OnClick="() => ShowFarmhouse(row.Id)"/>
                     </MudTooltip>
@@ -65,7 +65,7 @@ else
                         <Authorized>
                             @if (row.IsFavorite == false)
                             {
-                                <MudTooltip Text="@loc["X_Subscription"]">
+                                <MudTooltip Text="@loc["X_Subscription"]" Class="">
                                     <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Primary" OnClick="() => AddFavorite(row.Id)"/>
                                 </MudTooltip>
                                 @* <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddFavorite(row.Id)">@loc["X_Add"] @loc["X_Subscription"]</MudButton> *@
