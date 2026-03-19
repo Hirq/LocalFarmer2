@@ -13,6 +13,7 @@ namespace LocalFarmer2.Shared.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }
+        public string City { get; set; }
         public string Phone { get; set; }
 
         [RegularExpression(@"^$|^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$", ErrorMessage = "Invalid email address.")]
