@@ -664,6 +664,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to City.
+        /// </summary>
+        internal static string Farmhouse_City {
+            get {
+                return ResourceManager.GetString("Farmhouse_City", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contact form.
         /// </summary>
         internal static string Farmhouse_Contact_Form {

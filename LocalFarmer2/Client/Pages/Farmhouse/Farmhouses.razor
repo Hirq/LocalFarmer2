@@ -43,6 +43,7 @@ else
             <MudTh></MudTh>
             <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FarmhouseViewModel, object>(x => x.Name)">@loc["X_Name"]</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Description)">@loc["X_Description"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.City)">@loc["Farmhouse_City"]</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Address)">@loc["Farmhouse_Address"]</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Phone)">@loc["Farmhouse_Phone"]</MudTableSortLabel></MudTh>
             <MudTh>@loc["X_Details"]</MudTh>
@@ -51,6 +52,7 @@ else
                 <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" Disabled="@(!row.Products.Any())" OnClick="@(() => ShowBtnPress(row.Id))">@((row.ShowDetails == true) ? loc["Button_Hide_Products"] : loc["Button_Show_Products"])</MudButton></MudTd>
                 <MudTd DataLabel="Name">@row.Name</MudTd>
                 <MudTd DataLabel="Description">@row.Description</MudTd>
+                <MudTd DataLabel="City">@row.City</MudTd>
                 <MudTd DataLabel="Address">@row.Address</MudTd>
                 <MudTd DataLabel="Phone">@row.Phone</MudTd>
                 <MudTd DataLabel="Detail" Class="d-flex">

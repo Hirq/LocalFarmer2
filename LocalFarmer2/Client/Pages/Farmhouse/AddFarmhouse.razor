@@ -29,6 +29,7 @@ else
                     <MudPaper Class="pa-4">
                         <MudTextField T="String" Label="@loc["X_Name"]" @bind-Value="farmhouseDto.Name" @ref="farmhouseNameField" Required For="@(() => farmhouseDto.Name)" ErrorText="@loc["Validation_Required"]" />
                         <MudTextField T="String" Label="@loc["X_Description"]" @bind-Value="farmhouseDto.Description" />
+                        <MudTextField T="String" Label="@loc["Farmhouse_City"]" @bind-Value="farmhouseDto.City" />
                         <MudTextField T="String" Label="@loc["Farmhouse_Address"]" @bind-Value="farmhouseDto.Address" />
                         <MudTextField T="String" Label="@loc["Farmhouse_Phone"]" @bind-Value="farmhouseDto.Phone" />
                         <MudTextField T="String" Label="Email" @bind-Value="farmhouseDto.Email" For="@(() => farmhouseDto.Email)" ErrorText="@loc["ErrorEmailValid"]" />

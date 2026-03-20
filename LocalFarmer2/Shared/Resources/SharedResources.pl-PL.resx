@@ -594,4 +594,7 @@
   <data name="X_Change_Language" xml:space="preserve">
     <value>Zmień język</value>
   </data>
+  <data name="Farmhouse_City" xml:space="preserve">
+    <value>Miejscowość</value>
+  </data>
 </root>
