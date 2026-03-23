@@ -376,11 +376,11 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Go to details.
+        ///   Looks up a localized string similar to Details.
         /// </summary>
-        internal static string Button_Go_To_Details {
+        internal static string Button_Details {
             get {
-                return ResourceManager.GetString("Button_Go_To_Details", resourceCulture);
+                return ResourceManager.GetString("Button_Details", resourceCulture);
             }
         }
         
@@ -1101,6 +1101,15 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string X_Action {
             get {
                 return ResourceManager.GetString("X_Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Actions.
+        /// </summary>
+        internal static string X_Actions {
+            get {
+                return ResourceManager.GetString("X_Actions", resourceCulture);
             }
         }
         

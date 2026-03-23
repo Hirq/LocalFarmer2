@@ -46,7 +46,7 @@ else
             <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.City)">@loc["Farmhouse_City"]</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Address)">@loc["Farmhouse_Address"]</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Phone)">@loc["Farmhouse_Phone"]</MudTableSortLabel></MudTh>
-            <MudTh>@loc["X_Details"]</MudTh>
+            <MudTh>@loc["X_Actions"]</MudTh>
         </HeaderContent>
         <RowTemplate Context="row">
                 <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" Disabled="@(!row.Products.Any())" OnClick="@(() => ShowBtnPress(row.Id))">@((row.ShowDetails == true) ? loc["Button_Hide_Products"] : loc["Button_Show_Products"])</MudButton></MudTd>
@@ -56,11 +56,13 @@ else
                 <MudTd DataLabel="Address">@row.Address</MudTd>
                 <MudTd DataLabel="Phone">@row.Phone</MudTd>
                 <MudTd DataLabel="Detail" Class="d-flex">
-                    <MudTooltip Text="@loc["Button_Go_To_Details"]">
+                    <MudTooltip Text="@loc["Button_Details"]">
                         <MudIconButton Icon="@Icons.Material.Filled.Info" Color="Color.Primary" OnClick="() => ShowFarmhouse(row.Id)"/>
                     </MudTooltip>
                     <MudTooltip Text="@loc["Button_Show_Products"]">
-                        <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart" Disabled="@(!row.Products.Any())" Color="Color.Primary" OnClick="() => ShowProducts(row.Id)" />
+                        <MudBadge Content="@row.Products.Count()" Color="Color.Primary" Overlap="true" Class="mx-6 my-4">
+                            <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart" Disabled="@(!row.Products.Any())" Color="Color.Primary" OnClick="() => ShowProducts(row.Id)" />
+                        </MudBadge>
                     </MudTooltip>
                     @* <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!row.Products.Any())" OnClick="() => ShowProducts(row.Id)">@loc["Button_Show_Products"] - @row.Products.Count()</MudButton> *@
                     <AuthorizeView>

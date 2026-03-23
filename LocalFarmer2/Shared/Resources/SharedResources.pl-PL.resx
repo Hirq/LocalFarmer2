@@ -486,7 +486,7 @@
   <data name="Button_Show_Products" xml:space="preserve">
     <value>Pokaż produkty</value>
   </data>
-  <data name="Button_Go_To_Details" xml:space="preserve">
+  <data name="Button_Details" xml:space="preserve">
     <value>Szczegóły</value>
   </data>
   <data name="X_Add" xml:space="preserve">
@@ -596,5 +596,8 @@
   </data>
   <data name="Farmhouse_City" xml:space="preserve">
     <value>Miejscowość</value>
+  </data>
+  <data name="X_Actions" xml:space="preserve">
+    <value>Akcje</value>
   </data>
 </root>
