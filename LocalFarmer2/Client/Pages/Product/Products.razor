@@ -35,12 +35,12 @@ else
             <MudTh>@loc["X_Actions"]</MudTh>
         </HeaderContent>
         <RowTemplate>
-            <MudTd DataLabel="Name">@context.Name</MudTd>
+            <MudTd DataLabel="@loc["X_Name"]">@context.Name</MudTd>
             <MudTd DataLabel="@loc["X_Description"]">@context.Description</MudTd>
-            <MudTd DataLabel="Count min one">@context.CountMinOne</MudTd>
-            <MudTd DataLabel="Prize one">@context.PrizeOne</MudTd>
-            <MudTd DataLabel="Count all">@context.CountAll</MudTd>
-            <MudTd DataLabel="Actions" Class="d-flex">
+            <MudTd DataLabel="@loc["Product_Minimal_Amount"]">@context.CountMinOne</MudTd>
+            <MudTd DataLabel="@loc["Product_Prize_One"]">@context.PrizeOne</MudTd>
+            <MudTd DataLabel="@loc["Product_Total_Quantity"]">@context.CountAll</MudTd>
+            <MudTd DataLabel="@loc["X_Actions"]" Class="d-flex">
                 <MudTooltip Text="@loc["Button_Details"]">
                     <MudIconButton Icon="@Icons.Material.Filled.Info" Color="Color.Primary" OnClick="() => ShowProduct(context.Id)" />
                 </MudTooltip>

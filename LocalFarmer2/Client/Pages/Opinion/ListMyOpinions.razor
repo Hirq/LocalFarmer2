@@ -33,10 +33,10 @@ else
             <MudTh>@loc["X_Action"]</MudTh>
         </HeaderContent>
         <RowTemplate>
-            <MudTd DataLabel="Name">@context.Farmhouse.Name</MudTd>
-            <MudTd DataLabel="Comment">@context.Comment</MudTd>
-            <MudTd DataLabel="Rating">@context.Rating</MudTd>
-            <MudTd DataLabel="Edit">
+            <MudTd DataLabel="@loc["X_Farmhouse"]">@context.Farmhouse.Name</MudTd>
+            <MudTd DataLabel="@loc["Opinion_Comment"]">@context.Comment</MudTd>
+            <MudTd DataLabel="@loc["Opinion_Rating"]">@context.Rating</MudTd>
+            <MudTd DataLabel="@loc["X_Edit"]">
                 <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="() => OpenMessageBoxEditOpinion(context.Id)" />
                 <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => DeleteOpinionPopup(context)' />
                 <MudMessageBox @ref="mbox" Title=@loc["Opinion_Edit_Opinion"] CancelText=@loc["X_Cancel"]>

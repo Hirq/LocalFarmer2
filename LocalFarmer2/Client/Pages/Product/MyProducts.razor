@@ -39,15 +39,15 @@ else
             <MudTh>@loc["X_Action"]</MudTh>
         </HeaderContent>
         <RowTemplate>
-                <MudTd DataLabel="Name">@context.Name</MudTd>
-                <MudTd DataLabel="@loc["X_Description"]">@context.Description</MudTd>
-                <MudTd DataLabel="Count min one">@context.CountMinOne</MudTd>
-                <MudTd DataLabel="Prize one">@context.PrizeOne</MudTd>
-                <MudTd DataLabel="Count all">@context.CountAll</MudTd>
-                <MudTd DataLabel="Edit">
-                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@(() => EditProduct(context.Id))" />
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => DeleteProductPopup(context)' />
-                </MudTd>
+            <MudTd DataLabel="@loc["X_Name"]">@context.Name</MudTd>
+            <MudTd DataLabel="@loc["X_Description"]">@context.Description</MudTd>
+            <MudTd DataLabel="@loc["Product_Minimal_Amount"]">@context.CountMinOne</MudTd>
+            <MudTd DataLabel="@loc["Product_Prize_One"]">@context.PrizeOne</MudTd>
+            <MudTd DataLabel="@loc["Product_Total_Quantity"]">@context.CountAll</MudTd>
+            <MudTd DataLabel="@loc["X_Edit"]">
+                <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="@(() => EditProduct(context.Id))" />
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => DeleteProductPopup(context)' />
+            </MudTd>
         </RowTemplate>
         <PagerContent>
             <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
