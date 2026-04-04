@@ -42,10 +42,10 @@ else
             <MudTd DataLabel="@loc["Product_Total_Quantity"]">@context.CountAll</MudTd>
             <MudTd DataLabel="@loc["X_Actions"]" Class="d-flex">
                 <MudTooltip Text="@loc["Button_Details"]">
-                    <MudIconButton Icon="@Icons.Material.Filled.Info" Color="Color.Primary" OnClick="() => ShowProduct(context.Id)" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Info" Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProduct(context.Id)" />
                 </MudTooltip>
                 <MudTooltip Text="@loc["X_Farmhouse"]">
-                    <MudIconButton Icon="@Icons.Material.Filled.Home" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.IdFarmhouse)" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Home" Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.IdFarmhouse)" />
                 </MudTooltip>
             </MudTd>
                 @* <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProduct(context.Id)">Go to detail</MudButton> *@

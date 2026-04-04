@@ -60,13 +60,13 @@ else
             <MudTd DataLabel="@loc["Farmhouse_Photo"]">@row.Phone</MudTd>
             <MudTd DataLabel="@loc["X_Details"]" Class="icon-column">
                 <MudTooltip Text="@loc["Button_Details"]">
-                    <MudIconButton Icon="@Icons.Material.Filled.Info" Color="Color.Primary" OnClick="() => ShowFarmhouse(row.Id)"/>
+                    <MudIconButton Icon="@Icons.Material.Filled.Info" Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(row.Id)" />
                 </MudTooltip>
             </MudTd>
             <MudTd Class="icon-column">
                 <MudTooltip Text="@loc["Button_Show_Products"]">
-                    <MudBadge Content="@row.Products.Count()" Color="Color.Primary" Overlap="true" Class="mx-6 my-4">
-                        <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart" Disabled="@(!row.Products.Any())" Color="Color.Primary" OnClick="() => ShowProducts(row.Id)" />
+                    <MudBadge Content="@row.Products.Count()" Bordered="true" Color="Color.Primary" Overlap="true" Class="mx-6 my-4">
+                        <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart" Variant="Variant.Filled" Disabled="@(!row.Products.Any())" Color="Color.Primary" OnClick="() => ShowProducts(row.Id)" />
                     </MudBadge>
                 </MudTooltip>
             </MudTd>
@@ -106,12 +106,12 @@ else
                 <Authorized>
                     <MudTd Class="icon-column">
                         <MudTooltip Text="@loc["X_Subscription"]" Class="">
-                            <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Primary" Disabled="@(row.IsFavorite)" OnClick="() => AddFavorite(row.Id)" />
+                            <MudIconButton Icon="@Icons.Material.Filled.Favorite" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(row.IsFavorite)" OnClick="() => AddFavorite(row.Id)" />
                         </MudTooltip>
                     </MudTd>
                     <MudTd Class="icon-column">
                         <MudTooltip Text="@loc["Opinion_Add_Opinion"]">
-                            <MudIconButton Icon="@Icons.Material.Filled.PostAdd" Color="Color.Primary" Disabled="@(row.IsCommented)" OnClick="() => OnButtonClicked(row.Id)" />
+                            <MudIconButton Icon="@Icons.Material.Filled.PostAdd" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(row.IsCommented)" OnClick="() => OnButtonClicked(row.Id)" />
                         </MudTooltip>
                     </MudTd>
                     <MudMessageBox @ref="mbox" Title="Add opinion" CancelText="Cancel">
