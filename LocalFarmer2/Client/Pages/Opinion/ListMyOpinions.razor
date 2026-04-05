@@ -30,7 +30,7 @@ else
             <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Farmhouse.Name)">@loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Comment)">@loc["Opinion_Comment"]</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Rating)">@loc["Opinion_Rating"]</MudTableSortLabel></MudTh>
-            <MudTh>@loc["X_Action"]</MudTh>
+            <MudTh>@loc["X_Actions"]</MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="@loc["X_Farmhouse"]">@context.Farmhouse.Name</MudTd>

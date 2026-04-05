@@ -29,15 +29,18 @@ else
 
         <HeaderContent>
             <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FavoriteFarmhouse, object>(x=>x.Farmhouse.Name)">@loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
-            <MudTh>@loc["X_Action"]</MudTh>
-            <MudTh>@loc["Button_Details"]</MudTh>
+            <MudTh>@loc["X_Actions"]</MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="@loc["X_Name"]">@context.Farmhouse.Name</MudTd>
-            <MudTd DataLabel="@loc["X_Edit"]">
-                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => DeleteFavoritePopup(context)' />
+            <MudTd DataLabel="@loc["X_Edit"]" Class="d-flex">
+                <MudTooltip Text="@loc["X_Delete"]">
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => DeleteFavoritePopup(context)' />
+                </MudTooltip>
+                <MudTooltip Text="@loc["X_Farmhouse"]">
+                    <MudIconButton Icon="@Icons.Material.Filled.Home" Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.Id)" />
+                </MudTooltip>
             </MudTd>
-            <MudTd DataLabel="@loc["X_Farmhouse"]"><MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.Id)">@loc["Button_Details"]</MudButton></MudTd>
         </RowTemplate>
         <PagerContent>
             <MudTablePager RowsPerPageString="@loc["Table_Rows_Per_Page"]" PageSizeOptions="new int[]{50, 100}" />
