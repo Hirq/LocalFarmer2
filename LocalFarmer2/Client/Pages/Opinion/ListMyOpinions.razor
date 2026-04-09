@@ -30,27 +30,29 @@ else
             <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Farmhouse.Name)">@loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Comment)">@loc["Opinion_Comment"]</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Opinion, object>(x=>x.Rating)">@loc["Opinion_Rating"]</MudTableSortLabel></MudTh>
-            <MudTh>@loc["X_Actions"]</MudTh>
+            <MudTh Class="actions-column">@loc["X_Actions"]</MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="@loc["X_Farmhouse"]">@context.Farmhouse.Name</MudTd>
             <MudTd DataLabel="@loc["Opinion_Comment"]">@context.Comment</MudTd>
             <MudTd DataLabel="@loc["Opinion_Rating"]">@context.Rating</MudTd>
-            <MudTd DataLabel="@loc["X_Edit"]">
-                <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="() => OpenMessageBoxEditOpinion(context.Id)" />
-                <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => DeleteOpinionPopup(context)' />
-                <MudMessageBox @ref="mbox" Title=@loc["Opinion_Edit_Opinion"] CancelText=@loc["X_Cancel"]>
-                    <MessageContent>
-                        <div class="d-flex flex-column align-center">
-                            <MudRating @bind-SelectedValue="opinionDto.Rating" />
-                            <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">@loc["Opinion_Your_Opinion"]</MudText>
-                        </div>
-                        <MudTextField T="string" @bind-Value="opinionDto.Comment" Label="@loc["Opinion_Comment"]" Variant="Variant.Outlined" Lines="3" Placeholder="@loc["Opinion_Placeholder"]" />
-                    </MessageContent>
-                    <YesButton>
-                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => EditOpinion(context.Id)">@loc["X_Edit"]</MudButton>
-                    </YesButton>
-                </MudMessageBox>
+            <MudTd DataLabel="@loc["X_Actions"]">
+                <div class="icons-container">
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="() => OpenMessageBoxEditOpinion(context.Id)" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => DeleteOpinionPopup(context)' />
+                    <MudMessageBox @ref="mbox" Title=@loc["Opinion_Edit_Opinion"] CancelText=@loc["X_Cancel"]>
+                        <MessageContent>
+                            <div class="d-flex flex-column align-center">
+                                <MudRating @bind-SelectedValue="opinionDto.Rating" />
+                                <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">@loc["Opinion_Your_Opinion"]</MudText>
+                            </div>
+                            <MudTextField T="string" @bind-Value="opinionDto.Comment" Label="@loc["Opinion_Comment"]" Variant="Variant.Outlined" Lines="3" Placeholder="@loc["Opinion_Placeholder"]" />
+                        </MessageContent>
+                        <YesButton>
+                            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => EditOpinion(context.Id)">@loc["X_Edit"]</MudButton>
+                        </YesButton>
+                    </MudMessageBox>
+                </div>
             </MudTd>
             </RowTemplate>
         <PagerContent>

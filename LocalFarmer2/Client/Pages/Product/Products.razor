@@ -32,7 +32,7 @@ else
             <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountMinOne)">@loc["Product_Minimal_Amount"]</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.PrizeOne)">@loc["Product_Prize_One"]</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Product, object>(x=>x.CountAll)">@loc["Product_Total_Quantity"]</MudTableSortLabel></MudTh>
-            <MudTh>@loc["X_Actions"]</MudTh>
+            <MudTh Class="actions-column">@loc["X_Actions"]</MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="@loc["X_Name"]">@context.Name</MudTd>
@@ -40,13 +40,15 @@ else
             <MudTd DataLabel="@loc["Product_Minimal_Amount"]">@context.CountMinOne</MudTd>
             <MudTd DataLabel="@loc["Product_Prize_One"]">@context.PrizeOne</MudTd>
             <MudTd DataLabel="@loc["Product_Total_Quantity"]">@context.CountAll</MudTd>
-            <MudTd DataLabel="@loc["X_Actions"]" Class="d-flex">
-                <MudTooltip Text="@loc["Button_Details"]">
-                    <MudIconButton Icon="@Icons.Material.Filled.Info" Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProduct(context.Id)" />
-                </MudTooltip>
-                <MudTooltip Text="@loc["X_Farmhouse"]">
-                    <MudIconButton Icon="@Icons.Material.Filled.Home" Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.IdFarmhouse)" />
-                </MudTooltip>
+            <MudTd DataLabel="@loc["X_Actions"]">
+                <div class="icons-container">
+                    <MudTooltip Text="@loc["Button_Details"]">
+                        <MudIconButton Icon="@Icons.Material.Filled.Info" Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProduct(context.Id)" />
+                    </MudTooltip>
+                    <MudTooltip Text="@loc["X_Farmhouse"]">
+                        <MudIconButton Icon="@Icons.Material.Filled.Home" Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.IdFarmhouse)" />
+                    </MudTooltip>
+                </div>
             </MudTd>
                 @* <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowProduct(context.Id)">Go to detail</MudButton> *@
 

@@ -2,6 +2,7 @@
 @inherits BasePage
 @using static LocalFarmer2.Client.Services.UtilsService
 @inject IFavoriteFarmhouseService FavoriteFarmhouseService
+@inject IFarmhouseService FarmhouseService
 @inject IAlertService AlertService
 @inject UserStateService UserStateService
 @inject UtilsService UtilsService
@@ -29,17 +30,19 @@ else
 
         <HeaderContent>
             <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<FavoriteFarmhouse, object>(x=>x.Farmhouse.Name)">@loc["X_Farmhouse"]</MudTableSortLabel></MudTh>
-            <MudTh>@loc["X_Actions"]</MudTh>
+            <MudTh Class="actions-column">@loc["X_Actions"]</MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="@loc["X_Name"]">@context.Farmhouse.Name</MudTd>
-            <MudTd DataLabel="@loc["X_Edit"]" Class="d-flex">
-                <MudTooltip Text="@loc["X_Delete"]">
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => DeleteFavoritePopup(context)' />
-                </MudTooltip>
-                <MudTooltip Text="@loc["X_Farmhouse"]">
-                    <MudIconButton Icon="@Icons.Material.Filled.Home" Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.Id)" />
-                </MudTooltip>
+            <MudTd DataLabel="@loc["X_Actions"]">
+                <div class="icons-container">
+                    <MudTooltip Text="@loc["X_Farmhouse"]">
+                        <MudIconButton Icon="@Icons.Material.Filled.Home" Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(context.IdFarmhouse)" />
+                    </MudTooltip>
+                    <MudTooltip Text="@loc["X_Delete"]">
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => DeleteFavoritePopup(context)' />
+                    </MudTooltip>
+                </div>
             </MudTd>
         </RowTemplate>
         <PagerContent>
@@ -70,15 +73,16 @@ else
         };
     }
 
-    private async void DeleteFavorite(int idFarmhouse)
+    private async void DeleteFavorite(int id, int idFarmhouse)
     {
-        var deletedFarmhouse = ListFavoritesFarmhouse.FirstOrDefault(x => x.Id == idFarmhouse);
+        var deletedFarmhouse = ListFavoritesFarmhouse.FirstOrDefault(x => x.Id == id);
         if (deletedFarmhouse != null)
         {
-            await FavoriteFarmhouseService.DeleteFavorite(idFarmhouse);
+            await FavoriteFarmhouseService.DeleteFavorite(id);
             ListFavoritesFarmhouse.Remove(deletedFarmhouse);
             StateHasChanged();
-            AlertService.SetDeleteAlert($"{@loc["Alert_Delete_Subscribe"]} {idFarmhouse}");
+            var farmhouse = await FarmhouseService.GetFarmhouse(idFarmhouse);
+            AlertService.SetDeleteAlert($"{@loc["Alert_Delete_Subscribe"]} {farmhouse.Name}");
             _ = AlertService.ClearAlertAfterDelay();
         }
     }
@@ -91,7 +95,7 @@ else
             ButtonName = dialogData.ButtonName,
             Content = $"{dialogData.Content} '{item.Farmhouse.Name}'?"
         };
-        UtilsService.OpenDialog(dialogDataDelete, () => DeleteFavorite(item.Id), Color.Error);
+        UtilsService.OpenDialog(dialogDataDelete, () => DeleteFavorite(item.Id, item.IdFarmhouse), Color.Error);
     }
 
     void ShowFarmhouse(int id)

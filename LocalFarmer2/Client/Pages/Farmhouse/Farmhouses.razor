@@ -46,10 +46,7 @@ else
             <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.City)">@loc["Farmhouse_City"]</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Address)">@loc["Farmhouse_Address"]</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<FarmhouseViewModel, object>(x=>x.Phone)">@loc["Farmhouse_Phone"]</MudTableSortLabel></MudTh>
-            <MudTh Class="icon-column">@loc["X_Actions"]</MudTh>
-            <MudTh Class="icon-column"></MudTh>
-            <MudTh Class="icon-column"></MudTh>
-            <MudTh Class="icon-column"></MudTh>
+            <MudTh Class="actions-column">@loc["X_Actions"]</MudTh>
         </HeaderContent>
         <RowTemplate Context="row">
             <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" Disabled="@(!row.Products.Any())" OnClick="@(() => ShowBtnPress(row.Id))">@((row.ShowDetails == true) ? loc["Button_Hide_Products"] : loc["Button_Show_Products"])</MudButton></MudTd>
@@ -58,77 +55,40 @@ else
             <MudTd DataLabel="@loc["Farmhouse_City"]">@row.City</MudTd>
             <MudTd DataLabel="@loc["Farmhouse_Address"]">@row.Address</MudTd>
             <MudTd DataLabel="@loc["Farmhouse_Photo"]">@row.Phone</MudTd>
-            <MudTd DataLabel="@loc["X_Details"]" Class="icon-column">
-                <MudTooltip Text="@loc["Button_Details"]">
-                    <MudIconButton Icon="@Icons.Material.Filled.Info" Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(row.Id)" />
-                </MudTooltip>
-            </MudTd>
-            <MudTd Class="icon-column">
-                <MudTooltip Text="@loc["Button_Show_Products"]">
-                    <MudBadge Content="@row.Products.Count()" Bordered="true" Color="Color.Primary" Overlap="true" Class="mx-6 my-4">
-                        <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart" Variant="Variant.Filled" Disabled="@(!row.Products.Any())" Color="Color.Primary" OnClick="() => ShowProducts(row.Id)" />
-                    </MudBadge>
-                </MudTooltip>
-            </MudTd>
-                @* <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!row.Products.Any())" OnClick="() => ShowProducts(row.Id)">@loc["Button_Show_Products"] - @row.Products.Count()</MudButton> *@
-            <AuthorizeView>
-@*                     <Authorized>
-                    @if (row.IsFavorite == false)
-                    {
-                        <MudTd DataLabel="Detail">
+            <MudTd DataLabel="@loc["X_Actions"]">
+                <div class="icons-container">
+                    <MudTooltip Text="@loc["Button_Details"]">
+                        <MudIconButton Icon="@Icons.Material.Filled.Info" Variant="Variant.Filled" Color="Color.Primary" OnClick="() => ShowFarmhouse(row.Id)" />
+                    </MudTooltip>
+                    <MudTooltip Text="@loc["Button_Show_Products"]">
+                        <MudBadge Content="@row.Products.Count()" Bordered="true" Color="Color.Primary" Overlap="true">
+                            <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart" Variant="Variant.Filled" Disabled="@(!row.Products.Any())" Color="Color.Primary" OnClick="() => ShowProducts(row.Id)" />
+                        </MudBadge>
+                    </MudTooltip>
+                    <AuthorizeView>
+                        <Authorized>
                             <MudTooltip Text="@loc["X_Subscription"]" Class="">
-                                <MudIconButton Icon="@Icons.Material.Filled.Favorite" Color="Color.Primary" OnClick="() => AddFavorite(row.Id)"/>
+                                <MudIconButton Icon="@Icons.Material.Filled.Favorite" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(row.IsFavorite)" OnClick="() => AddFavorite(row.Id)" />
                             </MudTooltip>
-                        </MudTd>
-                    }
-
-                    @if (row.IsCommented == false)
-                    {
-                        <MudTd DataLabel="Detail">
                             <MudTooltip Text="@loc["Opinion_Add_Opinion"]">
-                                <MudIconButton Icon="@Icons.Material.Filled.PostAdd" Color="Color.Primary" OnClick="() => OnButtonClicked(row.Id)" />
+                                <MudIconButton Icon="@Icons.Material.Filled.PostAdd" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(row.IsCommented)" OnClick="() => OnButtonClicked(row.Id)" />
                             </MudTooltip>
-                        </MudTd>
-                        <MudMessageBox @ref="mbox" Title="Add opinion" CancelText="Cancel">
-                            <MessageContent>
-                                <div class="d-flex flex-column align-center">
-                                    <MudRating @bind-SelectedValue="opinion.Rating" />
-                                    <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">Rate our farmhouse!</MudText>
-                                </div>
-                                <MudTextField T="string" @bind-Value="opinion.Comment" Label="Comment" Variant="Variant.Outlined" Lines="3" Placeholder="Set star and add your opinion" />
-                            </MessageContent>
-                            <YesButton>
-                                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddOpinion()">Add</MudButton>
-                            </YesButton>
-                        </MudMessageBox>
-                    }
-                </Authorized> *@
-                <Authorized>
-                    <MudTd Class="icon-column">
-                        <MudTooltip Text="@loc["X_Subscription"]" Class="">
-                            <MudIconButton Icon="@Icons.Material.Filled.Favorite" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(row.IsFavorite)" OnClick="() => AddFavorite(row.Id)" />
-                        </MudTooltip>
-                    </MudTd>
-                    <MudTd Class="icon-column">
-                        <MudTooltip Text="@loc["Opinion_Add_Opinion"]">
-                            <MudIconButton Icon="@Icons.Material.Filled.PostAdd" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(row.IsCommented)" OnClick="() => OnButtonClicked(row.Id)" />
-                        </MudTooltip>
-                    </MudTd>
-                    <MudMessageBox @ref="mbox" Title="Add opinion" CancelText="Cancel">
-                        <MessageContent>
-                            <div class="d-flex flex-column align-center">
-                                <MudRating @bind-SelectedValue="opinion.Rating" />
-                                <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">Rate our farmhouse!</MudText>
-                            </div>
-                            <MudTextField T="string" @bind-Value="opinion.Comment" Label="Comment" Variant="Variant.Outlined" Lines="3" Placeholder="Set star and add your opinion" />
-                        </MessageContent>
-                        <YesButton>
-                            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddOpinion()">Add</MudButton>
-                        </YesButton>
-                    </MudMessageBox>
-                </Authorized>
-            </AuthorizeView>
-                
+                            <MudMessageBox @ref="mbox" Title="Add opinion" CancelText="Cancel">
+                                <MessageContent>
+                                    <div class="d-flex flex-column align-center">
+                                        <MudRating @bind-SelectedValue="opinion.Rating" />
+                                        <MudText Typo="Typo.subtitle2" Class="deep-purple-text mt-2">Rate our farmhouse!</MudText>
+                                    </div>
+                                    <MudTextField T="string" @bind-Value="opinion.Comment" Label="Comment" Variant="Variant.Outlined" Lines="3" Placeholder="Set star and add your opinion" />
+                                </MessageContent>
+                                <YesButton>
+                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddOpinion()">Add</MudButton>
+                                </YesButton>
+                            </MudMessageBox>
+                        </Authorized>
+                    </AuthorizeView>
+                </div>
+            </MudTd>
         </RowTemplate>
         
         <ChildRowContent>
