@@ -139,8 +139,9 @@
     border-radius: 0 0 4px 4px !important;
 }
 
-.borderTableFarmhouses {
+.border-table-farmhouses {
     border: 2px solid var(--border) !important;
+    margin-right: 1px;
 }
 
 .my-products-table .mud-table-toolbar {
