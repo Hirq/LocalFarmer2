@@ -36,7 +36,7 @@ else
             <MudCheckBox T="bool?" TriState="true" Class="mr-2"
                          Checked="@GetAllCheckboxState()"
                          CheckedChanged="ToggleAll" />
-            <MudButton Class="mr-2" Color="Color.Secondary" Variant="Variant.Filled" OnClick="@(() => DeleteAlerts())">@loc["X_Delete"]</MudButton>
+            <MudButton Class="mr-2" Color="Color.Error" Variant="Variant.Filled" OnClick="@(() => DeleteAlerts())">@loc["X_Delete"]</MudButton>
             @if (FilterName == loc["Filter_All"])
             {
                 <MudButton Class="mr-2" Color="Color.Success" Variant="Variant.Filled" OnClick="@(() => SetAlertsAsRead())">@loc["Alert_As_Read"]</MudButton>
