@@ -37,6 +37,22 @@ else
                 </MudItem>
             </MudGrid>
         </EditForm>
+
+        <MudPaper Class="mudPaperTop mt-8">
+            <MudText Typo="Typo.h6" Class="text-center">Premium status</MudText>
+            <div class="d-flex justify-content-center">
+                @if (UserStateService.CurrentUser.IsPremium)
+                {
+                    <MudText Typo="Typo.h6" Class="text-center mt-3">XXXX: @UserStateService.CurrentUser.DatePremium</MudText>
+                }
+                else
+                {
+                    <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Premium XXXX</MudButton>
+                }
+            </div>
+        </MudPaper>
+
+
     </AuthorizeView>
 }
 

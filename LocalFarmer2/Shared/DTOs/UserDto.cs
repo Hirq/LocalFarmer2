@@ -10,5 +10,7 @@ namespace LocalFarmer2.Shared.DTOs
         public string FarmhouseName { get; set; }
         [Required]
         public string FullName { get; set; }
+        public bool IsPremium { get; set; }
+        public DateTime DatePremium { get; set; }
     }
 }
