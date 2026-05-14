@@ -5,6 +5,7 @@
 @inject IAlertService AlertService
 @inject UserStateService UserStateService
 @inject NavigationManager NavigationManager
+@inject UtilsService UtilsService
 
 <PageTitle>@loc["Account_My_Account"] | @Globals.AppName</PageTitle>
 
@@ -53,7 +54,7 @@ else
             </div>
 
             <div class="d-flex justify-content-center mt-2">
-                <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">Premium</MudButton>
+                <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary" OnClick='() => PremiumNotePopup()'>Premium</MudButton>
             </div>
         </div>
     </AuthorizeView>
@@ -62,6 +63,7 @@ else
 @code {
     [Parameter]
     public UserDto userDto { get; set; }
+    public DialogData dialogData = new DialogData();
 
     protected override async Task LoadDataAsync()
     {
@@ -71,6 +73,13 @@ else
         }
 
         userDto = UserStateService.CurrentUser;
+
+        dialogData = new DialogData()
+        {
+            Title = "Premium",
+            ButtonName = "XD",
+            Content = "XXX",
+        };
     }
 
     private async void OnValidSubmit(EditContext context)
@@ -81,5 +90,21 @@ else
         AlertService.SetSuccessAlert($"You new Fullname is: {editDto.FullName}");
         NavigationManager.NavigateTo("/");
         _ = AlertService.ClearAlertAfterDelay();
+    }
+
+    private void PremiumNotePopup()
+    {
+        var dialogDataDelete = new DialogData()
+        {
+            Title = dialogData.Title,
+            ButtonName = dialogData.ButtonName,
+            Content = $"{dialogData.Content}"
+        };
+        UtilsService.OpenDialog(dialogDataDelete, () => DeleteFavorite(), Color.Primary);
+    }
+
+    private async void DeleteFavorite()
+    {
+        Console.WriteLine("Get premium");
     }
 }
