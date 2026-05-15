@@ -1,4 +1,5 @@
-﻿using LocalFarmer2.Shared.Utilities;
+﻿using LocalFarmer2.Shared.DTOs;
+using LocalFarmer2.Shared.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -214,6 +215,29 @@ namespace LocalFarmer2.Server.Controllers
             };
 
             return Ok(userDto);
+        }
+
+
+        [HttpPut, Route("UserSetPremium/{idUser}")]
+        public async Task<IActionResult> SetPremium([FromBody] bool value, string idUser)
+        {
+            var user = await _applicationUserRepository.GetFirstOrDefaultAsync(x => x.Id == idUser);
+
+            if (user == null)
+            {
+                return NotFound(new { Message = $"User with id: {idUser} not found." });
+            }
+
+            user.IsPremium = value;
+            if (value)
+            {
+                user.DatePremium = DateTime.Now.AddDays(30);
+            }
+
+            _applicationUserRepository.Update(user);
+            await _applicationUserRepository.SaveChangesAsync();
+
+            return Ok(user);
         }
     }
 }

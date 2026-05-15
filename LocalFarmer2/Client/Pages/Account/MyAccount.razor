@@ -100,11 +100,12 @@ else
             ButtonName = dialogData.ButtonName,
             Content = $"{dialogData.Content}"
         };
-        UtilsService.OpenDialog(dialogDataDelete, () => DeleteFavorite(), Color.Primary);
+        UtilsService.OpenDialog(dialogDataDelete, () => _ = SetPremium(), Color.Primary);
     }
 
-    private async void DeleteFavorite()
+    private async Task SetPremium()
     {
         Console.WriteLine("Get premium");
+        await AccountService.SetPremium(true);
     }
 }
