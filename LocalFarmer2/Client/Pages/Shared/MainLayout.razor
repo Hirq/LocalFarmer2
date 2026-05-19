@@ -117,7 +117,7 @@
         if (result != null && bool.TryParse(result, out var parsedResult))
         {
             isDarkMode = parsedResult;
-            UpdateBodyClass(isDarkMode);
+            _ = UpdateBodyClass(isDarkMode);
         }
 
         AlertService.OnAlert += OnAlertChanged;
@@ -161,11 +161,11 @@
     private async Task ToggleTheme()
     {
         isDarkMode = !isDarkMode;
-        UpdateBodyClass(isDarkMode);
+        _ = UpdateBodyClass(isDarkMode);
         await JSRuntime.InvokeVoidAsync("localStorage.setItem", "isDarkMode", isDarkMode.ToString());
     }
 
-    private async void UpdateBodyClass(bool isDark)
+    private async Task UpdateBodyClass(bool isDark)
     {
         if (isDark)
         {

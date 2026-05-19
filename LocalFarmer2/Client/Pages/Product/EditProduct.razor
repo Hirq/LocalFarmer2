@@ -81,7 +81,7 @@ else
         }
     }
 
-    private async void OnValidSubmit(EditContext context)
+    private async Task OnValidSubmit(EditContext context)
     {
         var currentJson = JsonSerializer.Serialize(productDto);
         var originalJson = JsonSerializer.Serialize(originalProductDto);

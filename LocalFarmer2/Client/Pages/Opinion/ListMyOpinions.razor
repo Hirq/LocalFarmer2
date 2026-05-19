@@ -38,7 +38,7 @@ else
             <MudTd DataLabel="@loc["Opinion_Rating"]">@context.Rating</MudTd>
             <MudTd DataLabel="@loc["X_Actions"]">
                 <div class="icons-container">
-                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="() => OpenMessageBoxEditOpinion(context.Id)" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" OnClick="() => _ = OpenMessageBoxEditOpinion(context.Id)" />
                     <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" Size="Size.Medium" OnClick='() => DeleteOpinionPopup(context)' />
                     <MudMessageBox @ref="mbox" Title=@loc["Opinion_Edit_Opinion"] CancelText=@loc["X_Cancel"]>
                         <MessageContent>
@@ -49,7 +49,7 @@ else
                             <MudTextField T="string" @bind-Value="opinionDto.Comment" Label="@loc["Opinion_Comment"]" Variant="Variant.Outlined" Lines="3" Placeholder="@loc["Opinion_Placeholder"]" />
                         </MessageContent>
                         <YesButton>
-                            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => EditOpinion(context.Id)">@loc["X_Edit"]</MudButton>
+                            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => _ = EditOpinion(context.Id)">@loc["X_Edit"]</MudButton>
                         </YesButton>
                     </MudMessageBox>
                 </div>
@@ -86,7 +86,7 @@ else
         };
     }
 
-    private async void DeleteOpinion(int idOpinion)
+    private async Task DeleteOpinion(int idOpinion)
     {
         var opinion = ListMyOpinionsFarmhouse.FirstOrDefault(x => x.Id == idOpinion);
         if (opinion != null)
@@ -107,10 +107,10 @@ else
             ButtonName = dialogData.ButtonName,
             Content = $"{dialogData.Content} '{item.Farmhouse.Name}'?"
         };
-        UtilsService.OpenDialog(dialogDataDelete, () => DeleteOpinion(item.Id), Color.Error);
+        UtilsService.OpenDialog(dialogDataDelete, () => _ = DeleteOpinion(item.Id), Color.Error);
     }
 
-    private async void OpenMessageBoxEditOpinion(int idOpinion)
+    private async Task OpenMessageBoxEditOpinion(int idOpinion)
     {
         var opinionToEdit = ListMyOpinionsFarmhouse.FirstOrDefault(x => x.Id == idOpinion);
         opinionDto = new EditOpinionDto()
@@ -121,7 +121,7 @@ else
         await mbox.Show();
     }    
 
-    private async void EditOpinion(int idOpinion)
+    private async Task EditOpinion(int idOpinion)
     {
         var opinion = ListMyOpinionsFarmhouse.FirstOrDefault(x => x.Id == idOpinion);
         if (opinion != null)

@@ -75,10 +75,10 @@ else
                     <MudPaper Class="pa-4 mt-4 d-flex justify-space-between">
                         <div>
                             <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">@loc["X_Save"]</MudButton>
-                            <MudButton OnClick="() => UnlockMap()" id="buttonChangeMarker" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">@loc["Map_Change_Marker"]</MudButton>
+                            <MudButton OnClick="() => _ = UnlockMap()" id="buttonChangeMarker" ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary">@loc["Map_Change_Marker"]</MudButton>
                         </div>
                         <div>
-                            <MudButton OnClick='() => UtilsService.OpenDialog(dialogData, () => DeleteFarmhouse(), Color.Error)' Variant="Variant.Filled" Color="Color.Error">@loc["X_Delete"]</MudButton>
+                            <MudButton OnClick='() => UtilsService.OpenDialog(dialogData, () => _ = DeleteFarmhouse(), Color.Error)' Variant="Variant.Filled" Color="Color.Error">@loc["X_Delete"]</MudButton>
                         </div>
                     </MudPaper>
                 </MudItem>
@@ -174,7 +174,7 @@ else
         }
     }
 
-    private async void OnValidSubmit(EditContext context)
+    private async Task OnValidSubmit(EditContext context)
     {
         if (module != null)
         {
@@ -245,7 +245,7 @@ else
         _ = AlertService.ClearAlertAfterDelay();
     }
 
-    private async void DeleteFarmhouse()
+    private async Task DeleteFarmhouse()
     {
         if (UserStateService.CurrentUser?.IdFarmhouse != null)
         {
@@ -258,7 +258,7 @@ else
         }
     }
 
-    private async void UnlockMap()
+    private async Task UnlockMap()
     {
         if (module != null)
         {

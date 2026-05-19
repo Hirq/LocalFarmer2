@@ -73,7 +73,7 @@ else
         };
     }
 
-    private async void DeleteFavorite(int id, int idFarmhouse)
+    private async Task DeleteFavorite(int id, int idFarmhouse)
     {
         var deletedFarmhouse = ListFavoritesFarmhouse.FirstOrDefault(x => x.Id == id);
         if (deletedFarmhouse != null)
@@ -95,7 +95,7 @@ else
             ButtonName = dialogData.ButtonName,
             Content = $"{dialogData.Content} '{item.Farmhouse.Name}'?"
         };
-        UtilsService.OpenDialog(dialogDataDelete, () => DeleteFavorite(item.Id, item.IdFarmhouse), Color.Error);
+        UtilsService.OpenDialog(dialogDataDelete, () => _ = DeleteFavorite(item.Id, item.IdFarmhouse), Color.Error);
     }
 
     void ShowFarmhouse(int id)

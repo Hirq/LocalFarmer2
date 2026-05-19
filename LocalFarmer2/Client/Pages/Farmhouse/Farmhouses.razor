@@ -68,10 +68,10 @@ else
                     <AuthorizeView>
                         <Authorized>
                             <MudTooltip Text="@loc["X_Subscription"]" Class="">
-                                <MudIconButton Icon="@Icons.Material.Filled.Favorite" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(row.IsFavorite)" OnClick="() => AddFavorite(row.Id)" />
+                                <MudIconButton Icon="@Icons.Material.Filled.Favorite" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(row.IsFavorite)" OnClick="() => _ = AddFavorite(row.Id)" />
                             </MudTooltip>
                             <MudTooltip Text="@loc["Opinion_Add_Opinion"]">
-                                <MudIconButton Icon="@Icons.Material.Filled.PostAdd" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(row.IsCommented)" OnClick="() => OnButtonClicked(row.Id)" />
+                                <MudIconButton Icon="@Icons.Material.Filled.PostAdd" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(row.IsCommented)" OnClick="() => _ = OnButtonClicked(row.Id)" />
                             </MudTooltip>
                             <MudMessageBox @ref="mbox" Title="Add opinion" CancelText="Cancel">
                                 <MessageContent>
@@ -82,7 +82,7 @@ else
                                     <MudTextField T="string" @bind-Value="opinion.Comment" Label="Comment" Variant="Variant.Outlined" Lines="3" Placeholder="Set star and add your opinion" />
                                 </MessageContent>
                                 <YesButton>
-                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => AddOpinion()">Add</MudButton>
+                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => _ = AddOpinion()">Add</MudButton>
                                 </YesButton>
                             </MudMessageBox>
                         </Authorized>
@@ -183,7 +183,7 @@ else
         NavigationManager.NavigateTo($"productsFarmhouse/{id}");
     }
 
-    private async void AddFavorite(int idFarmhouse)
+    private async Task AddFavorite(int idFarmhouse)
     {
         await FavoriteFarmhouseService.AddFavorite(idFarmhouse);
         var addedFarmhouse = ListFarmhousesVM.FirstOrDefault(x => x.Id == idFarmhouse);
@@ -210,7 +210,7 @@ else
         }
     }
 
-    private async void OnButtonClicked(int idFarmhouse)
+    private async Task OnButtonClicked(int idFarmhouse)
     {
         opinion.Comment = string.Empty;
         opinion.Rating = 3;
@@ -219,7 +219,7 @@ else
         StateHasChanged();
     }
 
-    private async void AddOpinion()
+    private async Task AddOpinion()
     {
         AddOpinionDto dto = new AddOpinionDto()
             {
