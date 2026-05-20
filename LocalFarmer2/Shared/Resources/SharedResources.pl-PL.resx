@@ -600,4 +600,7 @@
   <data name="X_Actions" xml:space="preserve">
     <value>Akcje</value>
   </data>
+  <data name="Button_Premium" xml:space="preserve">
+    <value>Premium</value>
+  </data>
 </root>

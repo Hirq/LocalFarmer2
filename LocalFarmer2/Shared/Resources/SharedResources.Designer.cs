@@ -430,6 +430,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Get premium.
+        /// </summary>
+        internal static string Button_Premium {
+            get {
+                return ResourceManager.GetString("Button_Premium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Prize information.
         /// </summary>
         internal static string Button_Prize_Info {
