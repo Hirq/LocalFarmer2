@@ -603,4 +603,13 @@
   <data name="Button_Premium" xml:space="preserve">
     <value>Get premium</value>
   </data>
+  <data name="Premium_TopSection" xml:space="preserve">
+    <value>Upgrade to Premium and grow your business!</value>
+  </data>
+  <data name="Premium_MainSection" xml:space="preserve">
+    <value>Join our featured farms and unlock full access to tools designed to help you reach more customers. Here is what you get with a Premium account:</value>
+  </data>
+  <data name="Premium_FooterSection" xml:space="preserve">
+    <value>Why go Premium? Premium means higher visibility, zero restrictions, and an easy way to boost your sales.</value>
+  </data>
 </root>

@@ -1006,6 +1006,33 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Why go Premium? Premium means higher visibility, zero restrictions, and an easy way to boost your sales..
+        /// </summary>
+        internal static string Premium_FooterSection {
+            get {
+                return ResourceManager.GetString("Premium_FooterSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Join our featured farms and unlock full access to tools designed to help you reach more customers. Here is what you get with a Premium account:.
+        /// </summary>
+        internal static string Premium_MainSection {
+            get {
+                return ResourceManager.GetString("Premium_MainSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upgrade to Premium and grow your business!.
+        /// </summary>
+        internal static string Premium_TopSection {
+            get {
+                return ResourceManager.GetString("Premium_TopSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add product.
         /// </summary>
         internal static string Product_Add_Product {

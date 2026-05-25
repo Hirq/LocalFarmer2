@@ -276,3 +276,7 @@ body.dark-mode .close-btn {
     display: flex;
     justify-content: center;
 }
+
+.mud-dialog-content {
+    white-space: pre-line;
+}

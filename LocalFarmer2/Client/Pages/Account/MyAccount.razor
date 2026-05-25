@@ -6,6 +6,9 @@
 @inject UserStateService UserStateService
 @inject NavigationManager NavigationManager
 @inject UtilsService UtilsService
+@inject HttpClient Http
+@using System.Text.Json
+@using System.Globalization
 
 <PageTitle>@loc["Account_My_Account"] | @Globals.AppName</PageTitle>
 
@@ -64,6 +67,8 @@ else
     [Parameter]
     public UserDto userDto { get; set; }
     public DialogData dialogData = new DialogData();
+    private List<PremiumItem> PremiumItems = new List<PremiumItem>();
+    private string CurrentLang => CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 
     protected override async Task LoadDataAsync()
     {
@@ -74,11 +79,22 @@ else
 
         userDto = UserStateService.CurrentUser;
 
+        var json = await Http.GetStringAsync("premium.json");
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
+        PremiumItems = JsonSerializer.Deserialize<List<PremiumItem>>(json, options);
+
+        var protifts = PremiumItems.Select(x => x.Profit[CurrentLang]);
+        var protifts2 = string.Join("\n", protifts);
+
         dialogData = new DialogData()
         {
-            Title = $"{loc["Button_Premium"]}",
-            ButtonName = "XD",
-            Content = "XXX",
+            Title = $"{loc["Premium_TopSection"]}",
+            ButtonName = $"{loc["X_Save"]}",
+            Content = $"{loc["Premium_MainSection"]}\n\n" + protifts2 + $"\n\n{loc["Premium_FooterSection"]}",
         };
     }
 
@@ -94,13 +110,13 @@ else
 
     private void PremiumNotePopup()
     {
-        var dialogDataDelete = new DialogData()
+        var dialogPremium = new DialogData()
         {
             Title = dialogData.Title,
             ButtonName = dialogData.ButtonName,
-            Content = $"{dialogData.Content}"
+            Content = dialogData.Content,
         };
-        UtilsService.OpenDialog(dialogDataDelete, () => _ = SetPremium(), Color.Primary);
+        UtilsService.OpenDialog(dialogPremium, () => _ = SetPremium(), Color.Primary);
     }
 
     private async Task SetPremium()

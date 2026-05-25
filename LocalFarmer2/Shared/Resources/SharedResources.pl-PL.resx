@@ -603,4 +603,13 @@
   <data name="Button_Premium" xml:space="preserve">
     <value>Premium</value>
   </data>
+  <data name="Premium_TopSection" xml:space="preserve">
+    <value>Wybierz Pakiet Premium i rozwiń swój biznes!</value>
+  </data>
+  <data name="Premium_MainSection" xml:space="preserve">
+    <value>Dołącz do grona wyróżnionych gospodarstw i zyskaj pełen dostęp do narzędzi, które pozwolą Ci dotrzeć do większej liczby klientów. Sprawdź, co zyskujesz z kontem Premium:</value>
+  </data>
+  <data name="Premium_FooterSection" xml:space="preserve">
+    <value>Dlaczego warto? Premium to większa widoczność, brak ograniczeń i prosty sposób na zwiększenie zysków.</value>
+  </data>
 </root>
