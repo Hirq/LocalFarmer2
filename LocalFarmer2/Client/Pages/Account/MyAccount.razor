@@ -44,7 +44,7 @@ else
 
         <div class="mt-8">
             <div class="d-flex justify-content-center">
-                <MudText Typo="Typo.h6">Premium status: </MudText>
+                <MudText Typo="Typo.h6" Class="mr-1">Premium status:</MudText>
                 @if (UserStateService.CurrentUser.IsPremium)
                 {
                     <MudText Typo="Typo.h6">ACTIVE</MudText>
@@ -86,15 +86,13 @@ else
         };
 
         PremiumItems = JsonSerializer.Deserialize<List<PremiumItem>>(json, options);
-
-        var protifts = PremiumItems.Select(x => x.Profit[CurrentLang]);
-        var protifts2 = string.Join("\n", protifts);
+        var profits = string.Join("\n", PremiumItems.Select(x => "⭐" + x.Profit[CurrentLang]));
 
         dialogData = new DialogData()
         {
             Title = $"{loc["Premium_TopSection"]}",
             ButtonName = $"{loc["X_Save"]}",
-            Content = $"{loc["Premium_MainSection"]}\n\n" + protifts2 + $"\n\n{loc["Premium_FooterSection"]}",
+            Content = $"{loc["Premium_MainSection"]}\n{loc["Premium_MainSection2"]}\n\n" + profits + $"\n\n{loc["Premium_FooterSection"]}\n{loc["Premium_FooterSection2"]}",
         };
     }
 

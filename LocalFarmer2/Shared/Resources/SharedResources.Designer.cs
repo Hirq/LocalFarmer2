@@ -1006,7 +1006,7 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Why go Premium? Premium means higher visibility, zero restrictions, and an easy way to boost your sales..
+        ///   Looks up a localized string similar to Why go Premium?.
         /// </summary>
         internal static string Premium_FooterSection {
             get {
@@ -1015,7 +1015,16 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Join our featured farms and unlock full access to tools designed to help you reach more customers. Here is what you get with a Premium account:.
+        ///   Looks up a localized string similar to Premium means higher visibility, zero restrictions, and an easy way to boost your sales..
+        /// </summary>
+        internal static string Premium_FooterSection2 {
+            get {
+                return ResourceManager.GetString("Premium_FooterSection2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Join our featured farms and unlock full access to tools designed to help you reach more customers..
         /// </summary>
         internal static string Premium_MainSection {
             get {
@@ -1024,7 +1033,16 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upgrade to Premium and grow your business!.
+        ///   Looks up a localized string similar to Here is what you get with a Premium account:.
+        /// </summary>
+        internal static string Premium_MainSection2 {
+            get {
+                return ResourceManager.GetString("Premium_MainSection2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upgrade to Premium!.
         /// </summary>
         internal static string Premium_TopSection {
             get {
