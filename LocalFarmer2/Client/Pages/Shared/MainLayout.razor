@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @inject UserStateService UserStateService
 @inject NavigationManager NavigationManager
+@inject UtilsService UtilsService
 @inject IAlertService AlertService
 @inject IAccountService AccountService
 @inject IJSRuntime JSRuntime
@@ -93,6 +94,7 @@
     private bool isDataInitialized = false;
     int newAlerts = 0;
     List<Alert> alerts = new List<Alert>();
+    public DialogData dialogData = new DialogData();
     private bool isDarkMode;
     private MudThemeProvider mudThemeProvider;
     private MudTheme MainTheme = new MudTheme
@@ -129,6 +131,13 @@
                 UserStateService.CurrentUser = await AccountService.GetCurrentUser();
                 alerts = await AlertService.GetAllForUser(UserStateService.CurrentUser.IdUser, UserStateService.CurrentUser.IdFarmhouse);
                 newAlerts = alerts.Where(x => !x.IsOpen).Count();
+                int days = 11;
+                dialogData = new DialogData()
+                {
+                    Title = $"{loc["Premium_TopSection"]}",
+                    ButtonName = $"{loc["X_Save"]}",
+                    Content = "Zostało dni: " + days,
+                };
             }
             else
             {
@@ -138,6 +147,10 @@
         }
 
         NavigationManager.LocationChanged += HandleLocationChanged;
+        if (days < 14)
+        {
+            ReminderPremiumNotePopup();
+        }
     }
 
 
@@ -198,4 +211,19 @@
         NavigationManager.LocationChanged -= HandleLocationChanged;
     }
 
+    private void ReminderPremiumNotePopup()
+    {
+        var dialogPremium = new DialogData()
+        {
+            Title = dialogData.Title,
+            ButtonName = dialogData.ButtonName,
+            Content = dialogData.Content,
+        };
+        UtilsService.OpenDialog(dialogPremium, () => _ = GoPremium(), Color.Primary);
+    }
+    
+    private async Task GoPremium()
+    {
+        NavigationManager.NavigateTo("/myaccount");
+    }
 }
