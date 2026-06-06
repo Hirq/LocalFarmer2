@@ -115,6 +115,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        int days = 7;
         var result = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "isDarkMode");
         if (result != null && bool.TryParse(result, out var parsedResult))
         {
@@ -131,7 +132,7 @@
                 UserStateService.CurrentUser = await AccountService.GetCurrentUser();
                 alerts = await AlertService.GetAllForUser(UserStateService.CurrentUser.IdUser, UserStateService.CurrentUser.IdFarmhouse);
                 newAlerts = alerts.Where(x => !x.IsOpen).Count();
-                int days = 11;
+                days = (int)(DateTime.Now - UserStateService.CurrentUser.DatePremium).TotalDays;
                 dialogData = new DialogData()
                 {
                     Title = $"{loc["Premium_TopSection"]}",
