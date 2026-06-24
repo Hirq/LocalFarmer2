@@ -1,19 +1,20 @@
 global using AutoMapper;
-global using LocalFarmer2.Shared.Models;
+global using LocalFarmer2.Server.Data;
 global using LocalFarmer2.Server.Repositories;
 global using LocalFarmer2.Shared.DTOs;
-global using LocalFarmer2.Server.Data;
+global using LocalFarmer2.Shared.Models;
 global using LocalFarmer2.Shared.Resources;
 global using Microsoft.Extensions.Localization;
+using LocalFarmer2.Client;
+using LocalFarmer2.Server.Hubs;
+using LocalFarmer2.Server.Repositories.Interfaces;
+using LocalFarmer2.Server.Services;
 using LocalFarmer2.Server.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using LocalFarmer2.Server.Services;
-using LocalFarmer2.Server.Hubs;
-using LocalFarmer2.Server.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,6 +64,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero
         };
     });
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(24);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 builder.Services.AddScoped<IFarmhouseRepository, FarmhouseRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -120,6 +129,10 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode();
 
 app.MapHub<ChatHub>("/chathub");
 

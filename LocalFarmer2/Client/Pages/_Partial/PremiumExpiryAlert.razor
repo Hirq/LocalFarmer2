@@ -1,0 +1,33 @@
+﻿@inject IAlertServicePremium AlertServicePremium
+@inject AuthenticationStateProvider AuthProvider
+@inject UserStateService UserStateService
+
+@if (_showAlert)
+{
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <strong>⏳ Twoje Premium wygasa za @_daysLeft dni!</strong>
+        Przedłuż subskrypcję, aby nie stracić dostępu.
+        <a href="/premium" class="btn btn-sm btn-warning ms-2">Przedłuż teraz</a>
+        <button type="button" class="btn-close" @onclick="Dismiss"></button>
+    </div>
+}
+
+@code {
+    private bool _showAlert;
+    private int _daysLeft;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthProvider.GetAuthenticationStateAsync();
+        var user = await AuthService.GetUserById(authState.User);
+
+        if ((UserStateService.IsUserLogged) && AlertServicePremium.ShouldShowAlert(user))
+        {
+            _daysLeft = AlertServicePremium.GetDaysLeft(user);
+            _showAlert = true;
+            AlertServicePremium.MarkAlertShown();
+        }
+    }
+
+    private void Dismiss() => _showAlert = false;
+}
