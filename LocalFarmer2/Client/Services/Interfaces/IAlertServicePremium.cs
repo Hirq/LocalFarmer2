@@ -2,8 +2,8 @@
 {
     public interface IAlertServicePremium
     {
-        public bool ShouldShowAlert(ApplicationUser user);
+        public bool ShouldShowAlert(UserDto user);
         public void MarkAlertShown();
-        public int GetDaysLeft(ApplicationUser user);
+        public int GetDaysLeft(UserDto user);
     }
 }

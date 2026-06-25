@@ -14,7 +14,7 @@ namespace LocalFarmer2.Client.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public int GetDaysLeft(ApplicationUser user)
+        public int GetDaysLeft(UserDto user)
             => (int)Math.Ceiling((user.DatePremium - DateTime.UtcNow).TotalDays);
 
 
@@ -24,7 +24,7 @@ namespace LocalFarmer2.Client.Services
             session?.SetString(SessionKey, DateTime.UtcNow.ToString("yyyy-MM-dd"));
         }
 
-        public bool ShouldShowAlert(ApplicationUser user)
+        public bool ShouldShowAlert(UserDto user)
         {
             if (!user.IsPremium || user.DatePremium == null)
                 return false;
