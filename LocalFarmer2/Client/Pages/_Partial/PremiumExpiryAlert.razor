@@ -1,8 +1,8 @@
 ﻿@namespace LocalFarmer2.Client.Pages
-@inject IAlertServicePremium AlertServicePremium
+
+@inject IAlertPremiumService AlertPremiumService
 @inject AuthenticationStateProvider AuthProvider
 @inject UserStateService UserStateService
-@inherits BasePage
 
 @if (_showAlert)
 {
@@ -18,18 +18,25 @@
     private bool _showAlert;
     private int _daysLeft;
 
-    protected override async Task LoadDataAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (!await EnsureLoggedInAsync())
-        {
-            return;
-        }
+        if (!firstRender) return;
 
-        if ((UserStateService.IsUserLogged) && AlertServicePremium.ShouldShowAlert(UserStateService.CurrentUser))
+        var authState = await AuthProvider.GetAuthenticationStateAsync();
+        if (authState.User.Identity?.IsAuthenticated != true) return;
+
+        var user = UserStateService.CurrentUser;
+        if (user == null) return;
+
+        if (AlertPremiumService.ShouldShowAlert(user.DatePremium, user.IsPremium))
         {
-            _daysLeft = AlertServicePremium.GetDaysLeft(UserStateService.CurrentUser);
-            _showAlert = true;
-            AlertServicePremium.MarkAlertShown();
+            if (!await AlertPremiumService.WasAlertShownTodayAsync())
+            {
+                _daysLeft = AlertPremiumService.GetDaysLeft(user.DatePremium);
+                _showAlert = true;
+                await AlertPremiumService.MarkAlertShownAsync();
+                StateHasChanged();
+            }
         }
     }
 

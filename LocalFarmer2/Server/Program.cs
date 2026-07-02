@@ -65,13 +65,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromHours(24);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
 
 builder.Services.AddScoped<IFarmhouseRepository, FarmhouseRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -129,10 +122,6 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseSession();
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
 
 app.MapHub<ChatHub>("/chathub");
 
