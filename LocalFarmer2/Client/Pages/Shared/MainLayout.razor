@@ -95,7 +95,6 @@
     private bool isDataInitialized = false;
     int newAlerts = 0;
     List<Alert> alerts = new List<Alert>();
-    public DialogData dialogData = new DialogData();
     private bool isDarkMode;
     private MudThemeProvider mudThemeProvider;
     private MudTheme MainTheme = new MudTheme
@@ -116,7 +115,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        int days = 7;
         var result = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "isDarkMode");
         if (result != null && bool.TryParse(result, out var parsedResult))
         {
@@ -133,13 +131,6 @@
                 UserStateService.CurrentUser = await AccountService.GetCurrentUser();
                 alerts = await AlertService.GetAllForUser(UserStateService.CurrentUser.IdUser, UserStateService.CurrentUser.IdFarmhouse);
                 newAlerts = alerts.Where(x => !x.IsOpen).Count();
-                days = (int)(DateTime.Now - UserStateService.CurrentUser.DatePremium).TotalDays;
-                dialogData = new DialogData()
-                {
-                    Title = $"{loc["Premium_TopSection"]}",
-                    ButtonName = $"{loc["X_Save"]}",
-                    Content = "Zostało dni: " + days,
-                };
             }
             else
             {
@@ -149,10 +140,6 @@
         }
 
         NavigationManager.LocationChanged += HandleLocationChanged;
-        if (days < 14)
-        {
-            ReminderPremiumNotePopup();
-        }
     }
 
 
@@ -211,17 +198,6 @@
     {
         AlertService.OnAlert -= OnAlertChanged;
         NavigationManager.LocationChanged -= HandleLocationChanged;
-    }
-
-    private void ReminderPremiumNotePopup()
-    {
-        var dialogPremium = new DialogData()
-        {
-            Title = dialogData.Title,
-            ButtonName = dialogData.ButtonName,
-            Content = dialogData.Content,
-        };
-        UtilsService.OpenDialog(dialogPremium, () => _ = GoPremium(), Color.Primary);
     }
     
     private async Task GoPremium()

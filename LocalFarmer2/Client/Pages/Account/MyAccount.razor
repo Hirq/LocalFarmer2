@@ -44,15 +44,16 @@ else
 
         <div class="mt-8">
             <div class="d-flex justify-content-center">
-                <MudText Typo="Typo.h6" Class="mr-1">Premium status:</MudText>
                 @if (UserStateService.CurrentUser.IsPremium)
                 {
-                    <MudText Typo="Typo.h6">ACTIVE</MudText>
-                    <MudText Typo="Typo.h6">XXXX: @UserStateService.CurrentUser.DatePremium</MudText>
+                    <div class="d-flex flex-column align-center">
+                        <MudText Typo="Typo.h6" Class="mr-1">Premium status: ACTIVE</MudText>
+                        <MudText Typo="Typo.h6">@UserStateService.CurrentUser.DatePremium.ToShortDateString()</MudText>
+                    </div>
                 }
                 else
                 {
-                    <MudText Typo="Typo.h6">NO ACTIVE</MudText>
+                    <MudText Typo="Typo.h6" Class="mr-1">Premium status: NO ACTIVE</MudText>
                 }
             </div>
 

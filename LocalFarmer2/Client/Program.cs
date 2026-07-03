@@ -55,11 +55,18 @@ builder.Services.AddLocalization();
 
 var host = builder.Build();
 
-//Ustawienie kultury z localStorage
+//Set culture from localStorage
 var jsInterop = host.Services.GetRequiredService<IJSRuntime>();
 var result = await jsInterop.InvokeAsync<string>("blazorCulture.get");
-var culture = result ?? "en-US";
-CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(culture);
-CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(culture);
+var cultureName = result ?? "en-US";
+
+var culture = new CultureInfo(cultureName);
+
+culture.DateTimeFormat.ShortDatePattern = cultureName == "pl-PL"
+    ? "dd.MM.yyyy"
+    : "MM/dd/yyyy";
+
+CultureInfo.DefaultThreadCurrentCulture = culture;
+CultureInfo.DefaultThreadCurrentUICulture = culture;
 
 await host.RunAsync();

@@ -123,7 +123,9 @@ namespace LocalFarmer2.Server.Controllers
                 IdUser = user.Id,
                 IdFarmhouse = user.IdFarmhouse,
                 FarmhouseName = user.Farmhouse?.Name,
-                FullName = user.FullName
+                FullName = user.FullName,
+                IsPremium = user.IsPremium,
+                DatePremium = user.DatePremium
             };
 
             return Ok(userDto);
