@@ -331,6 +331,33 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your Premium subscription expires in.
+        /// </summary>
+        internal static string Alert_Premium_Expiry1 {
+            get {
+                return ResourceManager.GetString("Alert_Premium_Expiry1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to days.
+        /// </summary>
+        internal static string Alert_Premium_Expiry2 {
+            get {
+                return ResourceManager.GetString("Alert_Premium_Expiry2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Renew your subscription so you don’t lose access..
+        /// </summary>
+        internal static string Alert_Premium_Expiry3 {
+            get {
+                return ResourceManager.GetString("Alert_Premium_Expiry3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Successfully.
         /// </summary>
         internal static string Alert_Successfully {

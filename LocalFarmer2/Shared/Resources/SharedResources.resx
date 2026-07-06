@@ -618,4 +618,13 @@
   <data name="Premium_MainSection2" xml:space="preserve">
     <value>Here is what you get with a Premium account:</value>
   </data>
+  <data name="Alert_Premium_Expiry1" xml:space="preserve">
+    <value>Your Premium subscription expires in</value>
+  </data>
+  <data name="Alert_Premium_Expiry2" xml:space="preserve">
+    <value>days</value>
+  </data>
+  <data name="Alert_Premium_Expiry3" xml:space="preserve">
+    <value>Renew your subscription so you don’t lose access.</value>
+  </data>
 </root>

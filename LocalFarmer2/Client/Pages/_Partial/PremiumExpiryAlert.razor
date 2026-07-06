@@ -7,9 +7,9 @@
 @if (_showAlert)
 {
     <div class="alert alert-warning alert-dismissible" role="alert">
-        <strong>⏳ Twoje Premium wygasa za @_daysLeft dni!</strong>
-        Przedłuż subskrypcję, aby nie stracić dostępu.
-        <a href="/premium" class="btn btn-sm btn-warning ms-2">Przedłuż teraz</a>
+        <strong>⏳ @loc["Alert_Premium_Expiry1"] @_daysLeft @loc["Alert_Premium_Expiry2"]</strong>
+        @loc["Alert_Premium_Expiry3"]
+        <a href="/myaccount" class="btn btn-sm btn-warning ms-2">Premium</a>
         <button type="button" class="btn-close" @onclick="Dismiss"></button>
     </div>
 }

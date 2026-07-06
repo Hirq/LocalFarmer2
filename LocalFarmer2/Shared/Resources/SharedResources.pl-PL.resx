@@ -618,4 +618,13 @@
   <data name="Premium_MainSection2" xml:space="preserve">
     <value>Sprawdź, co zyskujesz z kontem Premium:</value>
   </data>
+  <data name="Alert_Premium_Expiry1" xml:space="preserve">
+    <value>Twoje Premium wygasa za</value>
+  </data>
+  <data name="Alert_Premium_Expiry2" xml:space="preserve">
+    <value>dni</value>
+  </data>
+  <data name="Alert_Premium_Expiry3" xml:space="preserve">
+    <value>Przedłuż subskrypcję, aby nie stracić dostępu.</value>
+  </data>
 </root>
