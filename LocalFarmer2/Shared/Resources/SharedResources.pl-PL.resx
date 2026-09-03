@@ -372,8 +372,11 @@
   <data name="X_Are_You_Sure_Edit_This" xml:space="preserve">
     <value>Czy na pewno chcesz zedytować</value>
   </data>
-  <data name="X_Subscription" xml:space="preserve">
+  <data name="X_Subscriptions" xml:space="preserve">
     <value>Subskrypcje</value>
+  </data>
+  <data name="X_Subscription" xml:space="preserve">
+    <value>Subskrypcja</value>
   </data>
   <data name="X_Opinion" xml:space="preserve">
     <value>Opinia</value>

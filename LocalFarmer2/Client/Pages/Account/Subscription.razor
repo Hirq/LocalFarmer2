@@ -1,0 +1,112 @@
+﻿@page "/subscription"
+@inherits BasePage
+@inject IMapper mapper
+@inject IAccountService AccountService
+@inject IAlertService AlertService
+@inject UserStateService UserStateService
+@inject NavigationManager NavigationManager
+@inject UtilsService UtilsService
+@inject HttpClient Http
+@using System.Text.Json
+@using System.Globalization
+
+<PageTitle>@loc["X_Subscription"] | @Globals.AppName</PageTitle>
+
+@if (isLoading)
+{
+    <MudProgressCircular Class="m-4" Color="Color.Primary" />
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <MudAlert Severity="Severity.Error">@errorMessage</MudAlert>
+}
+else
+{
+    <AuthorizeView>
+        <MudPaper Class="mudPaperTop">
+            <div class="mud-table-toolbar titlePage">
+                <MudText Class="d-flex justify-center" Typo="Typo.h6">@loc["X_Subscription"]</MudText>
+            </div>
+        </MudPaper>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudPaper Class="mudPaperBottom pa-4">
+                    <div class="mt-8">
+                        <div class="d-flex justify-content-center">
+                            <div class="d-flex flex-column align-center">
+                                @if (UserStateService.CurrentUser.IsPremium && UserStateService.CurrentUser.DatePremium > DateTime.Today)
+                                {
+                                    <MudText Typo="Typo.h6" Class="mr-1">Premium status: ACTIVE</MudText>
+                                }
+                                else
+                                {
+                                    <MudText Typo="Typo.h6" Class="mr-1">Premium status: NO ACTIVE</MudText>
+                                }
+                                @if (UserStateService.CurrentUser.IsPremium && UserStateService.CurrentUser.DatePremium > DateTime.MinValue)
+                                {
+                                    <MudText Typo="Typo.h6">End date: @UserStateService.CurrentUser.DatePremium.ToShortDateString()</MudText>
+                                }
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center mt-2">
+                            <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary" OnClick='() => PremiumNotePopup()'>Premium</MudButton>
+                        </div>
+                    </div>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+
+
+    </AuthorizeView>
+}
+
+@code {
+    [Parameter]
+    public UserDto userDto { get; set; }
+    public DialogData dialogData = new DialogData();
+    private List<PremiumItem> PremiumItems = new List<PremiumItem>();
+    private string CurrentLang => CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+    protected override async Task LoadDataAsync()
+    {
+        if (!await EnsureLoggedInAsync())
+        {
+            return;
+        }
+
+        userDto = UserStateService.CurrentUser;
+
+        var json = await Http.GetStringAsync("premium.json");
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
+        PremiumItems = JsonSerializer.Deserialize<List<PremiumItem>>(json, options);
+        var profits = string.Join("\n", PremiumItems.Select(x => "⭐" + x.Profit[CurrentLang]));
+
+        dialogData = new DialogData()
+        {
+            Title = $"{loc["Premium_TopSection"]}",
+            ButtonName = $"{loc["X_Save"]}",
+            Content = $"{loc["Premium_MainSection"]}\n{loc["Premium_MainSection2"]}\n\n" + profits + $"\n\n{loc["Premium_FooterSection"]}\n{loc["Premium_FooterSection2"]}",
+        };
+    }
+
+    private void PremiumNotePopup()
+    {
+        var dialogPremium = new DialogData()
+        {
+            Title = dialogData.Title,
+            ButtonName = dialogData.ButtonName,
+            Content = dialogData.Content,
+        };
+        UtilsService.OpenDialog(dialogPremium, () => _ = SetPremium(), Color.Primary);
+    }
+
+    private async Task SetPremium()
+    {
+        Console.WriteLine("Premium");
+        await AccountService.SetPremium(true);
+    }
+}
