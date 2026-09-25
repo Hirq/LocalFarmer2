@@ -280,3 +280,11 @@ body.dark-mode .close-btn {
 .mud-dialog-content {
     white-space: pre-line;
 }
+
+.rotate-icon svg {
+    transition: transform 0.5s ease-in-out;
+}
+
+.rotate-icon.open svg {
+    transform: rotate(180deg);
+}

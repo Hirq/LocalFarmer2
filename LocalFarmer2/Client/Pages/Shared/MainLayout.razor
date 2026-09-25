@@ -14,7 +14,7 @@
 {
     <MudLayout>
         <MudAppBar>
-            <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+            <MudIconButton Icon="@Icons.Material.Filled.ChevronRight" Color="Color.Inherit" Edge="Edge.Start" Class="@(_drawerOpen ? "rotate-icon open" : "rotate-icon")" OnClick="@((e) => DrawerToggle())" />
             <MudSpacer />
             <MudSwitch @bind-Value="@isDarkMode"
                        ThumbIcon="@(!isDarkMode ? @Icons.Material.Filled.LightMode : Icons.Material.Filled.ModeNight)"
@@ -58,16 +58,16 @@
                     }
                 </div> *@
                 <MudMenu AnchorOrigin="Origin.BottomRight" Icon="@Icons.Material.Outlined.MoreVert" TransformOrigin="Origin.TopRight" Color="Color.Inherit">
-                    @if (UserStateService.CurrentUser?.IdFarmhouse != null)
-                    {
-                        <MudMenuItem Icon="@Icons.Material.Filled.Edit" Href="/editfarmhouse">@loc["Farmhouse_Edit_Farmhouse"]</MudMenuItem>
-                    }
-                    else
-                    {
-                        <MudMenuItem Icon="@Icons.Material.Filled.Edit" Href="/addfarmhouse">@loc["Farmhouse_Add_Farmhouse"]</MudMenuItem>
-                    }
-                    <MudMenuItem Icon="@Icons.Material.Filled.Notifications" Href="/myalerts">@loc["X_Alerts"]</MudMenuItem>
-                    <MudMenuItem Icon="@Icons.Material.Filled.AccountBox" Href="/settings">@loc["X_Settings"]</MudMenuItem>
+                        @if (UserStateService.CurrentUser?.IdFarmhouse != null)
+                        {
+                            <MudMenuItem Icon="@Icons.Material.Filled.Edit" Href="/editfarmhouse">@loc["Farmhouse_Edit_Farmhouse"]</MudMenuItem>
+                        }
+                        else
+                        {
+                            <MudMenuItem Icon="@Icons.Material.Filled.Edit" Href="/addfarmhouse">@loc["Farmhouse_Add_Farmhouse"]</MudMenuItem>
+                        }
+                        <MudMenuItem Icon="@Icons.Material.Filled.Notifications" Href="/myalerts">@loc["X_Alerts"]</MudMenuItem>
+                        <MudMenuItem Icon="@Icons.Material.Filled.AccountBox" Href="/settings">@loc["X_Settings"]</MudMenuItem>
                 </MudMenu>
             </AuthorizeView>
         </MudAppBar>
