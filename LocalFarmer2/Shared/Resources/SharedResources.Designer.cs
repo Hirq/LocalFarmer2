@@ -1168,6 +1168,26 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About service.
+        /// </summary>
+        internal static string X_About_Service {
+            get {
+                return ResourceManager.GetString("X_About_Service", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LokalnyProducent connects local producers—farmers, 
+        ///beekeepers, producers of preserves, etc. with customers looking for 
+        ///fresh, local products directly from the source..
+        /// </summary>
+        internal static string X_About_Service_Text {
+            get {
+                return ResourceManager.GetString("X_About_Service_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accept.
         /// </summary>
         internal static string X_Accept {
@@ -1281,6 +1301,24 @@ namespace LocalFarmer2.Shared.Resources {
         internal static string X_Contact {
             get {
                 return ResourceManager.GetString("X_Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you have a question, a technical issue, or another matter? Write to us—we usually respond within 24–48 hours..
+        /// </summary>
+        internal static string X_Contact_Text {
+            get {
+                return ResourceManager.GetString("X_Contact_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can also write directly:.
+        /// </summary>
+        internal static string X_Contact_Text2 {
+            get {
+                return ResourceManager.GetString("X_Contact_Text2", resourceCulture);
             }
         }
         

@@ -630,4 +630,18 @@
   <data name="Alert_Premium_Expiry3" xml:space="preserve">
     <value>Przedłuż subskrypcję, aby nie stracić dostępu.</value>
   </data>
+  <data name="X_About_Service" xml:space="preserve">
+    <value>O serwisie</value>
+  </data>
+  <data name="X_About_Service_Text" xml:space="preserve">
+    <value>LokalnyProducent łączy lokalnych producentów — rolników, 
+pszczelarzy, wytwórców przetworów itd z klientami szukającymi 
+świeżych, lokalnych produktów bezpośrednio od źródła.</value>
+  </data>
+  <data name="X_Contact_Text" xml:space="preserve">
+    <value>Masz pytanie, problem techniczny lub inna sprawę? Napisz do nas — odpowiadamy zwykle w ciągu 24-48h.</value>
+  </data>
+  <data name="X_Contact_Text2" xml:space="preserve">
+    <value>Możesz też napisać bezpośrednio:</value>
+  </data>
 </root>
