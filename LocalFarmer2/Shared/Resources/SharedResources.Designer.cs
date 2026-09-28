@@ -1458,6 +1458,15 @@ namespace LocalFarmer2.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No alerts.
+        /// </summary>
+        internal static string X_No_Alerts {
+            get {
+                return ResourceManager.GetString("X_No_Alerts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Note.
         /// </summary>
         internal static string X_Note {

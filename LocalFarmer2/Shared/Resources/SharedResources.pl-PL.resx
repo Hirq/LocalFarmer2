@@ -644,4 +644,7 @@ pszczelarzy, wytwórców przetworów itd z klientami szukającymi
   <data name="X_Contact_Text2" xml:space="preserve">
     <value>Możesz też napisać bezpośrednio:</value>
   </data>
+  <data name="X_No_Alerts" xml:space="preserve">
+    <value>Brak powiadomień</value>
+  </data>
 </root>

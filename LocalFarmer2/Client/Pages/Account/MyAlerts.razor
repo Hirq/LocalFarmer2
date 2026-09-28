@@ -18,64 +18,77 @@ else if (!string.IsNullOrEmpty(errorMessage))
 }
 else
 {
-    <div class="mud-table mud-xs-table mud-table-hover mud-elevation-1">
-        <div class="mud-toolbar mud-toolbar-gutters mud-table-toolbar">
-            <MudText Typo="Typo.h6">@loc["X_Alerts"]</MudText>
+    @if (ListAlert.Any())
+    {
+        <div class="mud-table mud-xs-table mud-table-hover mud-elevation-1">
+            <div class="mud-toolbar mud-toolbar-gutters mud-table-toolbar">
+                <MudText Typo="Typo.h6">@loc["X_Alerts"]</MudText>
 
-            <MudSpacer />
-            <div class="mr-3">
-                <MudButton Color="Color.Warning" Variant="Variant.Filled" Class="noteButtonFilter" OnClick="@(() => ChangeFilter())">@FilterName</MudButton>
-                <div class="position-indicators">
-                    <div class="indicator2 @(FilterNotes == 0 ? "active" : "")" onclick="@(() => SetFilter(0))"></div>
-                    <div class="indicator2 @(FilterNotes == 1 ? "active" : "")" onclick="@(() => SetFilter(1))"></div>
+                <MudSpacer />
+                <div class="mr-3">
+                    <MudButton Color="Color.Warning" Variant="Variant.Filled" Class="noteButtonFilter" OnClick="@(() => ChangeFilter())">@FilterName</MudButton>
+                    <div class="position-indicators">
+                        <div class="indicator2 @(FilterNotes == 0 ? "active" : "")" onclick="@(() => SetFilter(0))"></div>
+                        <div class="indicator2 @(FilterNotes == 1 ? "active" : "")" onclick="@(() => SetFilter(1))"></div>
+                    </div>
                 </div>
+                <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
             </div>
-            <MudTextField @bind-Value="SearchService.SearchString" Placeholder="@loc["X_Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 input-search"></MudTextField>
-        </div>
-        <div class="mud-toolbar mud-toolbar-gutters mud-table-toolbar pl-6">
-            <MudCheckBox T="bool?" TriState="true" Class="mr-2"
-                         Checked="@GetAllCheckboxState()"
-                         CheckedChanged="ToggleAll" />
-            <MudButton Class="mr-2" Color="Color.Error" Variant="Variant.Filled" OnClick="@(() => DeleteAlerts())">@loc["X_Delete"]</MudButton>
-            @if (FilterName == loc["Filter_All"])
-            {
-                <MudButton Class="mr-2" Color="Color.Success" Variant="Variant.Filled" OnClick="@(() => SetAlertsAsRead())">@loc["Alert_As_Read"]</MudButton>
-            }
-        </div>
-        <MudExpansionPanels MultiExpansion="true">
-            @foreach (var group in ListAlert.Where(a => UtilsService.FilterFunc(a, SearchService.SearchString)).GroupBy(a => a.AlertEnum))
-            {
-                <MudExpansionPanel>
-                    <TitleContent>
-                        <div class="d-flex">
-                            <MudCheckBox T="bool?" TriState="true" Class="mr-2"
-                                         Checked="@GetGroupCheckboxState(group.Key)"
-                                         CheckedChanged="@((bool? value) => ToggleGroup(group.Key, value))" />
-                            <MudText Class="d-flex align-items-center"><b>@GetAlertName(@group.Key)</b></MudText>
-                            <MudChip Color="Color.Primary" Size="Size.Small" Class="ml-2">@group.Count()</MudChip>
-                        </div>
-                    </TitleContent>
-                    <ChildContent>
-                        <MudList Clickable="true">
-                            @foreach (var alert in group.OrderByDescending(a => a.DateCreated))
-                            {
-                                var details = GetAlertDetails(alert.AlertEnum);
-                                <MudListItem Icon="@details.Icon" IconColor="@details.Color">
-                                    <div class="d-flex justify-space-between w-100">
-                                        <div class="d-flex align-center">
-                                            <MudCheckBox Class="mr-2" Checked="@IsSelected(alert.Id)" CheckedChanged="@((bool value) => ToggleAlert(alert.Id, value))" />
-                                            <span>@alert.Message</span>
+
+            <div class="mud-toolbar mud-toolbar-gutters mud-table-toolbar pl-6">
+                <MudCheckBox T="bool?" TriState="true" Class="mr-2"
+                             Checked="@GetAllCheckboxState()"
+                             CheckedChanged="ToggleAll" />
+                <MudButton Class="mr-2" Color="Color.Error" Variant="Variant.Filled" OnClick="@(() => DeleteAlerts())">@loc["X_Delete"]</MudButton>
+                @if (FilterName == loc["Filter_All"])
+                {
+                    <MudButton Class="mr-2" Color="Color.Success" Variant="Variant.Filled" OnClick="@(() => SetAlertsAsRead())">@loc["Alert_As_Read"]</MudButton>
+                }
+            </div>
+
+            <MudExpansionPanels MultiExpansion="true">
+                @foreach (var group in ListAlert.Where(a => UtilsService.FilterFunc(a, SearchService.SearchString)).GroupBy(a => a.AlertEnum))
+                {
+                    <MudExpansionPanel>
+                        <TitleContent>
+                            <div class="d-flex">
+                                <MudCheckBox T="bool?" TriState="true" Class="mr-2"
+                                             Checked="@GetGroupCheckboxState(group.Key)"
+                                             CheckedChanged="@((bool? value) => ToggleGroup(group.Key, value))" />
+                                <MudText Class="d-flex align-items-center"><b>@GetAlertName(@group.Key)</b></MudText>
+                                <MudChip Color="Color.Primary" Size="Size.Small" Class="ml-2">@group.Count()</MudChip>
+                            </div>
+                        </TitleContent>
+                        <ChildContent>
+                            <MudList Clickable="true">
+                                @foreach (var alert in group.OrderByDescending(a => a.DateCreated))
+                                {
+                                    var details = GetAlertDetails(alert.AlertEnum);
+                                    <MudListItem Icon="@details.Icon" IconColor="@details.Color">
+                                        <div class="d-flex justify-space-between w-100">
+                                            <div class="d-flex align-center">
+                                                <MudCheckBox Class="mr-2" Checked="@IsSelected(alert.Id)" CheckedChanged="@((bool value) => ToggleAlert(alert.Id, value))" />
+                                                <span>@alert.Message</span>
+                                            </div>
+                                            <MudText Typo="Typo.caption">@alert.DateCreated.ToString("g")</MudText>
                                         </div>
-                                        <MudText Typo="Typo.caption">@alert.DateCreated.ToString("g")</MudText>
-                                    </div>
-                                </MudListItem>
-                            }
-                        </MudList>
-                    </ChildContent>
-                </MudExpansionPanel>
-            }
-        </MudExpansionPanels>
-    </div>
+                                    </MudListItem>
+                                }
+                            </MudList>
+                        </ChildContent>
+                    </MudExpansionPanel>
+                }
+            </MudExpansionPanels>
+        </div>
+    }
+    else
+    {
+        <div class="mud-table mud-xs-table mud-table-hover mud-elevation-1">
+            <div class="mud-toolbar mud-toolbar-gutters mud-table-toolbar">
+                <MudText Typo="Typo.h6">@loc["X_No_Alerts"]</MudText>
+            </div>
+        </div>
+    }
 }
 @code {
     List<Alert> ListAlert = new List<Alert>();
